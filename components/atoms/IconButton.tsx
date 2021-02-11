@@ -9,9 +9,13 @@ font-weight:bold;
 color:${({ theme }) => theme.primary};
 width:min-content;
 transition:all .2s;
+font-size:15px;
+white-space:nowrap;
+align-items:center;
 cursor:pointer;
 & svg {
-    width:30px;
+    height:20px;
+    margin-right:6px;
 }
 
 &:hover {

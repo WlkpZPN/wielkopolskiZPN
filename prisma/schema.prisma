@@ -8,11 +8,10 @@ datasource db {
 }
 
 model users {
-  user_id  Int     @id @default(autoincrement())
-  email    String
-  imie     String?
-  nazwisko String?
-  username String
-  password String
-  role     Int
+  user_id   Int     @id @default(autoincrement())
+  email     String
+  password  String
+  firstname String?
+  lastname  String?
+  role      Int
 }
