@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 //components
 import Label from "../../components/atoms/label";
-import Input from "../../components/atoms/input";
+import Input from "../../components/atoms/login_input";
 import ErrorMessage from "../../components/atoms/error_message";
 import LoggedUserInfo from "../../components/molecules/loggedUserInfo";
 import PrimaryButton from "../../components/atoms/primary_button";

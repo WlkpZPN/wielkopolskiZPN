@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 import styled from "styled-components";
-import Input from "../components/atoms/input";
-import ErrorMessage from "../components/atoms/error_message";
+
+//components
 import Label from "../components/atoms/label";
+import Input from "../components/atoms/login_input";
+import ErrorMessage from "../components/atoms/error_message";
+import LoggedUserInfo from "../components/molecules/loggedUserInfo";
 import PrimaryButton from "../components/atoms/primary_button";
+import Loader from "../components/atoms/loader";
+
+//helpers
 
 import { validateEmail } from "../middleware/validation";
 
@@ -54,6 +60,10 @@ const Header = styled.h1`
   margin-bottom: 4px;
 `;
 
+const StyledForm = styled.form`
+  width: 100%;
+`;
+
 const StyledLabel = styled(Label)`
   margin-top: 32px;
   @media (max-width: 700px) {
@@ -72,13 +82,14 @@ const ForgetPassword = styled.p`
   cursor: pointer;
   margin-top: 4px;
 `;
-const LoginPage = (props) => {
+
+const LoginPage = ({ userData }) => {
+  console.log(userData);
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const { baseApiUrl, profile } = props;
 
   const submitLogin = async (e) => {
     e.preventDefault();
@@ -89,7 +100,7 @@ const LoginPage = (props) => {
       setError("");
       setLoading(true);
       axios
-        .post("/api/auth", {
+        .post("/api/auth/login", {
           email,
           password,
         })
@@ -98,13 +109,16 @@ const LoginPage = (props) => {
 
           console.log(res);
           const { success, token } = res.data;
-          if (success && token) {
-            Cookies.set("token", token);
-            router.push("/");
-          }
+
+          router.push("/admin");
         })
         .catch((err) => {
-          setError(err.response.data.message);
+          setLoading(false);
+          console.log(err);
+          setError(
+            err.response.data.message ||
+              "Wystąpił błąd,proszę spróbować później"
+          );
         });
     } else {
       setLoading(false);
@@ -119,43 +133,69 @@ const LoginPage = (props) => {
           src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
           alt="Wielkopolski ZPN logo"
         />
+
         <Header>Platforma licencyjna</Header>
         <p style={{ marginBottom: "64px", fontSize: "18px" }}>
           Konto klubu sportowego
         </p>
-        <StyledLabel>E-mail</StyledLabel>
-        <Input
-          type="text"
-          placeholder="jan.nowak@wielkopolskizpn.pl"
-          value={email}
-          onChange={(e) => {
-            setError("");
-            setEmail(e.target.value);
-          }}
-        />
-        <StyledLabel>Hasło</StyledLabel>
-        <Input
-          type="password"
-          placeholder="********"
-          value={password}
-          onChange={(e) => {
-            setError("");
-            setPassword(e.target.value);
-          }}
-        />
-        <ForgetPassword>Przypomnij hasło</ForgetPassword>
-        <PrimaryButton
-          type="submit"
-          onClick={submitLogin}
-          style={{ marginTop: "48px" }}
-        >
-          Zaloguj
-        </PrimaryButton>
-        {error ? <ErrorMessage>{error}</ErrorMessage> : null}
+        {userData ? (
+          <LoggedUserInfo userData={userData} />
+        ) : loading ? (
+          <Loader>Loading...</Loader>
+        ) : (
+          <StyledForm>
+            <StyledLabel>E-mail</StyledLabel>
+            <Input
+              type="text"
+              placeholder="jan.nowak@wielkopolskizpn.pl"
+              value={email}
+              onChange={(e) => {
+                setError("");
+                setEmail(e.target.value);
+              }}
+            />
+            <StyledLabel>Hasło</StyledLabel>
+            <Input
+              type="password"
+              placeholder="********"
+              value={password}
+              onChange={(e) => {
+                setError("");
+                setPassword(e.target.value);
+              }}
+            />
+            <ForgetPassword>Przypomnij hasło</ForgetPassword>
+            <PrimaryButton
+              type="submit"
+              onClick={submitLogin}
+              style={{ marginTop: "48px" }}
+            >
+              Zaloguj
+            </PrimaryButton>
+            {error ? <ErrorMessage>{error}</ErrorMessage> : null}
+          </StyledForm>
+        )}
       </Left>
       <Right></Right>
     </Wrapper>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { req, res } = context;
+  const token = req.cookies.userToken || null;
+  let decodedToken: Object;
+  if (token) {
+    console.log("we have token");
+    decodedToken = jwt.verify(token, process.env.AUTH_KEY);
+  } else {
+    decodedToken = null;
+  }
+  return {
+    props: {
+      userData: decodedToken || null,
+    },
+  };
+}
 
 export default LoginPage;

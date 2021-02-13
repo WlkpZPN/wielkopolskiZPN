@@ -21,3 +21,10 @@ export default (req, res) => {
     res.send("user added");
   });
 };
+
+// ROLES
+// 0 - superuser
+// 1 - admin
+// 2 - mod
+// 3 - other
+// >= 4 - client/club
