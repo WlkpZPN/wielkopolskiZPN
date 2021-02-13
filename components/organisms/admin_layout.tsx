@@ -82,7 +82,7 @@ const AdminLayout = ({ children }) => {
         <ProgressBar />
         <ButtonWrapper>
           <IconButton>
-            <User /> {userData.email || "email nieznany"}
+            <User /> {"email nieznany"}
           </IconButton>
           <IconButton onClick={logout}>
             <LogOut /> Wyloguj
