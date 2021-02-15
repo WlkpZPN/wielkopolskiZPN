@@ -6,6 +6,10 @@ const theme = {
   primary: "#0056A5",
   primaryLight: "#2185D0",
   darkLight: "#363636",
+  dark: "#1B1C1D",
+  greyText: "#797979",
+  danger: "#D10101",
+  dangerDark: "#A50000",
 };
 function MyApp({ Component, pageProps }) {
   return (

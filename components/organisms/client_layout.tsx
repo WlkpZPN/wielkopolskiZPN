@@ -65,7 +65,7 @@ const List = styled.ul`
   }
 `;
 
-const ClientLayout = ({ children }) => {
+const ClientLayout = ({ view, setView, children }) => {
   //const { userData, setView } = useContext(UserContext);
 
   const router = useRouter();
@@ -94,14 +94,23 @@ const ClientLayout = ({ children }) => {
       <NavBar>
         <NavBarContent>
           <List>
-            <NavItem onClick={() => handleViewChange("wnioski")}>
+            <NavItem
+              active={view === "Wniosek licencyjny"}
+              onClick={() => handleViewChange("Wniosek licencyjny")}
+            >
               Wniosek licencyjny
             </NavItem>
 
-            <NavItem onClick={() => handleViewChange("statystyki")}>
+            <NavItem
+              active={view === "Dane klubu"}
+              onClick={() => handleViewChange("Dane klubu")}
+            >
               Dane klubu
             </NavItem>
-            <NavItem onClick={() => handleViewChange("uzytkownicy")}>
+            <NavItem
+              active={view === "Pomoc"}
+              onClick={() => handleViewChange("Pomoc")}
+            >
               Pomoc / FAQ
             </NavItem>
           </List>
