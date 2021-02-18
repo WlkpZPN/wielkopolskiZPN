@@ -7,6 +7,10 @@ const FormRow = styled.div`
     cols ? `repeat(${cols},1fr)` : "repeat(2,1fr)"};
   width: 100%;
   grid-gap: 16px;
+
+  & label {
+    margin: 16px 0;
+  }
 `;
 
 export default FormRow;

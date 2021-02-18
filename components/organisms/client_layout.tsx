@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useRouter } from "next/router";
+import Link from "next/link";
 //icons
 import { User } from "@styled-icons/fa-solid/User";
 import { LogOut } from "@styled-icons/entypo/LogOut";
@@ -19,6 +19,12 @@ const Wrapper = styled.main`
   display: grid;
   grid-template-rows: 9% 7% auto 4%;
   height: 100vh;
+`;
+const Content = styled.div`
+  padding: 16px 0;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 const TopBar = styled.div`
@@ -65,15 +71,9 @@ const List = styled.ul`
   }
 `;
 
-const ClientLayout = ({ view, setView, children }) => {
+const ClientLayout = ({ view, children }) => {
   //const { userData, setView } = useContext(UserContext);
 
-  const router = useRouter();
-
-  const handleViewChange = (view) => {
-    //setView(view);
-    console.log(view);
-  };
   return (
     <Wrapper>
       <TopBar>
@@ -94,30 +94,21 @@ const ClientLayout = ({ view, setView, children }) => {
       <NavBar>
         <NavBarContent>
           <List>
-            <NavItem
-              active={view === "Wniosek licencyjny"}
-              onClick={() => handleViewChange("Wniosek licencyjny")}
-            >
-              Wniosek licencyjny
-            </NavItem>
-
-            <NavItem
-              active={view === "Dane klubu"}
-              onClick={() => handleViewChange("Dane klubu")}
-            >
-              Dane klubu
-            </NavItem>
-            <NavItem
-              active={view === "Pomoc"}
-              onClick={() => handleViewChange("Pomoc")}
-            >
-              Pomoc / FAQ
-            </NavItem>
+            <Link href="/">
+              <NavItem active={view === "Wniosek licencyjny"}>
+                Wniosek licencyjny
+              </NavItem>
+            </Link>
+            <Link href="/dane">
+              <NavItem active={view === "Dane klubu"}>Dane klubu</NavItem>
+            </Link>
+            <Link href="/pomoc">
+              <NavItem active={view === "Pomoc"}>Pomoc / FAQ</NavItem>
+            </Link>
           </List>
         </NavBarContent>
       </NavBar>
-
-      {children}
+      <Content>{children}</Content>
       <Footer />
     </Wrapper>
   );

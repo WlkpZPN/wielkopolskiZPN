@@ -7,6 +7,7 @@ const OutlineButton = styled.button`
   font-weight: bold;
   color: ${({ theme }) => theme.primaryLight};
   border-radius: 5px;
+  align-self: ${({ align }) => (align ? align : "initial")};
   cursor: pointer;
   background: transparent;
   &:hover {

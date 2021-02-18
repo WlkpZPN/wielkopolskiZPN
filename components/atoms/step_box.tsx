@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 8px 4px;
-
+  cursor: pointer;
   width: 180px;
   position: relative;
   &::after {
@@ -50,9 +50,20 @@ const StyledCheck = styled(Check)`
   fill: #3dba77;
   width: 20px;
 `;
-const StepBox = ({ number, text, helperText, active, completed }) => {
+const StepBox = ({
+  number,
+  text,
+  helperText,
+  active,
+  completed,
+  handleStepChange,
+}) => {
   return (
-    <Wrapper completed={completed} active={active}>
+    <Wrapper
+      onClick={() => handleStepChange("jump", number)}
+      completed={completed}
+      active={active}
+    >
       <Number>{completed ? <StyledCheck /> : number}</Number>
       <div>
         <Header completed={completed}>{text}</Header>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
@@ -13,6 +14,8 @@ const Wrapper = styled.div`
   justify-content: center;
   position: relative;
   z-index: 1;
+  max-width: 50%;
+  text-align: center;
 
   &::after {
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ";
@@ -74,6 +77,7 @@ const FileInfo = styled.div`
   font-size: 20px;
   font-weight: bold;
   align-items: center;
+
   margin-bottom: 16px;
   svg {
     width: 50px;
@@ -81,7 +85,16 @@ const FileInfo = styled.div`
   }
 `;
 
+const FileInput = styled.input`
+  appearance: none;
+  display: none;
+`;
+
 const AddFile = () => {
+  const handleInput = (e) => {
+    e.preventDefault();
+    console.log(e.target.files);
+  };
   return (
     <Wrapper>
       <Info>
@@ -91,7 +104,11 @@ const AddFile = () => {
         <FilePdf />
         Brak załączonego dokumentu.
       </FileInfo>
-      <OutlineButton>+ Dodaj dokument</OutlineButton>
+
+      <label>
+        <OutlineButton>+ Dodaj dokument</OutlineButton>
+        <FileInput id="file" type="file" name="file" />
+      </label>
     </Wrapper>
   );
 };

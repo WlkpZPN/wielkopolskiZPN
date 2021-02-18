@@ -6,6 +6,8 @@ const PrimaryButton = styled.button`
   border: none;
   color: white;
   font-size: 15px;
+  font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : "inherit")};
+  width: ${({ width }) => (width ? width : "initial")};
   padding: 8px 16px;
   border-radius: 5px;
   transition: all 0.2s;
