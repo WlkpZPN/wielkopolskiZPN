@@ -8,10 +8,259 @@ datasource db {
 }
 
 model users {
-  user_id   Int     @id @default(autoincrement())
-  email     String
-  password  String
-  firstname String?
-  lastname  String?
-  role      Int
+  id           Int            @id @default(autoincrement())
+  role_id      Int?
+  club_id      Int?
+  name         String?
+  email        String?
+  password     String?
+  created_at   DateTime?
+  updated_at   DateTime?
+  clubs        clubs?         @relation(fields: [club_id], references: [id])
+  roles        roles?         @relation(fields: [role_id], references: [id])
+  annotations  annotations[]
+  applications applications[]
+  histories    histories[]
+}
+
+model annotations {
+  id             Int           @id @default(autoincrement())
+  application_id Int?
+  user_id        Int?
+  description    String?
+  created_at     DateTime?
+  updated_at     DateTime?
+  applications   applications? @relation(fields: [application_id], references: [id])
+  users          users?        @relation(fields: [user_id], references: [id])
+}
+
+model applications {
+  id                                                             Int                         @id @default(autoincrement())
+  user_id                                                        Int?
+  status_id                                                      Int?
+  number_of_seasons                                              Int?
+  declaration_on_the_subject_of_participation_in_the_competition Boolean?
+  declaration_on_the_use_of_personal_data_documentation          Boolean?
+  number_of_youth_groups                                         Int?
+  share_of_youth_groups                                          Int?
+  declaration_on_medical_care_for_the_players                    Boolean?
+  declaration_of_no_obligations_towards_employees                Boolean?
+  declaration_of_no_obligations_towards_PZPN_and_WZPN            Boolean?
+  declaration_of_no_obligations_towards_football_clubs           Boolean?
+  declaration_of_having_football_staff                           Boolean?
+  declaration_of_having_security_services                        Boolean?
+  created_at                                                     DateTime?
+  updated_at                                                     DateTime?
+  statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
+  users                                                          users?                      @relation(fields: [user_id], references: [id])
+  annotations                                                    annotations[]
+  applications_attachments                                       applications_attachments[]
+  applications_leagues                                           applications_leagues[]
+  applications_youth_groups                                      applications_youth_groups[]
+  histories                                                      histories[]
+  sport_facilities                                               sport_facilities[]
+}
+
+model applications_attachments {
+  id             Int           @id @default(autoincrement())
+  application_id Int?
+  attachment_id  Int?
+  created_at     DateTime?
+  updated_at     DateTime?
+  applications   applications? @relation(fields: [application_id], references: [id])
+  attachments    attachments?  @relation(fields: [attachment_id], references: [id])
+}
+
+model applications_leagues {
+  id             Int           @id @default(autoincrement())
+  application_id Int?
+  league_id      Int?
+  created_at     Int?
+  updated_at     Int?
+  applications   applications? @relation(fields: [application_id], references: [id])
+  leagues        leagues?      @relation(fields: [league_id], references: [id])
+}
+
+model applications_youth_groups {
+  id             Int           @id @default(autoincrement())
+  application_id Int?
+  youth_group_id Int?
+  created_at     DateTime?
+  updated_at     DateTime?
+  applications   applications? @relation(fields: [application_id], references: [id])
+  youth_groups   youth_groups? @relation(fields: [youth_group_id], references: [id])
+}
+
+model attachment_categories {
+  id          Int           @id @default(autoincrement())
+  name        String?
+  description String?
+  created_at  DateTime?
+  updated_at  DateTime?
+  attachments attachments[]
+}
+
+model attachments {
+  id                       Int                        @id @default(autoincrement())
+  attachment_category_id   Int?
+  name                     String?
+  description              String?
+  filepath                 String?
+  created_at               DateTime?
+  updated_at               DateTime?
+  attachment_categories    attachment_categories?     @relation(fields: [attachment_category_id], references: [id])
+  applications_attachments applications_attachments[]
+}
+
+model clubs {
+  id                 Int       @id @default(autoincrement())
+  name               String?
+  address            String?
+  post_code          String?
+  region             String?
+  email              String?
+  phone_number       String?
+  additional_contact String?
+  webpage            String?
+  facebook_profile   String?
+  management         String?
+  created_at         DateTime?
+  updated_at         DateTime?
+  users              users[]
+}
+
+model frequently_asked_questions {
+  id         Int       @id @default(autoincrement())
+  question   String?
+  answer     String?
+  created_at DateTime?
+  updated_at DateTime?
+}
+
+model histories {
+  id             Int           @id @default(autoincrement())
+  application_id Int?
+  user_id        Int?
+  description    String?
+  created_at     DateTime?
+  updated_at     DateTime?
+  applications   applications? @relation(fields: [application_id], references: [id])
+  users          users?        @relation(fields: [user_id], references: [id])
+}
+
+model leagues {
+  id                   Int                    @id @default(autoincrement())
+  name                 String?
+  description          String?
+  created_at           DateTime?
+  updated_at           DateTime?
+  applications_leagues applications_leagues[]
+}
+
+model roles {
+  id          Int       @id @default(autoincrement())
+  name        String?
+  description String?
+  created_at  DateTime?
+  updated_at  DateTime?
+  users       users[]
+}
+
+model sport_facilities {
+  id                                 Int           @id @default(autoincrement())
+  application_id                     Int?
+  address                            String?
+  post_code                          String?
+  city                               String?
+  I01_1                              Boolean?
+  I01_2                              Boolean?
+  I02_1                              Boolean?
+  I02_2                              Boolean?
+  I02_3                              Boolean?
+  I02_4                              Boolean?
+  I03_total_capacity                 Int?
+  I03_1                              Boolean?
+  I03_2                              Boolean?
+  I04_1                              Boolean?
+  I04_2                              Boolean?
+  I04_3                              Boolean?
+  I04_4                              Boolean?
+  I04_5                              Boolean?
+  I05_number_of_seats_for_guests     Int?
+  I05_percentage_of_seats_for_guests Int?
+  I05_1                              Boolean?
+  I05_2                              Boolean?
+  I05_3                              Boolean?
+  I06_type                           String?
+  I06_condition                      String?
+  I06_dimensions                     String?
+  I06_1                              Boolean?
+  I06_2                              Boolean?
+  I06_3                              Boolean?
+  I06_4                              Boolean?
+  I06_5                              Boolean?
+  I07_1                              Boolean?
+  I07_2                              Boolean?
+  I07_3                              Boolean?
+  I07_4                              Boolean?
+  I08_number_of_seats_on_the_bench   Int?
+  I08_1                              Boolean?
+  I08_2                              Boolean?
+  I08_3                              Boolean?
+  I08_4                              Boolean?
+  I09_1                              Boolean?
+  I09_2                              Boolean?
+  I10_1                              Boolean?
+  I11_number_of_seats                Int?
+  I11_number_of_hangers_or_lockers   Int?
+  I11_number_of_showers              Int?
+  I11_number_of_toilets              Int?
+  I11_1                              Boolean?
+  I11_2                              Boolean?
+  I12_number_of_seats                Int?
+  I12_number_of_hangers_or_lockers   Int?
+  I12_number_of_showers              Int?
+  I12_number_of_toilets              Int?
+  I12_1                              Boolean?
+  I12_2                              Boolean?
+  I13_1                              Boolean?
+  I13_2                              Boolean?
+  I13_3                              Boolean?
+  I13_4                              Boolean?
+  I13_5                              Boolean?
+  I14_1                              Boolean?
+  I14_2                              Boolean?
+  I14_3                              Boolean?
+  I15_number_of_toilets_for_women    Int?
+  I15_number_of_toilets_for_men      Int?
+  I15_standard                       String?
+  I15_1                              Boolean?
+  I16_1                              Boolean?
+  I17_1                              Boolean?
+  I18_1                              Boolean?
+  I19_1                              Boolean?
+  I19_2                              Boolean?
+  I19_3                              Boolean?
+  I20_1                              Boolean?
+  created_at                         DateTime?
+  updated_at                         DateTime?
+  applications                       applications? @relation(fields: [application_id], references: [id])
+}
+
+model statuses {
+  id           Int            @id @default(autoincrement())
+  name         String?
+  description  String?
+  created_at   DateTime?
+  updated_at   DateTime?
+  applications applications[]
+}
+
+model youth_groups {
+  id                        Int                         @id @default(autoincrement())
+  name                      String?
+  description               String?
+  created_at                DateTime?
+  updated_at                DateTime?
+  applications_youth_groups applications_youth_groups[]
 }

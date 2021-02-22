@@ -13,7 +13,7 @@ export function protectedAdminRoute(cb) {
       decodedToken = jwt.verify(token, process.env.AUTH_KEY);
       console.log("token", decodedToken);
 
-      if (decodedToken.role !== 0) {
+      if (decodedToken.role !== "superadmin") {
         res.statusCode = 302;
         res.setHeader("Location", "/admin/login");
       }

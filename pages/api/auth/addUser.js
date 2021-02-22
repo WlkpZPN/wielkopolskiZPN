@@ -12,10 +12,9 @@ export default (req, res) => {
     await prisma.users.create({
       data: {
         email: "hondakkia@gmail.com",
-        firstname: "Aleksander",
-        lastname: "Franczak",
+        name: "Aleksander Franczak",
         password: securedPassword,
-        role: 0,
+        role_id: 2,
       },
     });
     res.send("user added");

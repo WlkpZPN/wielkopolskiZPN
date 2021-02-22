@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, createContext } from "react";
 
 import StepOneForm from "./step1_form";
 import StepTwoForm from "./step2_form";
@@ -12,7 +12,7 @@ import StepBox from "../atoms/step_box";
 const StepsContainer = styled.div`
   display: flex;
 `;
-
+export const ApplicationContext = createContext({});
 const ClubApplication = () => {
   const [step, setStep] = useState(1);
 
@@ -29,7 +29,6 @@ const ClubApplication = () => {
         }
         break;
       case "jump":
-        console.log(nextStep);
         if (nextStep < step) {
           setStep(nextStep);
         }
@@ -55,68 +54,70 @@ const ClubApplication = () => {
   };
 
   return (
-    <div>
-      {" "}
-      <StepsContainer>
-        <StepBox
-          handleStepChange={handleStepChange}
-          completed={false}
-          number={1}
-          active={step === 1}
-          text="Podstawowe dane"
-          helperText="Wybór klasy rozgrywkowej"
-        />
-        <StepBox
-          handleStepChange={handleStepChange}
-          completed={false}
-          number={2}
-          active={step === 2}
-          text="Prawo"
-          helperText="Kryteria prawne"
-        />
-        <StepBox
-          handleStepChange={handleStepChange}
-          completed={false}
-          number={3}
-          active={step === 3}
-          text="Sport"
-          helperText="Kryteria sportowe"
-        />
-        <StepBox
-          handleStepChange={handleStepChange}
-          completed={false}
-          number={4}
-          active={step === 4}
-          text="Obiekty"
-          helperText="Kryteria infrastrukturalne"
-        />
-        <StepBox
-          handleStepChange={handleStepChange}
-          completed={false}
-          number={5}
-          active={step === 5}
-          text="Finanse"
-          helperText="Kryteria finansowe"
-        />
-        <StepBox
-          handleStepChange={handleStepChange}
-          completed={false}
-          number={6}
-          active={step === 6}
-          text="Personel"
-          helperText="kryteria personalne"
-        />
-        <StepBox
-          handleStepChange={handleStepChange}
-          completed={false}
-          number={7}
-          active={step === 7}
-          text="Załączniki"
-          helperText="Załącz dokumenty"
-        />
-      </StepsContainer>
-      {renderCurrentStep()}
-    </div>
+    <ApplicationContext.Provider value={{}}>
+      <div>
+        {" "}
+        <StepsContainer>
+          <StepBox
+            handleStepChange={handleStepChange}
+            completed={false}
+            number={1}
+            active={step === 1}
+            text="Podstawowe dane"
+            helperText="Wybór klasy rozgrywkowej"
+          />
+          <StepBox
+            handleStepChange={handleStepChange}
+            completed={false}
+            number={2}
+            active={step === 2}
+            text="Prawo"
+            helperText="Kryteria prawne"
+          />
+          <StepBox
+            handleStepChange={handleStepChange}
+            completed={false}
+            number={3}
+            active={step === 3}
+            text="Sport"
+            helperText="Kryteria sportowe"
+          />
+          <StepBox
+            handleStepChange={handleStepChange}
+            completed={false}
+            number={4}
+            active={step === 4}
+            text="Obiekty"
+            helperText="Kryteria infrastrukturalne"
+          />
+          <StepBox
+            handleStepChange={handleStepChange}
+            completed={false}
+            number={5}
+            active={step === 5}
+            text="Finanse"
+            helperText="Kryteria finansowe"
+          />
+          <StepBox
+            handleStepChange={handleStepChange}
+            completed={false}
+            number={6}
+            active={step === 6}
+            text="Personel"
+            helperText="kryteria personalne"
+          />
+          <StepBox
+            handleStepChange={handleStepChange}
+            completed={false}
+            number={7}
+            active={step === 7}
+            text="Załączniki"
+            helperText="Załącz dokumenty"
+          />
+        </StepsContainer>
+        {renderCurrentStep()}
+      </div>
+    </ApplicationContext.Provider>
   );
 };
 

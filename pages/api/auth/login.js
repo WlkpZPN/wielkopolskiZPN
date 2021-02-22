@@ -25,6 +25,9 @@ export default async (req, res) => {
           where: {
             email: email,
           },
+          include: {
+            roles: true,
+          },
         });
         // check if we have a user
         if (!user) {
@@ -33,7 +36,7 @@ export default async (req, res) => {
             message: "Użytkownik o podanym adresie email nie istnieje",
           });
         }
-
+        console.log("user role:", user);
         // compare passwords` QA\`1q  a\Z `111`q  a\
         bcrypt.compare(password, user.password).then((isMatch) => {
           if (isMatch) {
@@ -41,9 +44,8 @@ export default async (req, res) => {
             const payload = {
               id: user.id,
               email: user.email,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              role: user.role,
+              name: user.name,
+              role: user.roles.name,
             };
 
             const token = jwt.sign(payload, process.env.AUTH_KEY, {

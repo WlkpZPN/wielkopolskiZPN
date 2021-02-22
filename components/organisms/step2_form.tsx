@@ -10,31 +10,36 @@ import FormRow from "../atoms/form_row";
 import PrimaryButton from "../atoms/primary_button";
 import RadioSquare from "../molecules/form_radio";
 import Paragraph from "../atoms/paragraph";
-import AddFile from "../molecules/add_file";
+import AddFilesWrapper from "./add_files_wrapper";
 import OutlineButton from "../atoms/outline_button";
+import FormStatement from "../molecules/form_statement";
 const StepTwoForm = ({ handleStepChange }) => {
+  const [formData, setFormData] = useState({
+    files: [],
+    participateInCompetitions: false,
+    privateDataProtection: false,
+  });
+
+  const [files, setFiles] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(files);
+  };
+
   return (
-    <FormTemplate>
+    <FormTemplate onSubmit={handleSubmit}>
       <Paragraph>
         Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty
         potwierdzony za zgodność ze stanem faktycznym na dzień składania
         niniejszego wniosku
       </Paragraph>
-      <AddFile />
-      <Paragraph>Oświadczenie w przedmiocie udziału w rozgrywkach</Paragraph>
-      <OutlineButton>Pokaż treść oświadczenia</OutlineButton>
-      <Label direction="row">
-        <RadioSquare />
-        Potwierdzam treść oświadczenia
-      </Label>
-      <Paragraph>
-        Oświadczenie o stosowaniu dokumentacji ochorny danych osobowych
-      </Paragraph>
-      <OutlineButton>Pokaż treść oświadczenia</OutlineButton>
-      <Label direction="row">
-        <RadioSquare />
-        Potwierdzam treść oświadczenia
-      </Label>
+      <AddFilesWrapper files={files} setFiles={setFiles} />
+
+      <FormStatement name="Oświadczenie w przedmiocie udziału w rozgrywkach" />
+      <FormStatement name=" Oświadczenie o stosowaniu dokumentacji ochorny danych osobowych" />
+
       <FormRow cols="3">
         <PrimaryButton onClick={() => handleStepChange("previous")}>
           Cofnij
@@ -42,7 +47,7 @@ const StepTwoForm = ({ handleStepChange }) => {
         <PrimaryButton color="dark" hoverColor="darkLight">
           Zapisz wersję roboczą
         </PrimaryButton>
-        <PrimaryButton onClick={() => handleStepChange("next")}>
+        <PrimaryButton type="submit" onClick={() => handleStepChange("next")}>
           Kolejny krok
         </PrimaryButton>
       </FormRow>

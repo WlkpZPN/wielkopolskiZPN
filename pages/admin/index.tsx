@@ -8,12 +8,11 @@ import nookies from "nookies";
 export const UserContext = createContext(null);
 
 const MainPage = ({ userData }) => {
-  const [currentView, setCurrentView] = useState("wnioski");
   console.log(userData);
   return (
-    <UserContext.Provider value={{ userData, setView: setCurrentView }}>
-      <AdminLayout>
-        <h1>{currentView}</h1>
+    <UserContext.Provider value={{ userData }}>
+      <AdminLayout view="wnioski">
+        <h1>Wnioski licencyjne</h1>
       </AdminLayout>
     </UserContext.Provider>
   );

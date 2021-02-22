@@ -4,17 +4,24 @@ import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
 //components
 import OutlineButton from "../atoms/outline_button";
+
 const Wrapper = styled.div`
+  border-radius: 5px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  padding: 8px;
+  margin-right: 16px;
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  padding: 64px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 1;
-  max-width: 50%;
+  width: 300px;
+
   text-align: center;
 
   &::after {
@@ -72,29 +79,60 @@ const Info = styled.div`
 `;
 
 const FileInfo = styled.div`
+  white-space: wrap;
   display: flex;
   flex-direction: column;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   align-items: center;
-
-  margin-bottom: 16px;
+  width: 100%;
+  margin-bottom: 32px;
   svg {
-    width: 50px;
+    width: 40px;
     margin-bottom: 16px;
   }
 `;
 
 const FileInput = styled.input`
-  appearance: none;
   display: none;
 `;
 
-const AddFile = () => {
-  const handleInput = (e) => {
+const Label = styled.label``;
+
+const AddButton = styled.span`
+  padding: 8px 16px;
+  border: 2px solid ${({ theme }) => theme.primaryLight};
+  transition: all 0.2s;
+  font-weight: bold;
+  color: ${({ theme }) => theme.primaryLight};
+  border-radius: 5px;
+
+  cursor: pointer;
+  background: transparent;
+  &:hover {
+    border: 2px solid rgba(0, 0, 0, 0.3);
+  }
+`;
+
+const DeleteButton = styled.span`
+  padding: 8px 16px;
+  background-color: ${({ theme }) => theme.danger};
+  color: white;
+  font-weight: bold;
+  transition: all 0.2s;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.dangerDark};
+  }
+`;
+
+const AddFile = ({ file, addFile, deleteFile, index }) => {
+  const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.files);
+    addFile(e.target.files[0]);
   };
+
   return (
     <Wrapper>
       <Info>
@@ -102,13 +140,19 @@ const AddFile = () => {
       </Info>
       <FileInfo>
         <FilePdf />
-        Brak załączonego dokumentu.
+        <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+          {file ? file.name : "Brak załączonego dokumentu."}
+        </span>
       </FileInfo>
 
-      <label>
-        <OutlineButton>+ Dodaj dokument</OutlineButton>
-        <FileInput id="file" type="file" name="file" />
-      </label>
+      <Label>
+        {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
+
+        <FileInput id="file" type="file" name="file" onChange={handleChange} />
+      </Label>
+      {file ? (
+        <DeleteButton onClick={() => deleteFile(index)}>Usuń</DeleteButton>
+      ) : null}
     </Wrapper>
   );
 };

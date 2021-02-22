@@ -2,6 +2,7 @@ import { useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 //icons
 import { User } from "@styled-icons/fa-solid/User";
 import { LogOut } from "@styled-icons/entypo/LogOut";
@@ -18,6 +19,12 @@ const Wrapper = styled.main`
   display: grid;
   grid-template-rows: 9% 9% auto;
   height: 100vh;
+`;
+const Content = styled.div`
+  padding: 16px 0;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 const TopBar = styled.div`
@@ -64,14 +71,9 @@ const List = styled.ul`
   }
 `;
 
-const AdminLayout = ({ children }) => {
-  const { userData, setView } = useContext(UserContext);
-
+const AdminLayout = ({ children, view }) => {
   const router = useRouter();
 
-  const handleViewChange = (view) => {
-    setView(view);
-  };
   return (
     <Wrapper>
       <TopBar>
@@ -92,24 +94,26 @@ const AdminLayout = ({ children }) => {
       <NavBar>
         <NavBarContent>
           <List>
-            <NavItem onClick={() => handleViewChange("wnioski")}>
-              Wnioski licencyjne
-            </NavItem>
-            <NavItem onClick={() => handleViewChange("kluby")}>Kluby</NavItem>
-            <NavItem onClick={() => handleViewChange("statystyki")}>
-              Statystyki
-            </NavItem>
-            <NavItem onClick={() => handleViewChange("uzytkownicy")}>
-              Użytkownicy
-            </NavItem>
-            <NavItem onClick={() => handleViewChange("ustawienia")}>
-              Ustawienia
-            </NavItem>
+            <Link href="/admin">
+              <NavItem active={view === "wnioski"}>Wnioski licencyjne</NavItem>
+            </Link>
+            <Link href="/admin/kluby">
+              <NavItem active={view === "kluby"}>Kluby</NavItem>
+            </Link>
+            <Link href="/admin/statystyki">
+              <NavItem active={view === "statystyki"}>Statystyki</NavItem>
+            </Link>
+            <Link href="/admin/uzytkownicy">
+              <NavItem active={view === "uzytkownicy"}>Użytkownicy</NavItem>
+            </Link>
+            <Link href="/admin/ustawienia">
+              <NavItem active={view === "ustawienia"}>Ustawienia</NavItem>
+            </Link>
           </List>
         </NavBarContent>
       </NavBar>
 
-      {children}
+      <Content>{children}</Content>
     </Wrapper>
   );
 };

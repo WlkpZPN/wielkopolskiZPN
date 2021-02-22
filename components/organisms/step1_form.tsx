@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { useContext } from "react";
 import FormTemplate from "../atoms/form_template";
 import Select from "../atoms/form_select";
 import Label from "../atoms/form_label";
@@ -7,10 +7,16 @@ import RadioContainer from "../atoms/radio_container";
 import Input from "../atoms/form_input";
 import FormRow from "../atoms/form_row";
 import PrimaryButton from "../atoms/primary_button";
+import PhoneInput from "../molecules/phone_input";
 
+import { ApplicationContext } from "./club_application";
 const StepOneForm = ({ handleStepChange }) => {
+  const applicationData = useContext(ApplicationContext);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
-    <FormTemplate>
+    <FormTemplate onSubmit={handleSubmit}>
       <Select>
         <option>IV liga</option>
         <option>III liga</option>
@@ -65,12 +71,21 @@ const StepOneForm = ({ handleStepChange }) => {
         Funkcja / stanowisko pełnomocnika
         <Input type="text" />
       </Label>
+      <FormRow>
+        <Label>
+          E-mail pełnomocnika
+          <Input type="text" />
+        </Label>
+        <Label>
+          Telefon pełnomocnika <PhoneInput />
+        </Label>
+      </FormRow>
 
       <FormRow margin="48px 0" cols={3}>
         <PrimaryButton color="dark" hoverColor="darkLight">
           Zapisz werjse roboczą
         </PrimaryButton>
-        <PrimaryButton onClick={() => handleStepChange("next")}>
+        <PrimaryButton type="submit" onClick={() => handleStepChange("next")}>
           Kolejny krok
         </PrimaryButton>
       </FormRow>

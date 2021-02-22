@@ -12,8 +12,11 @@ export default async (req, res) => {
       where: {
         email: email,
       },
+      include: {
+        roles: true,
+      },
     });
-
+    console.log("user data", user);
     if (user) {
       const payload = {
         id: user.id,
