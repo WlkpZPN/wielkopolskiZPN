@@ -10,7 +10,7 @@ const theme = {
   greyText: "#797979",
   danger: "#D10101",
   dangerDark: "#A50000",
-  success: "#05A750",
+  success: "#00C65B",
   successDark: "#00A54C",
 };
 function MyApp({ Component, pageProps }) {

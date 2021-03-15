@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 //components
-import Input from "../atoms/form_input";
+import Input from "../atoms/input";
 import Label from "../atoms/form_label";
 const PhoneInput = () => {
   const [phone, setPhone] = useState("");

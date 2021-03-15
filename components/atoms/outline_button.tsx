@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 const OutlineButton = styled.button`
-  padding: 8px 16px;
+  padding: 6px 12px;
   border: 2px solid ${({ theme }) => theme.primaryLight};
   transition: all 0.2s;
+
   font-weight: bold;
   color: ${({ theme }) => theme.primaryLight};
   border-radius: 5px;
-  align-self: ${({ align }) => (align ? align : "initial")};
+  align-self: ${({ align }) => align || "initial"};
   cursor: pointer;
   background: transparent;
   &:hover {

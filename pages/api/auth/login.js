@@ -1,10 +1,7 @@
 const bcrypt = require("bcrypt");
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
-const KEY = process.env.AUTH_KEY;
+import prisma from "../../../middleware/prisma";
 
 export default async (req, res) => {
   const { method } = req;
@@ -19,6 +16,7 @@ export default async (req, res) => {
             status: "error",
             message: "Brak hasła lub adresu email",
           });
+          return resolve();
         }
         // get user from database
         const user = await prisma.users.findFirst({
@@ -36,7 +34,7 @@ export default async (req, res) => {
             message: "Użytkownik o podanym adresie email nie istnieje",
           });
         }
-        console.log("user role:", user);
+        //console.log("user role:", user);
         // compare passwords` QA\`1q  a\Z `111`q  a\
         bcrypt.compare(password, user.password).then((isMatch) => {
           if (isMatch) {
@@ -56,7 +54,7 @@ export default async (req, res) => {
               // res.cookie("userToken", token, { httpOnly: true });
               res.setHeader(
                 "Set-Cookie",
-                cookie.serialize("userToken", token, {
+                cookie.serialize("adminToken", token, {
                   maxAge: 43200,
                   path: "/",
                   httpOnly: true,

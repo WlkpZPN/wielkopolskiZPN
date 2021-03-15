@@ -22,10 +22,10 @@ const CustomRadio = styled.span`
   margin-right: 6px;
 `;
 
-const RadioSquare = () => {
+const RadioSquare = ({ value, handleChange }) => {
   return (
     <div>
-      <Radio type="checkbox" />
+      <Radio onChange={handleChange} checked={value} type="checkbox" />
       <CustomRadio />
     </div>
   );

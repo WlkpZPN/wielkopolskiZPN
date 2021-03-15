@@ -11,7 +11,7 @@ import ErrorMessage from "../components/atoms/error_message";
 import LoggedUserInfo from "../components/molecules/loggedUserInfo";
 import PrimaryButton from "../components/atoms/primary_button";
 import Loader from "../components/atoms/loader";
-
+import BigLogo from "../components/atoms/big_logo";
 //helpers
 
 import { validateEmail } from "../middleware/validation";
@@ -84,7 +84,6 @@ const ForgetPassword = styled.p`
 `;
 
 const LoginPage = ({ userData }) => {
-  console.log(userData);
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -99,18 +98,19 @@ const LoginPage = ({ userData }) => {
     if (valid) {
       setError("");
       setLoading(true);
+
       axios
-        .post("/api/auth/login", {
-          email,
+        .post("/api/clubAuth/login", {
+          email: email.trim(),
           password,
         })
         .then((res) => {
           setLoading(false);
 
-          console.log(res);
+          //console.log(res);
           const { success, token } = res.data;
 
-          router.push("/admin");
+          router.push("/");
         })
         .catch((err) => {
           setLoading(false);
@@ -176,7 +176,9 @@ const LoginPage = ({ userData }) => {
           </StyledForm>
         )}
       </Left>
-      <Right></Right>
+      <Right>
+        <BigLogo />
+      </Right>
     </Wrapper>
   );
 };

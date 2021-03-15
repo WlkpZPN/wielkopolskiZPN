@@ -50,7 +50,7 @@ const LoggedUserInfo = ({ userData }) => {
       })
       .then((res) => {
         setLoading(false);
-        console.log(res);
+
         router.push("/admin");
       })
       .catch((err) => {

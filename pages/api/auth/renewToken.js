@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
-const prisma = new PrismaClient();
+import prisma from "../../../middleware/prisma";
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { email } = req.body;

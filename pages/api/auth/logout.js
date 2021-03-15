@@ -4,13 +4,13 @@ export default async (req, res) => {
   return new Promise(async (resolve) => {
     res.setHeader(
       "Set-Cookie",
-      cookie.serialize("userToken", "", {
+      cookie.serialize("adminToken", "", {
         maxAge: -1,
         path: "/",
       })
     );
     res.json({
-      message: "user logged out",
+      message: "admin logged out",
     });
     return resolve();
   });

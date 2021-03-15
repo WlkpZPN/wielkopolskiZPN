@@ -19,7 +19,9 @@ const Paragraph = styled.p`
   align-items: center;
   font-size: 16px;
   background: ${({ theme }) => theme.primaryLight};
-
+  &:hover {
+    cursor: pointer;
+  }
   & svg {
     width: 25px;
     transform: ${({ expanded }) => (expanded ? "rotate(180deg)" : "rotate(0)")};
@@ -31,9 +33,10 @@ const Paragraph = styled.p`
 
 const ObjectInfo = ({ children }) => {
   const [expanded, setExpanded] = useState(false);
+
   return (
-    <Wrapper onClick={() => setExpanded(!expanded)} expanded={expanded}>
-      <Paragraph expanded={expanded}>
+    <Wrapper expanded={expanded}>
+      <Paragraph onClick={() => setExpanded(!expanded)} expanded={expanded}>
         <DownArrow />
         Informacje dot. powyższego obiektu sportowego
       </Paragraph>

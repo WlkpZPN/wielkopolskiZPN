@@ -7,13 +7,13 @@ import Link from "next/link";
 import { User } from "@styled-icons/fa-solid/User";
 import { LogOut } from "@styled-icons/entypo/LogOut";
 //utils
-import { logout } from "./../../middleware/utils";
+import { logout } from "../../middleware/utils";
 
 //components
 import IconButton from "../atoms/IconButton";
 import ProgressBar from "../molecules/progress_bar";
 import NavItem from "../atoms/navItem";
-import { UserContext } from "../../pages/admin/index";
+import { AdminContext } from "../../pages/admin/index";
 
 const Wrapper = styled.main`
   display: grid;
@@ -71,7 +71,7 @@ const List = styled.ul`
   }
 `;
 
-const AdminLayout = ({ children, view }) => {
+const AdminLayout = ({ userData, children, view }) => {
   const router = useRouter();
 
   return (
@@ -84,11 +84,13 @@ const AdminLayout = ({ children, view }) => {
         <ProgressBar />
         <ButtonWrapper>
           <IconButton>
-            <User /> {"email nieznany"}
+            <User /> {userData.email}
           </IconButton>
-          <IconButton onClick={logout}>
-            <LogOut /> Wyloguj
-          </IconButton>
+          <Link href="/admin/login">
+            <IconButton onClick={() => logout("admin")}>
+              <LogOut /> Wyloguj
+            </IconButton>
+          </Link>
         </ButtonWrapper>
       </TopBar>
       <NavBar>

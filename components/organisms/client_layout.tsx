@@ -6,14 +6,14 @@ import Link from "next/link";
 import { User } from "@styled-icons/fa-solid/User";
 import { LogOut } from "@styled-icons/entypo/LogOut";
 //utils
-import { logout } from "./../../middleware/utils";
+import { logout } from "../../middleware/utils";
 
 //components
 import ClubInfo from "../molecules/club_info";
 import IconButton from "../atoms/IconButton";
 import Footer from "../atoms/footer";
 import NavItem from "../atoms/navItem";
-import { UserContext } from "../../pages/admin/index";
+//import { UserContext } from "../../pages/admin/index";
 
 const Wrapper = styled.main`
   display: grid;
@@ -71,7 +71,7 @@ const List = styled.ul`
   }
 `;
 
-const ClientLayout = ({ view, children }) => {
+const ClientLayout = ({ view, children, clubData }) => {
   //const { userData, setView } = useContext(UserContext);
 
   return (
@@ -81,14 +81,13 @@ const ClientLayout = ({ view, children }) => {
           src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
           alt="wielkoposlki ZPN logo"
         />
-        <ClubInfo />
+        <ClubInfo clubData={clubData} />
         <ButtonWrapper>
-          <IconButton>
-            <User /> Nazwa użytkownika
-          </IconButton>
-          <IconButton onClick={logout}>
-            <LogOut /> Wyloguj
-          </IconButton>
+          <Link href="/login">
+            <IconButton onClick={() => logout("klub")}>
+              <LogOut /> Wyloguj
+            </IconButton>
+          </Link>
         </ButtonWrapper>
       </TopBar>
       <NavBar>

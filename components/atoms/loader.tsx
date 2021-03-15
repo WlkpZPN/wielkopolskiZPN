@@ -1,7 +1,5 @@
-import styled,{keyframes} from 'styled-components';
-import { Spinner } from '@styled-icons/evil/Spinner';
-
-
+import styled, { keyframes } from "styled-components";
+import { Spinner } from "@styled-icons/evil/Spinner";
 
 const rotate = keyframes`
     from{
@@ -12,14 +10,12 @@ const rotate = keyframes`
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-`
-
-
-const StyledSpinner = styled(Spinner)`
-fill:${props => props.theme.primary};
-width:100px;
-animation:${rotate} 1.4s infinite linear;
-
 `;
 
-export default StyledSpinner;
+const Loader = styled(Spinner)`
+  fill: ${(props) => props.theme.primary};
+  width: ${({ width }) => (width ? width : "100px")};
+  animation: ${rotate} 1.4s infinite linear;
+`;
+
+export default Loader;

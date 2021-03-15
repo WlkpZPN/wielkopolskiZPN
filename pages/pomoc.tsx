@@ -1,4 +1,5 @@
 //components
+import { protectedClientRoute } from "../middleware/protectedClient";
 import ClientLayout from "../components/organisms/client_layout";
 
 const Pomoc = () => {
@@ -8,5 +9,13 @@ const Pomoc = () => {
     </ClientLayout>
   );
 };
+
+export const getServerSideProps = protectedClientRoute((context, data) => {
+  return {
+    props: {
+      authData: data,
+    },
+  };
+});
 
 export default Pomoc;

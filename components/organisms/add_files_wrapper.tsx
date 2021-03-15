@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import uniqid from "uniqid";
 import styled from "styled-components";
-
+import { ApplicationContext } from "./club_application";
 import AddFile from "../molecules/add_file";
 
 const Row = styled.div`
@@ -12,42 +13,33 @@ const Row = styled.div`
   width: 70vw;
 `;
 
-const AddFilesWrapper = ({ files, setFiles }) => {
+const AddFilesWrapper = ({ fileData, setFiles, deleteFile }) => {
   const [boxes, setBoxes] = useState([]);
+  //console.log(fileData);
 
-  const addFile = (file) => {
-    setFiles([...files, file]);
-  };
-
-  const deleteFile = (index) => {
-    console.log("file deleted");
-    const helperArr = files;
-    helperArr.splice(index, 1);
-    setFiles([...helperArr]);
-    console.log(files);
+  const addFile = (id, file) => {
+    //console.log(file);
+    setFiles(id, file);
   };
 
   const generateBoxes = () => {
     const arr = [];
-    for (let i = 0; i < files.length + 1; i++) {
+    for (let i = 0; i < fileData.length + 1; i++) {
       arr.push(
         <AddFile
-          key={i}
-          deleteFile={deleteFile}
           addFile={addFile}
-          file={files[i] ? files[i] : null}
-          index={i}
+          key={uniqid()}
+          handleDelete={deleteFile}
+          file={fileData[i] ? fileData[i] : null}
         />
       );
     }
-    setBoxes(arr);
+    //console.log(arr);
+
+    return arr;
   };
 
-  useEffect(() => {
-    generateBoxes();
-  }, [files]);
-
-  return <Row cols={files.length + 1}>{boxes}</Row>;
+  return <Row cols={fileData.length + 1}>{generateBoxes()}</Row>;
 };
 
 export default AddFilesWrapper;

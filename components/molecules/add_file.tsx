@@ -1,7 +1,9 @@
 import { useState } from "react";
+import uniqid from "uniqid";
 import styled from "styled-components";
 import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
+
 //components
 import OutlineButton from "../atoms/outline_button";
 
@@ -19,7 +21,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 1;
+  z-index: 0;
   width: 300px;
 
   text-align: center;
@@ -85,7 +87,7 @@ const FileInfo = styled.div`
   font-size: 16px;
   font-weight: bold;
   align-items: center;
-  width: 100%;
+
   margin-bottom: 32px;
   svg {
     width: 40px;
@@ -127,10 +129,11 @@ const DeleteButton = styled.span`
   }
 `;
 
-const AddFile = ({ file, addFile, deleteFile, index }) => {
+const AddFile = ({ file, handleDelete, addFile }) => {
   const handleChange = (e) => {
     e.preventDefault();
-    addFile(e.target.files[0]);
+    addFile(file ? file.id : uniqid(), e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
   return (
@@ -151,7 +154,15 @@ const AddFile = ({ file, addFile, deleteFile, index }) => {
         <FileInput id="file" type="file" name="file" onChange={handleChange} />
       </Label>
       {file ? (
-        <DeleteButton onClick={() => deleteFile(index)}>Usuń</DeleteButton>
+        <DeleteButton
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            handleDelete(file.id);
+          }}
+        >
+          Usuń
+        </DeleteButton>
       ) : null}
     </Wrapper>
   );

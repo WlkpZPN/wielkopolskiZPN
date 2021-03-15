@@ -13,9 +13,13 @@ const Select = styled.select`
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
   background-size: 20px;
-
+  text-overflow: ellipsis;
+  white-space: pre;
+  overflow: hidden;
   & option {
     border-radius: 5px;
+    text-overflow: ellipsis;
+    white-space: pre;
   }
 `;
 

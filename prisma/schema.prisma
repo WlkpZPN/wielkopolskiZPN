@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["createMany"]
 }
 
 datasource db {
@@ -7,52 +8,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id           Int            @id @default(autoincrement())
-  role_id      Int?
-  club_id      Int?
-  name         String?
-  email        String?
-  password     String?
-  created_at   DateTime?
-  updated_at   DateTime?
-  clubs        clubs?         @relation(fields: [club_id], references: [id])
-  roles        roles?         @relation(fields: [role_id], references: [id])
-  annotations  annotations[]
-  applications applications[]
-  histories    histories[]
-}
-
 model annotations {
   id             Int           @id @default(autoincrement())
   application_id Int?
   user_id        Int?
   description    String?
-  created_at     DateTime?
-  updated_at     DateTime?
+  created_at     DateTime?     @db.Timestamp(6)
+  updated_at     DateTime?     @db.Timestamp(6)
   applications   applications? @relation(fields: [application_id], references: [id])
   users          users?        @relation(fields: [user_id], references: [id])
 }
 
 model applications {
   id                                                             Int                         @id @default(autoincrement())
-  user_id                                                        Int?
+  club_id                                                        Int?
   status_id                                                      Int?
-  number_of_seasons                                              Int?
+  number_of_seasons                                              String?                     @db.VarChar(50)
   declaration_on_the_subject_of_participation_in_the_competition Boolean?
   declaration_on_the_use_of_personal_data_documentation          Boolean?
-  number_of_youth_groups                                         Int?
-  share_of_youth_groups                                          Int?
+  number_of_youth_groups                                         String?                     @db.VarChar(100)
+  share_of_youth_groups                                          String?                     @db.VarChar(100)
   declaration_on_medical_care_for_the_players                    Boolean?
   declaration_of_no_obligations_towards_employees                Boolean?
   declaration_of_no_obligations_towards_PZPN_and_WZPN            Boolean?
   declaration_of_no_obligations_towards_football_clubs           Boolean?
   declaration_of_having_football_staff                           Boolean?
   declaration_of_having_security_services                        Boolean?
-  created_at                                                     DateTime?
-  updated_at                                                     DateTime?
+  created_at                                                     String?                     @db.VarChar(40)
+  updated_at                                                     String?                     @db.VarChar(40)
+  payment_link                                                   String?
+  error_step                                                     Int?
+  error_message                                                  String?
+  club_agreement_name                                            String?                     @db.VarChar(300)
+  youth_groups_possession                                        String?                     @db.VarChar(300)
+  internal_id                                                    String?                     @db.VarChar(20)
+  clubs                                                          clubs?                      @relation(fields: [club_id], references: [id])
   statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
-  users                                                          users?                      @relation(fields: [user_id], references: [id])
   annotations                                                    annotations[]
   applications_attachments                                       applications_attachments[]
   applications_leagues                                           applications_leagues[]
@@ -62,21 +53,27 @@ model applications {
 }
 
 model applications_attachments {
-  id             Int           @id @default(autoincrement())
-  application_id Int?
-  attachment_id  Int?
-  created_at     DateTime?
-  updated_at     DateTime?
-  applications   applications? @relation(fields: [application_id], references: [id])
-  attachments    attachments?  @relation(fields: [attachment_id], references: [id])
+  id                  Int               @id @default(autoincrement())
+  application_id      Int?
+  attachment_id       Int?
+  created_at          DateTime?         @db.Timestamp(6)
+  updated_at          DateTime?         @db.Timestamp(6)
+  name                String?
+  filepath            String?
+  description         String?
+  category            String?
+  sport_facilities_id Int?
+  applications        applications?     @relation(fields: [application_id], references: [id])
+  attachments         attachments?      @relation(fields: [attachment_id], references: [id])
+  sport_facilities    sport_facilities? @relation(fields: [sport_facilities_id], references: [id])
 }
 
 model applications_leagues {
   id             Int           @id @default(autoincrement())
   application_id Int?
   league_id      Int?
-  created_at     Int?
-  updated_at     Int?
+  created_at     BigInt?
+  updated_at     BigInt?
   applications   applications? @relation(fields: [application_id], references: [id])
   leagues        leagues?      @relation(fields: [league_id], references: [id])
 }
@@ -85,56 +82,70 @@ model applications_youth_groups {
   id             Int           @id @default(autoincrement())
   application_id Int?
   youth_group_id Int?
-  created_at     DateTime?
-  updated_at     DateTime?
+  created_at     DateTime?     @db.Timestamp(6)
+  updated_at     DateTime?     @db.Timestamp(6)
   applications   applications? @relation(fields: [application_id], references: [id])
   youth_groups   youth_groups? @relation(fields: [youth_group_id], references: [id])
 }
 
 model attachment_categories {
   id          Int           @id @default(autoincrement())
-  name        String?
+  name        String?       @db.VarChar(60)
   description String?
-  created_at  DateTime?
-  updated_at  DateTime?
+  created_at  DateTime?     @db.Timestamp(6)
+  updated_at  DateTime?     @db.Timestamp(6)
   attachments attachments[]
 }
 
 model attachments {
   id                       Int                        @id @default(autoincrement())
   attachment_category_id   Int?
-  name                     String?
+  name                     String?                    @db.VarChar(60)
   description              String?
   filepath                 String?
-  created_at               DateTime?
-  updated_at               DateTime?
+  created_at               DateTime?                  @db.Timestamp(6)
+  updated_at               DateTime?                  @db.Timestamp(6)
   attachment_categories    attachment_categories?     @relation(fields: [attachment_category_id], references: [id])
   applications_attachments applications_attachments[]
 }
 
 model clubs {
-  id                 Int       @id @default(autoincrement())
-  name               String?
-  address            String?
-  post_code          String?
-  region             String?
-  email              String?
-  phone_number       String?
-  additional_contact String?
-  webpage            String?
-  facebook_profile   String?
-  management         String?
-  created_at         DateTime?
-  updated_at         DateTime?
-  users              users[]
+  id             Int            @id @default(autoincrement())
+  name           String?        @db.VarChar(300)
+  address        String?        @db.VarChar(200)
+  email          String?        @db.VarChar(300)
+  phone          String?        @db.VarChar(300)
+  email_2        String?        @db.VarChar(300)
+  agent_name     String?        @db.VarChar(300)
+  leauge         String?        @db.VarChar(50)
+  stadium        String?        @db.VarChar(300)
+  email_3        String?        @db.VarChar(300)
+  phone_2        String?        @db.VarChar(300)
+  landline_phone String?        @db.VarChar(100)
+  agent_phone    String?        @db.VarChar(100)
+  agent_position String?        @db.VarChar(100)
+  chairman       String?        @db.VarChar(60)
+  chairman_phone String?        @db.VarChar(100)
+  postal_address String?        @db.VarChar(300)
+  region         String?        @db.VarChar(200)
+  password       String?
+  phone_3        String?        @db.VarChar(100)
+  agent_email    String?        @db.VarChar(300)
+  seasons        String?        @db.VarChar(50)
+  internal_id    String?        @db.VarChar(20)
+  active         Boolean?       @default(true)
+  updated_at     String?        @db.VarChar(40)
+  debt           Boolean?       @default(false)
+  applications   applications[]
+  users          users[]
 }
 
 model frequently_asked_questions {
   id         Int       @id @default(autoincrement())
   question   String?
   answer     String?
-  created_at DateTime?
-  updated_at DateTime?
+  created_at DateTime? @db.Timestamp(6)
+  updated_at DateTime? @db.Timestamp(6)
 }
 
 model histories {
@@ -142,43 +153,45 @@ model histories {
   application_id Int?
   user_id        Int?
   description    String?
-  created_at     DateTime?
-  updated_at     DateTime?
+  created_at     DateTime?     @db.Timestamp(6)
+  updated_at     DateTime?     @db.Timestamp(6)
+  status_id      Int?
   applications   applications? @relation(fields: [application_id], references: [id])
+  statuses       statuses?     @relation(fields: [status_id], references: [id])
   users          users?        @relation(fields: [user_id], references: [id])
 }
 
 model leagues {
   id                   Int                    @id @default(autoincrement())
-  name                 String?
+  name                 String?                @db.VarChar(60)
   description          String?
-  created_at           DateTime?
-  updated_at           DateTime?
+  created_at           DateTime?              @db.Timestamp(6)
+  updated_at           DateTime?              @db.Timestamp(6)
   applications_leagues applications_leagues[]
 }
 
 model roles {
   id          Int       @id @default(autoincrement())
-  name        String?
+  name        String?   @db.VarChar(60)
   description String?
-  created_at  DateTime?
-  updated_at  DateTime?
+  created_at  DateTime? @db.Timestamp(6)
+  updated_at  DateTime? @db.Timestamp(6)
   users       users[]
 }
 
 model sport_facilities {
-  id                                 Int           @id @default(autoincrement())
+  id                                 Int                        @id @default(autoincrement())
   application_id                     Int?
-  address                            String?
-  post_code                          String?
-  city                               String?
+  address                            String?                    @db.VarChar(60)
+  post_code                          String?                    @db.VarChar(60)
+  city                               String?                    @db.VarChar(60)
   I01_1                              Boolean?
   I01_2                              Boolean?
   I02_1                              Boolean?
   I02_2                              Boolean?
   I02_3                              Boolean?
   I02_4                              Boolean?
-  I03_total_capacity                 Int?
+  I03_total_capacity                 String?                    @db.VarChar(20)
   I03_1                              Boolean?
   I03_2                              Boolean?
   I04_1                              Boolean?
@@ -186,14 +199,13 @@ model sport_facilities {
   I04_3                              Boolean?
   I04_4                              Boolean?
   I04_5                              Boolean?
-  I05_number_of_seats_for_guests     Int?
-  I05_percentage_of_seats_for_guests Int?
+  I05_number_of_seats_for_guests     String?                    @db.VarChar(20)
+  I05_percentage_of_seats_for_guests String?                    @db.VarChar(20)
   I05_1                              Boolean?
   I05_2                              Boolean?
   I05_3                              Boolean?
-  I06_type                           String?
-  I06_condition                      String?
-  I06_dimensions                     String?
+  I06_type                           String?                    @db.VarChar(60)
+  I06_condition                      String?                    @db.VarChar(60)
   I06_1                              Boolean?
   I06_2                              Boolean?
   I06_3                              Boolean?
@@ -203,7 +215,7 @@ model sport_facilities {
   I07_2                              Boolean?
   I07_3                              Boolean?
   I07_4                              Boolean?
-  I08_number_of_seats_on_the_bench   Int?
+  I08_number_of_seats_on_the_bench   String?                    @db.VarChar(20)
   I08_1                              Boolean?
   I08_2                              Boolean?
   I08_3                              Boolean?
@@ -211,16 +223,16 @@ model sport_facilities {
   I09_1                              Boolean?
   I09_2                              Boolean?
   I10_1                              Boolean?
-  I11_number_of_seats                Int?
-  I11_number_of_hangers_or_lockers   Int?
-  I11_number_of_showers              Int?
-  I11_number_of_toilets              Int?
+  I11_number_of_seats                String?                    @db.VarChar(20)
+  I11_number_of_hangers_or_lockers   String?                    @db.VarChar(20)
+  I11_number_of_showers              String?                    @db.VarChar(20)
+  I11_number_of_toilets              String?                    @db.VarChar(20)
   I11_1                              Boolean?
   I11_2                              Boolean?
-  I12_number_of_seats                Int?
-  I12_number_of_hangers_or_lockers   Int?
-  I12_number_of_showers              Int?
-  I12_number_of_toilets              Int?
+  I12_number_of_seats                String?                    @db.VarChar(20)
+  I12_number_of_hangers_or_lockers   String?                    @db.VarChar(20)
+  I12_number_of_showers              String?                    @db.VarChar(20)
+  I12_number_of_toilets              String?                    @db.VarChar(20)
   I12_1                              Boolean?
   I12_2                              Boolean?
   I13_1                              Boolean?
@@ -231,9 +243,9 @@ model sport_facilities {
   I14_1                              Boolean?
   I14_2                              Boolean?
   I14_3                              Boolean?
-  I15_number_of_toilets_for_women    Int?
-  I15_number_of_toilets_for_men      Int?
-  I15_standard                       String?
+  I15_number_of_toilets_for_women    String?                    @db.VarChar(20)
+  I15_number_of_toilets_for_men      String?                    @db.VarChar(20)
+  I15_standard                       String?                    @db.VarChar(60)
   I15_1                              Boolean?
   I16_1                              Boolean?
   I17_1                              Boolean?
@@ -242,25 +254,48 @@ model sport_facilities {
   I19_2                              Boolean?
   I19_3                              Boolean?
   I20_1                              Boolean?
-  created_at                         DateTime?
-  updated_at                         DateTime?
-  applications                       applications? @relation(fields: [application_id], references: [id])
+  created_at                         DateTime?                  @db.Timestamp(6)
+  updated_at                         DateTime?                  @db.Timestamp(6)
+  name                               String?
+  I06_width                          String?                    @db.VarChar(50)
+  I06_length                         String?                    @db.VarChar(50)
+  I17_intensity_level                String?                    @db.VarChar(50)
+  applications                       applications?              @relation(fields: [application_id], references: [id])
+  applications_attachments           applications_attachments[]
 }
 
 model statuses {
   id           Int            @id @default(autoincrement())
-  name         String?
+  name         String?        @db.VarChar(60)
   description  String?
-  created_at   DateTime?
-  updated_at   DateTime?
+  created_at   DateTime?      @db.Timestamp(6)
+  updated_at   DateTime?      @db.Timestamp(6)
+  amount       String?
+  error        String?
   applications applications[]
+  histories    histories[]
+}
+
+model users {
+  id          Int           @id @default(autoincrement())
+  role_id     Int?
+  club_id     Int?
+  name        String?       @db.VarChar(60)
+  email       String?       @db.VarChar(60)
+  password    String?
+  created_at  DateTime?     @db.Timestamp(6)
+  updated_at  DateTime?     @db.Timestamp(6)
+  clubs       clubs?        @relation(fields: [club_id], references: [id])
+  roles       roles?        @relation(fields: [role_id], references: [id])
+  annotations annotations[]
+  histories   histories[]
 }
 
 model youth_groups {
   id                        Int                         @id @default(autoincrement())
-  name                      String?
+  name                      String?                     @db.VarChar(60)
   description               String?
-  created_at                DateTime?
-  updated_at                DateTime?
+  created_at                DateTime?                   @db.Timestamp(6)
+  updated_at                DateTime?                   @db.Timestamp(6)
   applications_youth_groups applications_youth_groups[]
 }
