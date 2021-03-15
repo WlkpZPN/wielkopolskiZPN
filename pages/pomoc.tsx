@@ -2,9 +2,9 @@
 import { protectedClientRoute } from "../middleware/protectedClient";
 import ClientLayout from "../components/organisms/client_layout";
 
-const Pomoc = () => {
+const Pomoc = ({ authData }) => {
   return (
-    <ClientLayout view="Pomoc">
+    <ClientLayout clubData={authData} view="Pomoc">
       <h1>Pomoc / FAQ</h1>
     </ClientLayout>
   );
