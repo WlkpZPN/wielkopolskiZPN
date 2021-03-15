@@ -12,9 +12,6 @@ export function protectedAdminRoute(cb) {
     } else {
       decodedToken = jwt.verify(token, process.env.AUTH_KEY);
       // console.log("token", decodedToken);
-      console.log('admin token',decodedToken);
-
-      
 
       if ( decodedToken.role !== "administrator") {
         res.statusCode = 302;

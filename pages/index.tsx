@@ -11,6 +11,7 @@ import ClientLayout from "../components/organisms/client_layout";
 import StepBox from "../components/atoms/step_box";
 import ClubApplication from "../components/organisms/club_application";
 import LastChange from "../components/molecules/last_change";
+import Spinner from "../components/atoms/loader";
 const Header = styled.h1`
   margin-bottom: 16px;
   padding: 16px 0;
@@ -24,6 +25,9 @@ export const ClubContext = createContext(null);
 const Home = ({ authData, clubData }) => {
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
 
+  if (!clubData) {
+    return <Spinner />;
+  }
   const renderView = () => {
     if (clubData.applications.length === 0) {
       // 1. tworzymy nowy wniosek
@@ -83,7 +87,17 @@ const Home = ({ authData, clubData }) => {
 
 export const getServerSideProps = protectedClientRoute(
   async (context, data) => {
-    let clubData = await prisma.clubs.findUnique({
+    const { req, res } = context;
+    let clubData;
+    console.log("data", data);
+    if (!data) {
+      res.statusCode = 302;
+      res.setHeader("Location", "/login");
+      return {
+        props: {},
+      };
+    }
+    clubData = await prisma.clubs.findUnique({
       where: {
         id: data.id,
       },
@@ -119,7 +133,7 @@ export const getServerSideProps = protectedClientRoute(
           created_at: getCurrentDate(),
         },
       });
-
+      console.log("applicationID", newApplication.id);
       await prisma.sport_facilities.create({
         data: {
           application_id: newApplication.id,
@@ -163,7 +177,6 @@ export const getServerSideProps = protectedClientRoute(
           )}`,
         },
       });
-
       clubData = await prisma.clubs.findUnique({
         where: {
           id: data.id,
