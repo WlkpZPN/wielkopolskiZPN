@@ -84,7 +84,7 @@ const AdminLayout = ({ userData, children, view }) => {
         <ProgressBar />
         <ButtonWrapper>
           <IconButton>
-            <User /> {userData.email}
+            <User /> {userData ? userData.email : ''}
           </IconButton>
           <Link href="/admin/login">
             <IconButton onClick={() => logout("admin")}>
