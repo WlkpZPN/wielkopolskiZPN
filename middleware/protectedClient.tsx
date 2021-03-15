@@ -12,7 +12,7 @@ export function protectedClientRoute(cb) {
       decodedToken = jwt.verify(token, process.env.AUTH_KEY);
     }
     // console.log("token", decodedToken);
-
+    console.log('decodedTOken',decodedToken);
     if (decodedToken.role !== "klub") {
       res.statusCode = 302;
       res.setHeader("Location", "/login");
