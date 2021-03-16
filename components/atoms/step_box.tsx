@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Check } from "@styled-icons/boxicons-regular/Check";
+import { Close } from "@styled-icons/remix-line/Close";
 const Wrapper = styled.div`
   color: ${({ active }) => (active ? "white" : "black")};
 
@@ -62,6 +63,11 @@ const StyledCheck = styled(Check)`
   fill: #3dba77;
   width: 20px;
 `;
+
+const StyledClose = styled(Close)`
+  fill: ${({ theme }) => theme.danger};
+  width: 20px;
+`;
 const StepBox = ({
   number,
   text,
@@ -110,6 +116,24 @@ const StepBox = ({
         );
 
       case "error":
+        return (
+          <Wrapper
+            onClick={() => handleStepChange("jump", number)}
+            color="transparent"
+            active={active}
+          >
+            <Number>
+              {" "}
+              <StyledClose />
+            </Number>
+            <div>
+              <Header active={active} color="#D10101">
+                {text}
+              </Header>
+              <HelperText>{helperText}</HelperText>
+            </div>
+          </Wrapper>
+        );
         break;
       default:
         return (

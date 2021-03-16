@@ -32,7 +32,6 @@ const StepsContainer = styled.div`
 `;
 export const ApplicationContext = createContext(null);
 const ClubApplication = ({ clubData, readOnly }) => {
-  // console.log(clubData);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
@@ -57,9 +56,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     stepSix: { completed: false, error: false },
   });
   const [city, street, zipCode] = extractAddressData(clubData.address);
-  const [error, setError] = useState({
-    stepOne: "",
-  });
+  const [error, setError] = useState({});
   const [formData, setFormData] = useState({
     stepOne: {
       leauge: clubData.leauge || "IV liga",
@@ -128,13 +125,42 @@ const ClubApplication = ({ clubData, readOnly }) => {
 
   const [currentObject, setCurrentObject] = useState(0);
 
+  const deleteFacility = (data) => {
+    console.log(data);
+    if (data.id) {
+      axios
+        .post("/api/applications/deleteSportFacility", {
+          facilityId: data.id,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    const newFormData = formData;
+    newFormData.stepFour.sport_facilities.splice(
+      newFormData.stepFour.sport_facilities.findIndex((e) => e.id === data.id),
+      1
+    );
+    router.replace(router.asPath);
+
+    setFormData(newFormData);
+    setCurrentObject(0);
+  };
+
   const handleStepFill = (step, state) => {
     let newStepData = completedSteps;
 
     newStepData[step] = state;
-
+    console.log(newStepData);
     setCompletedSteps(newStepData);
   };
+
+  console.log(currentObject);
+  console.log(formData);
+  console.log(formData.stepFour.sport_facilities[currentObject]);
   const handleFormChange = (event, field, step) => {
     let newFields = { ...formData };
     switch (step) {
@@ -172,9 +198,14 @@ const ClubApplication = ({ clubData, readOnly }) => {
     // dodaj kolejny obiekt jesli klub posiada mniej niz 5 obiektów
     if (formData.stepFour.sport_facilities.length < 5) {
       // dodaj obiekt tylko jesli ich liczba w clubData i formData jest taka sama
+      console.log(
+        clubData.applications[0].sport_facilities.length -
+          formData.stepFour.sport_facilities.length
+      );
       if (
-        clubData.applications[0].sport_facilities.length !==
-        formData.stepFour.sport_facilities.length
+        clubData.applications[0].sport_facilities.length -
+          formData.stepFour.sport_facilities.length <
+        0
       ) {
         return "Zapisz aktualny obiekt aby dodać kolejny";
       }
@@ -206,12 +237,12 @@ const ClubApplication = ({ clubData, readOnly }) => {
 
         applications_attachments: [],
       };
-      router.replace(router.asPath);
-      setCurrentObject(currentObject + 1);
       let newFormData = formData;
 
       newFormData.stepFour.sport_facilities.push(newForm);
       setFormData(newFormData);
+      setCurrentObject(newFormData.stepFour.sport_facilities.length - 1);
+      router.replace(router.asPath);
       return true;
     }
   };
@@ -293,6 +324,75 @@ const ClubApplication = ({ clubData, readOnly }) => {
     setFormData(newFileData);
   };
 
+  const sendApplication = () => {
+    // validate  all steps
+    let result;
+    // step one
+    result = checkStepOne(formData.stepOne);
+    if (result.valid === false) {
+      handleStepFill("stepOne", "error");
+      setError({
+        stepOne: result.text,
+      });
+      return;
+    }
+
+    // step two
+    result = checkStepTwo(formData.stepTwo);
+    if (result.valid === false) {
+      handleStepFill("stepTwo", "error");
+      setError({
+        stepTwo: result.text,
+      });
+      return;
+    }
+    //step three
+    result = checkStepThree(formData.stepThree);
+    if (result.valid === false) {
+      handleStepFill("stepThree", "error");
+      setError({
+        stepThree: result.text,
+      });
+      return;
+    }
+    // step four
+    result = checkStepFour(formData.stepFour);
+    if (result.valid === false) {
+      handleStepFill("stepFour", "error");
+      setError({
+        stepFour: result.text,
+      });
+      return;
+    }
+    //step five
+    result = checkStepFive(formData.stepFive);
+    if (result.valid === false) {
+      handleStepFill("stepFive", "error");
+      setError({
+        stepFive: result.text,
+      });
+      return;
+    }
+
+    //step six
+    result = checkStepSix(formData.stepSix);
+    if (result.valid === false) {
+      handleStepFill("stepSix", "error");
+      setError({
+        stepSix: result.text,
+      });
+      return;
+    }
+    axios.post("/api/applications/updateApplication", {
+      formData,
+      clubData,
+      statusId: 2,
+    });
+    console.log("application sent");
+
+    // update data and status of application
+  };
+
   const saveForm = () => {
     // save data in the application table
     // save data in the club table
@@ -319,9 +419,10 @@ const ClubApplication = ({ clubData, readOnly }) => {
     // );
 
     axios
-      .post("/api/applications/saveDraft", {
+      .post("/api/applications/updateApplication", {
         formData,
         clubData,
+        statusId: 1,
       })
       .then((res) => {
         setLoading(false);
@@ -395,7 +496,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
         }
         break;
       case 4:
-        result = checkStepFour(clubData);
+        result = checkStepFour(formData.stepFour);
         if (!result.valid) {
           handleStepFill("stepFour", "uncompleted");
         }
@@ -500,6 +601,8 @@ const ClubApplication = ({ clubData, readOnly }) => {
         createNewSportFacilityForm,
         error,
         clearErrors,
+        sendApplication,
+        deleteFacility,
       }}
     >
       <div>

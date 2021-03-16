@@ -1,28 +1,44 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
 import { ApplicationContext } from "./club_application";
-import FormTemplate from "../atoms/form_template";
-import Select from "../atoms/form_select";
-import Label from "../atoms/form_label";
-import RadioContainer from "../atoms/radio_container";
-import Input from "../atoms/input";
+
 import FormRow from "../atoms/form_row";
 import PrimaryButton from "../atoms/primary_button";
-import RadioSquare from "../molecules/form_radio";
-import Paragraph from "../atoms/paragraph";
-import AddFile from "../molecules/add_file";
+
 import OutlineButton from "../atoms/outline_button";
-import Info from "../atoms/Info";
+
 import ObjectName from "../atoms/object_name";
-import ObjectForm from "./object_form";
+
 import Fieldset from "../atoms/fieldset";
 import ErrorMessage from "../atoms/error_message";
+import ObjectForm from "./object_form";
+
+const NoObjects = styled.div`
+  margin: 32px 0;
+  margin-top: 0;
+  font-size: 18px;
+  padding: 24px 32px;
+  border-radius: 5px;
+  /* border: 2px solid ${({ theme }) => theme.primary}; */
+  width: max-content;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  & span {
+    color: ${({ theme }) => theme.primary};
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  & button {
+    font-size: 16px;
+  }
+`;
 const StepFourForm = ({ handleStepChange, readOnly }) => {
   const context = useContext(ApplicationContext);
   const { sport_facilities } = context.formData.stepFour;
   const currentObject = context.currentObject;
   const setCurrentobject = context.setCurrentObject;
-  console.log(context.formData.stepFour.sport_facilities);
+
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
   const [error, setError] = useState("");
 
@@ -67,16 +83,36 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           >
             {renderObjects()}
           </div>
-          <OutlineButton onClick={handleNewForm} align="flex-start">
-            + Dodaj kolejny obiekt
-          </OutlineButton>
+          {sport_facilities.length === 0 ? null : (
+            <OutlineButton
+              style={{ padding: "6px 16px" }}
+              onClick={handleNewForm}
+              align="flex-start"
+            >
+              + Dodaj kolejny obiekt
+            </OutlineButton>
+          )}
         </div>
         {error ? <ErrorMessage>{error}</ErrorMessage> : null}
       </Fieldset>
 
-      <ObjectForm objectIndex={currentObject} readOnly={readOnly} />
-      <FormRow cols="3">
-        <PrimaryButton onClick={() => handleStepChange("previous")}>
+      {sport_facilities.length === 0 ? (
+        <NoObjects>
+          Nie posiadasz żadnych obiektów sportowych,dodaj je klikając przycisk
+          poniżej (wymagane jest posiadanie min. 1 obiektu)
+          <span>Pamiętaj aby zapisać obiekt po wypełnienu danych</span>
+          <OutlineButton onClick={handleNewForm} align="flex-start">
+            Utwórz obiekt
+          </OutlineButton>
+        </NoObjects>
+      ) : (
+        <ObjectForm objectIndex={currentObject} readOnly={readOnly} />
+      )}
+      <div style={{ marginLeft: "32px" }}>
+        <PrimaryButton
+          style={{ marginRight: "16px" }}
+          onClick={() => handleStepChange("previous")}
+        >
           Cofnij
         </PrimaryButton>
         <PrimaryButton
@@ -84,13 +120,14 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           hoverColor="darkLight"
           type="button"
           onClick={context.saveForm}
+          style={{ marginRight: "16px" }}
         >
           Zapisz wersję roboczą
         </PrimaryButton>
         <PrimaryButton onClick={() => handleStepChange("next")}>
           Kolejny krok
         </PrimaryButton>
-      </FormRow>
+      </div>
     </div>
   );
 };

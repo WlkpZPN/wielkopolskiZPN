@@ -2,7 +2,7 @@ import prisma from "../../../middleware/prisma";
 import { convertAddressData, getCurrentDate } from "../../../middleware/utils";
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    const { formData, clubData } = req.body;
+    const { formData, clubData, statusId } = req.body;
     const {
       stepOne,
       stepTwo,
@@ -35,7 +35,7 @@ export default async (req, res) => {
     //2. update application data
     const dataToInsert = {
       club_id: clubData.id,
-      status_id: 1,
+      status_id: parseInt(statusId),
       number_of_seasons: stepOne.seasons,
       declaration_on_the_subject_of_participation_in_the_competition:
         stepTwo.participateInCompetitions,

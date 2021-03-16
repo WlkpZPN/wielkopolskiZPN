@@ -21,9 +21,11 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     handleObjectFileDelete,
     handleFileChange,
     deleteFile,
+    sendApplication,
   } = context;
   const stepTwoFiles = context.formData.stepTwo.krs_documents;
   const stepThreeFiles = context.formData.stepThree.agreement_documents;
+
   const stepFourFiles =
     context.formData.stepFour.sport_facilities[context.currentObject]
       .applications_attachments;
@@ -35,8 +37,18 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const agreementDocuments = stepFourFiles.filter(
     (file) => file.category === "I01_agreement"
   );
+
+  // const isSuperVision = () => {
+  //   if(stepTwoFiles.length === 0) {
+  //     return true;
+  //   }
+  //   if(context.formData.stepThree)
+
+  // }
+
   const submitForm = (e) => {
     e.preventDefault();
+    sendApplication();
   };
   return (
     <Fieldset disabled={readOnly}>
@@ -46,29 +58,23 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           W swoim zgłoszeniu licencyjnym załączyłeś poniższe załączniki. Prosimy
           sprawdź ich aktualność.
         </Paragraph>
-
-        {stepTwoFiles.length > 0 ? (
-          <>
-            <Paragraph>
-              {" "}
-              Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty
-              potwierdzony za zgodność ze stanem faktycznym na dzień składania
-              niniejszego wniosku.
-            </Paragraph>{" "}
-            <AddFilesWrapper
-              deleteFile={(id) => {
-                deleteFile(id, "krs_documents");
-                setState(!state);
-              }}
-              fileData={stepTwoFiles}
-              setFiles={(id, file) => {
-                handleFileChange(id, file, file.name, "krs_documents");
-                setState(!state);
-              }}
-            />
-          </>
-        ) : null}
-
+        <Paragraph>
+          {" "}
+          Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty
+          potwierdzony za zgodność ze stanem faktycznym na dzień składania
+          niniejszego wniosku.
+        </Paragraph>{" "}
+        <AddFilesWrapper
+          deleteFile={(id) => {
+            deleteFile(id, "krs_documents");
+            setState(!state);
+          }}
+          fileData={stepTwoFiles}
+          setFiles={(id, file) => {
+            handleFileChange(id, file, file.name, "krs_documents");
+            setState(!state);
+          }}
+        />
         {stepThreeFiles.length > 0 ? (
           <>
             <Paragraph>
@@ -87,7 +93,6 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             />
           </>
         ) : null}
-
         {agreementDocuments.length > 0 ? (
           <>
             <Paragraph>
@@ -117,7 +122,6 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             />
           </>
         ) : null}
-
         {intensityDocuments.length > 0 ? (
           <>
             <Paragraph>
@@ -147,7 +151,10 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             />
           </>
         ) : null}
-
+        <Paragraph>
+          W przypadku wysłania wniosku z brakującymi dokumentami zostanie wydana
+          licencja z nadzorem
+        </Paragraph>
         <div style={{ marginTop: "32px" }}>
           <PrimaryButton
             style={{ marginRight: "16px" }}

@@ -1,4 +1,6 @@
 import { useState, useContext } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { ApplicationContext } from "./club_application";
 import FormTemplate from "../atoms/form_template";
@@ -21,11 +23,17 @@ import ErrorMessage from "../atoms/error_message";
 import AddFilesWrapper from "./add_files_wrapper";
 
 const ObjectForm = ({ readOnly, objectIndex }) => {
+  const router = useRouter();
   const [error, setError] = useState({ step: null, text: "" });
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
   const data = context.formData.stepFour.sport_facilities[objectIndex];
-  const { handleObjectFileChange, handleObjectFileDelete } = context;
+  const {
+    handleObjectFileChange,
+    handleObjectFileDelete,
+    deleteFacility,
+  } = context;
+  // console.log(context);
   const objectFiles =
     context.formData.stepFour.sport_facilities[objectIndex]
       .applications_attachments;
@@ -1322,6 +1330,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               width="min-content"
               color="danger"
               hoverColor="dangerDark"
+              onClick={() => deleteFacility(data)}
             >
               Usuń
             </PrimaryButton>

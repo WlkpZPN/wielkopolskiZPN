@@ -11,6 +11,8 @@ const ObjectName = styled.div`
   font-weight: bold;
   margin-bottom: 8px;
   cursor: pointer;
+  text-overflow: ellipsis;
+  white-space: wrap;
 `;
 
 export default ObjectName;

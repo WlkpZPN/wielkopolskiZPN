@@ -133,35 +133,6 @@ export const getServerSideProps = protectedClientRoute(
           created_at: getCurrentDate(),
         },
       });
-      console.log("applicationID", newApplication.id);
-      await prisma.sport_facilities.create({
-        data: {
-          application_id: newApplication.id,
-          name: "Obiekt 1",
-          address: "",
-          post_code: "",
-          city: "",
-          I03_total_capacity: "0",
-          I05_number_of_seats_for_guests: "0",
-          I05_percentage_of_seats_for_guests: "0",
-          I06_type: "naturalna",
-          I06_condition: "dobry",
-          I06_width: "",
-          I06_length: "",
-          I08_number_of_seats_on_the_bench: "0",
-          I11_number_of_seats: "0",
-          I11_number_of_hangers_or_lockers: "0",
-          I11_number_of_showers: "0",
-          I11_number_of_toilets: "0",
-          I12_number_of_seats: "0",
-          I12_number_of_hangers_or_lockers: "0",
-          I12_number_of_showers: "0",
-          I12_number_of_toilets: "0",
-          I15_number_of_toilets_for_women: "0",
-          I15_number_of_toilets_for_men: "0",
-          I15_standard: "Odpowiedni",
-        },
-      });
 
       await prisma.applications.update({
         where: {

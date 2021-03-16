@@ -108,7 +108,7 @@ export const checkStepThree = (formData) => {
 
 export const checkStepFour = (data) => {
   // to do check for sport_facilitie possesion
-  if ((data.applications[0].sport_facilities.length = 0)) {
+  if (data.sport_facilities.length === 0) {
     return {
       valid: false,
       text: "Klub musi posiadać minimum 1 obiekt sportowy",
