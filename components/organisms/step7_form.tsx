@@ -27,8 +27,10 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const stepThreeFiles = context.formData.stepThree.agreement_documents;
 
   const stepFourFiles =
-    context.formData.stepFour.sport_facilities[context.currentObject]
-      .applications_attachments;
+    context.formData.stepFour.sport_facilities.length > 0
+      ? context.formData.stepFour.sport_facilities[context.currentObject]
+          .applications_attachments
+      : [];
 
   const intensityDocuments = stepFourFiles.filter(
     (file) => file.category === "I17_intensity_document"
@@ -38,17 +40,34 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     (file) => file.category === "I01_agreement"
   );
 
-  // const isSuperVision = () => {
-  //   if(stepTwoFiles.length === 0) {
-  //     return true;
-  //   }
-  //   if(context.formData.stepThree)
+  const isSuperVision = () => {
+    if (stepTwoFiles.length === 0) {
+      return true;
+    }
+    if (
+      context.formData.stepThree.youthGroupsPossession ===
+        "nie posiadamy zespołów" &&
+      stepThreeFiles.length === 0
+    ) {
+      return true;
+    }
+    if (
+      context.formData.stepFour.I01_1 === "false" &&
+      agreementDocuments.length === 0
+    ) {
+      return true;
+    }
 
-  // }
+    if (context.formData.stepFour.I17_1 && intensityDocuments.length === 0) {
+      return true;
+    }
+
+    return false;
+  };
 
   const submitForm = (e) => {
     e.preventDefault();
-    sendApplication();
+    sendApplication(isSuperVision());
   };
   return (
     <Fieldset disabled={readOnly}>
@@ -151,10 +170,12 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             />
           </>
         ) : null}
-        <Paragraph>
-          W przypadku wysłania wniosku z brakującymi dokumentami zostanie wydana
-          licencja z nadzorem
-        </Paragraph>
+        {isSuperVision() ? (
+          <Paragraph>
+            Brak wszystkich dokumentów, zostanie wydana licencja z nadzorem
+            (istnieje możliwość późniejszego dosłania dokumentów)
+          </Paragraph>
+        ) : null}
         <div style={{ marginTop: "32px" }}>
           <PrimaryButton
             style={{ marginRight: "16px" }}

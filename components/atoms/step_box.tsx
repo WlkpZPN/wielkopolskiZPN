@@ -6,12 +6,13 @@ const Wrapper = styled.div`
 
   background: ${({ color }) => color};
   background: ${({ active, theme, color }) => (active ? theme.primary : color)};
+  max-height: 65px;
 
   border: 1px solid rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 4px;
+  padding: 6px 4px;
   cursor: pointer;
   width: 180px;
   position: relative;
@@ -61,7 +62,7 @@ const HelperText = styled.p`
 
 const StyledCheck = styled(Check)`
   fill: #3dba77;
-  width: 20px;
+  width: 32px;
 `;
 
 const StyledClose = styled(Close)`

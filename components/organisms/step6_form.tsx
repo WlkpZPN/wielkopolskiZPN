@@ -68,6 +68,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
           </PrimaryButton>
           <PrimaryButton
             color="dark"
+            type="button"
             hoverColor="darkLight"
             onClick={context.saveForm}
           >

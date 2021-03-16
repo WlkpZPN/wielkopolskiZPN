@@ -23,7 +23,7 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
   const context = useContext(ApplicationContext);
   const handleChange = context.handleFormChange;
   const formData = context.formData.stepFive;
-
+  console.log(formData);
   const submitForm = (e) => {
     e.preventDefault();
 

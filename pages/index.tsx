@@ -89,7 +89,7 @@ export const getServerSideProps = protectedClientRoute(
   async (context, data) => {
     const { req, res } = context;
     let clubData;
-    console.log("data", data);
+
     if (!data) {
       res.statusCode = 302;
       res.setHeader("Location", "/login");

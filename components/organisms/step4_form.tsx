@@ -38,6 +38,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   const { sport_facilities } = context.formData.stepFour;
   const currentObject = context.currentObject;
   const setCurrentobject = context.setCurrentObject;
+  const { applications } = context.clubData;
 
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
   const [error, setError] = useState("");
@@ -57,11 +58,12 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     sport_facilities.map((facility, index) => {
       helperArr.push(
         <ObjectName
+          saved={facility.id ? true : false}
           active={index === currentObject}
           key={index}
           onClick={() => setCurrentobject(index)}
         >
-          {facility.name === "" ? "Obiekt 1" : facility.name}
+          {facility.name}
         </ObjectName>
       );
     });

@@ -119,20 +119,32 @@ export const checkStepFour = (data) => {
   };
 };
 
-export const checkStepFive = (data) => {
+export const checkStepFive = (formData) => {
   if (
     !formData.NoObligationsTowardsEmployees ||
     !formData.NoObligationsTowardsPzpnAndWzpn ||
     !formData.NoObligationTowardsFootballClubs
   ) {
-    setError("Proszę zaakceptować poniższe oświadczenia");
-    return;
+    return {
+      valid: false,
+      text: "Proszę zaakceptować poniższe oświadczenia",
+    };
   }
+
+  return {
+    valid: true,
+  };
 };
 
-export const checkStepSix = (data) => {
+export const checkStepSix = (formData) => {
   if (!formData.havingFootballStaff || !formData.HavingSecurityServices) {
-    setError("Proszę zaakceptować poniższe oświadczenia");
-    return;
+    return {
+      valid: false,
+      text: "Proszę zaakceptować poniższe oświadczenia",
+    };
   }
+
+  return {
+    valid: true,
+  };
 };

@@ -56,6 +56,7 @@ export default async (req, res) => {
       updated_at: `${getCurrentDate()}`,
       club_agreement_name: stepThree.clubAgreementName,
     };
+    console.log("data to insert", dataToInsert);
 
     if (!clubData.applications[0]) {
       // we dont have an application | create

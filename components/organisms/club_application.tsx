@@ -97,7 +97,8 @@ const ClubApplication = ({ clubData, readOnly }) => {
         clubData.applications[0].declaration_on_medical_care_for_the_players ||
         false,
       clubAgreementName: clubData.applications[0].club_agreement_name || "",
-      youthGroupsPossession: clubData.applications[0].youth_groups_possession,
+      youthGroupsPossession:
+        clubData.applications[0].youth_groups_possession || "posiadamy zespoły",
       agreement_documents: clubData.applications[0]
         ? clubData.applications[0].applications_attachments.filter(
             (file) => file.category === "agreement_documents"
@@ -109,17 +110,21 @@ const ClubApplication = ({ clubData, readOnly }) => {
     },
     stepFive: {
       NoObligationsTowardsEmployees:
-        clubData.declaration_of_no_obligations_towards_employees || false,
+        clubData.applications[0]
+          .declaration_of_no_obligations_towards_employees || false,
       NoObligationsTowardsPzpnAndWzpn:
-        clubData.declaration_of_no_obligations_towards_PZPN_and_WZPN || false,
+        clubData.applications[0]
+          .declaration_of_no_obligations_towards_PZPN_and_WZPN || false,
       NoObligationTowardsFootballClubs:
-        clubData.declaration_of_no_obligations_towards_football_clubs || false,
+        clubData.applications[0]
+          .declaration_of_no_obligations_towards_football_clubs || false,
     },
     stepSix: {
       havingFootballStaff:
-        clubData.declaration_of_having_football_staff || false,
+        clubData.applications[0].declaration_of_having_football_staff || false,
       HavingSecurityServices:
-        clubData.declaration_of_having_security_services || false,
+        clubData.applications[0].declaration_of_having_security_services ||
+        false,
     },
   });
 
@@ -154,13 +159,10 @@ const ClubApplication = ({ clubData, readOnly }) => {
     let newStepData = completedSteps;
 
     newStepData[step] = state;
-    console.log(newStepData);
+
     setCompletedSteps(newStepData);
   };
 
-  console.log(currentObject);
-  console.log(formData);
-  console.log(formData.stepFour.sport_facilities[currentObject]);
   const handleFormChange = (event, field, step) => {
     let newFields = { ...formData };
     switch (step) {
@@ -198,10 +200,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     // dodaj kolejny obiekt jesli klub posiada mniej niz 5 obiektów
     if (formData.stepFour.sport_facilities.length < 5) {
       // dodaj obiekt tylko jesli ich liczba w clubData i formData jest taka sama
-      console.log(
-        clubData.applications[0].sport_facilities.length -
-          formData.stepFour.sport_facilities.length
-      );
+
       if (
         clubData.applications[0].sport_facilities.length -
           formData.stepFour.sport_facilities.length <
@@ -324,7 +323,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     setFormData(newFileData);
   };
 
-  const sendApplication = () => {
+  const sendApplication = (isSuperVision) => {
     // validate  all steps
     let result;
     // step one
@@ -366,6 +365,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     }
     //step five
     result = checkStepFive(formData.stepFive);
+
     if (result.valid === false) {
       handleStepFill("stepFive", "error");
       setError({
@@ -383,11 +383,11 @@ const ClubApplication = ({ clubData, readOnly }) => {
       });
       return;
     }
-    axios.post("/api/applications/updateApplication", {
-      formData,
-      clubData,
-      statusId: 2,
-    });
+    // axios.post("/api/applications/updateApplication", {
+    //   formData,
+    //   clubData,
+    //   statusId: isSuperVision ? 2 : 3,
+    // });
     console.log("application sent");
 
     // update data and status of application
@@ -417,6 +417,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     //     },
     //   }
     // );
+    setLoading(true);
 
     axios
       .post("/api/applications/updateApplication", {
@@ -502,6 +503,24 @@ const ClubApplication = ({ clubData, readOnly }) => {
         }
         if (result.valid) {
           handleStepFill("stepFour", "completed");
+        }
+        break;
+      case 5:
+        result = checkStepFive(formData.stepFive);
+        if (!result.valid) {
+          handleStepFill("stepFive", "uncompleted");
+        }
+        if (result.valid) {
+          handleStepFill("stepFive", "completed");
+        }
+        break;
+      case 6:
+        result = checkStepSix(formData.stepSix);
+        if (!result.valid) {
+          handleStepFill("stepSix", "uncompleted");
+        }
+        if (result.valid) {
+          handleStepFill("stepSix", "completed");
         }
         break;
     }
@@ -603,6 +622,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
         clearErrors,
         sendApplication,
         deleteFacility,
+        clubData,
       }}
     >
       <div>
