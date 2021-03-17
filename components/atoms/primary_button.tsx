@@ -12,6 +12,7 @@ const PrimaryButton = styled.button`
   border-radius: 5px;
   transition: all 0.2s;
   cursor: pointer;
+
   outline: none;
   &:hover {
     background-color: ${({ theme, hoverColor }) =>

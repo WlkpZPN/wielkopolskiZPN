@@ -10,6 +10,7 @@ export default async (req, res) => {
       stepFour,
       stepFive,
       stepSix,
+      stepSeven,
     } = formData;
 
     await prisma.clubs.update({
@@ -55,6 +56,7 @@ export default async (req, res) => {
       declaration_of_having_security_services: stepSix.HavingSecurityServices,
       updated_at: `${getCurrentDate()}`,
       club_agreement_name: stepThree.clubAgreementName,
+      invoice_required: stepSeven.invoice_required,
     };
     console.log("data to insert", dataToInsert);
 
@@ -87,7 +89,7 @@ export default async (req, res) => {
     //4 update application_attachments
 
     //5 add record to history table
-    res.send("zapisano jako wniosek roboczy");
+    res.send("zaaktualizowano wniosek");
     return resolve();
   });
 };

@@ -44,6 +44,7 @@ const ApplicationsList = () => {
     applications.forEach((application, index) => {
       applicationsArray[currentPage].push(
         <StyledRow
+          key={application.clubs.id}
           onClick={() => router.push(`/admin/licencje/${application.clubs.id}`)}
         >
           <ApplicationStatus status={application.statuses.name} />

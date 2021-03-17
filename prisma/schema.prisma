@@ -37,11 +37,13 @@ model applications {
   created_at                                                     String?                     @db.VarChar(40)
   updated_at                                                     String?                     @db.VarChar(40)
   payment_link                                                   String?
-  error_step                                                     Int?
+  error_step                                                     String?                     @db.VarChar(200)
   error_message                                                  String?
   club_agreement_name                                            String?                     @db.VarChar(300)
   youth_groups_possession                                        String?                     @db.VarChar(300)
   internal_id                                                    String?                     @db.VarChar(20)
+  reject_reason                                                  String?
+  invoice_required                                               Boolean?                    @default(false)
   clubs                                                          clubs?                      @relation(fields: [club_id], references: [id])
   statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
   annotations                                                    annotations[]
@@ -146,6 +148,7 @@ model frequently_asked_questions {
   answer     String?
   created_at DateTime? @db.Timestamp(6)
   updated_at DateTime? @db.Timestamp(6)
+  category   String?   @db.VarChar(200)
 }
 
 model histories {
@@ -153,8 +156,8 @@ model histories {
   application_id Int?
   user_id        Int?
   description    String?
-  created_at     DateTime?     @db.Timestamp(6)
-  updated_at     DateTime?     @db.Timestamp(6)
+  created_at     String?       @db.VarChar(50)
+  updated_at     String?       @db.VarChar(50)
   status_id      Int?
   applications   applications? @relation(fields: [application_id], references: [id])
   statuses       statuses?     @relation(fields: [status_id], references: [id])
@@ -298,4 +301,10 @@ model youth_groups {
   created_at                DateTime?                   @db.Timestamp(6)
   updated_at                DateTime?                   @db.Timestamp(6)
   applications_youth_groups applications_youth_groups[]
+}
+
+model submission_duration {
+  start_date String? @db.VarChar(300)
+  end_date   String? @db.VarChar(300)
+  id         Int     @id @default(autoincrement())
 }

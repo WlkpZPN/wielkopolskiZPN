@@ -126,6 +126,9 @@ const ClubApplication = ({ clubData, readOnly }) => {
         clubData.applications[0].declaration_of_having_security_services ||
         false,
     },
+    stepSeven: {
+      invoice_required: clubData.applications[0].invoice_required,
+    },
   });
 
   const [currentObject, setCurrentObject] = useState(0);
@@ -187,6 +190,9 @@ const ClubApplication = ({ clubData, readOnly }) => {
         newFields.stepSix[field] = event;
         setFormData(newFields);
         break;
+      case 7:
+        newFields.stepSeven[field] = event;
+        setFormData(newFields);
     }
   };
 
@@ -323,7 +329,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     setFormData(newFileData);
   };
 
-  const sendApplication = (isSuperVision) => {
+  const sendApplication = async (isSuperVision) => {
     // validate  all steps
     let result;
     // step one
@@ -383,11 +389,30 @@ const ClubApplication = ({ clubData, readOnly }) => {
       });
       return;
     }
-    // axios.post("/api/applications/updateApplication", {
-    //   formData,
-    //   clubData,
-    //   statusId: isSuperVision ? 2 : 3,
-    // });
+    setLoading(true);
+    await addSportFacility();
+
+    await axios.post("/api/applications/addHistory", {
+      description: "Złożenie wniosku licencyjnego w terminie.",
+      applicationID: clubData.applications[0].id,
+      statusID: isSuperVision ? 2 : 3,
+    });
+
+    await axios
+      .post("/api/applications/updateApplication", {
+        formData,
+        clubData,
+        statusId: isSuperVision ? 2 : 3,
+      })
+      .then((res) => {
+        setLoading(false);
+        toast.success("Wniosek wyłsany do Wielkopolskiego ZPN");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+    router.replace(router.asPath);
     console.log("application sent");
 
     // update data and status of application
@@ -418,7 +443,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     //   }
     // );
     setLoading(true);
-
+    addSportFacility();
     axios
       .post("/api/applications/updateApplication", {
         formData,

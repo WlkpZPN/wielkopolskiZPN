@@ -6,7 +6,7 @@ const Wrapper = styled.div`
 
   background: ${({ color }) => color};
   background: ${({ active, theme, color }) => (active ? theme.primary : color)};
-  max-height: 65px;
+  height: 65px;
 
   border: 1px solid rgba(0, 0, 0, 0.3);
   display: flex;

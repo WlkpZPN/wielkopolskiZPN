@@ -1,10 +1,29 @@
 import styled from "styled-components";
 import License from "../../public/license.svg";
-
-const StyledLicense = styled(License)`
+import { UserSecret } from "@styled-icons/fa-solid/UserSecret";
+import { Certificate } from "@styled-icons/fa-solid/Certificate";
+const StyledLicense = styled(Certificate)`
   width: ${({ size }) => size || "21px"};
   height: ${({ size }) => size || "21px"};
-  fill: ${({ color }) => color};
+  color: ${({ color }) => color};
+`;
+
+const SupervisiorLicense = styled.div`
+  width: ${({ size }) => size || "21px"};
+  height: ${({ size }) => size || "21px"};
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  svg {
+    position: absolute;
+    right: -20%;
+    top: -20%;
+    width: 80%;
+    height: 80%;
+    color: ${({ theme }) => theme.primary};
+  }
 `;
 
 const Application = styled.div`
@@ -14,7 +33,6 @@ const Application = styled.div`
   border-radius: 50%;
 `;
 const ApplicationStatus = ({ status, size = "21px" }) => {
-  console.log(typeof status);
   const setColor = () => {
     switch (status.trim()) {
       case "roboczy":
@@ -40,10 +58,24 @@ const ApplicationStatus = ({ status, size = "21px" }) => {
     }
   };
 
-  console.log(setColor());
+  if (status === "licencja wydana z nadzorem") {
+    return (
+      <SupervisiorLicense color={setColor()} size={size}>
+        <StyledLicense size={size} color={setColor()} />
+        <UserSecret />
+      </SupervisiorLicense>
+    );
+  }
 
   if (status.includes("licencja")) {
-    return <StyledLicense size={size} color={setColor()} />;
+    return (
+      <StyledLicense
+        size={size}
+        color={setColor()}
+        src="/license.svg"
+        alt="license icon"
+      />
+    );
   }
 
   return <Application size={size} color={setColor()} />;

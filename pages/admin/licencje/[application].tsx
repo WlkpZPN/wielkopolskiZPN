@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { toast } from "react-toastify";
 import prisma from "../../../middleware/prisma";
 import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
 import AdminLayout from "../../../components/organisms/admin_layout";
@@ -6,30 +10,247 @@ import ClubApplication from "../../../components/organisms/club_application";
 import ApplicationStatus from "../../../components/atoms/application_status";
 import IconButton from "../../../components/atoms/IconButton";
 import { ControllerFastBackward } from "@styled-icons/entypo/ControllerFastBackward";
+import PrimaryButton from "../../../components/atoms/primary_button";
 import Link from "next/link";
+import Loader from "../../../components/atoms/loader";
+import CorrectModal from "../../../components/molecules/correct_modal";
+import RejectModal from "../../../components/molecules/reject_modal";
+import Paragraph from "../../../components/atoms/paragraph";
+import AddFilesWrapper from "../../../components/organisms/add_files_wrapper";
+import ErrorMessage from "../../../components/atoms/error_message";
+import LicenseDecision from "../../../components/atoms/license_decision";
 const Application = ({ authData, clubData }) => {
-  console.log(clubData);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [visibleReject, setvisibleReject] = useState(false);
+  const [invoiceFiles, setInvoiceFiles] = useState([]);
+
+  console.log(clubData.applications[0]);
+  const handleFileDelete = () => {};
+  const renderTopPanel = () => {
+    switch (clubData.applications[0].statuses.id) {
+      case 6:
+        return (
+          <>
+            {" "}
+            <Paragraph>Dodaj fakturę</Paragraph>{" "}
+            <AddFilesWrapper
+              fileData={invoiceFiles}
+              setFiles={setInvoiceFiles}
+              deleteFile={handleFileDelete}
+            />
+            <ErrorMessage>
+              {clubData.applications[0].invoice_required
+                ? "UWAGA! Klub prosi o fakturę przed dokonaniem płatności"
+                : null}
+            </ErrorMessage>{" "}
+          </>
+        );
+      case 7:
+        return (
+          <>
+            <Paragraph>Dodaj fakturę</Paragraph>
+            <div style={{ display: "flex" }}>
+              <LicenseDecision
+                applicationID={clubData.applications[0].id}
+                reasonID={8}
+                type="standard"
+                reason=""
+                internalID={clubData.applications[0].internal_id}
+              />
+              <LicenseDecision
+                reasonID={10}
+                applicationID={clubData.applications[0].id}
+                type="nadzór"
+                reason=""
+                internalID={clubData.applications[0].internal_id}
+              />
+              <LicenseDecision
+                reasonID={9}
+                applicationID={clubData.applications[0].id}
+                type="odmowa"
+                reason=""
+                internalID={clubData.applications[0].internal_id}
+              />
+            </div>
+          </>
+        );
+    }
+  };
+
+  const renderButtons = () => {
+    switch (clubData.applications[0].statuses.id) {
+      case 2:
+      case 3:
+      case 4:
+        return (
+          <div>
+            <PrimaryButton
+              color="successDark"
+              hoverColor="success"
+              style={{ margin: "0 6px" }}
+              onClick={acceptApplication}
+            >
+              Zaakceptuj
+            </PrimaryButton>
+            <PrimaryButton
+              color="warningDark"
+              hoverColor="warning"
+              style={{ margin: "0 6px" }}
+              onClick={() => setVisible(true)}
+            >
+              Do poprawy
+            </PrimaryButton>
+            <PrimaryButton
+              color="dangerDark"
+              hoverColor="danger"
+              style={{ margin: "0 6px" }}
+              onClick={() => setvisibleReject(true)}
+            >
+              Odrzuć
+            </PrimaryButton>
+          </div>
+        );
+
+      case 6:
+        return (
+          <div>
+            <PrimaryButton
+              color="successDark"
+              hoverColor="success"
+              style={{ margin: "0 6px" }}
+              onClick={markAsPaid}
+            >
+              Oznacz jako opłacony
+            </PrimaryButton>
+
+            <PrimaryButton
+              color="dangerDark"
+              hoverColor="danger"
+              style={{ margin: "0 6px" }}
+              onClick={() => setvisibleReject(true)}
+            >
+              Odrzuć
+            </PrimaryButton>
+          </div>
+        );
+
+      default:
+        return;
+    }
+  };
+  const acceptApplication = async () => {
+    setLoading(true);
+
+    //TO DO: api route for generate paynament link
+
+    try {
+      await axios.post("/api/applications/acceptApplication", {
+        applicationID: clubData.applications[0].id,
+
+        description: "Zaakceptowanie wniosku",
+      });
+      router.replace(router.asPath);
+
+      setLoading(false);
+      toast.success("Wniosek zaakceptowany, wysłano link do płatności");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error("Nie udało się zaakceptować wniosku, spróbuj ponownie");
+    }
+  };
+
+  const markAsPaid = async () => {
+    try {
+      setLoading(true);
+      await axios.post("/api/applications/acceptPayment", {
+        applicationID: clubData.applications[0].id,
+      });
+
+      setLoading(false);
+      toast.success("Wniosek oznaczony jako opłacony");
+      router.replace(router.asPath);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error("Nie udało się zaakceptować płatności,spróbuj ponownie");
+    }
+  };
+
   return (
     <AdminLayout view="wnioski" userData={authData}>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <h1 style={{ marginRight: "32px" }}>
-          Wniosek {clubData.applications[0].internal_id}
-        </h1>
-        <ApplicationStatus
-          size="32px"
-          status={clubData.applications[0].statuses.name}
-        />
-        <span style={{ marginLeft: "16px" }}>
-          {clubData.applications[0].statuses.name}
-        </span>
+      <CorrectModal
+        internalId={
+          clubData.applications[0] ? clubData.applications[0].internal_id : ""
+        }
+        id={clubData.applications[0] ? clubData.applications[0].id : ""}
+        visible={visible}
+        setVisibile={setVisible}
+      />
+
+      <RejectModal
+        internalID={
+          clubData.applications[0] ? clubData.applications[0].internal_id : ""
+        }
+        applicationID={
+          clubData.applications[0] ? clubData.applications[0].id : ""
+        }
+        visible={visibleReject}
+        setVisible={setvisibleReject}
+      />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "32px 0",
+          alignItems: "flex-start",
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <span>
+            <h1 style={{ marginRight: "32px", marginTop: "-3px" }}>
+              Wniosek {clubData.applications[0].internal_id}
+            </h1>
+            <Link href="/admin">
+              <IconButton>
+                <ControllerFastBackward />
+                Powrót
+              </IconButton>
+            </Link>
+          </span>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              height: "min-content",
+            }}
+          >
+            <ApplicationStatus
+              size="32px"
+              status={clubData.applications[0].statuses.name}
+            />
+            <span style={{ marginLeft: "16px" }}>
+              {clubData.applications[0].statuses.name}
+            </span>
+          </div>
+        </div>
+        <div style={{ display: "flex" }}>
+          {renderButtons()}
+          <PrimaryButton style={{ margin: "0 6px" }}>
+            Historia zmian
+          </PrimaryButton>
+        </div>
       </div>
-      <Link href="/admin">
-        <IconButton>
-          <ControllerFastBackward />
-          Powrót
-        </IconButton>
-      </Link>
-      <ClubApplication clubData={clubData} readOnly={true} />
+      <div style={{ marginBottom: "32px" }}>{renderTopPanel()}</div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <ClubApplication clubData={clubData} readOnly={true} />
+      )}
     </AdminLayout>
   );
 };

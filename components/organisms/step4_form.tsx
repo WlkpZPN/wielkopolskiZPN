@@ -58,7 +58,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     sport_facilities.map((facility, index) => {
       helperArr.push(
         <ObjectName
-          saved={facility.id ? true : false}
+          saved={true}
           active={index === currentObject}
           key={index}
           onClick={() => setCurrentobject(index)}

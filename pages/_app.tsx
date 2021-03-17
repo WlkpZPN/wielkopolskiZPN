@@ -12,6 +12,8 @@ const theme = {
   dangerDark: "#A50000",
   success: "#00C65B",
   successDark: "#00A54C",
+  warningDark: "#D3E500",
+  warning: "#E2F500",
 };
 function MyApp({ Component, pageProps }) {
   return (

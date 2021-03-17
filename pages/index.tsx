@@ -12,10 +12,12 @@ import StepBox from "../components/atoms/step_box";
 import ClubApplication from "../components/organisms/club_application";
 import LastChange from "../components/molecules/last_change";
 import Spinner from "../components/atoms/loader";
+import Paragraph from "../components/atoms/paragraph";
+import ClubSteps from "../components/organisms/club_steps";
 const Header = styled.h1`
   margin-bottom: 16px;
   padding: 16px 0;
-  color: ${({ theme }) => theme.dark};
+  color: ${({ theme, color }) => (color ? theme[color] : theme.dark)};
   font-weight: 600;
   font-size: 32px;
 `;
@@ -59,6 +61,26 @@ const Home = ({ authData, clubData }) => {
               )}
 
               <ClubApplication readOnly={false} clubData={clubData} />
+            </>
+          );
+        case 2:
+        case 3:
+          return (
+            <>
+              <Header color="success">
+                Dziękujemy! Poczekaj na akceptację wniosku
+              </Header>
+              <Paragraph>
+                Dziękujemy za złożenie wniosku liencyjnego. <br /> Najpóźniej 20
+                kwietnia {new Date().getFullYear()} otrzymasz informację czy
+                wniosek został zaakceptowany przez Wielkopolski ZPN. <br />{" "}
+                Dalsze kroki procedury licencyjnej możesz zobaczyć poniżej{" "}
+              </Paragraph>
+              <ClubSteps
+                paymentLink={clubData.applications[0].payment_link || ""}
+                history={clubData.applications[0].histories}
+              />
+              <ClubApplication readOnly={true} clubData={clubData} />
             </>
           );
       }
@@ -106,6 +128,7 @@ export const getServerSideProps = protectedClientRoute(
           include: {
             statuses: true,
             applications_attachments: true,
+            histories: true,
             sport_facilities: {
               include: {
                 applications_attachments: true,
@@ -157,6 +180,7 @@ export const getServerSideProps = protectedClientRoute(
             include: {
               statuses: true,
               applications_attachments: true,
+              histories: true,
               sport_facilities: {
                 include: {
                   applications_attachments: true,

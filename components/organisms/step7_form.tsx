@@ -6,7 +6,7 @@ import FormTemplate from "../atoms/form_template";
 import PrimaryButton from "../atoms/primary_button";
 import RadioSquare from "../molecules/form_radio";
 import Paragraph from "../atoms/paragraph";
-
+import Label from "../atoms/form_label";
 import Fieldset from "../atoms/fieldset";
 import { ApplicationContext } from "./club_application";
 import ErrorMessage from "../atoms/error_message";
@@ -22,6 +22,8 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     handleFileChange,
     deleteFile,
     sendApplication,
+    formData,
+    handleFormChange,
   } = context;
   const stepTwoFiles = context.formData.stepTwo.krs_documents;
   const stepThreeFiles = context.formData.stepThree.agreement_documents;
@@ -176,6 +178,24 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             (istnieje możliwość późniejszego dosłania dokumentów)
           </Paragraph>
         ) : null}
+        <Paragraph>
+          Informacje dotyczące płatności za procedurę licencyjną
+        </Paragraph>
+        <Label pointer>
+          <span>
+            <RadioSquare
+              value={formData.stepSeven.invoice_required}
+              handleChange={(e) =>
+                handleFormChange(
+                  !formData.stepSeven.invoice_required,
+                  "invoice_required",
+                  7
+                )
+              }
+            />{" "}
+            Chcemy otrzymać fakturę przed dokonaniem płatności
+          </span>
+        </Label>
         <div style={{ marginTop: "32px" }}>
           <PrimaryButton
             style={{ marginRight: "16px" }}

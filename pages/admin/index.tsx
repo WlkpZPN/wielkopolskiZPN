@@ -11,7 +11,6 @@ import ApplicationsList from "../../components/organisms/applications_list";
 export const AdminContext = createContext(null);
 
 const MainPage = ({ userData, applications }) => {
-  console.log(applications);
   return (
     <AdminContext.Provider value={{ userData, applications }}>
       <AdminLayout userData={userData} view="wnioski">
@@ -25,15 +24,23 @@ const MainPage = ({ userData, applications }) => {
           <h1>Wnioski licencyjne</h1>
           <div>status | szukaj</div>
         </div>
-        <ApplicationsList />
+        {applications ? <ApplicationsList /> : null}
       </AdminLayout>
     </AdminContext.Provider>
   );
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
+  const { req, res } = context;
 
-  console.log('data',data);
+  if (!data) {
+    res.statusCode = 302;
+    res.setHeader("Location", "/admin/login");
+    return {
+      props: {},
+    };
+  }
+  console.log("data", data);
   const applications = await prisma.applications.findMany({
     include: {
       statuses: true,

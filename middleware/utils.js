@@ -78,12 +78,18 @@ export const convertToFormData = (files) => {
 };
 
 export const getCurrentDate = () => {
-  const date = ` ${new Date().getDate()}/${new Date()
+  const newDate = new Date();
+  const date = ` ${newDate.getDate()}/${newDate
     .getMonth()
     .toLocaleString("en-US", {
-      minimumIntegerDigits: 3,
+      minimumIntegerDigits: 2,
       useGrouping: false,
-    })}/${new Date().getFullYear()}`;
+    })}/${newDate.getFullYear()}, ${newDate.getHours()}:${newDate
+    .getMinutes()
+    .toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    })}`;
   return date;
 };
 
