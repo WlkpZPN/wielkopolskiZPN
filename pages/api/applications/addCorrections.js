@@ -21,6 +21,7 @@ export default async (req, res) => {
         application_id: applicationID,
         description: description,
         status_id: 4,
+        created_at:getCurrentDate(),
       },
     });
 

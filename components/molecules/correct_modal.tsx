@@ -30,7 +30,7 @@ const Background = styled.div`
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
   display: ${({ visible }) => (visible ? "block" : "none")};
-  z-index: 9;
+  z-index: 1000;
 `;
 
 const Content = styled.div`
@@ -103,7 +103,7 @@ const CorrectModal = ({ internalId, id, visible, setVisibile }) => {
     toast.warn("Wniosek oznaczony jako do poprawy", {
       autoClose: 1500,
     });
-    setVisible(false);
+    setVisibile(false);
     router.replace(router.asPath);
   };
   return (

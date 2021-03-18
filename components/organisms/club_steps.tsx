@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import { Check } from "@styled-icons/boxicons-regular/Check";
-import Loader from "../atoms/loader";
+
 const StyledCheck = styled(Check)`
   color: white;
   width: 90%;
@@ -25,6 +25,9 @@ const Number = styled.div`
   color: white;
   & span {
     display: ${({ completed, theme }) => (completed ? "none" : "block")};
+  }
+  & svg {
+    display: ${({ completed, theme }) => (completed ? "block" : "none")};
   }
   &:after {
     content: "";
@@ -57,7 +60,6 @@ const Text = styled.p`
 `;
 
 const ClubSteps = ({ history, paymentLink }) => {
-  console.log(history);
   const [steps, setSteps] = useState({
     stepOne: {
       completed: false,
@@ -67,6 +69,7 @@ const ClubSteps = ({ history, paymentLink }) => {
       completed: false,
       date: "",
       link: "",
+      reason: "",
     },
     stepThree: {
       completed: false,
@@ -100,6 +103,7 @@ const ClubSteps = ({ history, paymentLink }) => {
             date: step.created_at,
             completed: true,
             link: paymentLink || "",
+            reason: "",
           };
           return;
         case 7:
@@ -122,6 +126,13 @@ const ClubSteps = ({ history, paymentLink }) => {
             reason: step.description,
           };
           return;
+        case 4:
+          helperObj.stepTwo = {
+            date: step.created_at,
+            completed: false,
+            reason: step.description,
+            link: "",
+          };
       }
     });
 
@@ -135,7 +146,6 @@ const ClubSteps = ({ history, paymentLink }) => {
     <Wrapper>
       <Step>
         <Number completed={steps.stepOne.completed}>
-          {" "}
           <StyledCheck /> <span>1</span>
         </Number>
         <Text>
@@ -143,23 +153,33 @@ const ClubSteps = ({ history, paymentLink }) => {
         </Text>
       </Step>
       <Step>
-        <Number completed={steps.stepTwo.completed}>2</Number>
+        <Number completed={steps.stepTwo.completed}>
+          <StyledCheck />
+          <span>2</span>
+        </Number>
         <Text>
           Akceptacja wniosku licencyjnego przez Wielkopolski ZPN oraz link do
           płatności za wniosek przesłany na maila Klubu
         </Text>
       </Step>
       <Step>
-        <Number completed={steps.stepThree.completed}>3</Number>
+        <Number completed={steps.stepThree.completed}>
+          <StyledCheck />
+          <span>3</span>
+        </Number>
         <Text>Dokonanie płatności przez klub</Text>
       </Step>
       <Step>
-        <Number completed={steps.stepThree.completed}>4</Number>
+        <Number completed={steps.stepThree.completed}>
+          <StyledCheck />
+          <span>4</span>
+        </Number>
         <Text>Weryfikacja płatności przez Wielkopolski ZPN</Text>
       </Step>
       <Step>
         <Number completed={steps.stepFive.completed} hidden>
-          5
+          <StyledCheck />
+          <span>5</span>
         </Number>
         <Text>Decyzja Komisji Licenzyjnej Wielkopolskiego ZPN</Text>
       </Step>

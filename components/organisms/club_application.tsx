@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import uniqid from "uniqid";
 import { useRouter } from "next/router";
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import { useLocalStorage } from "../../middleware/hooks";
 import {
   extractAddressData,
@@ -31,32 +31,99 @@ const StepsContainer = styled.div`
   display: flex;
 `;
 export const ApplicationContext = createContext(null);
-const ClubApplication = ({ clubData, readOnly }) => {
+const ClubApplication = ({
+  errors,
+  completed,
+  clubData,
+  readOnly,
+  error_message,
+}) => {
+  const improvements = errors ? JSON.parse(errors) : {};
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState({
-    stepOne: "",
-    stepTwo: {
-      completed: false,
-      error: false,
-    },
-    stepThree: {
-      completed: false,
-      error: false,
-    },
-    stepFour: {
-      completed: false,
-      error: false,
-    },
-    stepFive: {
-      completed: false,
-      error: false,
-    },
-    stepSix: { completed: false, error: false },
+    stepOne: completed ? "completed" : "default",
+    stepTwo: completed ? "completed" : "default",
+    stepThree: completed ? "completed" : "default",
+    stepFour: completed ? "completed" : "default",
+    stepFive: completed ? "completed" : "default",
+    stepSix: completed ? "completed" : "default",
+    stepSeven: completed ? "completed" : "default",
   });
+
+  useEffect(() => {
+    let newStepData = { ...completedSteps };
+    newStepData.stepFour = "";
+    // let result = checkStepOne(formData.stepOne);
+    // if (!result.valid) {
+    //   newStepData.stepOne = "default";
+    // }
+    // if (result.valid) {
+    //   newStepData.stepOne = "completed";
+    // }
+
+    // result = checkStepTwo(formData.stepTwo);
+
+    // if (!result.valid) {
+    //   newStepData.stepTwo = "default";
+    // }
+    // if (result.valid) {
+    //   newStepData.stepTwo = "completed";
+    // }
+
+    // result = checkStepThree(formData.stepThree);
+    // if (!result.valid) {
+    //   newStepData.stepThree = "default";
+    // }
+    // if (result.valid) {
+    //   newStepData.stepThree = "completed";
+    // }
+
+    // result = checkStepFour(formData.stepFour);
+    // if (!result.valid) {
+    //   newStepData.stepFour = "default";
+    // }
+    // if (result.valid) {
+    //   newStepData.stepFour = "completed";
+    // }
+
+    // result = checkStepFive(formData.stepFive);
+    // if (!result.valid) {
+    //   newStepData.stepFive = "default";
+    // }
+    // if (result.valid) {
+    //   newStepData.stepFive = "completed";
+    // }
+
+    // result = checkStepSix(formData.stepSix);
+    // if (!result.valid) {
+    //   newStepData.stepSix = "default";
+    // }
+    // if (result.valid) {
+    //   newStepData.stepSix = "completed";
+    // }
+    // console.log(newStepData);
+    // setCompletedSteps((state) => ({ ...state, ...newStepData }));
+    // console.log(completedSteps);
+
+    // if (clubData.applications[0].statuses.id === 4) {
+    //   let newStepData = completedSteps;
+    //   console.log(stepErrors, errorMessage);
+    // }
+  }, []);
+
   const [city, street, zipCode] = extractAddressData(clubData.address);
-  const [error, setError] = useState({});
+  const [error, setError] = useState({
+    stepOne: improvements.one ? error_message : "",
+    stepTwo: improvements.two ? error_message : "",
+    stepThree: improvements.three ? error_message : "",
+    stepFour: improvements.four ? error_message : "",
+    stepFive: improvements.five ? error_message : "",
+    stepSix: improvements.six ? error_message : "",
+    stepSeven: improvements.seven ? error_message : "",
+  });
+  console.log(error);
   const [formData, setFormData] = useState({
     stepOne: {
       leauge: clubData.leauge || "IV liga",
@@ -336,9 +403,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     result = checkStepOne(formData.stepOne);
     if (result.valid === false) {
       handleStepFill("stepOne", "error");
-      setError({
-        stepOne: result.text,
-      });
+      setError((state) => ({ ...state, stepOne: result.text }));
       return;
     }
 
@@ -346,27 +411,21 @@ const ClubApplication = ({ clubData, readOnly }) => {
     result = checkStepTwo(formData.stepTwo);
     if (result.valid === false) {
       handleStepFill("stepTwo", "error");
-      setError({
-        stepTwo: result.text,
-      });
+      setError((state) => ({ ...state, stepTwo: result.text }));
       return;
     }
     //step three
     result = checkStepThree(formData.stepThree);
     if (result.valid === false) {
       handleStepFill("stepThree", "error");
-      setError({
-        stepThree: result.text,
-      });
+      setError((state) => ({ ...state, stepThree: result.text }));
       return;
     }
     // step four
     result = checkStepFour(formData.stepFour);
     if (result.valid === false) {
       handleStepFill("stepFour", "error");
-      setError({
-        stepFour: result.text,
-      });
+      setError((state) => ({ ...state, stepFour: result.text }));
       return;
     }
     //step five
@@ -374,9 +433,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
 
     if (result.valid === false) {
       handleStepFill("stepFive", "error");
-      setError({
-        stepFive: result.text,
-      });
+      setError((state) => ({ ...state, stepFive: result.text }));
       return;
     }
 
@@ -384,9 +441,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
     result = checkStepSix(formData.stepSix);
     if (result.valid === false) {
       handleStepFill("stepSix", "error");
-      setError({
-        stepSix: result.text,
-      });
+      setError((state) => ({ ...state, stepSix: result.text }));
       return;
     }
     setLoading(true);
@@ -654,6 +709,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
         {" "}
         <StepsContainer>
           <StepBox
+            improvements={improvements.one || ""}
             handleStepChange={handleStepChange}
             state={completedSteps.stepOne}
             number={1}
@@ -662,6 +718,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
             helperText="Wybór klasy rozgrywkowej"
           />
           <StepBox
+            improvements={improvements.two || ""}
             handleStepChange={handleStepChange}
             state={completedSteps.stepTwo}
             number={2}
@@ -670,6 +727,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
             helperText="Kryteria prawne"
           />
           <StepBox
+            improvements={improvements.three || ""}
             handleStepChange={handleStepChange}
             state={completedSteps.stepThree}
             number={3}
@@ -678,6 +736,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
             helperText="Kryteria sportowe"
           />
           <StepBox
+            improvements={improvements.four || ""}
             handleStepChange={handleStepChange}
             state={completedSteps.stepFour}
             number={4}
@@ -686,6 +745,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
             helperText="Kryteria infrastrukturalne"
           />
           <StepBox
+            improvements={improvements.five || ""}
             handleStepChange={handleStepChange}
             state={completedSteps.stepFive}
             number={5}
@@ -694,6 +754,7 @@ const ClubApplication = ({ clubData, readOnly }) => {
             helperText="Kryteria finansowe"
           />
           <StepBox
+            improvements={improvements.six || ""}
             handleStepChange={handleStepChange}
             state={completedSteps.stepSix}
             number={6}
@@ -702,8 +763,9 @@ const ClubApplication = ({ clubData, readOnly }) => {
             helperText="kryteria personalne"
           />
           <StepBox
+            improvements={improvements.seven || ""}
             handleStepChange={handleStepChange}
-            state={"default"}
+            state={completedSteps.stepSeven}
             number={7}
             active={step === 7}
             text="Załączniki"

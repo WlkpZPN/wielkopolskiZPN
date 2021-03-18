@@ -76,9 +76,47 @@ const StepBox = ({
   active,
   state,
   handleStepChange,
+  improvements,
 }) => {
+  console.log(improvements);
+  if (improvements) {
+    return (
+      <Wrapper
+        onClick={() => handleStepChange("jump", number)}
+        color="#D3E500"
+        active={active}
+      >
+        <Number>
+          {" "}
+          <StyledClose />
+        </Number>
+        <div>
+          <Header active={active} color="black">
+            {text}
+          </Header>
+          <HelperText>{helperText}</HelperText>
+        </div>
+      </Wrapper>
+    );
+  }
   const renderState = () => {
     switch (state) {
+      case "default":
+        return (
+          <Wrapper
+            onClick={() => handleStepChange("jump", number)}
+            color="white"
+            active={active}
+          >
+            <Number>{number}</Number>
+            <div>
+              <Header active={active} color="black">
+                {text}
+              </Header>
+              <HelperText>{helperText}</HelperText>
+            </div>
+          </Wrapper>
+        );
       case "uncompleted":
         return (
           <Wrapper
@@ -135,7 +173,6 @@ const StepBox = ({
             </div>
           </Wrapper>
         );
-        break;
       default:
         return (
           <Wrapper

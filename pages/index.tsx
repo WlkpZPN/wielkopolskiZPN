@@ -37,7 +37,13 @@ const Home = ({ authData, clubData }) => {
       return (
         <>
           <Header>Złóż wniosek licencyjny</Header>
-          <ClubApplication readOnly={false} clubData={clubData} />
+          <ClubApplication
+            errors=""
+            error_message=""
+            completed={false}
+            readOnly={false}
+            clubData={clubData}
+          />
         </>
       );
     }
@@ -60,7 +66,13 @@ const Home = ({ authData, clubData }) => {
                 </>
               )}
 
-              <ClubApplication readOnly={false} clubData={clubData} />
+              <ClubApplication
+                error_message=""
+                completed={false}
+                errors={""}
+                readOnly={false}
+                clubData={clubData}
+              />
             </>
           );
         case 2:
@@ -80,7 +92,36 @@ const Home = ({ authData, clubData }) => {
                 paymentLink={clubData.applications[0].payment_link || ""}
                 history={clubData.applications[0].histories}
               />
-              <ClubApplication readOnly={true} clubData={clubData} />
+              <ClubApplication
+                error_message=""
+                errors=""
+                completed={true}
+                readOnly={true}
+                clubData={clubData}
+              />
+            </>
+          );
+        case 4:
+          return (
+            <>
+              <Header color="warning">Prosimy o wprowadzenie poprawek.</Header>
+
+              <Paragraph>
+                Wielkopolski ZPN odrzucił Twój wniosek. <br />
+                Zapoznaj się z poniższym uzasadnieniem oraz prosimy o
+                wprowadzenie poprawek do wniosku
+              </Paragraph>
+              <ClubSteps
+                paymentLink={clubData.applications[0].payment_link || ""}
+                history={clubData.applications[0].histories}
+              />
+              <ClubApplication
+                error_message={clubData.applications[0].error_message}
+                completed={true}
+                errors={clubData.applications[0].error_step}
+                readOnly={false}
+                clubData={clubData}
+              />
             </>
           );
       }
