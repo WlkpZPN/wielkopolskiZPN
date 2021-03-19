@@ -24,11 +24,11 @@ const ClubSteps = ({ status }) => {
         return (
           <>
             <Row>
-              <HistoryIcon state="completed" number={1} />
+              <HistoryIcon hidden={false} state="completed" number={1} />
               <span>Złożenie wniosku licencyjnego.</span>
             </Row>
             <Row>
-              <HistoryIcon state="default" number={2} />
+              <HistoryIcon hidden={false} state="default" number={2} />
               <span>
                 Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
@@ -36,11 +36,11 @@ const ClubSteps = ({ status }) => {
               </span>
             </Row>
             <Row>
-              <HistoryIcon state="default" number={3} />
+              <HistoryIcon hidden={false} state="default" number={3} />
               <span>Dokonanie płatności przez klub</span>
             </Row>
             <Row>
-              <HistoryIcon state="default" number={4} />
+              <HistoryIcon hidden={false} state="default" number={4} />
               <span>Weryfikacja płatności przez Wielkopolski ZPN</span>
             </Row>
             <Row>

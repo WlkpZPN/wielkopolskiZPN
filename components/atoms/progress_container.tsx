@@ -10,10 +10,8 @@ const Progress = styled.div`
   position: relative;
 
   &:before {
-    content: "${({ progress, number, visible }) =>
-      visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}";
-    text-align: end;
     padding: 0px 4px;
+    text-align: end;
 
     position: absolute;
     font-size: 13px;
@@ -32,9 +30,13 @@ const Progress = styled.div`
     left: 0;
     bottom: 0;
     height: 100%;
+
     width: ${({ progress, visible }) =>
       visible ? `${progress}%` : "max-content"};
+
     border-radius: 5px;
+    content: "${({ progress, number, visible }) =>
+      visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}";
   }
 `;
 
