@@ -39,17 +39,18 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   const currentObject = context.currentObject;
   const setCurrentobject = context.setCurrentObject;
   const { applications } = context.clubData;
-
+  const show_buttons = context.show_buttons;
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
-  const [error, setError] = useState("");
-
+  const { error, clearErrors } = context;
+  const [internalError, setInternalError] = useState("");
   const handleNewForm = () => {
     const result = createNewSportFacilityForm();
     console.log(result);
     if (result === true) {
       console.log("new form added");
+      setInternalError("");
     } else if (typeof result === "string") {
-      setError(result);
+      setInternalError(result);
     }
   };
 
@@ -85,17 +86,21 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           >
             {renderObjects()}
           </div>
+          <ErrorMessage>{error.stepFour}</ErrorMessage>
           {sport_facilities.length === 0 ? null : (
             <OutlineButton
+              type="button"
               style={{ padding: "6px 16px" }}
-              onClick={handleNewForm}
+              onClick={(e) => {
+                handleNewForm();
+              }}
               align="flex-start"
             >
               + Dodaj kolejny obiekt
             </OutlineButton>
           )}
         </div>
-        {error ? <ErrorMessage>{error}</ErrorMessage> : null}
+        {error ? <ErrorMessage>{internalError}</ErrorMessage> : null}
       </Fieldset>
 
       {sport_facilities.length === 0 ? (
@@ -103,7 +108,13 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           Nie posiadasz żadnych obiektów sportowych,dodaj je klikając przycisk
           poniżej (wymagane jest posiadanie min. 1 obiektu)
           <span>Pamiętaj aby zapisać obiekt po wypełnienu danych</span>
-          <OutlineButton onClick={handleNewForm} align="flex-start">
+          <OutlineButton
+            onClick={() => {
+              clearErrors("stepFour");
+              handleNewForm();
+            }}
+            align="flex-start"
+          >
             Utwórz obiekt
           </OutlineButton>
         </NoObjects>
@@ -117,15 +128,17 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
         >
           Cofnij
         </PrimaryButton>
-        <PrimaryButton
-          color="dark"
-          hoverColor="darkLight"
-          type="button"
-          onClick={context.saveForm}
-          style={{ marginRight: "16px" }}
-        >
-          Zapisz wersję roboczą
-        </PrimaryButton>
+        {show_buttons ? (
+          <PrimaryButton
+            color="dark"
+            hoverColor="darkLight"
+            type="button"
+            onClick={context.saveForm}
+            style={{ marginRight: "16px" }}
+          >
+            Zapisz wersję roboczą
+          </PrimaryButton>
+        ) : null}
         <PrimaryButton onClick={() => handleStepChange("next")}>
           Kolejny krok
         </PrimaryButton>

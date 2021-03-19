@@ -26,7 +26,6 @@ const Application = ({ authData, clubData }) => {
   const [visibleReject, setvisibleReject] = useState(false);
   const [invoiceFiles, setInvoiceFiles] = useState([]);
 
-  console.log(clubData.applications[0]);
   const handleFileDelete = () => {};
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {
@@ -240,7 +239,14 @@ const Application = ({ authData, clubData }) => {
         </div>
         <div style={{ display: "flex" }}>
           {renderButtons()}
-          <PrimaryButton style={{ margin: "0 6px" }}>
+          <PrimaryButton
+            onClick={() =>
+              router.push(
+                `/admin/licencje/historia/${clubData.applications[0].id}`
+              )
+            }
+            style={{ margin: "0 6px" }}
+          >
             Historia zmian
           </PrimaryButton>
         </div>
@@ -249,7 +255,14 @@ const Application = ({ authData, clubData }) => {
       {loading ? (
         <Loader />
       ) : (
-        <ClubApplication clubData={clubData} readOnly={true} />
+        <ClubApplication
+          show_buttons={false}
+          completed={true}
+          errors=""
+          error_message=""
+          clubData={clubData}
+          readOnly={true}
+        />
       )}
     </AdminLayout>
   );

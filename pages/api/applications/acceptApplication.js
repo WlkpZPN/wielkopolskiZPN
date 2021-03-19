@@ -17,7 +17,8 @@ export default async (req, res) => {
       data: {
         application_id: applicationID,
         created_at: getCurrentDate(),
-        description: description,
+        description:
+          "Akceptacja wniosku licencyjnego przez Wielkopolski ZPN oraz link do płatności za wniosek licencyjny przesłany na maila Klubu",
         status_id: 6,
       },
     });

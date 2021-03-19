@@ -32,9 +32,16 @@ const User = ({ clubData, authData }) => {
       .then((res) => {
         console.log(res);
         setLoading("");
-        toast.success(
-          `Klub ${clubData.internal_id} został oznaczony jako zadłużony`
-        );
+        if (newDebt) {
+          toast.success(
+            `Klub ${clubData.internal_id} został oznaczony jako zadłużony`
+          );
+        } else {
+          toast.success(
+            `Usunięto zadłużenie dla klubu ${clubData.internal_id}`
+          );
+        }
+
         router.replace(router.asPath);
       })
       .catch((err) => {

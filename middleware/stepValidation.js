@@ -1,3 +1,5 @@
+import { validateEmail } from "./validation";
+
 export const checkStepOne = (data) => {
   if (!data.leauge) {
     return {
@@ -12,11 +14,11 @@ export const checkStepOne = (data) => {
       text: "Proszę zaznaczyć liczbę sezonów",
     };
   }
-
-  if (!data.clubName) {
+  let result = validateEmail(data.agentEmail);
+  if (!result.valid) {
     return {
       valid: false,
-      text: "Proszę podać nazwę klubu",
+      text: result.message,
     };
   }
 
@@ -33,7 +35,9 @@ export const checkStepOne = (data) => {
       text: "Proszę podać imię i nazwisko pełnomocnika",
     };
   }
-
+  if (!data.agentEmail) {
+    return {};
+  }
   if (!data.email) {
     return {
       valid: false,
@@ -80,6 +84,17 @@ export const checkStepThree = (formData) => {
           valid: false,
           text:
             "Proszę podać liczbę zespołów młodzieżowych oraz udział zawodników",
+        };
+      } else if (
+        isNaN(formData.numberOfYouthGroups) ||
+        isNaN(formData.shareOfYouthGroups) ||
+        parseInt(formData.shareOfYouthGroups) === 0 ||
+        parseInt(formData.numberOfYouthGroups) === 0
+      ) {
+        return {
+          valid: false,
+          text:
+            "Proszę podać liczbę zespołów młodzieżowym oraz udział uczestników",
         };
       }
       break;

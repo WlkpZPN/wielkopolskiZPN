@@ -28,6 +28,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     handleStepFill,
     error,
     clearErrors,
+    show_buttons,
   } = context;
 
   const setFiles = (id, file) => {
@@ -163,15 +164,17 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
           >
             Cofnij
           </PrimaryButton>
-          <PrimaryButton
-            style={{ marginRight: "16px" }}
-            color="dark"
-            hoverColor="darkLight"
-            type="button"
-            onClick={context.saveForm}
-          >
-            Zapisz wersję roboczą
-          </PrimaryButton>
+          {show_buttons ? (
+            <PrimaryButton
+              style={{ marginRight: "16px" }}
+              color="dark"
+              hoverColor="darkLight"
+              type="button"
+              onClick={context.saveForm}
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+          ) : null}
           <PrimaryButton style={{ marginRight: "16px" }} onClick={handleSubmit}>
             Kolejny krok
           </PrimaryButton>

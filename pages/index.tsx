@@ -38,6 +38,7 @@ const Home = ({ authData, clubData }) => {
         <>
           <Header>Złóż wniosek licencyjny</Header>
           <ClubApplication
+            show_buttons={true}
             errors=""
             error_message=""
             completed={false}
@@ -67,6 +68,7 @@ const Home = ({ authData, clubData }) => {
               )}
 
               <ClubApplication
+                show_buttons={true}
                 error_message=""
                 completed={false}
                 errors={""}
@@ -88,11 +90,9 @@ const Home = ({ authData, clubData }) => {
                 wniosek został zaakceptowany przez Wielkopolski ZPN. <br />{" "}
                 Dalsze kroki procedury licencyjnej możesz zobaczyć poniżej{" "}
               </Paragraph>
-              <ClubSteps
-                paymentLink={clubData.applications[0].payment_link || ""}
-                history={clubData.applications[0].histories}
-              />
+              <ClubSteps status="wnioskowany" />
               <ClubApplication
+                show_buttons={false}
                 error_message=""
                 errors=""
                 completed={true}
@@ -111,11 +111,9 @@ const Home = ({ authData, clubData }) => {
                 Zapoznaj się z poniższym uzasadnieniem oraz prosimy o
                 wprowadzenie poprawek do wniosku
               </Paragraph>
-              <ClubSteps
-                paymentLink={clubData.applications[0].payment_link || ""}
-                history={clubData.applications[0].histories}
-              />
+              <ClubSteps status="do poprawy" />
               <ClubApplication
+                show_buttons={true}
                 error_message={clubData.applications[0].error_message}
                 completed={true}
                 errors={clubData.applications[0].error_step}

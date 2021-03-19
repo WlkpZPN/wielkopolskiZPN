@@ -23,7 +23,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
   const context = useContext(ApplicationContext);
   const formData = context.formData.stepSix;
   const handleChange = context.handleFormChange;
-
+  const show_buttons = context.show_buttons;
   const submitForm = (e) => {
     e.preventDefault();
 
@@ -66,14 +66,16 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
           <PrimaryButton onClick={() => handleStepChange("previous")}>
             Cofnij
           </PrimaryButton>
-          <PrimaryButton
-            color="dark"
-            type="button"
-            hoverColor="darkLight"
-            onClick={context.saveForm}
-          >
-            Zapisz wersję roboczą
-          </PrimaryButton>
+          {show_buttons ? (
+            <PrimaryButton
+              color="dark"
+              type="button"
+              hoverColor="darkLight"
+              onClick={context.saveForm}
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+          ) : null}
           <PrimaryButton onClick={submitForm}>Kolejny krok</PrimaryButton>
         </FormRow>
       </FormTemplate>

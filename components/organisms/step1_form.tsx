@@ -24,9 +24,13 @@ const StepOneForm = ({
   readOnly,
   handleStepChange,
 }) => {
-  const { saveForm, handleStepFill, error, clearErrors } = useContext(
-    ApplicationContext
-  );
+  const {
+    saveForm,
+    handleStepFill,
+    error,
+    clearErrors,
+    show_buttons,
+  } = useContext(ApplicationContext);
 
   const [loading, setLoading] = useState(false);
 
@@ -191,14 +195,16 @@ const StepOneForm = ({
             </FormRow>
 
             <FormRow margin="48px 0" cols={3}>
-              <PrimaryButton
-                type="button"
-                color="dark"
-                hoverColor="darkLight"
-                onClick={saveForm}
-              >
-                Zapisz werjse roboczą
-              </PrimaryButton>
+              {show_buttons ? (
+                <PrimaryButton
+                  type="button"
+                  color="dark"
+                  hoverColor="darkLight"
+                  onClick={saveForm}
+                >
+                  Zapisz werjse roboczą
+                </PrimaryButton>
+              ) : null}
               <PrimaryButton type="submit" onClick={submitForm}>
                 Kolejny krok
               </PrimaryButton>

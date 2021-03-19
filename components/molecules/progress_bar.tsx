@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Loader from "../atoms/loader";
 import styled from "styled-components";
-
+import axios from "axios";
+import Progress from "../atoms/progress_container";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -32,42 +34,25 @@ const Select = styled.select`
   background-size: 0.65em auto, 100%;
 `;
 
-const Progress = styled.div`
-  background-color: #e6e6e6;
-  width: 450px;
-  height: 25px;
-  border-radius: 5px;
-  margin-top: 4px;
-  position: relative;
-
-  &:before {
-    content: "${({ progress }) => `${progress}%`}";
-    text-align: end;
-    padding-right: 10px;
-    color: rgba(255, 255, 255, 0.8);
-    position: absolute;
-    font-size: 14px;
-    display: block;
-    line-height: 25px;
-    background: #888888;
-    left: 0;
-    bottom: 0;
-    height: 100%;
-    width: ${({ progress }) => `${progress}%`};
-    border-radius: 5px;
-  }
-`;
 const ProgressBar = () => {
-  const [progress, setProgress] = useState("20");
+  const [status, setStatus] = useState(6);
+
   return (
     <Wrapper>
-      <Select name="requests" id="requests">
-        <option value="zatwierdzone">Wnioski zatwierdzone</option>
-        <option value="odrzucone">Wnioski odrzucone</option>
-        <option value="wysłane">Wnioski wysłane</option>
-        <option value="niewypełnione"> Wnioski niewypełnione</option>
+      <Select
+        onChange={(e) => setStatus(parseInt(e.target.value))}
+        value={status}
+        name="requests"
+        id="requests"
+      >
+        <option value={7}>Wnioski zaakceptowane opłacone</option>
+        <option value={6}>Wnioski zaakceptowane nie opłacone</option>
+        <option value={5}>Wnioski odrzucone</option>
+        <option value={2}>Wnioski wysłane</option>
+        <option value={0}> Wnioski niewypełnione</option>
       </Select>
-      <Progress progress={progress}></Progress>
+
+      <Progress style={{}} status={status}></Progress>
     </Wrapper>
   );
 };

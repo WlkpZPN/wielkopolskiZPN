@@ -37,6 +37,7 @@ const ClubApplication = ({
   clubData,
   readOnly,
   error_message,
+  show_buttons,
 }) => {
   const improvements = errors ? JSON.parse(errors) : {};
   const router = useRouter();
@@ -123,7 +124,7 @@ const ClubApplication = ({
     stepSix: improvements.six ? error_message : "",
     stepSeven: improvements.seven ? error_message : "",
   });
-  console.log(error);
+
   const [formData, setFormData] = useState({
     stepOne: {
       leauge: clubData.leauge || "IV liga",
@@ -703,6 +704,7 @@ const ClubApplication = ({
         sendApplication,
         deleteFacility,
         clubData,
+        show_buttons,
       }}
     >
       <div>

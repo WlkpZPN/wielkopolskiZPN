@@ -19,29 +19,20 @@ import FormStatement from "../molecules/form_statement";
 import { ApplicationContext } from "./club_application";
 import ErrorMessage from "../atoms/error_message";
 const StepFiveForm = ({ handleStepChange, readOnly }) => {
-  const [error, setError] = useState("");
   const context = useContext(ApplicationContext);
   const handleChange = context.handleFormChange;
   const formData = context.formData.stepFive;
+  const show_buttons = context.show_buttons;
+  const { error, clearErrors } = context;
   console.log(formData);
   const submitForm = (e) => {
     e.preventDefault();
-
-    if (
-      !formData.NoObligationsTowardsEmployees ||
-      !formData.NoObligationsTowardsPzpnAndWzpn ||
-      !formData.NoObligationTowardsFootballClubs
-    ) {
-      setError("Proszę zaakceptować poniższe oświadczenia");
-      return;
-    }
-
     handleStepChange("next");
   };
   return (
     <Fieldset disabled={readOnly}>
-      <FormTemplate onChange={() => setError("")}>
-        {<ErrorMessage>{error}</ErrorMessage>}
+      <FormTemplate onChange={() => clearErrors("stepFive")}>
+        {<ErrorMessage>{error.stepFive}</ErrorMessage>}
         <FormStatement
           value={formData.NoObligationsTowardsEmployees}
           handleChange={() =>
@@ -80,14 +71,16 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
           <PrimaryButton onClick={() => handleStepChange("previous")}>
             Cofnij
           </PrimaryButton>
-          <PrimaryButton
-            color="dark"
-            hoverColor="darkLight"
-            type="button"
-            onClick={context.saveForm}
-          >
-            Zapisz wersję roboczą
-          </PrimaryButton>
+          {show_buttons ? (
+            <PrimaryButton
+              color="dark"
+              hoverColor="darkLight"
+              type="button"
+              onClick={context.saveForm}
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+          ) : null}
           <PrimaryButton onClick={submitForm}>Kolejny krok</PrimaryButton>
         </FormRow>
       </FormTemplate>

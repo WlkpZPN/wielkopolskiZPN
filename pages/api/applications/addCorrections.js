@@ -19,9 +19,9 @@ export default async (req, res) => {
     await prisma.histories.create({
       data: {
         application_id: applicationID,
-        description: description,
+        description: "Odrzucenie wniosku licencyjnego jako do poprawy",
         status_id: 4,
-        created_at:getCurrentDate(),
+        created_at: getCurrentDate(),
       },
     });
 

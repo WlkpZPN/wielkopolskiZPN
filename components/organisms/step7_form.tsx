@@ -24,6 +24,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     sendApplication,
     formData,
     handleFormChange,
+    show_buttons,
   } = context;
   const stepTwoFiles = context.formData.stepTwo.krs_documents;
   const stepThreeFiles = context.formData.stepThree.agreement_documents;
@@ -203,20 +204,25 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           >
             Cofnij
           </PrimaryButton>
-          <PrimaryButton
-            style={{ marginRight: "16px" }}
-            color="dark"
-            hoverColor="darkLight"
-          >
-            Zapisz wersję roboczą
-          </PrimaryButton>
-          <PrimaryButton
-            color="successDark"
-            hoverColor="success"
-            onClick={submitForm}
-          >
-            Zatwierdź i wyślij do Wielkopolskiego ZPN
-          </PrimaryButton>
+          {show_buttons ? (
+            <>
+              {" "}
+              <PrimaryButton
+                style={{ marginRight: "16px" }}
+                color="dark"
+                hoverColor="darkLight"
+              >
+                Zapisz wersję roboczą
+              </PrimaryButton>
+              <PrimaryButton
+                color="successDark"
+                hoverColor="success"
+                onClick={submitForm}
+              >
+                Zatwierdź i wyślij do Wielkopolskiego ZPN
+              </PrimaryButton>{" "}
+            </>
+          ) : null}
         </div>
       </FormTemplate>
     </Fieldset>

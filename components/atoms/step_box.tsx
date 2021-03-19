@@ -78,7 +78,6 @@ const StepBox = ({
   handleStepChange,
   improvements,
 }) => {
-  console.log(improvements);
   if (improvements) {
     return (
       <Wrapper

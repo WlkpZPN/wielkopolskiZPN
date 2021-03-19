@@ -25,6 +25,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     handleStepFill,
     error,
     clearErrors,
+    show_buttons,
   } = context;
   const fileArr = context.formData.stepTwo.krs_documents;
   const handleChange = context.handleFormChange;
@@ -99,14 +100,16 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
           <PrimaryButton onClick={() => handleStepChange("previous")}>
             Cofnij
           </PrimaryButton>
-          <PrimaryButton
-            type="button"
-            onClick={context.saveForm}
-            color="dark"
-            hoverColor="darkLight"
-          >
-            Zapisz wersję roboczą
-          </PrimaryButton>
+          {show_buttons ? (
+            <PrimaryButton
+              type="button"
+              onClick={context.saveForm}
+              color="dark"
+              hoverColor="darkLight"
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+          ) : null}
           <PrimaryButton type="submit" onClick={nextStep}>
             Kolejny krok
           </PrimaryButton>
