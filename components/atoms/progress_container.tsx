@@ -52,11 +52,11 @@ const ProgressContainer = ({ status, style }) => {
             getUncompleted: true,
           }
         );
-        console.log(result.data);
+
         const { allApplications, applications } = result.data;
         const percent =
           (Math.round((applications / allApplications) * 100) / 100) * 100;
-        console.log(percent);
+
         setProgress(percent);
         setNumber(applications);
       } else if (status === 2) {
@@ -79,7 +79,7 @@ const ProgressContainer = ({ status, style }) => {
           (Math.round((applications + applications2 / allApplications) * 100) /
             100) *
           100;
-        console.log(percent);
+
         setProgress(percent);
         setNumber(applications + applications2);
       } else {
@@ -93,7 +93,7 @@ const ProgressContainer = ({ status, style }) => {
         const { allApplications, applications } = result.data;
         const percent =
           (Math.round((applications / allApplications) * 100) / 100) * 100;
-        console.log(percent);
+
         setProgress(parseInt(`${percent}`));
         setNumber(applications);
       }

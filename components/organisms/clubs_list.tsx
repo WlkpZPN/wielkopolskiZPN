@@ -25,8 +25,8 @@ const TableHeader = styled.span`
 const ClubsList = () => {
   const router = useRouter();
   const [page, setPage] = useState(0);
-  const { clubs } = useContext(AdminContext);
-  console.log(clubs);
+  const { list: clubs } = useContext(AdminContext);
+
   const totalPages = Math.ceil(clubs.length / 10);
 
   const generateClubs = () => {
@@ -39,7 +39,10 @@ const ClubsList = () => {
     let currentPage = 0;
     clubs.forEach((club, index) => {
       clubsArray[currentPage].push(
-        <TableRow  onClick={() => router.push(`/admin/kluby/${club.id}`)}>
+        <TableRow
+          key={club.id}
+          onClick={() => router.push(`/admin/kluby/${club.id}`)}
+        >
           <DebtIcon debt={club.debt} />
           <ClubStatus active={club.active} />
           <span>{club.internal_id}</span>
@@ -62,7 +65,7 @@ const ClubsList = () => {
         currentPage += 1;
       }
     });
-    console.log(clubsArray);
+
     return clubsArray;
   };
   return (

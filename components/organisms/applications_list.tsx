@@ -29,8 +29,8 @@ const StyledRow = styled(TableRow)`
 const ApplicationsList = () => {
   const router = useRouter();
   const [page, setPage] = useState(0);
-  const { applications } = useContext(AdminContext);
-  console.log(applications);
+  const { list: applications } = useContext(AdminContext);
+
   const totalPages = Math.ceil(applications.length / 10);
 
   const generateClubs = () => {
@@ -71,7 +71,7 @@ const ApplicationsList = () => {
         currentPage += 1;
       }
     });
-    console.log(applicationsArray);
+
     return applicationsArray;
   };
   return (
