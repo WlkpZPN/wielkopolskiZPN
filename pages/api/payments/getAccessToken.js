@@ -3,7 +3,7 @@ import axios from "axios";
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     try {
-      const result = await axios({
+      const tokenData = await axios({
         method: "POST",
         url: "https://secure.snd.payu.com/pl/standard/user/oauth/authorize",
         headers: {
