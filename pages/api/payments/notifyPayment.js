@@ -4,7 +4,9 @@ export default (req, res) => {
   return new Promise(async (resolve) => {
     const newStatus = req.body.order.status;
     const applicationID = req.body.order.exOrderId;
+
     console.log("NOTIFY ROUTE FIRED");
+    console.log(req.body);
     if (newStatus === "COMPLETED") {
       await prisma.applications.update({
         where: {
