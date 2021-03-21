@@ -2,7 +2,7 @@ import prisma from "../../../middleware/prisma";
 import { getCurrentDate } from "../../../middleware/utils";
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    const { applicationID, description } = req.body;
+    const { applicationID, description, link, amount } = req.body;
 
     await prisma.applications.update({
       where: {
@@ -10,6 +10,8 @@ export default async (req, res) => {
       },
       data: {
         status_id: 6,
+        payment_link: link,
+        amount: amount,
       },
     });
 

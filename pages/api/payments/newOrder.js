@@ -50,12 +50,12 @@ export default (req, res) => {
           validityTime: "86400",
           extOrderId: applicationID,
           customerIp: ip,
-          totalAmount: amount,
+          totalAmount: amount * 100,
           buyer: {
             email: email,
             phone: phone,
-            firstName: firstName,
-            lastName: lastName,
+            firstName: firstName || "",
+            lastName: lastName || "",
             language: "pl",
           },
           products: [

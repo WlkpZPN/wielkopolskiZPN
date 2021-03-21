@@ -2,7 +2,20 @@ import prisma from "../../../middleware/prisma";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    //console.log("notify payment", req.body);
+    const newStatus = req.body.order.status;
+    const applicationID = req.body.order.exOrderId;
+
+    if (newStatus === "COMPLETED") {
+      await prisma.applications.update({
+        where: {
+          id: applicationID,
+        },
+        data: {
+          status_id: 7,
+        },
+      });
+    }
+
     res.status(200);
     res.send("OK");
     return resolve();

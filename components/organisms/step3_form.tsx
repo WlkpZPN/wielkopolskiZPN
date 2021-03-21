@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import styled from "styled-components";
 import { ApplicationContext } from "./club_application";
+import { ClubContext } from "../../pages/index";
 import FormTemplate from "../atoms/form_template";
 import Select from "../atoms/form_select";
 import Label from "../atoms/form_label";
@@ -19,6 +20,7 @@ import AddFilesWrapper from "./add_files_wrapper";
 const StepThreeForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
+  const settings = useContext(ClubContext);
   const formData = context.formData.stepThree;
   const handleChange = context.handleFormChange;
   const {
@@ -114,7 +116,9 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             <p style={{ fontWeight: "bold", margin: "24px 0 8px" }}>
               Wysokość opłaty dodatkowej w tym sezonie
             </p>{" "}
-            <h1 style={{ fontSize: "40px" }}>500,00 PLN</h1>
+            <h1 style={{ fontSize: "40px" }}>
+              {settings.no_possession_fee} PLN
+            </h1>
             <p style={{ fontWeight: "bold", margin: "24px 0 48px 0" }}>
               Opłatę będzie można uiścić na koniec procesu składania wniosku
             </p>

@@ -9,7 +9,9 @@ const Input = styled.input`
   color: black;
   font-size: 16px;
   outline: none;
+  -webkit-appearance: none;
 
+  -moz-appearance: textfield;
   &:focus {
     box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.primaryLight};
   }

@@ -19,13 +19,13 @@ import Paragraph from "../../../components/atoms/paragraph";
 import AddFilesWrapper from "../../../components/organisms/add_files_wrapper";
 import ErrorMessage from "../../../components/atoms/error_message";
 import LicenseDecision from "../../../components/atoms/license_decision";
-const Application = ({ authData, clubData }) => {
+const Application = ({ authData, clubData, settings }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [visibleReject, setvisibleReject] = useState(false);
   const [invoiceFiles, setInvoiceFiles] = useState([]);
-
+  console.log(settings);
   const handleFileDelete = () => {};
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {
@@ -143,12 +143,24 @@ const Application = ({ authData, clubData }) => {
     setLoading(true);
 
     //TO DO: api route for generate paynament link
-
+    const amount =
+      clubData.applications[0].youth_groups_possession ===
+      "nie posiadamy zespołów"
+        ? settings.application_fee + settings.no_possession_fee
+        : settings.application_fee;
     try {
+      const newOrder = await axios.post("/api/payments/newOrder", {
+        description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
+        email: clubData.email,
+        amount: amount,
+
+        firstName: clubData.name,
+      });
+
       await axios.post("/api/applications/acceptApplication", {
         applicationID: clubData.applications[0].id,
-
-        description: "Zaakceptowanie wniosku",
+        link: newOrder.data.link,
+        amount: amount,
       });
       router.replace(router.asPath);
 
@@ -287,10 +299,22 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
       },
     },
   });
+
+  const settings = await prisma.settings.findUnique({
+    where: {
+      id: 1,
+    },
+  });
   return {
     props: {
       authData: data,
       clubData: clubData,
+      settings: {
+        application_fee: parseFloat(settings.application_fee),
+        no_possession_fee: parseFloat(settings.no_possession_fee),
+        start_date: settings.start_date,
+        end_date: settings.end_date,
+      },
     },
   };
 });

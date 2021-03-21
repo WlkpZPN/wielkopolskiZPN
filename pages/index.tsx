@@ -14,6 +14,7 @@ import LastChange from "../components/molecules/last_change";
 import Spinner from "../components/atoms/loader";
 import Paragraph from "../components/atoms/paragraph";
 import ClubSteps from "../components/organisms/club_steps";
+import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 const Header = styled.h1`
   margin-bottom: 16px;
   padding: 16px 0;
@@ -22,11 +23,22 @@ const Header = styled.h1`
   font-size: 32px;
 `;
 
+const PaymentLink = styled.a`
+  background: url("http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png");
+  display: block;
+  background-repeat: no-repeat;
+  color: transparent;
+  background-size: contain;
+  height: 40px;
+  margin-bottom: 32px;
+  cursor: pointer;
+`;
+
 export const ClubContext = createContext(null);
 
-const Home = ({ authData, clubData }) => {
+const Home = ({ authData, clubData, settings }) => {
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
-
+  console.log(settings);
   if (!clubData) {
     return <Spinner />;
   }
@@ -122,6 +134,73 @@ const Home = ({ authData, clubData }) => {
               />
             </>
           );
+
+        case 6:
+          return (
+            <>
+              <Header color="success">
+                Twój wniosek został zaakceptowany. Prosimy o dokonanie
+                płatności.
+              </Header>
+              <Paragraph>
+                Wielkopolski ZPN zaakceptował Twój wniosek. <br />
+                Prosimy dokonaj płatności używając poniższego linka
+              </Paragraph>
+              <p style={{ fontSize: "48px", fontWeight: "bold" }}>
+                {clubData.applications[0].amount} PLN
+              </p>
+              {clubData.applications[0].youth_groups_possession ===
+              "nie posiadamy zespołów" ? (
+                <p>
+                  Opłata dodatkowa (klub nie posiada zespołów młodzieżowych):{" "}
+                  <span style={{ fontWeight: "bold" }}>
+                    {settings.no_possession_fee}
+                  </span>
+                </p>
+              ) : null}
+              <p style={{ fontSize: "14px", marginBottom: "32px" }}>
+                Opłata licencyjna:{" "}
+                <span style={{ fontWeight: "bold" }}>
+                  {settings.application_fee}
+                </span>
+              </p>
+              <PaymentLink
+                href={clubData.applications[0].payment_link}
+                target="_blank"
+              ></PaymentLink>
+              <ClubSteps status="zaakceptowany nieopłacony" />
+              <ClubApplication
+                show_buttons={false}
+                error_message=""
+                errors=""
+                completed={true}
+                readOnly={true}
+                clubData={clubData}
+              />
+            </>
+          );
+        case 7:
+          return (
+            <>
+              {" "}
+              <Header color="success">
+                Płatność za wniosek została wykonana
+                <Paragraph>
+                  Opłaciłeś swój wniosek. Poczekaj aż Wielkopolski ZPN
+                  zweryfikuje płatność.
+                </Paragraph>
+              </Header>{" "}
+              <ClubSteps status="zaakceptowany opłacony" />
+              <ClubApplication
+                show_buttons={false}
+                error_message=""
+                errors=""
+                completed={true}
+                readOnly={true}
+                clubData={clubData}
+              />
+            </>
+          );
       }
 
       //  sprawdzamy status
@@ -138,7 +217,7 @@ const Home = ({ authData, clubData }) => {
   };
 
   return (
-    <ClubContext.Provider value={clubData}>
+    <ClubContext.Provider value={settings}>
       <ClientLayout clubData={clubData} view="Wniosek licencyjny">
         {renderView()}
       </ClientLayout>
@@ -231,11 +310,23 @@ export const getServerSideProps = protectedClientRoute(
       });
     }
 
+    const settings = await prisma.settings.findUnique({
+      where: {
+        id: 1,
+      },
+    });
+
     // console.log("clubData", clubData);
     return {
       props: {
         authData: data,
         clubData: clubData,
+        settings: {
+          application_fee: parseFloat(settings.application_fee),
+          no_possession_fee: parseFloat(settings.no_possession_fee),
+          start_date: settings.start_date,
+          end_date: settings.end_date,
+        },
       },
     };
   }

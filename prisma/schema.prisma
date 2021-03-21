@@ -44,6 +44,7 @@ model applications {
   internal_id                                                    String?                     @db.VarChar(20)
   reject_reason                                                  String?
   invoice_required                                               Boolean?                    @default(false)
+  amount                                                         Float?
   clubs                                                          clubs?                      @relation(fields: [club_id], references: [id])
   statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
   annotations                                                    annotations[]
@@ -303,8 +304,10 @@ model youth_groups {
   applications_youth_groups applications_youth_groups[]
 }
 
-model submission_duration {
-  start_date String? @db.VarChar(300)
-  end_date   String? @db.VarChar(300)
-  id         Int     @id @default(autoincrement())
+model settings {
+  start_date        DateTime? @db.Date
+  end_date          DateTime? @db.Date
+  id                Int       @id @default(autoincrement())
+  application_fee   Float?
+  no_possession_fee Float?
 }

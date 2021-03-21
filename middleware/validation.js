@@ -77,3 +77,18 @@ export const validatePhone = (phone) => {
     valid: true,
   };
 };
+
+export const validateNumber = (number) => {
+  const num = parseFloat(number);
+
+  if (isNaN(num)) {
+    return {
+      valid: false,
+      message: "Proszę podać poprawną liczbę,znaki tekstowe nie są dozwolone",
+    };
+  }
+
+  return {
+    valid: true,
+  };
+};

@@ -1,11 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
-const Label = styled.p`
-font-weight:bold;
-font-size:13px;
-margin-bottom:4px;
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
-
 
 export default Label;
