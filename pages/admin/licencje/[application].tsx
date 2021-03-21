@@ -153,8 +153,9 @@ const Application = ({ authData, clubData, settings }) => {
         description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
         email: clubData.email,
         amount: amount,
-
+        applicationID: clubData.applications[0].id,
         firstName: clubData.name,
+        phone: clubData.phone,
       });
 
       await axios.post("/api/applications/acceptApplication", {
