@@ -10,7 +10,7 @@ export default (req, res) => {
     if (newStatus === "COMPLETED") {
       await prisma.applications.update({
         where: {
-          id: applicationID,
+          id: parseInt(applicationID),
         },
         data: {
           status_id: 7,
