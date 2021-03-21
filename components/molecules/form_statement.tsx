@@ -95,7 +95,7 @@ const FormStatement = ({
               dapibus porttitor leo. Vestibulum commodo aliquet ligula. Donec
               molestie nisl scelerisque lectus pulvinar pharetra.{" "}
             </StatementText>
-            <Label direction="row">
+            <Label pointer direction="row">
               <RadioSquare value={value} handleChange={handleChange} />
               {buttonText}
             </Label>

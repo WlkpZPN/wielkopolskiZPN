@@ -3,7 +3,7 @@ import prisma from "../../../middleware/prisma";
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const newStatus = req.body.order.status;
-    const applicationID = req.body.order.exOrderId;
+    const applicationID = req.body.order.extOrderId;
 
     console.log("NOTIFY ROUTE FIRED");
     console.log(req.body);
