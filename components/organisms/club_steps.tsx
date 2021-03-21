@@ -80,7 +80,7 @@ const ClubSteps = ({ status }) => {
         );
       case "zaakceptowany opłacony":
         return (
-          <WrapperWrapper>
+          <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
               <span>Złożenie wniosku licencyjnego.</span>
@@ -105,11 +105,11 @@ const ClubSteps = ({ status }) => {
               <HistoryIcon hidden={true} state="default" number={5} />
               <span>Decyzja Komisji Licencyjnej</span>
             </Row>
-          </WrapperWrapper>
+          </Wrapper>
         );
       case "do poprawy":
         return (
-          <WrapperWrapper>
+          <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
               <span>Złożenie wniosku licencyjnego.</span>
@@ -132,11 +132,11 @@ const ClubSteps = ({ status }) => {
               <HistoryIcon hidden={true} state="default" number={5} />
               <span>Decyzja Komisji Licencyjnej</span>
             </Row>
-          </WrapperWrapper>
+          </Wrapper>
         );
       case "odrzucony":
         return (
-          <WrapperWrapper>
+          <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
               <span>Złożenie wniosku licencyjnego.</span>
@@ -159,7 +159,7 @@ const ClubSteps = ({ status }) => {
               <HistoryIcon hidden={true} state="default" number={5} />
               <span>Decyzja Komisji Licencyjnej</span>
             </Row>
-          </WrapperWrapper>
+          </Wrapper>
         );
       case "licencja wydana":
       case "licencja niewydana":
