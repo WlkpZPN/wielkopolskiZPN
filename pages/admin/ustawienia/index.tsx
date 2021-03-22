@@ -33,7 +33,6 @@ const Ustawienia = ({ userData, settings, questions }) => {
   const [error, setError] = useState("");
   console.log(settings);
 
-  return <p>testing</p>;
   const setAmounts = async (e) => {
     e.preventDefault();
 
@@ -165,18 +164,18 @@ const Ustawienia = ({ userData, settings, questions }) => {
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
   const { req, res } = context;
 
-  // const settings = await prisma.settings.findUnique({
-  //   where: {
-  //     id: 1,
-  //   },
-  // });
+  const settings = await prisma.settings.findUnique({
+    where: {
+      id: 1,
+    },
+  });
 
   const questions = await prisma.frequently_asked_questions.findMany();
 
   return {
     props: {
       userData: data,
-      // settings: { settings },
+      settings: { settings },
       questions: questions,
     },
   };

@@ -325,6 +325,13 @@ export const getServerSideProps = protectedClientRoute(
         props: {},
       };
     }
+
+    const settings = await prisma.settings.findUnique({
+      where: {
+        id: 1,
+      },
+    });
+
     clubData = await prisma.clubs.findUnique({
       where: {
         id: data.id,
@@ -398,23 +405,12 @@ export const getServerSideProps = protectedClientRoute(
       });
     }
 
-    const settings = await prisma.settings.findUnique({
-      where: {
-        id: 1,
-      },
-    });
-
     // console.log("clubData", clubData);
     return {
       props: {
         authData: data,
         clubData: clubData,
-        settings: {
-          application_fee: parseFloat(settings.application_fee),
-          no_possession_fee: parseFloat(settings.no_possession_fee),
-          start_date: settings.start_date,
-          end_date: settings.end_date,
-        },
+        settings: settings,
       },
     };
   }
