@@ -10,6 +10,7 @@ const PrimaryButton = styled.button`
   width: ${({ width }) => (width ? width : "initial")};
   padding: 8px 16px;
   border-radius: 5px;
+  font-weight: bold;
   transition: all 0.2s;
   cursor: pointer;
 

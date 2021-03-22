@@ -13,6 +13,7 @@ import ClubApplication from "../components/organisms/club_application";
 import LastChange from "../components/molecules/last_change";
 import Spinner from "../components/atoms/loader";
 import Paragraph from "../components/atoms/paragraph";
+import ErrorMessage from "../components/atoms/error_message";
 import ClubSteps from "../components/organisms/club_steps";
 import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 const Header = styled.h1`
@@ -43,6 +44,37 @@ const Home = ({ authData, clubData, settings }) => {
     return <Spinner />;
   }
   const renderView = () => {
+    if (
+      new Date() < new Date(settings.start_date) &&
+      clubData.applications[0].status_id < 6
+    ) {
+      return (
+        <>
+          {" "}
+          <Header>Proces licencyjny jeszcze sie nie rozpoaczął</Header>{" "}
+          <Paragraph>
+            Wnisoki licencyjne będze można składać w okresie od{" "}
+            {settings.start_date} do {settings.end_date}
+          </Paragraph>
+        </>
+      );
+    }
+
+    if (
+      new Date() > new Date(settings.end_date) &&
+      clubData.applications[0].status_id < 6
+    ) {
+      return (
+        <>
+          {" "}
+          <Header>Czas na składanie wniosków licencyjnych upłynął</Header>{" "}
+          <Paragraph>
+            Jeśli nie udało Ci się złożyć wniosku licencyjnego w terminie,
+            skontaktuj się z Wielkopolskim ZPN
+          </Paragraph>
+        </>
+      );
+    }
     if (clubData.applications.length === 0) {
       // 1. tworzymy nowy wniosek
       console.log("to sie nigdy nie wykona");
@@ -134,6 +166,19 @@ const Home = ({ authData, clubData, settings }) => {
               />
             </>
           );
+        case 5:
+          return (
+            <>
+              <Header color="danger">Twój wniosek został odrzucony</Header>
+              <Paragraph>
+                Wielkopolski ZPN odrzucił Twój wniosek,przeczytaj uzasadnienie
+                poniżej:{" "}
+              </Paragraph>
+              <ErrorMessage>
+                {clubData.applications[0].reject_reason}
+              </ErrorMessage>
+            </>
+          );
 
         case 6:
           return (
@@ -185,11 +230,11 @@ const Home = ({ authData, clubData, settings }) => {
               {" "}
               <Header color="success">
                 Płatność za wniosek została wykonana
-                <Paragraph>
-                  Opłaciłeś swój wniosek. Poczekaj aż Wielkopolski ZPN
-                  zweryfikuje płatność.
-                </Paragraph>
               </Header>{" "}
+              <Paragraph>
+                Opłaciłeś swój wniosek. Poczekaj aż Wielkopolski ZPN zweryfikuje
+                płatność.
+              </Paragraph>
               <ClubSteps status="zaakceptowany opłacony" />
               <ClubApplication
                 show_buttons={false}
@@ -199,6 +244,37 @@ const Home = ({ authData, clubData, settings }) => {
                 readOnly={true}
                 clubData={clubData}
               />
+            </>
+          );
+
+        case 8:
+          return (
+            <>
+              {" "}
+              <Header color="success">
+                Gratulacje! Twój klub posiada licencję Wielkopolskiego ZPN
+              </Header>
+              <Paragraph>
+                Komisja Licencyjna Wielkopolskiego ZPN przyznała Twojemu klubowi
+                licencję na sezon 2021 do IV Ligi
+              </Paragraph>
+              TUTAJ PLIKI DO POBRANIA
+              <ClubSteps status="licencja wydana" />
+            </>
+          );
+        case 9:
+          return (
+            <>
+              {" "}
+              <Header>Licencja została cofnięta</Header>{" "}
+              <Paragraph>
+                Wielkopolski ZPN odrzucił Twoją licencję z następujących
+                przyczyn:
+              </Paragraph>
+              <ErrorMessage>
+                {clubData.applications[0].reject_reason}
+              </ErrorMessage>
+              <p></p>
             </>
           );
       }

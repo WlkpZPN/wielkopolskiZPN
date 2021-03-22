@@ -1,44 +1,4 @@
-import prisma from "../../../middleware/prisma";
-import nodemailer from "nodemailer";
-
-var transporter = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "d6b6955cf480dd",
-    pass: "fb302668d87e65",
-  },
-});
-
-export default (req, res) => {
-  return new Promise(async (resolve) => {
-    const newStatus = req.body.order.status;
-    const applicationID = req.body.order.extOrderId;
-    const email = req.body.order.buyer.email;
-    console.log("NOTIFY ROUTE FIRED");
-    console.log(req.body);
-
-    const application = await prisma.applications.findUnique({
-      where: {
-        id: parseInt(applicationID),
-      },
-    });
-    if (newStatus === "COMPLETED" && application.status_id == 6) {
-      await prisma.applications.update({
-        where: {
-          id: parseInt(applicationID),
-        },
-        data: {
-          status_id: 7,
-        },
-      });
-    }
-
-    transporter.sendMail({
-      from: "licklub@wielkopolskizpn.pl",
-      to: email,
-      subject: "WielkopolskiZPN - opłata za złożenie wniosku",
-      html: `<head>
+<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
@@ -111,11 +71,4 @@ export default (req, res) => {
       </tfoot>
     </table>
   </main>
-</body>`,
-    });
-
-    res.status(200);
-    res.send("OK");
-    return resolve();
-  });
-};
+</body>

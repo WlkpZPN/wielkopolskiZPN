@@ -8,21 +8,24 @@ const StyledLicense = styled(Certificate)`
   color: ${({ color }) => color};
 `;
 
+const User = styled(UserSecret)`
+  color: ${({ theme }) => theme.primary};
+`;
+
 const SupervisiorLicense = styled.div`
   width: ${({ size }) => size || "21px"};
   height: ${({ size }) => size || "21px"};
   position: relative;
+  color: ${({ color }) => color};
   img {
     width: 100%;
     height: 100%;
   }
-  svg {
+  & svg:nth-child(2) {
+    width: 26px;
     position: absolute;
-    right: -20%;
-    top: -20%;
-    width: 80%;
-    height: 80%;
-    color: ${({ theme }) => theme.primary};
+    top: -5px;
+    right: -5px;
   }
 `;
 
@@ -60,22 +63,15 @@ const ApplicationStatus = ({ status, size = "21px" }) => {
 
   if (status === "licencja wydana z nadzorem") {
     return (
-      <SupervisiorLicense color={setColor()} size={size}>
-        <StyledLicense size={size} color={setColor()} />
-        <UserSecret />
+      <SupervisiorLicense color="#00A54C" size={size}>
+        <StyledLicense size={size} color="#00A54C" />
+        <User />
       </SupervisiorLicense>
     );
   }
 
   if (status.includes("licencja")) {
-    return (
-      <StyledLicense
-        size={size}
-        color={setColor()}
-        src="/license.svg"
-        alt="license icon"
-      />
-    );
+    return <StyledLicense size={size} color={setColor()} />;
   }
 
   return <Application size={size} color={setColor()} />;

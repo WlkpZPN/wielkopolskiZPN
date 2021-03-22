@@ -52,7 +52,11 @@ const MainPage = ({ userData, applications }) => {
 
     if (query !== "") {
       helperArr = helperArr.filter((application) => {
-        return JSON.stringify(application).indexOf(query) > -1 ? true : false;
+        return JSON.stringify(application)
+          .toLowerCase()
+          .indexOf(query.toLowerCase()) > -1
+          ? true
+          : false;
       });
     }
     setList(helperArr);

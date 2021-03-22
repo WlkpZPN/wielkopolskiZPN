@@ -30,9 +30,10 @@ const Text = styled.p`
 const LicenseDecision = ({
   type,
   applicationID,
-  reasonID,
+  statusID,
   reason,
   internalID,
+  description,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -40,11 +41,13 @@ const LicenseDecision = ({
   const [loading, setLoading] = useState(false);
 
   const IssueLicense = async () => {
+    setLoading(true);
     try {
       axios.post("/api/licences/setLicense", {
         applicationID,
-        reasonID,
+        statusID,
         reason: reason || "",
+        description,
       });
     } catch (err) {
       console.log(err);
@@ -103,10 +106,7 @@ const LicenseDecision = ({
               internalID={internalID}
               applicationID={applicationID}
             />
-            <ApplicationStatus
-              size="40px"
-              status="licencja wydana z nadzorem"
-            />
+            <ApplicationStatus size="40px" status="licencja niewydana" />
             <Text> Odmów wydania licencji</Text>
             <PrimaryButton
               onClick={() => setVisible(true)}

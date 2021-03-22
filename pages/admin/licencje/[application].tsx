@@ -53,23 +53,26 @@ const Application = ({ authData, clubData, settings }) => {
             <div style={{ display: "flex" }}>
               <LicenseDecision
                 applicationID={clubData.applications[0].id}
-                reasonID={8}
+                statusID={8}
                 type="standard"
                 reason=""
+                description="Wydano licencje standardową"
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
-                reasonID={10}
+                statusID={10}
                 applicationID={clubData.applications[0].id}
                 type="nadzór"
                 reason=""
+                description="Wydano licencje z nadzorem"
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
-                reasonID={9}
+                statusID={9}
                 applicationID={clubData.applications[0].id}
                 type="odmowa"
                 reason=""
+                description="Odmowa wydania licencji"
                 internalID={clubData.applications[0].internal_id}
               />
             </div>
@@ -156,6 +159,11 @@ const Application = ({ authData, clubData, settings }) => {
         applicationID: clubData.applications[0].id,
         firstName: clubData.name,
         phone: clubData.phone,
+      });
+
+      await axios.post("/api/mails/sendPayuLink", {
+        link: newOrder.data.link,
+        email: clubData.email,
       });
 
       await axios.post("/api/applications/acceptApplication", {

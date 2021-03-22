@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { Download } from "@styled-icons/entypo/Download";
 import { AttachMoney } from "@styled-icons/material/AttachMoney";
 //components
+import { exportClubData } from "../../middleware/utils";
+import ExportToCSV from "../molecules/export_to_csv";
 import TableRow from "../atoms/table_row";
 import ClubStatus from "../atoms/club_status";
 import IconButton from "../atoms/IconButton";
@@ -88,7 +90,7 @@ const ClubsList = () => {
           width: "100%",
         }}
       >
-        <IconButton>
+        <IconButton onClick={() => exportClubData(clubs)}>
           <Download />
           Eksportuj tabelę do CSV
         </IconButton>

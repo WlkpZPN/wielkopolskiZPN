@@ -139,17 +139,18 @@ model clubs {
   active         Boolean?       @default(true)
   updated_at     String?        @db.VarChar(40)
   debt           Boolean?       @default(false)
+  chairman_email String?        @db.VarChar(300)
   applications   applications[]
   users          users[]
 }
 
 model frequently_asked_questions {
-  id         Int       @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   question   String?
   answer     String?
-  created_at DateTime? @db.Timestamp(6)
-  updated_at DateTime? @db.Timestamp(6)
-  category   String?   @db.VarChar(200)
+  created_at String? @db.VarChar(300)
+  updated_at String? @db.VarChar(300)
+  category   String? @db.VarChar(200)
 }
 
 model histories {
@@ -305,9 +306,9 @@ model youth_groups {
 }
 
 model settings {
-  start_date        DateTime? @db.Date
-  end_date          DateTime? @db.Date
-  id                Int       @id @default(autoincrement())
+  start_date        String? @db.VarChar(200)
+  end_date          String? @db.VarChar(200)
+  id                Int     @id @default(autoincrement())
   application_fee   Float?
   no_possession_fee Float?
 }

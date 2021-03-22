@@ -1,6 +1,7 @@
-import prisma from "../../../middleware/prisma";
 import nodemailer from "nodemailer";
-
+import hbs from "nodemailer-express-handlebars";
+import fs from "fs";
+import path from "path";
 var transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
@@ -10,29 +11,18 @@ var transporter = nodemailer.createTransport({
   },
 });
 
+// transporter.use(
+//   "compile",
+//   hbs({
+//     viewEngine: "express-handlebars",
+//     // viewPath: fs.readFileSync(path.join(__dirname, "mail.hbs"), "utf8"),
+//     viewPath: "./pages/api/mails/views",
+//   })
+// );
+
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const newStatus = req.body.order.status;
-    const applicationID = req.body.order.extOrderId;
-    const email = req.body.order.buyer.email;
-    console.log("NOTIFY ROUTE FIRED");
-    console.log(req.body);
-
-    const application = await prisma.applications.findUnique({
-      where: {
-        id: parseInt(applicationID),
-      },
-    });
-    if (newStatus === "COMPLETED" && application.status_id == 6) {
-      await prisma.applications.update({
-        where: {
-          id: parseInt(applicationID),
-        },
-        data: {
-          status_id: 7,
-        },
-      });
-    }
+    const { link, email } = req.body;
 
     transporter.sendMail({
       from: "licklub@wielkopolskizpn.pl",
@@ -60,18 +50,19 @@ export default (req, res) => {
       </tr>
       <tr style="padding: 0">
         <td style="margin: 0; padding: 16px 48px; background-color: #0156a6">
-          <h1 style="margin: 0; padding: 0; color: white">Dziękujemy za dokonanie płatności</h1>
+          <h1 style="margin: 0; padding: 0; color: white">Opłać swój wniosek licencyjny</h1>
         </td>
       </tr>
       <tr>
         <td style="padding: 32px 48px">
-          <p style="margin:24px 0; max-width:400px; font-weight:bold; color:rgba(0,0,0,0.7">
-            Twoja płatność przebiegła pomyślnie, niedługo dostaniesz maila z decyzją Wielkopolskiego ZPN o wystawieniu
-            licencji.
-          </p>
-          <p style=" max-width:400px; font-weight:bold; color:rgba(0,0,0,0.7">W razie pytań zapraszamy do
-            kontaktu,zachęcamy też do zalogowania się na nasz serwis liencyjny w celu
-            sprawdzenia zakładki FAQ</p>
+        <p style='max-width:400px; color:rgba(0,0,0,0.8); font-weight:bold;'>
+
+        Twój wniosek został zaakceptowany,prosimy o dokonanie płatności klikając w poniższy link
+        </>
+          <a href="${link}" style="margin-top:24px; background-image:url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');background-repeat:no-repeat;
+          background-size:contain;display:block;height:40px;margin-bottom:24px;
+          " >&nbsp;</a>
+          Po zweryfikowaniu płatności wyślemy mail z decyzją Wielkopolskiego ZPN, status swojego wniosku możesz również sprawdzić korzystając z aplikacji
           </p>
         </td>
       </tr>
@@ -84,7 +75,7 @@ export default (req, res) => {
               font-weight: bold;
               background: #0156a6;
               border-radius: 4px;
-            " href="wielkopolski-zpn.vercel.app">Platforma licencyjna</a>
+            " href='wielkopolski-zpn.vercel.app'>Platforma Licencyjna</a>
         </td>
       </tr>
       <tr>
@@ -112,10 +103,12 @@ export default (req, res) => {
     </table>
   </main>
 </body>`,
+      // template: "mail",
+      // context: {
+      //   content: "testowa wiadomosc",
+      // },
     });
-
-    res.status(200);
-    res.send("OK");
+    res.send("email send");
     return resolve();
   });
 };

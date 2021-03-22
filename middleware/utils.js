@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import XLSX from "xlsx";
 export const logout = async (type) => {
   if (type === "admin") {
     axios
@@ -98,4 +98,108 @@ export const getInternalId = (id, isApplication) => {
     return `W/${id}/${new Date().getFullYear()}`;
   }
   return `${id}/${new Date().getFullYear()}`;
+};
+
+export const exportApplicationData = (data) => {
+  const exportData = [
+    [
+      "ID wniosku",
+      "Klub",
+      "Data złożenia wniosku",
+      "Status",
+      "Pełnomocnik",
+      "Stanowisko",
+      "telefon",
+      "liczba zespołów młodzieżowych",
+      "Udział zawodników młodzieżowych",
+      "Zespoły młodzieżowe",
+    ],
+  ];
+
+  data.forEach((item) => {
+    const row = [
+      item.internal_id || "",
+      item.clubs.name,
+      item.created_at,
+      item.statuses.name,
+      item.clubs.agent_name,
+      item.clubs.agent_position,
+      item.clubs.phone,
+      item.number_of_youth_groups,
+      item.share_of_youth_groups,
+      item.youth_groups_possession,
+    ];
+
+    exportData.push(row);
+  });
+
+  const wb = XLSX.utils.book_new();
+  const wsAll = XLSX.utils.aoa_to_sheet(exportData);
+  XLSX.utils.book_append_sheet(wb, wsAll, "Wnioski licencyjne");
+  XLSX.writeFile(wb, `Wnioski licencyjne.xlsx`);
+};
+
+export const exportClubData = (data) => {
+  const exportData = [
+    [
+      "ID klubu",
+      "ostatnia aktualizacja",
+      "pełna nazwa",
+      "status",
+      "Strefa",
+      "Klasa rozgrywkowa",
+      "Adres klubu",
+      "Adres korespondencyjny",
+      "Adres stadionu",
+      "Telefon_1",
+      "Telefon_2",
+      "Telefon_3",
+      "Tel.stacjonarny",
+      "Email_1",
+      "Email_2",
+      "Email_3",
+      "Prezes",
+      "email prezesa",
+      "tel. prezesa",
+      "pełnomocnik",
+      "funkcja pełnomocnika",
+      "email pełnomocnika",
+      "tel.pełnomocnika",
+    ],
+  ];
+
+  data.forEach((club) => {
+    let row = [
+      club.internal_id || "",
+      club.updated_at || "",
+      club.name || "",
+      club.active ? "aktywny" : "nieaktywny",
+      club.region || "",
+      club.leauge || "",
+      club.address || "",
+      club.postal_address || "",
+      club.stadium || "",
+      club.phone || "",
+      club.phone_2 || "",
+      club.phone_3 || "",
+      club.landline_phone || "",
+      club.email || "",
+      club.email_2 || "",
+      club.email_3 || "",
+      club.chairman || "",
+      club.chairman_email || "",
+      club.chairman_phone || "",
+      club.agent_name || "",
+      club.agent_position || "",
+      club.agent_email || "",
+      club.agent_phone || "",
+    ];
+
+    exportData.push(row);
+  });
+
+  const wb = XLSX.utils.book_new();
+  const wsAll = XLSX.utils.aoa_to_sheet(exportData);
+  XLSX.utils.book_append_sheet(wb, wsAll, "Kluby");
+  XLSX.writeFile(wb, `Kluby.xlsx`);
 };

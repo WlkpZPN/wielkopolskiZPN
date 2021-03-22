@@ -5,6 +5,7 @@ import { AdminContext } from "../../pages/admin/index";
 //icons
 import { Download } from "@styled-icons/entypo/Download";
 //components
+import { exportApplicationData } from "../../middleware/utils";
 import TableRow from "../atoms/table_row";
 import ApplicationStatus from "../atoms/application_status";
 import IconButton from "../atoms/IconButton";
@@ -30,7 +31,10 @@ const ApplicationsList = () => {
   const router = useRouter();
   const [page, setPage] = useState(0);
   const { list: applications } = useContext(AdminContext);
-
+  console.log(applications);
+  const dataToExport = applications;
+  delete dataToExport.clubs;
+  delete dataToExport.statuses;
   const totalPages = Math.ceil(applications.length / 10);
 
   const generateClubs = () => {
@@ -95,7 +99,7 @@ const ApplicationsList = () => {
           width: "100%",
         }}
       >
-        <IconButton>
+        <IconButton onClick={() => exportApplicationData(applications)}>
           <Download />
           Eksportuj tabelę do CSV
         </IconButton>

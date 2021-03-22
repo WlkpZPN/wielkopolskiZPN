@@ -1,17 +1,17 @@
-import AdminLayout from "../../components/organisms/admin_layout";
+import AdminLayout from "../../../components/organisms/admin_layout";
 import styled from "styled-components";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import prisma from "../../middleware/prisma";
-import { protectedAdminRoute } from "../../middleware/protectedAdmin";
-import { validateNumber } from "../../middleware/validation";
+import prisma from "../../../middleware/prisma";
+import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
+import { validateNumber } from "../../../middleware/validation";
 import axios from "axios";
-
-import Input from "../../components/atoms/input";
-import Label from "../../components/atoms/form_label";
-import PrimaryButton from "../../components/atoms/primary_button";
-import ErrorMessage from "../../components/atoms/error_message";
-
+import Loader from "../../../components/atoms/loader";
+import Input from "../../../components/atoms/input";
+import Label from "../../../components/atoms/form_label";
+import PrimaryButton from "../../../components/atoms/primary_button";
+import ErrorMessage from "../../../components/atoms/error_message";
+import QuestionList from "../../../components/organisms/questions_list";
 const NumberInput = styled(Input)`
   max-width: 350px;
   margin-top: 6px;
@@ -20,9 +20,10 @@ const NumberInput = styled(Input)`
 const Header = styled.h3`
   margin-top: 32px;
 `;
-const Ustawienia = ({ userData, settings }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+const Ustawienia = ({ userData, settings, questions }) => {
+  const [loading, setLoading] = useState(false);
+  const [startDate, setStartDate] = useState(settings.start_date || new Date());
+  const [endDate, setEndDate] = useState(settings.end_date || new Date());
   const [primaryAmount, setPrimaryAmount] = useState(
     settings.application_fee || 0
   );
@@ -30,7 +31,7 @@ const Ustawienia = ({ userData, settings }) => {
     settings.no_possession_fee || 0
   );
   const [error, setError] = useState("");
-
+  console.log(settings);
   const setAmounts = async (e) => {
     e.preventDefault();
 
@@ -55,24 +56,68 @@ const Ustawienia = ({ userData, settings }) => {
       autoClose: 2000,
     });
   };
+
+  const setDates = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    if (start > end) {
+      setError("Data rozpoczęcia nie może być mniejsza od daty zakończenia");
+      return;
+    }
+
+    await axios.post("/api/settings/setDates", {
+      startDate,
+      endDate,
+    });
+
+    setLoading(false);
+    toast.success("Pomyślnie zaktualizowano czas trwania procesu licencyjnego");
+  };
   return (
     <AdminLayout userData={userData} view="ustawienia">
-      <h1>Ustawienia</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h1>Ustawienia</h1>
+        {loading && <Loader />}
+      </div>
       <ErrorMessage>{error}</ErrorMessage>
       <Header>Czas trwania procesu licencyjnego</Header>
-      <form>
+      <form
+        onChange={() => {
+          setError("");
+        }}
+      >
         <div style={{ display: "flex" }}>
           <Label
             style={{ width: "250px", marginRight: "16px", fontSize: "14px" }}
           >
             Rozpoczęcie wniosku licencyjnego{" "}
-            <Input type="date" placeholder="data" />
+            <Input
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              type="date"
+              placeholder="data"
+            />
           </Label>
           <Label style={{ width: "250px", fontSize: "14px" }}>
             zakończenie wniosku licencyjnego{" "}
-            <Input type="date" placeholder="data" />
+            <Input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              placeholder="data"
+            />
           </Label>
         </div>
+        <PrimaryButton
+          hoverColor="success"
+          color="successDark"
+          onClick={setDates}
+          type="submit"
+        >
+          Zapisz
+        </PrimaryButton>
       </form>
       <Header>Opłaty składane przez kluby</Header>
       <form
@@ -108,6 +153,9 @@ const Ustawienia = ({ userData, settings }) => {
           Zapisz
         </PrimaryButton>
       </form>
+
+      <Header>Pytania do działu FAQ</Header>
+      <QuestionList questions={questions} />
     </AdminLayout>
   );
 };
@@ -121,6 +169,8 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
     },
   });
 
+  const questions = await prisma.frequently_asked_questions.findMany();
+
   return {
     props: {
       userData: data,
@@ -130,6 +180,7 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
         start_date: settings.start_date,
         end_date: settings.end_date,
       },
+      questions: questions,
     },
   };
 });
