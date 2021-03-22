@@ -23,6 +23,7 @@ export default async (req, res) => {
         applications: applications.length,
         allApplications: allApplications,
       });
+      return resolve();
     }
 
     const applications = await prisma.applications.count({

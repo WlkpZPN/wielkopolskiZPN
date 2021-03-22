@@ -77,6 +77,7 @@ const RejectLicense = ({ visible, setVisible, applicationID, internalID }) => {
         reason: reason,
         applicationID: applicationID,
         statusID: 9,
+        description: "Odmowa wydania licencji przez wielkopolski ZPN",
       })
       .catch((err) => {
         console.log(err);

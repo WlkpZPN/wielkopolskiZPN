@@ -115,7 +115,7 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
     include: {
       histories: {
         orderBy: {
-          id: "desc",
+          id: "asc",
         },
       },
       clubs: true,

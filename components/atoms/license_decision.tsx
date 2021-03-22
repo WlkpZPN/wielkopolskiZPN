@@ -117,6 +117,42 @@ const LicenseDecision = ({
             </PrimaryButton>
           </Wrapper>
         );
+      case "cofnij":
+        return (
+          <Wrapper>
+            <RejectLicense
+              visible={visible}
+              setVisible={setVisible}
+              internalID={internalID}
+              applicationID={applicationID}
+            />
+            <ApplicationStatus size="40px" status="licencja niewydana" />
+            <Text> Licencja cofnięta</Text>
+            <PrimaryButton
+              onClick={() => setVisible(true)}
+              hoverColor="dangerDark"
+              color="danger"
+            >
+              Zmień decyzję
+            </PrimaryButton>
+          </Wrapper>
+        );
+      case "niewydana":
+        return (
+          <Wrapper>
+            <RejectLicense
+              visible={visible}
+              setVisible={setVisible}
+              internalID={internalID}
+              applicationID={applicationID}
+            />
+            <ApplicationStatus size="40px" status="licencja niewydana" />
+            <Text> Licencja niewydana</Text>
+            <PrimaryButton onClick={() => setVisible(true)}>
+              Zmień decyzję
+            </PrimaryButton>
+          </Wrapper>
+        );
 
       default:
         return null;

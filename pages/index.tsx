@@ -13,9 +13,10 @@ import ClubApplication from "../components/organisms/club_application";
 import LastChange from "../components/molecules/last_change";
 import Spinner from "../components/atoms/loader";
 import Paragraph from "../components/atoms/paragraph";
+import PrimaryButton from "../components/atoms/primary_button";
 import ErrorMessage from "../components/atoms/error_message";
 import ClubSteps from "../components/organisms/club_steps";
-import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
+
 const Header = styled.h1`
   margin-bottom: 16px;
   padding: 16px 0;
@@ -171,12 +172,14 @@ const Home = ({ authData, clubData, settings }) => {
             <>
               <Header color="danger">Twój wniosek został odrzucony</Header>
               <Paragraph>
-                Wielkopolski ZPN odrzucił Twój wniosek,przeczytaj uzasadnienie
-                poniżej:{" "}
+                Wielkopolski ZPN odrzucił Twój wniosek. <br />
+                Zapoznaj się z poniższym uzasadnieniem oraz prosimy o
+                wprowadzenie poprawek do wniosku
               </Paragraph>
               <ErrorMessage>
                 {clubData.applications[0].reject_reason}
               </ErrorMessage>
+              <PrimaryButton></PrimaryButton>
             </>
           );
 
@@ -248,6 +251,7 @@ const Home = ({ authData, clubData, settings }) => {
           );
 
         case 8:
+        case 10:
           return (
             <>
               {" "}
@@ -266,7 +270,7 @@ const Home = ({ authData, clubData, settings }) => {
           return (
             <>
               {" "}
-              <Header>Licencja została cofnięta</Header>{" "}
+              <Header>Licencja niewydana</Header>{" "}
               <Paragraph>
                 Wielkopolski ZPN odrzucił Twoją licencję z następujących
                 przyczyn:
@@ -275,6 +279,14 @@ const Home = ({ authData, clubData, settings }) => {
                 {clubData.applications[0].reject_reason}
               </ErrorMessage>
               <p></p>
+            </>
+          );
+
+        case 11:
+          return (
+            <>
+              {" "}
+              <Header>Licencja cofnięta</Header>{" "}
             </>
           );
       }

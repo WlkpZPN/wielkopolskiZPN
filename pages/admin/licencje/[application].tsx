@@ -78,6 +78,20 @@ const Application = ({ authData, clubData, settings }) => {
             </div>
           </>
         );
+      case 9:
+        return (
+          <>
+            {" "}
+            <LicenseDecision
+              statusID={9}
+              applicationID={clubData.applications[0].id}
+              type="niewydana"
+              reason=""
+              description="Licencja niewydana"
+              internalID={clubData.applications[0].internal_id}
+            />{" "}
+          </>
+        );
     }
   };
 

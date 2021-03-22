@@ -32,13 +32,12 @@ export default (req, res) => {
           status_id: 7,
         },
       });
-    }
 
-    transporter.sendMail({
-      from: "licklub@wielkopolskizpn.pl",
-      to: email,
-      subject: "WielkopolskiZPN - opłata za złożenie wniosku",
-      html: `<head>
+      transporter.sendMail({
+        from: "licklub@wielkopolskizpn.pl",
+        to: email,
+        subject: "WielkopolskiZPN - opłata za złożenie wniosku",
+        html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
@@ -112,7 +111,8 @@ export default (req, res) => {
     </table>
   </main>
 </body>`,
-    });
+      });
+    }
 
     res.status(200);
     res.send("OK");

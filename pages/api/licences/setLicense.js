@@ -19,6 +19,7 @@ export default async (req, res) => {
         application_id: parseInt(applicationID),
         status_id: statusID,
         description: description,
+        created_at:getCurrentDate(),
       },
     });
 

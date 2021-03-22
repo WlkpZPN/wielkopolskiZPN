@@ -174,12 +174,7 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
   return {
     props: {
       userData: data,
-      settings: {
-        application_fee: parseFloat(settings.application_fee),
-        no_possession_fee: parseFloat(settings.no_possession_fee),
-        start_date: settings.start_date,
-        end_date: settings.end_date,
-      },
+      settings: settings,
       questions: questions,
     },
   };
