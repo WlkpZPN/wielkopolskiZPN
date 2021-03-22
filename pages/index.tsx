@@ -39,7 +39,6 @@ const PaymentLink = styled.a`
 export const ClubContext = createContext(null);
 
 const Home = ({ authData, clubData, settings }) => {
-  return <p>testing</p>;
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
   console.log(settings);
   if (!clubData) {
@@ -327,91 +326,90 @@ export const getServerSideProps = protectedClientRoute(
       };
     }
 
-    // const settings = await prisma.settings.findUnique({
-    //   where: {
-    //     id: 1,
-    //   },
-    // });
+    const settings = await prisma.settings.findUnique({
+      where: {
+        id: 1,
+      },
+    });
 
-    // clubData = await prisma.clubs.findUnique({
-    //   where: {
-    //     id: data.id,
-    //   },
-    //   include: {
-    //     applications: {
-    //       include: {
-    //         statuses: true,
-    //         applications_attachments: true,
-    //         histories: true,
-    //         sport_facilities: {
-    //           include: {
-    //             applications_attachments: true,
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    // });
+    clubData = await prisma.clubs.findUnique({
+      where: {
+        id: data.id,
+      },
+      include: {
+        applications: {
+          include: {
+            statuses: true,
+            applications_attachments: true,
+            histories: true,
+            sport_facilities: {
+              include: {
+                applications_attachments: true,
+              },
+            },
+          },
+        },
+      },
+    });
 
-    // if (clubData.applications.length === 0) {
-    //   // create application with empty data
-    //   // create one sport facility with empty data
+    if (clubData.applications.length === 0) {
+      // create application with empty data
+      // create one sport facility with empty data
 
-    //   // await prisma.applications.deleteMany({
-    //   //   where: {
-    //   //     club_id: clubData.id,
-    //   //   },
-    //   // });
+      // await prisma.applications.deleteMany({
+      //   where: {
+      //     club_id: clubData.id,
+      //   },
+      // });
 
-    //   const newApplication = await prisma.applications.create({
-    //     data: {
-    //       club_id: clubData.id,
-    //       status_id: 1,
-    //       created_at: getCurrentDate(),
-    //     },
-    //   });
+      const newApplication = await prisma.applications.create({
+        data: {
+          club_id: clubData.id,
+          status_id: 1,
+          created_at: getCurrentDate(),
+        },
+      });
 
-    //   await prisma.applications.update({
-    //     where: {
-    //       id: newApplication.id,
-    //     },
-    //     data: {
-    //       internal_id: `W/${new Date().getFullYear()}/${newApplication.id.toLocaleString(
-    //         "en-US",
-    //         {
-    //           minimumIntegerDigits: 3,
-    //           useGrouping: false,
-    //         }
-    //       )}`,
-    //     },
-    //   });
-    //   clubData = await prisma.clubs.findUnique({
-    //     where: {
-    //       id: data.id,
-    //     },
-    //     include: {
-    //       applications: {
-    //         include: {
-    //           statuses: true,
-    //           applications_attachments: true,
-    //           histories: true,
-    //           sport_facilities: {
-    //             include: {
-    //               applications_attachments: true,
-    //             },
-    //           },
-    //         },
-    //       },
-    //     },
-    //   });
-    // }
+      await prisma.applications.update({
+        where: {
+          id: newApplication.id,
+        },
+        data: {
+          internal_id: `W/${new Date().getFullYear()}/${newApplication.id.toLocaleString(
+            "en-US",
+            {
+              minimumIntegerDigits: 3,
+              useGrouping: false,
+            }
+          )}`,
+        },
+      });
+      clubData = await prisma.clubs.findUnique({
+        where: {
+          id: data.id,
+        },
+        include: {
+          applications: {
+            include: {
+              statuses: true,
+              applications_attachments: true,
+              histories: true,
+              sport_facilities: {
+                include: {
+                  applications_attachments: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
 
-    // console.log("clubData", clubData);
     return {
       props: {
-        // authData: data,
-        // clubData: clubData,
-        // settings: settings,
+        authData: data,
+        clubData: clubData,
+        settings: settings,
       },
     };
   }
