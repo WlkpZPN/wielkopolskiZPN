@@ -37,7 +37,9 @@ const ApplicationsList = () => {
   delete dataToExport.clubs;
   delete dataToExport.statuses;
   const totalPages = Math.ceil(applications.length / 10);
-
+  if (totalPages <= page) {
+    setPage(0);
+  }
   const generateClubs = () => {
     let applicationsArray = [];
 

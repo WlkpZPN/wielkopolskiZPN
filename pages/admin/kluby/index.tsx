@@ -35,6 +35,7 @@ const Kluby = ({ clubs, userData }) => {
 
   useEffect(() => {
     let helperArr = clubs;
+
     if (status !== "wszystkie") {
       helperArr = helperArr.filter((club) => club.active == parseInt(status));
     }
@@ -45,7 +46,9 @@ const Kluby = ({ clubs, userData }) => {
           return club.leauge === "Klasa A" || club.leauge === "Klasa B";
         });
       } else {
-        helperArr = helperArr.filter((club) => club.leauge === leauge);
+        helperArr = helperArr.filter((club) => {
+          return club.leauge.toLowerCase() === leauge.toLowerCase();
+        });
       }
     }
 

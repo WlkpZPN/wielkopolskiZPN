@@ -28,10 +28,15 @@ const TableHeader = styled.span`
 const ClubsList = () => {
   const router = useRouter();
   const [page, setPage] = useLocalStorage("club_page", 0);
+  //const [page, setPage] = useState(0);
   const { list: clubs } = useContext(AdminContext);
 
   const totalPages = Math.ceil(clubs.length / 10);
-
+  console.log("total pages", totalPages);
+  console.log("current page", page);
+  if (totalPages <= page) {
+    setPage(0);
+  }
   const generateClubs = () => {
     let clubsArray = [];
 
