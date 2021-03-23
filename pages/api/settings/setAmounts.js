@@ -23,6 +23,8 @@ export default (req, res) => {
       conosle.log(error);
       res.status(400);
       res.send(error);
+    } finally {
+      await prisma.$disconnect();
     }
 
     return resolve();

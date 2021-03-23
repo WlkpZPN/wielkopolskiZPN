@@ -12,6 +12,7 @@ import Label from "../../../components/atoms/form_label";
 import PrimaryButton from "../../../components/atoms/primary_button";
 import ErrorMessage from "../../../components/atoms/error_message";
 import QuestionList from "../../../components/organisms/questions_list";
+import GroupMessages from "../../../components/organisms/group_messages";
 const NumberInput = styled(Input)`
   max-width: 350px;
   margin-top: 6px;
@@ -20,7 +21,7 @@ const NumberInput = styled(Input)`
 const Header = styled.h3`
   margin-top: 32px;
 `;
-const Ustawienia = ({ userData, settings, questions }) => {
+const Ustawienia = ({ userData, settings, questions, messages }) => {
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
   const [endDate, setEndDate] = useState(settings.end_date || new Date());
@@ -154,7 +155,8 @@ const Ustawienia = ({ userData, settings, questions }) => {
           Zapisz
         </PrimaryButton>
       </form>
-
+      <Header style={{ marginTop: "64px" }}> Wiadomości grupowe </Header>
+      <GroupMessages messages={messages} />
       <Header>Pytania do działu FAQ</Header>
       <QuestionList questions={questions} />
     </AdminLayout>
@@ -171,12 +173,13 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
   });
 
   const questions = await prisma.frequently_asked_questions.findMany();
-
+  const messages = await prisma.messages.findMany();
   return {
     props: {
       userData: data,
       settings: { settings },
       questions: questions,
+      messages,
     },
   };
 });

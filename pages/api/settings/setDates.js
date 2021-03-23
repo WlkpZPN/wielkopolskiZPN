@@ -10,12 +10,12 @@ export default (req, res) => {
           id: 1,
         },
         update: {
-            start_date:startDate,
-            end_date:endDate,
+          start_date: startDate,
+          end_date: endDate,
         },
         create: {
-            start_date:startDate,
-            end_date:endDate,
+          start_date: startDate,
+          end_date: endDate,
         },
       });
       res.send("dates updated");
@@ -23,6 +23,8 @@ export default (req, res) => {
       conosle.log(error);
       res.status(400);
       res.send(error);
+    } finally {
+      await prisma.$disconnect();
     }
 
     return resolve();

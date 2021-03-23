@@ -34,6 +34,8 @@ export default async (req, res) => {
       });
     }
 
+    await prisma.$disconnect();
+
     res.send("facility added");
     return resolve();
   });

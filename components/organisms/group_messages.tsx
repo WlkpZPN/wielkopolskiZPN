@@ -3,12 +3,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { InfoCircle } from "@styled-icons/boxicons-solid/InfoCircle";
+import { Mail } from "@styled-icons/entypo/Mail";
 import TableRow from "../atoms/table_row";
 import PrimaryButton from "../atoms/primary_button";
-import NewQUestionModal from "../organisms/new_question_modal";
+import NewMessageModal from "./new_message_modal";
 
-const Info = styled(InfoCircle)`
+const MailIcon = styled(Mail)`
   width: 26px;
   color: ${({ theme }) => theme.primary};
 `;
@@ -23,55 +23,55 @@ const TableHeader = styled.span`
 
 const StyledRow = styled(TableRow)`
   grid-template-columns:
-    50px 80px minmax(150px, 250px) minmax(150px, 250px)
+    50px 100px minmax(50px, 100px) minmax(60px, 250px)
     minmax(200px, 350px) auto;
 `;
 
-const QuestionsList = ({ questions }) => {
+const GroupMessages = ({ messages }) => {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 
-  const deleteQuestion = async (questionID) => {
+  const deleteMessage = async (messageID) => {
     axios
-      .post("/api/settings/deleteQuestion", {
-        questionID,
+      .post("/api/settings/deleteMessage", {
+        messageID,
       })
       .then(() => {
-        toast.error("Pytanie usunięte");
+        toast.error("Wiadomość usunięta", {
+          autoClose: 1500,
+        });
         router.replace(router.asPath);
       })
       .catch((err) => {
         console.log(err);
         toast.error(
-          "Usuwanie pytania,nie powiodło się, prosimy spróbuj jeszcze raz"
+          "Usuwanie wiadomości,nie powiodło się, prosimy spróbuj jeszcze raz"
         );
       });
   };
 
-  console.log(questions);
-
   const renderQuestions = () => {
-    let questionsArr = [];
-    questions.forEach((question) => {
-      questionsArr.push(
-        <StyledRow key={question.id}>
-          <Info />
-          <span>{question.id}</span>
-          <span>{question.created_at}</span>
-          <span>{question.category}</span>
-          <span>{question.question}</span>
+    let messageArr = [];
+    messages.forEach((message) => {
+      messageArr.push(
+        <StyledRow key={message.id}>
+          <MailIcon />
+          <span>{message.id}</span>
+          <span>{message.send_date || "nie wysłano"}</span>
+          <span>{message.recipients}</span>
+          <span>{message.title}</span>
           <div style={{ display: "flex" }}>
             <PrimaryButton
               style={{ marginRight: "8px" }}
               hoverColor="dangerDark"
               color="danger"
-              onClick={() => deleteQuestion(question.id)}
+              onClick={() => deleteMessage(message.id)}
             >
-              Usuń pytanie
+              Usuń wiadomość
             </PrimaryButton>
             <PrimaryButton
               onClick={() =>
-                router.push(`/admin/ustawienia/pytania/${question.id}`)
+                router.push(`/admin/ustawienia/wiadomosci/${message.id}`)
               }
             >
               Szczegóły
@@ -81,28 +81,28 @@ const QuestionsList = ({ questions }) => {
       );
     });
 
-    return questionsArr;
+    return messageArr;
   };
   return (
     <Wrapper>
-      <NewQUestionModal visible={visible} setVisible={setVisible} />
+      <NewMessageModal visible={visible} setVisible={setVisible} />
       <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
         <span></span>
-        <TableHeader>ID pytania</TableHeader>
-        <TableHeader>Data dodania pytania</TableHeader>
-        <TableHeader>Grupa pytań</TableHeader>
-        <TableHeader>Pytanie</TableHeader>
-        <div>&nbsp;</div>
+        <TableHeader>ID wiadomości</TableHeader>
+        <TableHeader>Data wysyłki</TableHeader>
+        <TableHeader>Grupa odbiorców</TableHeader>
+        <TableHeader>Tytuł</TableHeader>
+        <TableHeader>Reguła</TableHeader>
       </StyledRow>
       {renderQuestions()}
       <PrimaryButton
         onClick={() => setVisible(true)}
         style={{ margin: "24px 0" }}
       >
-        + Dodaj nowe pytanie
+        + Dodaj nową wiadomość grupową
       </PrimaryButton>
     </Wrapper>
   );
 };
 
-export default QuestionsList;
+export default GroupMessages;

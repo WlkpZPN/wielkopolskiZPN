@@ -33,6 +33,9 @@ export default async (req, res) => {
     });
 
     const allApplications = await prisma.clubs.count();
+
+    await prisma.$disconnect();
+
     res.json({
       applications: applications,
       allApplications: allApplications,

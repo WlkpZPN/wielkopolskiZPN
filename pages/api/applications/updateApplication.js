@@ -89,6 +89,9 @@ export default async (req, res) => {
     //4 update application_attachments
 
     //5 add record to history table
+
+    await prisma.$disconnect();
+
     res.send("zaaktualizowano wniosek");
     return resolve();
   });

@@ -4,11 +4,20 @@ export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { facilityId } = req.body;
     console.log(facilityId);
-    await prisma.sport_facilities.delete({
-      where: {
-        id: parseInt(facilityId),
-      },
-    });
+
+    try {
+      await prisma.sport_facilities.delete({
+        where: {
+          id: parseInt(facilityId),
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+      return resolve();
+    } finally {
+      await prisma.$disconnect();
+    }
 
     res.send("facility deleted");
     return resolve();

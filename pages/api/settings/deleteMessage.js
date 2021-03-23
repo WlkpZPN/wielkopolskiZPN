@@ -1,12 +1,12 @@
 import prisma from "../../../middleware/prisma";
-
+import { getCurrentDate } from "../../../middleware/utils";
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { questionID } = req.body;
+    const { messageID } = req.body;
     try {
-      await prisma.frequently_asked_questions.delete({
+      await prisma.messages.delete({
         where: {
-          id: parseInt(questionID),
+          id: parseInt(messageID),
         },
       });
     } catch (err) {
@@ -19,7 +19,7 @@ export default (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("Question deleted");
+    res.send("message deleted");
     return resolve();
   });
 };

@@ -21,6 +21,8 @@ export default (req, res) => {
       res.json({
         error: err,
       });
+    } finally {
+      await prisma.$disconnect();
     }
 
     res.send("Question updated");

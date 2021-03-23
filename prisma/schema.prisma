@@ -312,3 +312,12 @@ model settings {
   application_fee   Float?
   no_possession_fee Float?
 }
+
+model messages {
+  id         Int     @id @default(autoincrement())
+  title      String?
+  rule       String? @db.VarChar(200)
+  send_date  String? @db.VarChar(200)
+  recipients String? @db.VarChar(200)
+  message    String?
+}
