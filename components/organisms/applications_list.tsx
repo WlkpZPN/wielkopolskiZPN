@@ -83,17 +83,19 @@ const ApplicationsList = () => {
   };
   return (
     <Wrapper>
-      <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
-        <span></span>
-        <TableHeader>ID wniosku</TableHeader>
-        <TableHeader>Data złożenia wniosku</TableHeader>
-        <TableHeader>Klub</TableHeader>
-        <TableHeader>Status</TableHeader>
-        <TableHeader>Pełnomocnik</TableHeader>
-        <TableHeader>Stanowisko</TableHeader>
-        <TableHeader>Telefon</TableHeader>
-      </StyledRow>
-      {generateClubs()[page]}
+      <div>
+        <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
+          <span></span>
+          <TableHeader>ID wniosku</TableHeader>
+          <TableHeader>Data złożenia wniosku</TableHeader>
+          <TableHeader>Klub</TableHeader>
+          <TableHeader>Status</TableHeader>
+          <TableHeader>Pełnomocnik</TableHeader>
+          <TableHeader>Stanowisko</TableHeader>
+          <TableHeader>Telefon</TableHeader>
+        </StyledRow>
+        {generateClubs()[page]}
+      </div>
       <div
         style={{
           margin: "32px 0",

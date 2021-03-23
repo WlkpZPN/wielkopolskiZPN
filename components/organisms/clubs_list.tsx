@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { AdminContext } from "../../pages/admin/kluby";
 import { useRouter } from "next/router";
 import { useLocalStorage } from "../../middleware/hooks";
 //icons
 import { Download } from "@styled-icons/entypo/Download";
-import { AttachMoney } from "@styled-icons/material/AttachMoney";
+
 //components
 import { exportClubData } from "../../middleware/utils";
-import ExportToCSV from "../molecules/export_to_csv";
+
 import TableRow from "../atoms/table_row";
 import ClubStatus from "../atoms/club_status";
 import IconButton from "../atoms/IconButton";
@@ -78,16 +78,18 @@ const ClubsList = () => {
   };
   return (
     <Wrapper>
-      <TableRow style={{ backgroundColor: "#F9FAFB" }}>
-        <span></span>
-        <TableHeader>ID klubu</TableHeader>
-        <TableHeader>Data ost. akutalizacji</TableHeader>
-        <TableHeader>Pełna nazwa</TableHeader>
-        <TableHeader>Status</TableHeader>
-        <TableHeader>Strefa</TableHeader>
-        <TableHeader>Klasa rozgrywkowa</TableHeader>
-      </TableRow>
-      {generateClubs()[page]}
+      <div>
+        <TableRow style={{ backgroundColor: "#F9FAFB" }}>
+          <span></span>
+          <TableHeader>ID klubu</TableHeader>
+          <TableHeader>Data ost. akutalizacji</TableHeader>
+          <TableHeader>Pełna nazwa</TableHeader>
+          <TableHeader>Status</TableHeader>
+          <TableHeader>Strefa</TableHeader>
+          <TableHeader>Klasa rozgrywkowa</TableHeader>
+        </TableRow>
+        {generateClubs()[page]}
+      </div>
       <div
         style={{
           margin: "32px 0",
