@@ -96,7 +96,7 @@ const Kluby = ({ clubs, userData }) => {
               value={leauge}
               onChange={(e) => setLeauge(e.target.value)}
             >
-              <option value="wszystkie">Wszystkie ligii</option>
+              <option value="wszystkie">Wszystkie ligi</option>
               <option value="IV liga">IV liga</option>
               <option value="V liga">V liga</option>
               <option value="Klasa okręgowa">Klasa okręgowa</option>

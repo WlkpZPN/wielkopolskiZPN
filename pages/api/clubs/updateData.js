@@ -3,6 +3,7 @@ import prisma from "../../../middleware/prisma";
 export default (req, res) => {
   return new Promise(async (resolve) => {
     console.log(data, clubId);
+    const { data, clubId } = req.body;
     await prisma.clubs.update({
       where: {
         id: clubId,
