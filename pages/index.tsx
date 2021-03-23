@@ -89,6 +89,7 @@ const Home = ({ authData, clubData, settings }) => {
             completed={false}
             readOnly={false}
             clubData={clubData}
+            settings={settings}
           />
         </>
       );
@@ -119,6 +120,7 @@ const Home = ({ authData, clubData, settings }) => {
                 errors={""}
                 readOnly={false}
                 clubData={clubData}
+                settings={settings}
               />
             </>
           );
@@ -143,6 +145,7 @@ const Home = ({ authData, clubData, settings }) => {
                 completed={true}
                 readOnly={true}
                 clubData={clubData}
+                settings={settings}
               />
             </>
           );
@@ -164,6 +167,7 @@ const Home = ({ authData, clubData, settings }) => {
                 errors={clubData.applications[0].error_step}
                 readOnly={false}
                 clubData={clubData}
+                settings={settings}
               />
             </>
           );
@@ -224,6 +228,7 @@ const Home = ({ authData, clubData, settings }) => {
                 completed={true}
                 readOnly={true}
                 clubData={clubData}
+                settings={settings}
               />
             </>
           );
@@ -246,6 +251,7 @@ const Home = ({ authData, clubData, settings }) => {
                 completed={true}
                 readOnly={true}
                 clubData={clubData}
+                settings={settings}
               />
             </>
           );

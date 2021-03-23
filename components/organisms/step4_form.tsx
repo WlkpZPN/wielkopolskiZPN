@@ -92,7 +92,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
               type="button"
               style={{ padding: "6px 16px" }}
               onClick={(e) => {
-                handleNewForm();
+                readOnly ? null : handleNewForm();
               }}
               align="flex-start"
             >

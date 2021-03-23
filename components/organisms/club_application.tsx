@@ -38,6 +38,7 @@ const ClubApplication = ({
   readOnly,
   error_message,
   show_buttons,
+  settings,
 }) => {
   const improvements = errors ? JSON.parse(errors) : {};
   const router = useRouter();
@@ -705,6 +706,7 @@ const ClubApplication = ({
         deleteFacility,
         clubData,
         show_buttons,
+        settings,
       }}
     >
       <div>

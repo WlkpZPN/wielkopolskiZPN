@@ -20,7 +20,7 @@ import AddFilesWrapper from "./add_files_wrapper";
 const StepThreeForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
-  const settings = useContext(ClubContext);
+  const settings = context.settings;
   const formData = context.formData.stepThree;
   const handleChange = context.handleFormChange;
   const {

@@ -20,8 +20,6 @@ import AddFilesWrapper from "../../../components/organisms/add_files_wrapper";
 import ErrorMessage from "../../../components/atoms/error_message";
 import LicenseDecision from "../../../components/atoms/license_decision";
 
-export const ClubContext = createContext(null);
-
 const Application = ({ authData, clubData, settings }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -217,94 +215,93 @@ const Application = ({ authData, clubData, settings }) => {
   };
 
   return (
-    <ClubContext.Provider value={settings}>
-      <AdminLayout view="wnioski" userData={authData}>
-        <CorrectModal
-          internalId={
-            clubData.applications[0] ? clubData.applications[0].internal_id : ""
-          }
-          id={clubData.applications[0] ? clubData.applications[0].id : ""}
-          visible={visible}
-          setVisibile={setVisible}
-        />
+    <AdminLayout view="wnioski" userData={authData}>
+      <CorrectModal
+        internalId={
+          clubData.applications[0] ? clubData.applications[0].internal_id : ""
+        }
+        id={clubData.applications[0] ? clubData.applications[0].id : ""}
+        visible={visible}
+        setVisibile={setVisible}
+      />
 
-        <RejectModal
-          internalID={
-            clubData.applications[0] ? clubData.applications[0].internal_id : ""
-          }
-          applicationID={
-            clubData.applications[0] ? clubData.applications[0].id : ""
-          }
-          visible={visibleReject}
-          setVisible={setvisibleReject}
-        />
+      <RejectModal
+        internalID={
+          clubData.applications[0] ? clubData.applications[0].internal_id : ""
+        }
+        applicationID={
+          clubData.applications[0] ? clubData.applications[0].id : ""
+        }
+        visible={visibleReject}
+        setVisible={setvisibleReject}
+      />
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: "32px 0",
-            alignItems: "flex-start",
-          }}
-        >
-          <div style={{ display: "flex" }}>
-            <span>
-              <h1 style={{ marginRight: "32px", marginTop: "-3px" }}>
-                Wniosek {clubData.applications[0].internal_id}
-              </h1>
-              <Link href="/admin">
-                <IconButton>
-                  <ControllerFastBackward />
-                  Powrót
-                </IconButton>
-              </Link>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: "32px 0",
+          alignItems: "flex-start",
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <span>
+            <h1 style={{ marginRight: "32px", marginTop: "-3px" }}>
+              Wniosek {clubData.applications[0].internal_id}
+            </h1>
+            <Link href="/admin">
+              <IconButton>
+                <ControllerFastBackward />
+                Powrót
+              </IconButton>
+            </Link>
+          </span>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              height: "min-content",
+            }}
+          >
+            <ApplicationStatus
+              size="32px"
+              status={clubData.applications[0].statuses.name}
+            />
+            <span style={{ marginLeft: "16px" }}>
+              {clubData.applications[0].statuses.name}
             </span>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                height: "min-content",
-              }}
-            >
-              <ApplicationStatus
-                size="32px"
-                status={clubData.applications[0].statuses.name}
-              />
-              <span style={{ marginLeft: "16px" }}>
-                {clubData.applications[0].statuses.name}
-              </span>
-            </div>
-          </div>
-          <div style={{ display: "flex" }}>
-            {renderButtons()}
-            <PrimaryButton
-              onClick={() =>
-                router.push(
-                  `/admin/licencje/historia/${clubData.applications[0].id}`
-                )
-              }
-              style={{ margin: "0 6px" }}
-            >
-              Historia zmian
-            </PrimaryButton>
           </div>
         </div>
-        <div style={{ marginBottom: "32px" }}>{renderTopPanel()}</div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <ClubApplication
-            show_buttons={false}
-            completed={true}
-            errors=""
-            error_message=""
-            clubData={clubData}
-            readOnly={true}
-          />
-        )}
-      </AdminLayout>
-    </ClubContext.Provider>
+        <div style={{ display: "flex" }}>
+          {renderButtons()}
+          <PrimaryButton
+            onClick={() =>
+              router.push(
+                `/admin/licencje/historia/${clubData.applications[0].id}`
+              )
+            }
+            style={{ margin: "0 6px" }}
+          >
+            Historia zmian
+          </PrimaryButton>
+        </div>
+      </div>
+      <div style={{ marginBottom: "32px" }}>{renderTopPanel()}</div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <ClubApplication
+          show_buttons={false}
+          completed={clubData.applications[0].statuses.id === 1 ? false : true}
+          errors=""
+          error_message=""
+          clubData={clubData}
+          readOnly={true}
+          settings={settings}
+        />
+      )}
+    </AdminLayout>
   );
 };
 
