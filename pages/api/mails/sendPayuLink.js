@@ -1,15 +1,4 @@
-import nodemailer from "nodemailer";
-import hbs from "nodemailer-express-handlebars";
-import fs from "fs";
-import path from "path";
-var transporter = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "d6b6955cf480dd",
-    pass: "fb302668d87e65",
-  },
-});
+import transporter from "../../../middleware/transporter";
 
 // transporter.use(
 //   "compile",

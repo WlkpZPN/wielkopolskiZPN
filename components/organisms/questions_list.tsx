@@ -25,6 +25,8 @@ const StyledRow = styled(TableRow)`
   grid-template-columns:
     50px 80px minmax(150px, 250px) minmax(150px, 250px)
     minmax(200px, 350px) auto;
+
+  max-height: 50px;
 `;
 
 const QuestionsList = ({ questions }) => {
@@ -47,8 +49,6 @@ const QuestionsList = ({ questions }) => {
         );
       });
   };
-
-  console.log(questions);
 
   const renderQuestions = () => {
     let questionsArr = [];

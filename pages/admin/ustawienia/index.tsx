@@ -32,7 +32,6 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
     settings.no_possession_fee || 0
   );
   const [error, setError] = useState("");
-  console.log(settings);
 
   const setAmounts = async (e) => {
     e.preventDefault();

@@ -7,39 +7,55 @@ export default async (req, res) => {
 
     if (getUncompleted) {
       // kluby,które nie posiadają żadnego wniosku
-      const applications = await prisma.clubs.findMany({
-        where: {
-          applications: {
-            none: {},
+
+      try {
+        const applications = await prisma.clubs.findMany({
+          where: {
+            applications: {
+              none: {},
+            },
           },
+          // select: {
+          //   id: true,
+          // },
+        });
+        // wszystkie kluby w bazie
+        const allApplications = await prisma.clubs.count();
+        res.json({
+          applications: applications.length,
+          allApplications: allApplications,
+        });
+        return resolve();
+      } catch (error) {
+        console.log(error);
+        res.status(400);
+        res.json(error);
+        return resolve();
+      } finally {
+        await prisma.$disconnect();
+      }
+    }
+
+    try {
+      const applications = await prisma.applications.count({
+        where: {
+          status_id: statusID,
         },
-        // select: {
-        //   id: true,
-        // },
       });
-      // wszystkie kluby w bazie
+
       const allApplications = await prisma.clubs.count();
+
       res.json({
-        applications: applications.length,
+        applications: applications,
         allApplications: allApplications,
       });
       return resolve();
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+      return resolve();
+    } finally {
+      await prisma.$disconnect();
     }
-
-    const applications = await prisma.applications.count({
-      where: {
-        status_id: statusID,
-      },
-    });
-
-    const allApplications = await prisma.clubs.count();
-
-    await prisma.$disconnect();
-
-    res.json({
-      applications: applications,
-      allApplications: allApplications,
-    });
-    return resolve();
   });
 };

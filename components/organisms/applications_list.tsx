@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState, useContext } from "react";
 import { AdminContext } from "../../pages/admin/index";
+import { useLocalStorage } from "../../middleware/hooks";
 //icons
 import { Download } from "@styled-icons/entypo/Download";
 //components
@@ -29,7 +30,7 @@ const StyledRow = styled(TableRow)`
 
 const ApplicationsList = () => {
   const router = useRouter();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useLocalStorage("application_page", 0);
   const { list: applications } = useContext(AdminContext);
   console.log(applications);
   const dataToExport = applications;

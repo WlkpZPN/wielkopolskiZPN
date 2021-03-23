@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useContext } from "react";
 import { AdminContext } from "../../pages/admin/kluby";
 import { useRouter } from "next/router";
+import { useLocalStorage } from "../../middleware/hooks";
 //icons
 import { Download } from "@styled-icons/entypo/Download";
 import { AttachMoney } from "@styled-icons/material/AttachMoney";
@@ -26,7 +27,7 @@ const TableHeader = styled.span`
 
 const ClubsList = () => {
   const router = useRouter();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useLocalStorage("club_page", 0);
   const { list: clubs } = useContext(AdminContext);
 
   const totalPages = Math.ceil(clubs.length / 10);
