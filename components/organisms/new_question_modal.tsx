@@ -44,6 +44,12 @@ const NewQUestionModal = ({ visible, setVisible }) => {
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
 
+  const handleClose = (e) => {
+    if (e.target === e.currentTarget) {
+      setVisible(false);
+    }
+  };
+
   const addNewQuestion = async (e) => {
     e.preventDefault();
 
@@ -75,7 +81,7 @@ const NewQUestionModal = ({ visible, setVisible }) => {
   };
 
   return (
-    <Background visible={visible}>
+    <Background onClick={handleClose} visible={visible}>
       <Content>
         <CloseIcon onClick={() => setVisible(false)} />
         <form style={{ width: "100%" }} onSubmit={addNewQuestion}>

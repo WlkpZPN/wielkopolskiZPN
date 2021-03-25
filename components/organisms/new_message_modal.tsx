@@ -44,6 +44,13 @@ const NewMessageModal = ({ visible, setVisible }) => {
   const [message, setMessage] = useState("");
   const [rule, setRule] = useState("brak");
   const [error, setError] = useState("");
+
+  const handleClose = (e) => {
+    if (e.target === e.currentTarget) {
+      setVisible(false);
+    }
+  };
+
   const addNewMessage = async (e) => {
     e.preventDefault();
 
@@ -76,7 +83,7 @@ const NewMessageModal = ({ visible, setVisible }) => {
   };
 
   return (
-    <Background visible={visible}>
+    <Background onClick={handleClose} visible={visible}>
       <Content>
         <CloseIcon onClick={() => setVisible(false)} />
         <form style={{ width: "100%" }} onSubmit={addNewMessage}>

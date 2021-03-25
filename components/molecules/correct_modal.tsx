@@ -81,6 +81,12 @@ const CorrectModal = ({ internalId, id, visible, setVisibile }) => {
     six: false,
     seven: false,
   });
+
+  const handleClose = (e) => {
+    if (e.target === e.currentTarget) {
+      setVisibile(false);
+    }
+  };
   const handleChange = (field, value) => {
     let newData = data;
     newData[field] = value;
@@ -107,7 +113,7 @@ const CorrectModal = ({ internalId, id, visible, setVisibile }) => {
     router.replace(router.asPath);
   };
   return (
-    <Background visible={visible}>
+    <Background onClick={handleClose} visible={visible}>
       <Content>
         <Close onClick={() => setVisibile(false)} />
         {loading ? (

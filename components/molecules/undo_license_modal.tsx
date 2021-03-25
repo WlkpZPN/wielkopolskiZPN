@@ -65,6 +65,11 @@ const UndoLicense = ({ visible, setVisible, applicationID, internalID }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleClose = (e) => {
+    if (e.target === e.currentTarget) {
+      setVisible(false);
+    }
+  };
   const rejectApplication = async (e) => {
     e.preventDefault();
 
@@ -93,7 +98,7 @@ const UndoLicense = ({ visible, setVisible, applicationID, internalID }) => {
     router.replace(router.asPath);
   };
   return (
-    <Background visible={visible}>
+    <Background onClick={handleClose} visible={visible}>
       <Content>
         <Close onClick={() => setVisible(false)} />
         <div

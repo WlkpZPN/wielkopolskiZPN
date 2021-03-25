@@ -237,6 +237,7 @@ const AddNewClub = () => {
   };
 
   const handleSubmit = (e) => {
+    console.log(e.target[11]);
     // event.target[].offestTop + 100
     // console.log(e.target);
     e.preventDefault();
@@ -324,6 +325,7 @@ const AddNewClub = () => {
         text: "Proszę podać przynajmniej jeden telefon komórkowy",
         type: "phone",
       });
+      window.scrollTo(0, e.target[11].scrollIntoView());
       return;
     }
 
@@ -332,12 +334,14 @@ const AddNewClub = () => {
         text: "Proszę podać przynajmniej jeden email",
         type: "email",
       });
+      window.scrollTo(0, e.target[14].offsetTop + 300);
       return;
     }
 
     // chairman validation
     if (!chairmanPhone || !chairmanName || !chairmanLastName) {
       setError({ text: "Proszę podać dane prezesa", type: "chairman" });
+
       return;
     } else {
       let properPhone = validatePhone(chairmanPhone);
