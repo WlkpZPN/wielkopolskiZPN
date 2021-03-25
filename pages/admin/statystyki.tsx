@@ -12,7 +12,7 @@ const Statystyki = ({ userData }) => {
   return (
     <AdminLayout userData={userData} view="statystyki">
       <h1>Statystyki</h1>
-      <LicenseButton />
+
       {/* <Header>Wnioski robocze</Header>
       <ProgressContainer
         status={1}
