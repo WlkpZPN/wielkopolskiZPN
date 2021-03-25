@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AdminContext } from "../../pages/admin/index";
 import { useLocalStorage } from "../../middleware/hooks";
 //icons
@@ -32,14 +32,17 @@ const ApplicationsList = () => {
   const router = useRouter();
   const [page, setPage] = useLocalStorage("application_page", 0);
   const { list: applications } = useContext(AdminContext);
-  console.log(applications);
+
   const dataToExport = applications;
   delete dataToExport.clubs;
   delete dataToExport.statuses;
   const totalPages = Math.ceil(applications.length / 10);
-  if (totalPages <= page) {
-    setPage(0);
-  }
+
+  useEffect(() => {
+    if (totalPages <= page) {
+      setPage(0);
+    }
+  }, [applications]);
   const generateClubs = () => {
     let applicationsArray = [];
 

@@ -31,20 +31,22 @@ export const AdminContext = createContext(null);
 const MainPage = ({ userData, applications }) => {
   const [filterType, setFilterType] = useState(0);
   const [query, setQuery] = useState("");
-  const [list, setList] = useState(applications);
+  const [list, setList] = useState([]);
 
   useEffect(() => {
-    let helperArr = applications;
+    let helperArr = [...applications];
+    console.log(helperArr);
     // console.log(query !== "");
     // console.log(query);
 
     //1 check for filter type
     // TO DO : double check filtering types
+
     if (filterType > 0) {
       helperArr = helperArr.filter((application) => {
-        console.log(application.status_id === 1);
-
-        return application.status_id === filterType;
+        let appCopy = Object.assign({}, application);
+        // const appArr = Object.values(appCopy).join().toLowerCase();
+        return appCopy.status_id === filterType;
       });
     } else if (filterType === 0) {
       helperArr = applications;
@@ -52,15 +54,12 @@ const MainPage = ({ userData, applications }) => {
 
     if (query !== "") {
       helperArr = helperArr.filter((application) => {
-        return JSON.stringify(application)
-          .toLowerCase()
-          .indexOf(query.toLowerCase()) > -1
-          ? true
-          : false;
+        const string = JSON.stringify(application).toLowerCase();
+        return string.indexOf(query.toLowerCase()) > -1 ? true : false;
       });
     }
+
     setList(helperArr);
-    //2 query the filter type
   }, [filterType, query]);
   return (
     <AdminContext.Provider value={{ userData, list }}>

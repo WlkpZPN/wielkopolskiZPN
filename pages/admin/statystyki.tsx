@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { protectedAdminRoute } from "../../middleware/protectedAdmin";
 import ProgressContainer from "../../components/atoms/progress_container";
-
+import LicenseButton from "../../components/molecules/license_button";
 const Header = styled.h2`
   margin: 40px 0 12px 0;
 `;
@@ -12,7 +12,7 @@ const Statystyki = ({ userData }) => {
   return (
     <AdminLayout userData={userData} view="statystyki">
       <h1>Statystyki</h1>
-
+      <LicenseButton />
       {/* <Header>Wnioski robocze</Header>
       <ProgressContainer
         status={1}

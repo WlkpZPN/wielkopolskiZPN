@@ -1,6 +1,7 @@
 import { ThemeProvider } from "styled-components";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import "../styles/scroll.css";
 import { ToastContainer } from "react-toastify";
 const theme = {
   primary: "#0056A5",

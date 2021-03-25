@@ -54,7 +54,10 @@ const Kluby = ({ clubs, userData }) => {
 
     if (query !== "") {
       helperArr = helperArr.filter((club) => {
-        return JSON.stringify(club).indexOf(query) > -1 ? true : false;
+        return JSON.stringify(club).toLowerCase().indexOf(query.toLowerCase()) >
+          -1
+          ? true
+          : false;
       });
     }
 

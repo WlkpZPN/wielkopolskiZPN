@@ -22,10 +22,10 @@ const SupervisiorLicense = styled.div`
     height: 100%;
   }
   & svg:nth-child(2) {
-    width: 26px;
+    width: 80%;
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -30%;
+    right: -25%;
   }
 `;
 

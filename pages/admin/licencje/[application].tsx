@@ -19,7 +19,7 @@ import Paragraph from "../../../components/atoms/paragraph";
 import AddFilesWrapper from "../../../components/organisms/add_files_wrapper";
 import ErrorMessage from "../../../components/atoms/error_message";
 import LicenseDecision from "../../../components/atoms/license_decision";
-
+import LicenseButton from "../../../components/molecules/license_button";
 const Application = ({ authData, clubData, settings }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -91,6 +91,31 @@ const Application = ({ authData, clubData, settings }) => {
               description="Licencja niewydana"
               internalID={clubData.applications[0].internal_id}
             />{" "}
+          </>
+        );
+      case 8:
+        return (
+          <>
+            <div>
+              <Paragraph>Licencja</Paragraph>
+              <LicenseButton
+                isAdmin={true}
+                application={clubData.applications[0]}
+              />
+            </div>
+          </>
+        );
+      case 10:
+        return (
+          <>
+            {" "}
+            <div>
+              <Paragraph>Licencja</Paragraph>
+              <LicenseButton
+                isAdmin={true}
+                application={clubData.applications[0]}
+              />
+            </div>
           </>
         );
     }

@@ -46,6 +46,8 @@ const Content = styled.div`
   flex-direction: column;
   max-width: 1000px;
   width: 100%;
+  align-items: flex-start;
+  text-align: start;
 `;
 
 const TextArea = styled.textarea`
@@ -57,7 +59,7 @@ const TextArea = styled.textarea`
   padding: 4px;
 `;
 
-const RejectLicense = ({ visible, setVisible, applicationID, internalID }) => {
+const UndoLicense = ({ visible, setVisible, applicationID, internalID }) => {
   const router = useRouter();
   const [reason, setReason] = useState("");
   const [error, setError] = useState("");
@@ -67,17 +69,17 @@ const RejectLicense = ({ visible, setVisible, applicationID, internalID }) => {
     e.preventDefault();
 
     if (!reason) {
-      setError("Proszę podać powód odrzucenia wniosku");
+      setError("Proszę podać powód cofnięcia licencji");
       return;
     }
 
     setLoading(true);
     await axios
       .post("/api/licences/setLicense", {
-        reason: reason,
+        description: "Cofnięto licencje",
+        statusID: 11,
         applicationID: applicationID,
-        statusID: 9,
-        description: "Odmowa wydania licencji przez wielkopolski ZPN",
+        reason: reason,
       })
       .catch((err) => {
         console.log(err);
@@ -85,7 +87,7 @@ const RejectLicense = ({ visible, setVisible, applicationID, internalID }) => {
 
     setLoading(false);
     setVisible(false);
-    toast.error(`Wniosek ${internalID} odrzucony`, {
+    toast.error(`Licencja ${internalID} cofnięta`, {
       autoClose: 1500,
     });
     router.replace(router.asPath);
@@ -103,43 +105,48 @@ const RejectLicense = ({ visible, setVisible, applicationID, internalID }) => {
             paddingRight: "16px",
           }}
         >
-          <h1>Odmów wydania licencji {internalID}</h1>
-          <ApplicationStatus size="32px" status={"licencja niewydana"} />
+          <h1>Cofnij wydanie licencji {internalID}</h1>
+          <ApplicationStatus size="32px" status={"licencja cofnięta"} />
         </div>
         {loading ? (
           <Loader />
         ) : (
           <form style={{ width: "100%" }}>
             <ErrorMessage>{error}</ErrorMessage>
-            <Label>
-              <p
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "rgba(0,0,0,0.6)",
-                  marginBottom: "6px",
-                }}
-              >
-                Podaj treść uzasadnienia
-              </p>
-            </Label>
-            <TextArea placeholder="Uzasadnienie"></TextArea>
 
-            <div style={{ display: "flex" }}>
+            <p
+              style={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "rgba(0,0,0,0.6)",
+                marginBottom: "6px",
+                marginTop: "32px",
+              }}
+            >
+              Podaj treść uzasadnienia
+            </p>
+
+            <TextArea
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Uzasadnienie"
+            ></TextArea>
+
+            <div style={{ display: "flex", marginTop: "32px" }}>
               <PrimaryButton
-                color="dangerDark"
-                hoverColor="danger"
+                hoverColor="dangerDark"
+                color="danger"
                 onClick={() => setVisible(false)}
                 style={{ marginRight: "16px" }}
               >
                 Anuluj
               </PrimaryButton>
               <PrimaryButton
-                color="dangerDark"
-                hoverColor="danger"
+                hoverColor="dangerDark"
+                color="danger"
                 onClick={rejectApplication}
               >
-                Odmów wydania licencji
+                Cofnij wydanie licencji
               </PrimaryButton>
             </div>
           </form>
@@ -149,4 +156,4 @@ const RejectLicense = ({ visible, setVisible, applicationID, internalID }) => {
   );
 };
 
-export default RejectLicense;
+export default UndoLicense;

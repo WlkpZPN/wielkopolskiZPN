@@ -7,6 +7,16 @@ export default (req, res) => {
     let clubs = [];
     //1. check the rule for clubs
     //2. get all clubs that met conditions
+
+    try {
+    } catch (err) {
+      console.log(err);
+      res.status(400);
+      res.json({
+        type: "error",
+        message: err,
+      });
+    }
     switch (recipients) {
       case "aktywne":
         clubs = await prisma.clubs.findMany({
@@ -32,13 +42,22 @@ export default (req, res) => {
         });
         break;
       case "zatwierdzone":
-        // clubs = await prisma.clubs.findMany({
-        //     where: {
-        //         applications: {
-        //             id:
-        //         }
-        //     }
-        // })
+        clubs = await prisma.clubs.findMany({
+          where: {
+            applications: {
+              every: {
+                OR: [
+                  {
+                    id: 2,
+                  },
+                  {
+                    id: 3,
+                  },
+                ],
+              },
+            },
+          },
+        });
         break;
       case "wszystkie":
         clubs = await prisma.clubs.findMany();
@@ -49,7 +68,7 @@ export default (req, res) => {
     //nierozpoczęte
     //zatwierdzone
     //wszystkie
-
+    res.send(clubs);
     //3. send maild to all that clubs
     await prisma.$disconnect();
   });

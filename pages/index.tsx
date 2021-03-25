@@ -16,7 +16,7 @@ import Paragraph from "../components/atoms/paragraph";
 import PrimaryButton from "../components/atoms/primary_button";
 import ErrorMessage from "../components/atoms/error_message";
 import ClubSteps from "../components/organisms/club_steps";
-
+import LicenseButton from "../components/molecules/license_button";
 const Header = styled.h1`
   margin-bottom: 16px;
   padding: 16px 0;
@@ -268,7 +268,12 @@ const Home = ({ authData, clubData, settings }) => {
                 Komisja Licencyjna Wielkopolskiego ZPN przyznała Twojemu klubowi
                 licencję na sezon 2021 do IV Ligi
               </Paragraph>
-              TUTAJ PLIKI DO POBRANIA
+              <div style={{ margin: "42px 0" }}>
+                <LicenseButton
+                  isAdmin={false}
+                  application={clubData.applications[0]}
+                />
+              </div>
               <ClubSteps status="licencja wydana" />
             </>
           );

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AdminContext } from "../../pages/admin/kluby";
 import { useRouter } from "next/router";
 import { useLocalStorage } from "../../middleware/hooks";
@@ -32,11 +32,15 @@ const ClubsList = () => {
   const { list: clubs } = useContext(AdminContext);
 
   const totalPages = Math.ceil(clubs.length / 10);
-  console.log("total pages", totalPages);
-  console.log("current page", page);
-  if (totalPages <= page) {
-    setPage(0);
-  }
+  // console.log("total pages", totalPages);
+  // console.log("current page", page);
+
+  useEffect(() => {
+    console.log("effect worked");
+    if (totalPages <= page) {
+      setPage(0);
+    }
+  }, [clubs]);
   const generateClubs = () => {
     let clubsArray = [];
 

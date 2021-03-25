@@ -29,6 +29,8 @@ import {
 } from "../../middleware/stepValidation";
 const StepsContainer = styled.div`
   display: flex;
+  position: relative;
+  z-index: 1;
 `;
 export const ApplicationContext = createContext(null);
 const ClubApplication = ({
