@@ -32,7 +32,7 @@ const EditClubData = ({ clubData }) => {
   const [stadium_city, stadium_street, stadium_zipCode] = extractAddressData(
     clubData.stadium
   );
-  console.log(clubData);
+
   const [postalCity, setPostalCity] = useState(postal_city || "");
   const [postalStreet, setPostalStreet] = useState(postal_street || "");
   const [postalZipCode, setPostalZipCode] = useState(postal_zipCode || "");
@@ -255,7 +255,7 @@ const EditClubData = ({ clubData }) => {
       }
     }
   };
-
+  console.log(error);
   const handleSubmit = (e) => {
     // event.target[].offestTop + 100
     // console.log(e.target);
@@ -327,7 +327,7 @@ const EditClubData = ({ clubData }) => {
     if (!postalZipCode) {
       setError({
         text: "Proszę podać kod pocztowy ",
-        type: "postal zipCde",
+        type: "postal zipCode",
       });
       window.scrollTo(0, 0);
       return;
