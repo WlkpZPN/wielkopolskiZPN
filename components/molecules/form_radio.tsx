@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Check } from "@styled-icons/boxicons-regular/Check";
 
 const Radio = styled.input`
   opacity: 0;
@@ -7,27 +8,34 @@ const Radio = styled.input`
   position: relative;
   display: none;
   cursor: pointer;
-  &:checked + span {
-    background: ${({ theme }) => theme.primaryLight};
-    box-shadow: 0 0 5px 0px ${({ theme }) => theme.primaryLight};
+  &:checked + svg {
+    color: ${({ theme }) => theme.primaryLight};
+    box-shadow: 0 0 2px 0px ${({ theme }) => theme.primaryLight};
   }
 `;
 
-const CustomRadio = styled.span`
+const CustomRadio = styled(Check)`
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 21px;
+  height: 21px;
+  color: transparent;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   margin-right: 6px;
+  padding: 0;
 `;
 
-const RadioSquare = ({ value, handleChange }) => {
+const RadioSquare = ({ setVisible = null, value, handleChange }) => {
   return (
-    <div>
-      <Radio onChange={handleChange} checked={value} type="checkbox" />
+    <label>
+      <Radio
+        onClick={() => setVisible?.(false)}
+        onChange={handleChange}
+        checked={value}
+        type="checkbox"
+      />
       <CustomRadio />
-    </div>
+    </label>
   );
 };
 

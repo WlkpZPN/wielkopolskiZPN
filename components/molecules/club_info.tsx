@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   & div {
     display: flex;
+    margin: 4px 0;
   }
 
   & span {
@@ -26,11 +27,10 @@ const ClubInfo = ({ clubData }) => {
     <Wrapper>
       <div>
         <Bold>Klub: </Bold> <span> {clubData.name}</span>
-        <Bold>Liga:</Bold> <span> {clubData.leauge}</span>
         <Bold>Typ licencji:</Bold>
       </div>
       <div>
-        <Bold>Data wystawienia licencji:</Bold>
+        <Bold>Liga:</Bold> <span> {clubData.leauge}</span>
         <Bold>Data ważności licencji:</Bold>
       </div>
     </Wrapper>

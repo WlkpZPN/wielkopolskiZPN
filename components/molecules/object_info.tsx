@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { DownArrow } from "@styled-icons/boxicons-solid/DownArrow";
 const Wrapper = styled.div`
   margin: 16px 0;
+  padding-bottom: 16px;
+  width: 100%;
+  border-bottom: 2px solid ${({ theme }) => theme.primaryLight};
 `;
 
 const MoreInfo = styled.div`
@@ -16,6 +19,7 @@ const Paragraph = styled.p`
   padding: 12px;
   height: 100%;
   display: flex;
+  width: 100%;
   align-items: center;
   font-size: 16px;
   background: ${({ theme }) => theme.primaryLight};
@@ -32,7 +36,7 @@ const Paragraph = styled.p`
 `;
 
 const ObjectInfo = ({ children }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   return (
     <Wrapper expanded={expanded}>

@@ -378,7 +378,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
             />
             Posiadamy pisemną umowę z właścicielem stadionu
           </Label>
-          {data.I01_1 === "false" ? (
+          {data.I01_1 ? null : (
             <>
               {" "}
               <Paragraph>
@@ -391,18 +391,19 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                 fileData={getCategoryFiles("I01_agreement")}
                 setFiles={(id, file) => setFiles(id, file, "I01_agreement")}
               />
+              <Label pointer margin="16px 0" direction="row">
+                <RadioSquare
+                  value={data.I01_2}
+                  handleChange={() =>
+                    handleChange(!data.I01_2, objectIndex, "I01_2")
+                  }
+                />
+                Umowa gwarantuje prawo do korzystania ze stadionu przez cały
+                sezon,w którym ubiegamy się o licencję
+              </Label>
             </>
-          ) : null}
-          <Label pointer margin="16px 0" direction="row">
-            <RadioSquare
-              value={data.I01_2}
-              handleChange={() =>
-                handleChange(!data.I01_2, objectIndex, "I01_2")
-              }
-            />
-            Umowa gwarantuje prawo do korzystania ze stadionu przez cały sezon,w
-            którym ubiegamy się o licencję
-          </Label>
+          )}
+
           <FormHeader>Kryterium I.02 Regulaminy</FormHeader>
           <Label pointer margin="16px 0" direction="row">
             <span>

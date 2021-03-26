@@ -49,6 +49,7 @@ const CloseIcon = styled(CloseOutline)`
 `;
 
 const StyledLabel = styled(Label)`
+  align-items: center;
   &:hover {
     cursor: pointer;
   }
@@ -60,6 +61,12 @@ const FormStatement = ({
   handleChange,
 }) => {
   const [visible, setVisible] = useState(false);
+
+  const handleClose = (e) => {
+    if (e.target === e.currentTarget) {
+      setVisible(false);
+    }
+  };
   return (
     <Wrapper>
       <Paragraph>{name}</Paragraph>
@@ -71,7 +78,7 @@ const FormStatement = ({
         {buttonText}
       </StyledLabel>
       {visible ? (
-        <Statement>
+        <Statement onClick={handleClose}>
           <StatementContent>
             <CloseIcon onClick={() => setVisible(false)} />
             <h1>Oświadczenie</h1>
@@ -96,7 +103,11 @@ const FormStatement = ({
               molestie nisl scelerisque lectus pulvinar pharetra.{" "}
             </StatementText>
             <Label pointer direction="row">
-              <RadioSquare value={value} handleChange={handleChange} />
+              <RadioSquare
+                setVisible={setVisible}
+                value={value}
+                handleChange={handleChange}
+              />
               {buttonText}
             </Label>
           </StatementContent>

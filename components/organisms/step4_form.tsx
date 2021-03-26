@@ -121,7 +121,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
       ) : (
         <ObjectForm objectIndex={currentObject} readOnly={readOnly} />
       )}
-      <div style={{ marginLeft: "32px" }}>
+      <div style={{ margin: "40px 0" }}>
         <PrimaryButton
           style={{ marginRight: "16px" }}
           onClick={() => handleStepChange("previous")}
