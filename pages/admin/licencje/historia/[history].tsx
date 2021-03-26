@@ -66,7 +66,7 @@ const History = ({ authData, applicationData }) => {
                 number={1}
                 state="completed"
               />
-              <span>{item.description}</span>
+              <span>{item.description}<br/> {item.created_at}</span>
             </Row>
           );
           break;

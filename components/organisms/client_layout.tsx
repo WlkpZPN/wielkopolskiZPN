@@ -83,6 +83,11 @@ const ClientLayout = ({ view, children, clubData }) => {
         />
         <ClubInfo clubData={clubData} />
         <ButtonWrapper>
+          <Link href="/ustawienia">
+            <IconButton>
+              <User /> {clubData?.email}
+            </IconButton>
+          </Link>
           <Link href="/login">
             <IconButton onClick={() => logout("klub")}>
               <LogOut /> Wyloguj

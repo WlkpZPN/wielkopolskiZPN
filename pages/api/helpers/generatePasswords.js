@@ -7,20 +7,20 @@ export default async (req, res) => {
     const clubs = await prisma.clubs.findMany();
 
     clubs.forEach(async (club, index) => {
-      await prisma.clubs.update({
-        where: {
-          id: club.id,
-        },
-        data: {
-          internal_id: `K/${new Date().getFullYear()}/${index.toLocaleString(
-            "en-US",
-            {
-              minimumIntegerDigits: 2,
-              useGrouping: false,
-            }
-          )}`,
-        },
-      });
+      let securedPassword = "";
+      bcrypt
+        .hash(generator.generate({ length: 8, number: true }), saltRounds)
+        .then(async (hash) => {
+          securedPassword = hash;
+          await prisma.clubs.update({
+            where: {
+              id: club.id,
+            },
+            data: {
+              password: securedPassword,
+            },
+          });
+        });
     });
 
     res.send("id's generated");
