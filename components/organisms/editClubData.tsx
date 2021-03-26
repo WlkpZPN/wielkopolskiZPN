@@ -32,7 +32,7 @@ const EditClubData = ({ clubData }) => {
   const [stadium_city, stadium_street, stadium_zipCode] = extractAddressData(
     clubData.stadium
   );
-
+  console.log(clubData);
   const [postalCity, setPostalCity] = useState(postal_city || "");
   const [postalStreet, setPostalStreet] = useState(postal_street || "");
   const [postalZipCode, setPostalZipCode] = useState(postal_zipCode || "");
@@ -44,7 +44,9 @@ const EditClubData = ({ clubData }) => {
   const [clubCity, setClubCity] = useState(city || "");
   const [clubZipCode, setZipCode] = useState(zipCode || "");
   const [clubStreet, setStreet] = useState(street || "");
-
+  const [chairmanEmail, setChairmanEmail] = useState(
+    clubData.chairman_email || ""
+  );
   const [agentName, setAgentName] = useState(
     clubData.agent_name ? clubData.agent_name.split(" ")[0] : ""
   );
@@ -274,14 +276,32 @@ const EditClubData = ({ clubData }) => {
     }
 
     //club address validation
-    if (!clubCity || !clubZipCode || !clubStreet) {
+    if (!clubCity) {
       setError({
-        text: "Proszę podać ulice,kod pocztowy oraz miasto ",
-        type: "main address",
+        text: "Proszę podać miasto ",
+        type: "main city",
       });
       window.scrollTo(0, 0);
       return;
-    } else if (clubCity && clubZipCode && clubStreet) {
+    }
+    if (!clubZipCode) {
+      setError({
+        text: "Proszę podać kod pocztowy ",
+        type: "main zipCde",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (!clubStreet) {
+      setError({
+        text: "Proszę podać ulice,na której znajduje się klub ",
+        type: "main street",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (clubCity && clubZipCode && clubStreet) {
       let properCity = validateText(clubCity);
       if (!properCity.valid) {
         setError({ text: properCity.message, type: "main address" });
@@ -296,45 +316,76 @@ const EditClubData = ({ clubData }) => {
     }
 
     // postal address validation
-    if (!postalCity || !postalZipCode || !postalStreet) {
+    if (!postalCity) {
       setError({
-        text: "Proszę podać adres korespondencyjny klubu",
-        type: "postal address",
+        text: "Proszę podać miasto ",
+        type: "postal city",
       });
       window.scrollTo(0, 0);
       return;
-    } else {
-      let properCity = validateText(postalCity);
-      if (!properCity.valid) {
-        setError({ text: properCity.message, type: "postal address" });
-        return;
-      }
-      let properZipCode = validateZipCode(postalZipCode);
-      if (!properZipCode.valid) {
-        setError({ text: properZipCode.message, type: "postal address" });
-        return;
-      }
+    }
+    if (!postalZipCode) {
+      setError({
+        text: "Proszę podać kod pocztowy ",
+        type: "postal zipCde",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (!postalStreet) {
+      setError({
+        text: "Proszę podać ulice ",
+        type: "postal street",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    let properCity = validateText(postalCity);
+    if (!properCity.valid) {
+      setError({ text: properCity.message, type: "postal address" });
+      return;
+    }
+    let properZipCode = validateZipCode(postalZipCode);
+    if (!properZipCode.valid) {
+      setError({ text: properZipCode.message, type: "postal address" });
+      return;
     }
 
     //stadium validation
-    if (!stadiumStreet || !stadiumZipCode || !stadiumCity) {
+    if (!stadiumCity) {
       setError({
-        text: "Proszę uzupełnić adres stadionu",
-        type: "stadium address",
+        text: "Proszę podać miasto ",
+        type: "stadium city",
       });
       window.scrollTo(0, 0);
       return;
-    } else {
-      let properCity = validateText(stadiumCity);
-      if (!properCity.valid) {
-        setError({ text: properCity.message, type: "stadium address" });
-        return;
-      }
-      let properZipCode = validateZipCode(stadiumZipCode);
-      if (!properZipCode.valid) {
-        setError({ text: properZipCode.message, type: "stadium address" });
-        return;
-      }
+    }
+    if (!stadiumZipCode) {
+      setError({
+        text: "Proszę podać kod pocztowy ",
+        type: "stadium zipCde",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (!stadiumStreet) {
+      setError({
+        text: "Proszę podać ulice ",
+        type: "stadium street",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    properCity = validateText(stadiumCity);
+    if (!properCity.valid) {
+      setError({ text: properCity.message, type: "stadium address" });
+      return;
+    }
+    properZipCode = validateZipCode(stadiumZipCode);
+    if (!properZipCode.valid) {
+      setError({ text: properZipCode.message, type: "stadium address" });
+      return;
     }
 
     if (!phone) {
@@ -354,8 +405,16 @@ const EditClubData = ({ clubData }) => {
     }
 
     // chairman validation
-    if (!chairmanPhone || !chairmanName || !chairmanLastName) {
-      setError({ text: "Proszę podać dane prezesa", type: "chairman" });
+    if (
+      !chairmanPhone ||
+      !chairmanName ||
+      !chairmanLastName ||
+      !chairmanEmail
+    ) {
+      setError({
+        text: "Proszę podać wszystkie dane prezesa",
+        type: "chairman",
+      });
       return;
     } else {
       let properPhone = validatePhone(chairmanPhone);
@@ -372,6 +431,12 @@ const EditClubData = ({ clubData }) => {
       }
       if (!properLastName.valid) {
         setError({ text: properLastName.message, type: "chairman" });
+        return;
+      }
+
+      let properEmail = validateEmail(chairmanEmail);
+      if (!properEmail.valid) {
+        setError({ text: properEmail.message, type: "chairman" });
         return;
       }
     }
@@ -518,6 +583,7 @@ const EditClubData = ({ clubData }) => {
     //4. zapal giga joya
     console.log("form submitted");
   };
+
   if (loading) {
     return <StyledSpinner style={{ width: "150px" }} />;
   }
@@ -560,7 +626,7 @@ const EditClubData = ({ clubData }) => {
             onChange={(e) => setStreet(e.target.value)}
             type="text"
           />
-          {error && error.type === "main address" ? (
+          {error && error.type === "main street" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
           ) : null}
         </Label>
@@ -572,6 +638,9 @@ const EditClubData = ({ clubData }) => {
             onChange={(e) => setZipCode(e.target.value)}
             type="text"
           />
+          {error && error.type === "main zipCode" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
         <Label>
           Miasto
@@ -580,6 +649,9 @@ const EditClubData = ({ clubData }) => {
             onChange={(e) => setClubCity(e.target.value)}
             type="text"
           />
+          {error && error.type === "main city" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
       </FormRow>
       <FormRow cols={4}>
@@ -590,7 +662,7 @@ const EditClubData = ({ clubData }) => {
             onChange={(e) => setPostalStreet(e.target.value)}
             type="text"
           />
-          {error && error.type === "postal address" ? (
+          {error && error.type === "postal street" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
           ) : null}
         </Label>
@@ -602,6 +674,9 @@ const EditClubData = ({ clubData }) => {
             value={postalZipCode}
             onChange={(e) => setPostalZipCode(e.target.value)}
           />
+          {error && error.type === "postal zipCode" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
         <Label>
           Miasto
@@ -610,6 +685,9 @@ const EditClubData = ({ clubData }) => {
             value={postalCity}
             onChange={(e) => setPostalCity(e.target.value)}
           />
+          {error && error.type === "postal city" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
       </FormRow>
       <FormRow cols={4}>
@@ -620,7 +698,7 @@ const EditClubData = ({ clubData }) => {
             value={stadiumStreet}
             onChange={(e) => setStadiumStreet(e.target.value)}
           />
-          {error && error.type === "stadium address" ? (
+          {error && error.type === "stadium street" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
           ) : null}
         </Label>
@@ -632,6 +710,9 @@ const EditClubData = ({ clubData }) => {
             onChange={(e) => setStadiumZipCode(e.target.value)}
             type="text"
           />
+          {error && error.type === "stadium zipCode" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
         <Label>
           Miasto
@@ -640,6 +721,9 @@ const EditClubData = ({ clubData }) => {
             onChange={(e) => setStadiumCity(e.target.value)}
             type="text"
           />
+          {error && error.type === "stadium city" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
       </FormRow>
       <Label>
@@ -730,7 +814,12 @@ const EditClubData = ({ clubData }) => {
         </FormRow>
         <FormRow>
           <Label>
-            E-mail prezesa <Input type="text" />
+            E-mail prezesa{" "}
+            <Input
+              value={chairmanEmail}
+              onChange={(e) => setChairmanEmail(e.target.value)}
+              type="text"
+            />
           </Label>
           <Label>
             Telefon prezesa{" "}

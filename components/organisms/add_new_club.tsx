@@ -47,6 +47,7 @@ const AddNewClub = () => {
   const [chairmanName, setChairmanName] = useState("");
   const [chairmanLastName, setChairmanLastName] = useState("");
   const [chairmanPhone, setChairmanPhone] = useState("");
+  const [chairmanEmail, setChairmanEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [phone2, setPhone2] = useState("");
   const [phone3, setPhone3] = useState("");
@@ -546,7 +547,7 @@ const AddNewClub = () => {
             onChange={(e) => setStreet(e.target.value)}
             type="text"
           />
-          {error && error.type === "main address" ? (
+          {error && error.type === "main street" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
           ) : null}
         </Label>
@@ -558,6 +559,9 @@ const AddNewClub = () => {
             onChange={(e) => setZipCode(e.target.value)}
             type="text"
           />
+          {error && error.type === "main zipCode" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
         <Label>
           Miasto
@@ -566,6 +570,9 @@ const AddNewClub = () => {
             onChange={(e) => setClubCity(e.target.value)}
             type="text"
           />
+          {error && error.type === "main city" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
       </FormRow>
       <FormRow cols={4}>
@@ -576,7 +583,7 @@ const AddNewClub = () => {
             onChange={(e) => setPostalStreet(e.target.value)}
             type="text"
           />
-          {error && error.type === "postal address" ? (
+          {error && error.type === "postal street" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
           ) : null}
         </Label>
@@ -588,6 +595,9 @@ const AddNewClub = () => {
             value={postalZipCode}
             onChange={(e) => setPostalZipCode(e.target.value)}
           />
+          {error && error.type === "postal zipCode" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
         <Label>
           Miasto
@@ -596,6 +606,9 @@ const AddNewClub = () => {
             value={postalCity}
             onChange={(e) => setPostalCity(e.target.value)}
           />
+          {error && error.type === "postal city" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
       </FormRow>
       <FormRow cols={4}>
@@ -606,7 +619,7 @@ const AddNewClub = () => {
             value={stadiumStreet}
             onChange={(e) => setStadiumStreet(e.target.value)}
           />
-          {error && error.type === "stadium address" ? (
+          {error && error.type === "stadium street" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
           ) : null}
         </Label>
@@ -618,6 +631,9 @@ const AddNewClub = () => {
             onChange={(e) => setStadiumZipCode(e.target.value)}
             type="text"
           />
+          {error && error.type === "stadium zipCode" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
         <Label>
           Miasto
@@ -626,6 +642,9 @@ const AddNewClub = () => {
             onChange={(e) => setStadiumCity(e.target.value)}
             type="text"
           />
+          {error && error.type === "stadium city" ? (
+            <ErrorMessage>{error.text}</ErrorMessage>
+          ) : null}
         </Label>
       </FormRow>
       <Label>
@@ -716,7 +735,12 @@ const AddNewClub = () => {
         </FormRow>
         <FormRow>
           <Label>
-            E-mail prezesa <Input type="text" />
+            E-mail prezesa{" "}
+            <Input
+              value={chairmanEmail}
+              onChange={(e) => setChairmanEmail(e.target.value)}
+              type="text"
+            />
           </Label>
           <Label>
             Telefon prezesa{" "}
