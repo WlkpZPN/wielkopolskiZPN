@@ -287,7 +287,7 @@ const EditClubData = ({ clubData }) => {
     if (!clubZipCode) {
       setError({
         text: "Proszę podać kod pocztowy ",
-        type: "main zipCde",
+        type: "main zipCode",
       });
       window.scrollTo(0, 0);
       return;
@@ -364,7 +364,7 @@ const EditClubData = ({ clubData }) => {
     if (!stadiumZipCode) {
       setError({
         text: "Proszę podać kod pocztowy ",
-        type: "stadium zipCde",
+        type: "stadium zipCode",
       });
       window.scrollTo(0, 0);
       return;
@@ -554,6 +554,7 @@ const EditClubData = ({ clubData }) => {
           agent_email: agentEmail,
           email_3: email3,
           phone_2: phone2,
+          chairman_email: chairmanEmail,
           landline_phone: landlinePhone,
           agent_phone: agentPhone,
           agent_position: position,

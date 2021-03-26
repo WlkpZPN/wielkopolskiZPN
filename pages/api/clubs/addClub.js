@@ -6,7 +6,6 @@ export default (req, res) => {
     const club = await prisma.clubs.create({
       data: {
         ...data,
-     
       },
     });
 

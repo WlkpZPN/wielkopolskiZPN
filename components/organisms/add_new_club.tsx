@@ -238,7 +238,6 @@ const AddNewClub = () => {
   };
 
   const handleSubmit = (e) => {
-    console.log(e.target[11]);
     // event.target[].offestTop + 100
     // console.log(e.target);
     e.preventDefault();
@@ -258,14 +257,32 @@ const AddNewClub = () => {
     }
 
     //club address validation
-    if (!clubCity || !clubZipCode || !clubStreet) {
+    if (!clubCity) {
       setError({
-        text: "Proszę podać ulice,kod pocztowy oraz miasto ",
-        type: "main address",
+        text: "Proszę podać miasto ",
+        type: "main city",
       });
       window.scrollTo(0, 0);
       return;
-    } else if (clubCity && clubZipCode && clubStreet) {
+    }
+    if (!clubZipCode) {
+      setError({
+        text: "Proszę podać kod pocztowy ",
+        type: "main zipCode",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (!clubStreet) {
+      setError({
+        text: "Proszę podać ulice,na której znajduje się klub ",
+        type: "main street",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (clubCity && clubZipCode && clubStreet) {
       let properCity = validateText(clubCity);
       if (!properCity.valid) {
         setError({ text: properCity.message, type: "main address" });
@@ -280,45 +297,76 @@ const AddNewClub = () => {
     }
 
     // postal address validation
-    if (!postalCity || !postalZipCode || !postalStreet) {
+    if (!postalCity) {
       setError({
-        text: "Proszę podać adres korespondencyjny klubu",
-        type: "postal address",
+        text: "Proszę podać miasto ",
+        type: "postal city",
       });
       window.scrollTo(0, 0);
       return;
-    } else {
-      let properCity = validateText(postalCity);
-      if (!properCity.valid) {
-        setError({ text: properCity.message, type: "postal address" });
-        return;
-      }
-      let properZipCode = validateZipCode(postalZipCode);
-      if (!properZipCode.valid) {
-        setError({ text: properZipCode.message, type: "postal address" });
-        return;
-      }
+    }
+    if (!postalZipCode) {
+      setError({
+        text: "Proszę podać kod pocztowy ",
+        type: "postal zipCode",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (!postalStreet) {
+      setError({
+        text: "Proszę podać ulice ",
+        type: "postal street",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    let properCity = validateText(postalCity);
+    if (!properCity.valid) {
+      setError({ text: properCity.message, type: "postal address" });
+      return;
+    }
+    let properZipCode = validateZipCode(postalZipCode);
+    if (!properZipCode.valid) {
+      setError({ text: properZipCode.message, type: "postal address" });
+      return;
     }
 
     //stadium validation
-    if (!stadiumStreet || !stadiumZipCode || !stadiumCity) {
+    if (!stadiumCity) {
       setError({
-        text: "Proszę uzupełnić adres stadionu",
-        type: "stadium address",
+        text: "Proszę podać miasto ",
+        type: "stadium city",
       });
       window.scrollTo(0, 0);
       return;
-    } else {
-      let properCity = validateText(stadiumCity);
-      if (!properCity.valid) {
-        setError({ text: properCity.message, type: "stadium address" });
-        return;
-      }
-      let properZipCode = validateZipCode(stadiumZipCode);
-      if (!properZipCode.valid) {
-        setError({ text: properZipCode.message, type: "stadium address" });
-        return;
-      }
+    }
+    if (!stadiumZipCode) {
+      setError({
+        text: "Proszę podać kod pocztowy ",
+        type: "stadium zipCode",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (!stadiumStreet) {
+      setError({
+        text: "Proszę podać ulice ",
+        type: "stadium street",
+      });
+      window.scrollTo(0, 0);
+      return;
+    }
+    properCity = validateText(stadiumCity);
+    if (!properCity.valid) {
+      setError({ text: properCity.message, type: "stadium address" });
+      return;
+    }
+    properZipCode = validateZipCode(stadiumZipCode);
+    if (!properZipCode.valid) {
+      setError({ text: properZipCode.message, type: "stadium address" });
+      return;
     }
 
     if (!phone) {
@@ -326,7 +374,6 @@ const AddNewClub = () => {
         text: "Proszę podać przynajmniej jeden telefon komórkowy",
         type: "phone",
       });
-      window.scrollTo(0, e.target[11].scrollIntoView());
       return;
     }
 
@@ -335,14 +382,20 @@ const AddNewClub = () => {
         text: "Proszę podać przynajmniej jeden email",
         type: "email",
       });
-      window.scrollTo(0, e.target[14].offsetTop + 300);
       return;
     }
 
     // chairman validation
-    if (!chairmanPhone || !chairmanName || !chairmanLastName) {
-      setError({ text: "Proszę podać dane prezesa", type: "chairman" });
-
+    if (
+      !chairmanPhone ||
+      !chairmanName ||
+      !chairmanLastName ||
+      !chairmanEmail
+    ) {
+      setError({
+        text: "Proszę podać wszystkie dane prezesa",
+        type: "chairman",
+      });
       return;
     } else {
       let properPhone = validatePhone(chairmanPhone);
@@ -359,6 +412,12 @@ const AddNewClub = () => {
       }
       if (!properLastName.valid) {
         setError({ text: properLastName.message, type: "chairman" });
+        return;
+      }
+
+      let properEmail = validateEmail(chairmanEmail);
+      if (!properEmail.valid) {
+        setError({ text: properEmail.message, type: "chairman" });
         return;
       }
     }
@@ -475,6 +534,7 @@ const AddNewClub = () => {
           agent_email: agentEmail,
           email_3: email3,
           phone_2: phone2,
+          chairman_email: chairmanEmail,
           landline_phone: landlinePhone,
           agent_phone: agentPhone,
           agent_position: position,
@@ -488,10 +548,9 @@ const AddNewClub = () => {
           phone_3: phone3,
         },
       })
-      .then((res) => {
+      .then(() => {
         setLoading(false);
-        toast.success("Pomyślnie dodano klub");
-        router.push(`/admin/kluby/${res.data.id}`);
+        toast.success("Dane zaktualizowane pomyślnie");
       })
       .catch((err) => {
         setLoading(false);
@@ -505,6 +564,7 @@ const AddNewClub = () => {
     //4. zapal giga joya
     console.log("form submitted");
   };
+
   if (loading) {
     return <StyledSpinner style={{ width: "150px" }} />;
   }
