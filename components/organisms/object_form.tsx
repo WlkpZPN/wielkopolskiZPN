@@ -21,7 +21,7 @@ import FormHeader from "../atoms/form_header";
 import Fieldset from "../atoms/fieldset";
 import ErrorMessage from "../atoms/error_message";
 import AddFilesWrapper from "./add_files_wrapper";
-
+import ZipCodeInput from "../atoms/zip_code_input";
 const ObjectForm = ({ readOnly, objectIndex }) => {
   const router = useRouter();
   const [error, setError] = useState({ step: null, text: "" });
@@ -332,13 +332,12 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <FormRow>
             <Label>
               Kod pocztowy
-              <Input
+              <ZipCodeInput
                 value={data.post_code}
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "post_code")
                 }
-                type="text"
-              ></Input>
+              />
             </Label>
             <Label>
               Miasto

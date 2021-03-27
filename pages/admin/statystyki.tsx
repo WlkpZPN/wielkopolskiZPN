@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { protectedAdminRoute } from "../../middleware/protectedAdmin";
 import ProgressContainer from "../../components/atoms/progress_container";
 import LicenseButton from "../../components/molecules/license_button";
+import ZipCodeInput from "../../components/atoms/zip_code_input";
 const Header = styled.h2`
   margin: 40px 0 12px 0;
 `;

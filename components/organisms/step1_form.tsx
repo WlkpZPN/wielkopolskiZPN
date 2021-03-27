@@ -17,6 +17,7 @@ import StyledSpinner from "../atoms/loader";
 import { extractAddressData, convertAddressData } from "../../middleware/utils";
 import { ApplicationContext } from "./club_application";
 import ErrorMessage from "../atoms/error_message";
+import ZipCodeInput from "../atoms/zip_code_input";
 const StepOneForm = ({
   data,
   handleChange,
@@ -124,11 +125,10 @@ const StepOneForm = ({
             <FormRow>
               <Label>
                 Kod pocztowy
-                <Input
+                <ZipCodeInput
                   value={data.clubZipCode}
                   onChange={(e) => handleChange(e, "clubZipCode", 1)}
-                  type="text"
-                ></Input>
+                />
               </Label>
               <Label>
                 Miasto

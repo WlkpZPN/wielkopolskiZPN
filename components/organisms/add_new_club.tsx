@@ -24,7 +24,7 @@ import {
   validateText,
   validateZipCode,
 } from "../../middleware/validation";
-
+import ZipCodeInput from "../atoms/zip_code_input";
 const AddNewClub = () => {
   const router = useRouter();
   const [postalCity, setPostalCity] = useState("");
@@ -614,10 +614,9 @@ const AddNewClub = () => {
 
         <Label>
           Kod pocztowy{" "}
-          <Input
+          <ZipCodeInput
             value={clubZipCode}
             onChange={(e) => setZipCode(e.target.value)}
-            type="text"
           />
           {error && error.type === "main zipCode" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
@@ -650,8 +649,7 @@ const AddNewClub = () => {
 
         <Label>
           Kod pocztowy{" "}
-          <Input
-            type="text"
+          <ZipCodeInput
             value={postalZipCode}
             onChange={(e) => setPostalZipCode(e.target.value)}
           />
@@ -686,10 +684,9 @@ const AddNewClub = () => {
 
         <Label>
           Kod pocztowy{" "}
-          <Input
+          <ZipCodeInput
             value={stadiumZipCode}
             onChange={(e) => setStadiumZipCode(e.target.value)}
-            type="text"
           />
           {error && error.type === "stadium zipCode" ? (
             <ErrorMessage>{error.text}</ErrorMessage>
