@@ -17,6 +17,7 @@ import Info from "../atoms/Info";
 import Fieldset from "../atoms/fieldset";
 import FormStatement from "../molecules/form_statement";
 import AddFilesWrapper from "./add_files_wrapper";
+import NumericInput from "../atoms/numeric_input";
 const StepThreeForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
@@ -61,23 +62,25 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             {" "}
             <Label width="50%">
               Podaj liczbę zespołów młodzieżowych
-              <Input
+              <NumericInput
                 value={formData.numberOfYouthGroups}
                 onChange={(e) =>
                   handleChange(e.target.value, "numberOfYouthGroups", 3)
                 }
-                type="number"
+                suffix=""
+                placeholder="0"
               />
               <Info />
             </Label>
             <Label width="50%">
               Udział zawodników młodzieżowych
-              <Input
+              <NumericInput
                 value={formData.shareOfYouthGroups}
                 onChange={(e) =>
                   handleChange(e.target.value, "shareOfYouthGroups", 3)
                 }
-                type="text"
+                suffix=""
+                placeholder="0"
               />
               <Info />
             </Label>

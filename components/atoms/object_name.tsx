@@ -36,7 +36,6 @@ const SavedIcon = styled(Save)`
 `;
 
 const ObjectName = ({ active, onClick, saved, children }) => {
-  console.log(children);
   return (
     <Wrapper onClick={onClick} active={active}>
       {saved ? null : <SavedIcon />}

@@ -278,14 +278,6 @@ const ClubApplication = ({
     if (formData.stepFour.sport_facilities.length < 5) {
       // dodaj obiekt tylko jesli ich liczba w clubData i formData jest taka sama
 
-      if (
-        clubData.applications[0].sport_facilities.length -
-          formData.stepFour.sport_facilities.length <
-        0
-      ) {
-        return "Zapisz aktualny obiekt aby dodać kolejny";
-      }
-
       const newForm = {
         name: "Obiekt 1",
         address: "",
@@ -320,6 +312,8 @@ const ClubApplication = ({
       setCurrentObject(newFormData.stepFour.sport_facilities.length - 1);
       router.replace(router.asPath);
       return true;
+    } else {
+      return "Osiągnięto maksymalną liczbe obiektów sportowych (5)";
     }
   };
 

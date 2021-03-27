@@ -25,6 +25,7 @@ import {
   validateZipCode,
 } from "../../middleware/validation";
 import ZipCodeInput from "../atoms/zip_code_input";
+import PhoneInput from "../atoms/phone_input";
 const AddNewClub = () => {
   const router = useRouter();
   const [postalCity, setPostalCity] = useState("");
@@ -74,9 +75,8 @@ const AddNewClub = () => {
       case 0:
       case 1:
         return (
-          <Input
+          <PhoneInput
             key={1}
-            type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -85,16 +85,14 @@ const AddNewClub = () => {
       case 2:
         return (
           <>
-            <Input
+            <PhoneInput
               key={2}
-              type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
 
-            <Input
+            <PhoneInput
               key={3}
-              type="text"
               value={phone2}
               onChange={(e) => setPhone2(e.target.value)}
             />
@@ -104,23 +102,20 @@ const AddNewClub = () => {
       case 3:
         return (
           <>
-            <Input
+            <PhoneInput
               key={4}
-              type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
 
-            <Input
+            <PhoneInput
               key={5}
-              type="text"
               value={phone2}
               onChange={(e) => setPhone2(e.target.value)}
             />
 
-            <Input
+            <PhoneInput
               key={6}
-              type="text"
               value={phone3}
               onChange={(e) => setPhone3(e.target.value)}
             />

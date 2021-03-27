@@ -16,11 +16,11 @@ const StyledCleave = styled(Cleave)`
   }
 `;
 
-const ZipCodeInput = ({ value, onChange }) => {
+const PhoneInput = ({ value, onChange }) => {
   //console.log("value", value);
   return (
     <StyledCleave
-      options={{ delimiters: ["-"], blocks: [2, 3], numericOnly: true }}
+      options={{ delimiters: ["-"], blocks: [3, 3, 3], numericOnly: true }}
       onChange={onChange}
       className="form-field"
       value={value}
@@ -28,4 +28,4 @@ const ZipCodeInput = ({ value, onChange }) => {
   );
 };
 
-export default ZipCodeInput;
+export default PhoneInput;
