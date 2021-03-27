@@ -6,22 +6,23 @@ import { ApplicationContext } from "./club_application";
 import FormTemplate from "../atoms/form_template";
 import Select from "../atoms/form_select";
 import Label from "../atoms/form_label";
-import RadioContainer from "../atoms/radio_container";
+
 import Input from "../atoms/input";
 import FormRow from "../atoms/form_row";
 import PrimaryButton from "../atoms/primary_button";
 import RadioSquare from "../molecules/form_radio";
 import Paragraph from "../atoms/paragraph";
-import AddFile from "../molecules/add_file";
-import OutlineButton from "../atoms/outline_button";
+
 import Info from "../atoms/Info";
-import ObjectName from "../atoms/object_name";
+
 import ObjectInfo from "../molecules/object_info";
 import FormHeader from "../atoms/form_header";
 import Fieldset from "../atoms/fieldset";
 import ErrorMessage from "../atoms/error_message";
 import AddFilesWrapper from "./add_files_wrapper";
 import ZipCodeInput from "../atoms/zip_code_input";
+import NummericInput from "../atoms/numeric_input";
+import NumericInput from "../atoms/numeric_input";
 const ObjectForm = ({ readOnly, objectIndex }) => {
   const router = useRouter();
   const [error, setError] = useState({ step: null, text: "" });
@@ -460,12 +461,12 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <Label width="50%">
             Całkowita liczba indywidualnych miejsc siedzących z oparciami
             udostępniona dla publiczności
-            <Input
+            <NumericInput
               value={data.I03_total_capacity}
               onChange={(e) =>
                 handleChange(e.target.value, objectIndex, "I03_total_capacity")
               }
-              type="text"
+              suffix={null}
               placeholder="0"
             />
           </Label>
@@ -557,7 +558,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <Label width="50%">
             Liczba indywidualnych miejsc siedzących z oparciami w sektorze
             kibiców drużyny gości
-            <Input
+            <NumericInput
               value={data.I05_number_of_seats_for_guests}
               onChange={(e) => {
                 handleChange(
@@ -566,13 +567,13 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I05_number_of_seats_for_guests"
                 );
               }}
-              type="text"
+              suffix={null}
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Procent pojemności Stadionu udostępniony kibicom gości
-            <Input
+            <NumericInput
               value={data.I05_percentage_of_seats_for_guests}
               onChange={(e) =>
                 handleChange(
@@ -581,7 +582,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I05_percentage_of_seats_for_guests"
                 )
               }
-              type="text"
+              suffix="%"
               placeholder="0%"
             />
           </Label>
@@ -638,23 +639,21 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <Label>
             Wymiar pola gry (długość x szerokość)
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Input
+              <NumericInput
                 value={data.I06_length}
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I06_length")
                 }
-                width="140px"
-                type="text"
+                suffix="m"
                 placeholder="0 m"
               />{" "}
               <span style={{ margin: "0 8px" }}>x</span>
-              <Input
+              <NumericInput
                 value={data.I06_width}
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I06_width")
                 }
-                width="140px"
-                type="text"
+                suffix="m"
                 placeholder="0 m"
               />
             </div>
@@ -777,7 +776,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <FormHeader>Kryterium I.08 - Ławki w obszarze pola gry</FormHeader>
           <Label width="50%">
             Liczba miejsc siedzących na ławce dla rezerwowych
-            <Input
+            <NumericInput
               value={data.I08_number_of_seats_on_the_bench}
               onChange={(e) =>
                 handleChange(
@@ -786,7 +785,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I08_number_of_seats_on_the_bench"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
@@ -883,18 +882,18 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           </FormHeader>
           <Label width="50%">
             Liczba miejsc siedzących
-            <Input
+            <NumericInput
               value={data.I11_number_of_seats}
               onChange={(e) =>
                 handleChange(e.target.value, objectIndex, "I11_number_of_seats")
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Liczba wieszaków lub szafek na odzież
-            <Input
+            <NumericInput
               value={data.I11_number_of_hangers_or_lockers}
               onChange={(e) =>
                 handleChange(
@@ -903,13 +902,13 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I11_number_of_hangers_or_lockers"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Liczba pryszniców
-            <Input
+            <NumericInput
               value={data.I11_number_of_showers}
               onChange={(e) =>
                 handleChange(
@@ -918,13 +917,13 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I11_number_of_showers"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Liczba toalet z sedesem
-            <Input
+            <NumericInput
               value={data.I11_number_of_toilets}
               onChange={(e) =>
                 handleChange(
@@ -933,7 +932,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I11_number_of_toilets"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
@@ -963,18 +962,18 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <FormHeader>Kryterium I.12 - Szatnia dla drużyny gości</FormHeader>
           <Label width="50%">
             Liczba miejsc siedzących
-            <Input
+            <NumericInput
               value={data.I12_number_of_seats}
               onChange={(e) =>
                 handleChange(e.target.value, objectIndex, "I12_number_of_seats")
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Liczba wieszaków lub szafek na odzież
-            <Input
+            <NumericInput
               value={data.I12_number_of_hangers_or_lockers}
               onChange={(e) =>
                 handleChange(
@@ -983,13 +982,13 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I12_number_of_hangers_or_lockers"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Liczba pryszniców
-            <Input
+            <NumericInput
               value={data.I12_number_of_showers}
               onChange={(e) =>
                 handleChange(
@@ -998,13 +997,13 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I12_number_of_showers"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Liczba toalet z sedesem
-            <Input
+            <NumericInput
               value={data.I12_number_of_toilets}
               onChange={(e) =>
                 handleChange(
@@ -1013,7 +1012,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I12_number_of_toilets"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
@@ -1139,7 +1138,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <FormHeader>Kryterium I.15</FormHeader>
           <Label width="50%">
             Liczba toalet dla kobiet
-            <Input
+            <NumericInput
               value={data.I15_number_of_toilets_for_women}
               onChange={(e) =>
                 handleChange(
@@ -1148,13 +1147,13 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I15_number_of_toilets_for_women"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
           <Label width="50%">
             Liczba toalet dla mężczyzn
-            <Input
+            <NumericInput
               value={data.I15_number_of_toilets_for_men}
               onChange={(e) =>
                 handleChange(
@@ -1163,7 +1162,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   "I15_number_of_toilets_for_men"
                 )
               }
-              type="text"
+              suffix=""
               placeholder="0"
             />
           </Label>
@@ -1221,7 +1220,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
             <>
               <Label width="50%">
                 Poziom natężenia oświetlenia w lx
-                <Input
+                <NumericInput
                   value={data.I17_intensity_level}
                   onChange={(e) =>
                     handleChange(
@@ -1230,7 +1229,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                       "I17_intensity_level "
                     )
                   }
-                  type="text"
+                  suffix="lx"
                   placeholder="0 luksów"
                 />
               </Label>

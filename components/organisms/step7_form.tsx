@@ -174,10 +174,10 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           </>
         ) : null}
         {isSuperVision() ? (
-          <Paragraph>
+          <ErrorMessage>
             Brak wszystkich dokumentów, zostanie wydana licencja z nadzorem
             (istnieje możliwość późniejszego dosłania dokumentów)
-          </Paragraph>
+          </ErrorMessage>
         ) : null}
         <Paragraph>
           Informacje dotyczące płatności za procedurę licencyjną
