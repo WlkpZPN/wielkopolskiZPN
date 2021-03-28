@@ -13,8 +13,9 @@ import PrimaryButton from "../../../components/atoms/primary_button";
 import ErrorMessage from "../../../components/atoms/error_message";
 import QuestionList from "../../../components/organisms/questions_list";
 import GroupMessages from "../../../components/organisms/group_messages";
-const NumberInput = styled(Input)`
-  max-width: 350px;
+import NumericInput from "../../../components/atoms/numeric_input";
+const NumberInput = styled(NumericInput)`
+  max-width: 250px;
   margin-top: 6px;
 `;
 
@@ -22,6 +23,7 @@ const Header = styled.h3`
   margin-top: 32px;
 `;
 const Ustawienia = ({ userData, settings, questions, messages }) => {
+  console.log(settings);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
   const [endDate, setEndDate] = useState(settings.end_date || new Date());
@@ -128,10 +130,11 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
         }}
       >
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
-          <Label style={{ maxWidth: "400px" }}>
+          <Label style={{ maxWidth: "400px", marginRight: "16px" }}>
             Wysokość opłaty za złożenie wniosku licencyjnego
             <NumberInput
-              type="number"
+              suffix="PLN"
+              placeholder="0"
               value={primaryAmount}
               onChange={(e) => setPrimaryAmount(e.target.value)}
             />
@@ -139,7 +142,8 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           <Label style={{ maxWidth: "400px" }}>
             Wysokość opłaty za złożenie wniosku licencyjnego
             <NumberInput
-              type="number"
+              suffix="PLN"
+              placeholder="0"
               value={extraAmount}
               onChange={(e) => setExtraAmount(e.target.value)}
             />
@@ -176,7 +180,7 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
   return {
     props: {
       userData: data,
-      settings: { settings },
+      settings: settings,
       questions: questions,
       messages,
     },

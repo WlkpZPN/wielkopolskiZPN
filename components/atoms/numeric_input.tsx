@@ -25,7 +25,7 @@ const Wrapper = styled.div`
     content: "${({ suffix }) => suffix}";
     display: inline;
     position: absolute;
-    right: 12px;
+    right: 20px;
     line-height: 33px;
     font-size: 18px;
     top: 6px;

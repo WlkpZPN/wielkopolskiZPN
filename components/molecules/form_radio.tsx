@@ -6,7 +6,6 @@ const Radio = styled.input`
   width: 0;
   height: 0;
   position: relative;
-  display: none;
   cursor: pointer;
   &:checked + svg {
     color: ${({ theme }) => theme.primaryLight};
@@ -25,17 +24,28 @@ const CustomRadio = styled(Check)`
   padding: 0;
 `;
 
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+
+  &:focus {
+    box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.primaryLight};
+  }
+`;
+
 const RadioSquare = ({ setVisible = null, value, handleChange }) => {
   return (
-    <label>
+    <p>
       <Radio
+        id="checkbox"
         onClick={() => setVisible?.(false)}
         onChange={handleChange}
         checked={value}
         type="checkbox"
       />
       <CustomRadio />
-    </label>
+      <Label for="checkbox" tabindex="1" contenteditable="true"></Label>
+    </p>
   );
 };
 
