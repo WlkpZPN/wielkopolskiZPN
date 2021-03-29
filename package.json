@@ -37,6 +37,7 @@
     "nodemailer": "^6.5.0",
     "nodemailer-express-handlebars": "^4.0.0",
     "nookies": "^2.5.2",
+    "pdf-creator-node": "^2.2.2",
     "pdfkit": "^0.11.0",
     "randomstring": "^1.1.5",
     "react": "17.0.1",
