@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.19.3",
+    "@pdf-lib/fontkit": "^1.1.1",
     "@prisma/client": "^2.18.0",
     "@react-pdf/renderer": "^1.6.14",
     "@sendgrid/mail": "^7.4.2",
@@ -21,6 +22,7 @@
     "cookie-cutter": "^0.2.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
+    "downloadjs": "^1.4.7",
     "draft-js": "^0.11.7",
     "file-server": "^2.1.0",
     "generate-password": "^1.6.0",
@@ -38,6 +40,7 @@
     "nodemailer-express-handlebars": "^4.0.0",
     "nookies": "^2.5.2",
     "pdf-creator-node": "^2.2.2",
+    "pdf-lib": "^1.16.0",
     "pdfkit": "^0.11.0",
     "randomstring": "^1.1.5",
     "react": "17.0.1",

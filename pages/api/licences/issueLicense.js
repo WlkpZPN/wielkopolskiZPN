@@ -4,10 +4,24 @@ import { renderToStaticMarkup } from "react-dom/server";
 import pdf from "pdf-creator-node";
 import fs from "fs";
 
-const html = fs.readFileSync(
-  "../../../middleware/licenseTemplate.html",
-  "utf8"
-);
+const html = `<!DOCTYPE html>
+<html>
+  <head>
+    <mate charest="utf-8" />
+    <title>Hello world!</title>
+  </head>
+  <body>
+    <h1>User List</h1>
+    <ul>
+      {{#each users}}
+      <li>Name: {{this.name}}</li>
+      <li>Age: {{this.age}}</li>
+      <br />
+      {{/each}}
+    </ul>
+  </body>
+</html>
+`;
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
@@ -30,6 +44,42 @@ export default async (req, res) => {
         },
       },
     };
+
+    const users = [
+      {
+        name: "Shyam",
+        age: "26",
+      },
+      {
+        name: "Navjot",
+        age: "26",
+      },
+      {
+        name: "Vitthal",
+        age: "26",
+      },
+    ];
+    const document = {
+      html: html,
+      data: {
+        users: users,
+      },
+      path: "./output.pdf",
+      type: "buffer",
+    };
+
+    await pdf
+      .create(document, options)
+      .then((file) => {
+        console.log(file);
+        res.header("Content-type", "application/pdf");
+
+        res.send(file);
+        return resolve();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // const options = {
     //   format: "A4",
     //   orientation: "portrait",
@@ -72,7 +122,7 @@ export default async (req, res) => {
     // });
 
     // res.send("licencja wydana");
-    res.send("test");
+    // res.send("test");
     return resolve();
   });
 };

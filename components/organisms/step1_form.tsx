@@ -18,6 +18,7 @@ import { extractAddressData, convertAddressData } from "../../middleware/utils";
 import { ApplicationContext } from "./club_application";
 import ErrorMessage from "../atoms/error_message";
 import ZipCodeInput from "../atoms/zip_code_input";
+import RadioButton from "../atoms/radio_button";
 const StepOneForm = ({
   data,
   handleChange,
@@ -84,26 +85,26 @@ const StepOneForm = ({
             <RadioContainer>
               <p>Zaznacz,na ile sezonów ubiegasz się o licencje</p>
               <Label direction="row" htmlFor="1">
-                <Input
-                  type="radio"
+                <RadioButton
                   id="1"
                   name="seasons"
                   checked={data.seasons === "1"}
                   value={"1"}
                   onChange={(e) => handleChange(e, "seasons", 1)}
-                />
-                1 sezon
+                >
+                  1 sezon
+                </RadioButton>
               </Label>
               <Label direction="row" htmlFor="2">
-                <Input
-                  type="radio"
+                <RadioButton
                   value={"2"}
                   name="seasons"
                   id="2"
                   checked={data.seasons === "2"}
                   onChange={(e) => handleChange(e, "seasons", 1)}
-                />
-                2 sezony
+                >
+                  2 sezony
+                </RadioButton>
               </Label>
             </RadioContainer>
             <Label>
