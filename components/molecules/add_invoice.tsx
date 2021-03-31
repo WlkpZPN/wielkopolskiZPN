@@ -112,10 +112,15 @@ const FileInput = styled.input`
 
 const Label = styled.label`
   width: 100%;
+
+  & span {
+    width: 100%;
+    display: block;
+  }
 `;
 
 const AddButton = styled.span`
-  padding: 12px 16px;
+  padding: 10px 16px;
   border: 2px solid ${({ theme }) => theme.primaryLight};
   transition: all 0.2s;
   font-weight: bold;
@@ -157,7 +162,7 @@ const AddInvoice = ({ admin, clubData, file, addFile }) => {
   };
 
   const uploadFile = async () => {
-    file.name = file.name.replace("/", "_");
+    console.log(file.name);
     const formData = new FormData();
     formData.append("invoice", file);
     console.log(file);
@@ -203,11 +208,11 @@ const AddInvoice = ({ admin, clubData, file, addFile }) => {
         clubId: clubData.id,
       });
       setLoading(false);
-      router.replace(router.asPath);
       toast.error("Faktura usunięta", {
         autoClose: 2000,
       });
-      handleDelete();
+      addFile(null);
+      router.replace(router.asPath);
     } catch (error) {
       console.log(error);
       toast.error("Usuwanie faktury się nie powiodło,spróbuj ponownie", {
@@ -219,7 +224,7 @@ const AddInvoice = ({ admin, clubData, file, addFile }) => {
 
   const generateContent = () => {
     if (loading) {
-      return <Loader />;
+      return <Loader style={{ alignSelf: "center" }} />;
     }
 
     if (clubData.invoice_url) {
