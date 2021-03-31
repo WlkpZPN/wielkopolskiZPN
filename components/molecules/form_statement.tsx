@@ -54,6 +54,13 @@ const StyledLabel = styled(Label)`
     cursor: pointer;
   }
 `;
+
+const Button = styled(OutlineButton)`
+  &:focus {
+    box-shadow: 0px 3px 8px -4px ${({ theme }) => theme.primary};
+    outline: none;
+  }
+`;
 const FormStatement = ({
   name,
   buttonText = "Potwierdzam treść oświadczenia",
@@ -70,9 +77,9 @@ const FormStatement = ({
   return (
     <Wrapper>
       <Paragraph>{name}</Paragraph>
-      <OutlineButton type="button" onClick={() => setVisible(true)}>
+      <Button type="button" onClick={() => setVisible(true)}>
         Pokaż treść oświadczenia
-      </OutlineButton>
+      </Button>
       <StyledLabel direction="row">
         <RadioSquare value={value} handleChange={handleChange} />
         {buttonText}

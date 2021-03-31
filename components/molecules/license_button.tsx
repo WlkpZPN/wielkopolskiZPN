@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   margin-right: 16px;
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  height: 300px;
+  height: 340px;
   width: 260px;
   display: flex;
   flex-direction: column;
@@ -80,6 +80,12 @@ const LicenseButton = ({ application, isAdmin }) => {
       toast.error("Cofnięcie nadzoru nie powiodło się, spróbuj ponownie", {
         autoClose: 1500,
       });
+    }
+  };
+
+  const renderButtons = () => {
+    switch (application.statuses.id) {
+      case 7:
     }
   };
   return (

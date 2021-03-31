@@ -16,17 +16,18 @@ import Loader from "../../../components/atoms/loader";
 import CorrectModal from "../../../components/molecules/correct_modal";
 import RejectModal from "../../../components/molecules/reject_modal";
 import Paragraph from "../../../components/atoms/paragraph";
-import AddFilesWrapper from "../../../components/organisms/add_files_wrapper";
+
 import ErrorMessage from "../../../components/atoms/error_message";
 import LicenseDecision from "../../../components/atoms/license_decision";
 import LicenseButton from "../../../components/molecules/license_button";
+import AddInvoice from "../../../components/molecules/add_invoice";
 const Application = ({ authData, clubData, settings }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [visibleReject, setvisibleReject] = useState(false);
-  const [invoiceFiles, setInvoiceFiles] = useState([]);
-  console.log(settings);
+  const [invoiceFiles, setInvoiceFiles] = useState();
+  console.log(invoiceFiles);
   const handleFileDelete = () => {};
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {
@@ -35,10 +36,11 @@ const Application = ({ authData, clubData, settings }) => {
           <>
             {" "}
             <Paragraph>Dodaj fakturę</Paragraph>{" "}
-            <AddFilesWrapper
-              fileData={invoiceFiles}
-              setFiles={setInvoiceFiles}
-              deleteFile={handleFileDelete}
+            <AddInvoice
+              admin={true}
+              clubData={clubData}
+              file={invoiceFiles}
+              addFile={setInvoiceFiles}
             />
             <ErrorMessage>
               {clubData.applications[0].invoice_required
@@ -50,8 +52,16 @@ const Application = ({ authData, clubData, settings }) => {
       case 7:
         return (
           <>
-            <Paragraph>Dodaj fakturę</Paragraph>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", alignItems: "flex-end" }}>
+              <p>
+                <Paragraph>Dodaj fakturę</Paragraph>
+                <AddInvoice
+                  admin={true}
+                  clubData={clubData}
+                  file={invoiceFiles}
+                  addFile={setInvoiceFiles}
+                />
+              </p>
               <LicenseDecision
                 applicationID={clubData.applications[0].id}
                 statusID={8}
@@ -95,7 +105,7 @@ const Application = ({ authData, clubData, settings }) => {
         );
       case 8:
         return (
-          <>
+          <div style={{ display: "flex" }}>
             <div>
               <Paragraph>Licencja</Paragraph>
               <LicenseButton
@@ -103,11 +113,20 @@ const Application = ({ authData, clubData, settings }) => {
                 application={clubData.applications[0]}
               />
             </div>
-          </>
+            <div>
+              <Paragraph>Faktura</Paragraph>
+              <AddInvoice
+                admin={true}
+                clubData={clubData}
+                file={invoiceFiles}
+                addFile={setInvoiceFiles}
+              />
+            </div>
+          </div>
         );
       case 10:
         return (
-          <>
+          <div style={{ display: "flex" }}>
             {" "}
             <div>
               <Paragraph>Licencja</Paragraph>
@@ -116,7 +135,37 @@ const Application = ({ authData, clubData, settings }) => {
                 application={clubData.applications[0]}
               />
             </div>
-          </>
+            <div>
+              <Paragraph>Faktura</Paragraph>
+              <AddInvoice
+                admin={true}
+                clubData={clubData}
+                file={invoiceFiles}
+                addFile={setInvoiceFiles}
+              />
+            </div>
+          </div>
+        );
+      case 11:
+        return (
+          <div style={{ display: "flex" }}>
+            <div>
+              <Paragraph>Licencja</Paragraph>
+              <LicenseButton
+                isAdmin={true}
+                application={clubData.applications[0]}
+              />
+            </div>
+            <div>
+              <Paragraph>Faktura</Paragraph>
+              <AddInvoice
+                admin={true}
+                clubData={clubData}
+                file={invoiceFiles}
+                addFile={setInvoiceFiles}
+              />
+            </div>
+          </div>
         );
     }
   };
