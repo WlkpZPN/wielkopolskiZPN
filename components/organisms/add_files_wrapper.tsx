@@ -15,7 +15,6 @@ const Row = styled.div`
 
 const AddFilesWrapper = ({ fileData, setFiles, deleteFile }) => {
   const [boxes, setBoxes] = useState([]);
-  //console.log(fileData);
 
   const addFile = (id, file) => {
     //console.log(file);

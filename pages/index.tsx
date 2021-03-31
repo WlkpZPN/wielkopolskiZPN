@@ -41,7 +41,7 @@ export const ClubContext = createContext(null);
 
 const Home = ({ authData, clubData, settings }) => {
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
-  console.log(settings);
+
   if (!clubData) {
     return <Spinner />;
   }

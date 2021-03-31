@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-all;
-  padding: 32px;
+  padding: 24px;
   margin-right: 16px;
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);

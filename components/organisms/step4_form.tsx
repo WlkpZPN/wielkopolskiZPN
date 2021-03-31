@@ -43,6 +43,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
   const { error, clearErrors } = context;
   const [internalError, setInternalError] = useState("");
+
   const handleNewForm = () => {
     const result = createNewSportFacilityForm();
     console.log(result);
@@ -64,7 +65,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           key={index}
           onClick={() => setCurrentobject(index)}
         >
-          {facility.name}
+          {facility.name || "Obiekt 1"}
         </ObjectName>
       );
     });

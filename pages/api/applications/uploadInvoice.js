@@ -43,12 +43,7 @@ apiRoute.post((req, res) => {
       res.status(400).send(error);
     } else {
       console.log("data", req.file);
-      res.send("adawdawd");
-      //   res
-      //     .status(200)
-      //     .send(
-      //       `${process.env.DB_SPACES_ENDPOINT}/faktury/${req.file.originalname}`
-      //     );
+      res.send("");
     }
   });
 });

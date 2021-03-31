@@ -12,10 +12,12 @@ export default async (req, res) => {
     //     }
     // })
     // add sport facility
-    console.log("id", sport_facility.id);
-    delete sport_facility.applications_attachments;
+    // console.log("id", sport_facility.id);
+    if (sport_facility) {
+      delete sport_facility.applications_attachments;
+    }
 
-    if (sport_facility.id) {
+    if (sport_facility?.id) {
       await prisma.sport_facilities.update({
         where: {
           id: sport_facility.id,
@@ -25,7 +27,7 @@ export default async (req, res) => {
           ...sport_facility,
         },
       });
-    } else if (!sport_facility.id) {
+    } else if (!sport_facility?.id) {
       await prisma.sport_facilities.create({
         data: {
           application_id: clubData.applications[0].id,

@@ -42,6 +42,7 @@ const ClubApplication = ({
   show_buttons,
   settings,
 }) => {
+  console.log(clubData);
   const improvements = errors ? JSON.parse(errors) : {};
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -471,31 +472,58 @@ const ClubApplication = ({
     // update data and status of application
   };
 
-  const saveForm = () => {
-    // save data in the application table
-    // save data in the club table
+  const uploadFiles = async () => {
+    const config = {
+      headers: { "Content-type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        console.log(
+          `Current progress:`,
+          Math.round((event.loaded * 100) / event.total)
+        );
+      },
+    };
     const applicationFiles = {
       agreement_documents: convertToFormData(
         formData.stepThree.agreement_documents
       ),
       krs_documents: convertToFormData(formData.stepTwo.krs_documents),
     };
-    console.log(formData.stepTwo.krs_documents);
-    //setLoading(true);
-    // axios.post(
-    //   "/api/applications/uploadFiles",
-    //   applicationFiles.krs_documents,
-    //   {
-    //     headers: { "content-type": "multipart/form-data" },
-    //     onUploadProgress: (event) => {
-    //       console.log(
-    //         `Current progress:`,
-    //         Math.round((event.loaded * 100) / event.total)
-    //       );
-    //     },
-    //   }
-    // );
+    console.log(applicationFiles);
+
+    try {
+      if (formData.stepTwo.krs_documents.length > 0) {
+        // await axios.post(
+        //   "/api/applications/uploadFiles",
+        //   applicationFiles.krs_documents,
+        //   config
+        // );
+        // upload files urls to database
+      }
+
+      await axios.post("/api/applications/addFilesUrl", {
+        applicationID: clubData.applications[0].id,
+        fileNames: {
+          krs_documents: formData.stepTwo.krs_documents.map(
+            (file) => file.name
+          ),
+
+          agreement_documents: formData.stepThree.agreement_documents.map(
+            (file) => file.name
+          ),
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
+  const saveForm = () => {
+    // save data in the application table
+    // save data in the club table
+
     setLoading(true);
+    uploadFiles();
     addSportFacility();
     axios
       .post("/api/applications/updateApplication", {

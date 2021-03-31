@@ -58,7 +58,7 @@ export default async (req, res) => {
       club_agreement_name: stepThree.clubAgreementName,
       invoice_required: stepSeven.invoice_required,
     };
-    console.log("data to insert", dataToInsert);
+    // console.log("data to insert", dataToInsert);
 
     if (!clubData.applications[0]) {
       // we dont have an application | create

@@ -11,6 +11,8 @@ import Fieldset from "../atoms/fieldset";
 import { ApplicationContext } from "./club_application";
 import ErrorMessage from "../atoms/error_message";
 import AddFilesWrapper from "./add_files_wrapper";
+import OutlineButton from "../atoms/outline_button";
+import ObjectName from "../atoms/object_name";
 const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const [error, setError] = useState("");
@@ -25,13 +27,15 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     formData,
     handleFormChange,
     show_buttons,
+    setCurrentobject,
+    currentObject,
   } = context;
   const stepTwoFiles = context.formData.stepTwo.krs_documents;
   const stepThreeFiles = context.formData.stepThree.agreement_documents;
 
   const stepFourFiles =
     context.formData.stepFour.sport_facilities.length > 0
-      ? context.formData.stepFour.sport_facilities[context.currentObject]
+      ? context.formData.stepFour.sport_facilities[currentObject]
           .applications_attachments
       : [];
 
@@ -68,6 +72,21 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     return false;
   };
 
+  const renderFacilityNames = () => {
+    const objects = formData.stepFour.sport_facilities;
+    console.log(objects);
+    return objects.map((facility, index) => (
+      <ObjectName
+        onClick={() => setCurrentobject(index)}
+        key={index}
+        saved={true}
+        active={index === currentObject}
+      >
+        {facility.name}
+      </ObjectName>
+    ));
+  };
+
   const submitForm = (e) => {
     e.preventDefault();
     sendApplication(isSuperVision());
@@ -97,7 +116,8 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             setState(!state);
           }}
         />
-        {stepThreeFiles.length > 0 ? (
+        {context.formData.stepThree.youthGroupsPossession ===
+        "porozumienie na szkolenie" ? (
           <>
             <Paragraph>
               Kopia Porozumienia na szkolenie młodzieży z klubem {clubName}
@@ -115,6 +135,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             />
           </>
         ) : null}
+        {renderFacilityNames()}
         {agreementDocuments.length > 0 ? (
           <>
             <Paragraph>

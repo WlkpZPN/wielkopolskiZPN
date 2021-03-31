@@ -1,9 +1,12 @@
 import { useState } from "react";
 import uniqid from "uniqid";
+import axios from "axios";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
-
+import Loader from "../atoms/loader";
+import { toast } from "react-toastify";
 //components
 import OutlineButton from "../atoms/outline_button";
 
@@ -11,7 +14,7 @@ const Wrapper = styled.div`
   border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-all;
-  padding: 8px;
+  padding: 16px;
   margin-right: 16px;
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
@@ -130,12 +133,37 @@ const DeleteButton = styled.span`
 `;
 
 const AddFile = ({ file, handleDelete, addFile }) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     e.preventDefault();
     addFile(file ? file.id : uniqid(), e.target.files[0]);
     console.log(e.target.files[0]);
   };
+  console.log(file);
 
+  const deleteFile = async () => {
+    if (!file?.id) {
+      return;
+    }
+    setLoading(true);
+    try {
+      axios.post("/api/applications/deleteFile", {
+        attachment: file,
+      });
+      setLoading(false);
+      toast.error("Usunięto plik", {
+        autoClose: 1500,
+      });
+      router.replace(router.asPath);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error("Nie udało się usunąć pliku,spróbuj ponownie", {
+        autoClose: 2000,
+      });
+    }
+  };
   return (
     <Wrapper>
       <Info>
@@ -159,6 +187,7 @@ const AddFile = ({ file, handleDelete, addFile }) => {
           onClick={(e) => {
             e.preventDefault();
             handleDelete(file.id);
+            deleteFile();
           }}
         >
           Usuń
