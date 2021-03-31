@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   padding: 48px 24px;
   background-color: #f2f3f4;
   width: 260px;
-  height: 367px;
+  height: 340px;
   box-shadow: 0px 0px 2px #00000029;
   margin-right: 16px;
 `;

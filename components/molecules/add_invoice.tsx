@@ -147,7 +147,7 @@ const DeleteButton = styled.span`
   }
 `;
 
-const AddInvoice = ({ admin, clubData, file, addFile }) => {
+const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -195,6 +195,7 @@ const AddInvoice = ({ admin, clubData, file, addFile }) => {
       toast.error("Dodanie faktury się nie powiodło,sprobój ponownie", {
         autoClose: 2000,
       });
+      setLoading(false);
       return;
     }
   };
@@ -223,6 +224,30 @@ const AddInvoice = ({ admin, clubData, file, addFile }) => {
   };
 
   const generateContent = () => {
+    if (!admin) {
+      if (clubData.invoice_url) {
+        const addressArr = clubData.invoice_url.split("/");
+        const key = addressArr[addressArr.length - 1];
+        return (
+          <>
+            {" "}
+            <a
+              target="_blank"
+              style={{ marginBottom: "16px" }}
+              href={clubData.invoice_url}
+            >
+              <OutlineButton>Pobierz fakturę</OutlineButton>
+            </a>
+            <PrimaryButton color="danger" hoverColor="dangerDark">
+              Zgłoś nieprawidłowość
+            </PrimaryButton>
+          </>
+        );
+      } else {
+        return null;
+      }
+    }
+
     if (loading) {
       return <Loader style={{ alignSelf: "center" }} />;
     }
@@ -292,6 +317,23 @@ const AddInvoice = ({ admin, clubData, file, addFile }) => {
   };
 
   const renderTitle = () => {
+    if (!admin) {
+      if (clubData.invoice_url) {
+        const addressArr = clubData.invoice_url.split("/");
+        return (
+          <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+            {addressArr[addressArr.length - 1]}
+          </span>
+        );
+      } else {
+        return (
+          <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+            Brak załączonej faktury
+          </span>
+        );
+      }
+    }
+
     if (clubData.invoice_url) {
       const addressArr = clubData.invoice_url.split("/");
       return (

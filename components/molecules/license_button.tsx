@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-all;
-  padding: 8px;
+  padding: 32px;
   margin-right: 16px;
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
@@ -28,12 +28,15 @@ const Wrapper = styled.div`
   width: 260px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   position: relative;
   z-index: 2;
 
   text-align: center;
+  & button {
+    width: 100%;
+  }
 `;
 
 const Content = styled.span`
@@ -61,6 +64,26 @@ const LicenseButton = ({ application, isAdmin }) => {
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
 
+  const changeDecision = async () => {
+    setLoading(true);
+    try {
+      await axios.post("/api/licences/setLicense", {
+        applicationID: application.id,
+        statusID: 8,
+        description: "Zmiana decyzji, licencja wydana",
+      });
+
+      setLoading(false);
+      toast.success("Zmieniono decyzję,licencja wydana pomyślnie");
+      router.replace(router.asPath);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Zmiana decyzji nie powiodła się,spróbuj ponownie", {
+        autoClose: 2000,
+      });
+    }
+  };
   const undoSupervision = async () => {
     setLoading(true);
     try {
@@ -86,6 +109,62 @@ const LicenseButton = ({ application, isAdmin }) => {
   const renderButtons = () => {
     switch (application.statuses.id) {
       case 7:
+      case 8:
+      case 10:
+        return (
+          <>
+            <OutlineButton
+              style={{ padding: "8px", fontSize: "14px" }}
+              onClick={() => setVisible(true)}
+            >
+              Wyświetl
+            </OutlineButton>
+            {isAdmin && (
+              <>
+                {application.status_id === 8 ? (
+                  <PrimaryButton
+                    style={{
+                      padding: "8px",
+                      fontSize: "14px",
+                      margin: "12px 0",
+                    }}
+                    onClick={() => setVisible2(true)}
+                  >
+                    Nadaj nadzór
+                  </PrimaryButton>
+                ) : (
+                  <PrimaryButton
+                    style={{
+                      padding: "8px",
+                      fontSize: "14px",
+                      margin: "12px 0",
+                    }}
+                    onClick={undoSupervision}
+                  >
+                    Zdejmij nadzór
+                  </PrimaryButton>
+                )}
+                <PrimaryButton
+                  style={{ padding: "8px", fontSize: "14px" }}
+                  color="danger"
+                  hoverColor="dangerDark"
+                  onClick={() => setVisible1(true)}
+                >
+                  Cofnij licencję
+                </PrimaryButton>
+              </>
+            )}{" "}
+          </>
+        );
+
+      case 11:
+        return (
+          <>
+            <PrimaryButton onClick={changeDecision}>
+              Zmień decyzję
+            </PrimaryButton>{" "}
+          </>
+        );
     }
   };
   return (
@@ -116,51 +195,7 @@ const LicenseButton = ({ application, isAdmin }) => {
       </StatusContainer>
       {isAdmin ? null : <FileIcon />}
       <Content>licencja {application.internal_id}</Content>
-
-      <OutlineButton
-        style={{ width: "90%", padding: "8px", fontSize: "14px" }}
-        onClick={() => setVisible(true)}
-      >
-        Wyświetl
-      </OutlineButton>
-
-      {isAdmin && (
-        <>
-          {application.status_id === 8 ? (
-            <PrimaryButton
-              style={{
-                width: "90%",
-                padding: "8px",
-                fontSize: "14px",
-                margin: "12px 0",
-              }}
-              onClick={() => setVisible2(true)}
-            >
-              Nadaj nadzór
-            </PrimaryButton>
-          ) : (
-            <PrimaryButton
-              style={{
-                width: "90%",
-                padding: "8px",
-                fontSize: "14px",
-                margin: "12px 0",
-              }}
-              onClick={undoSupervision}
-            >
-              Zdejmij nadzór
-            </PrimaryButton>
-          )}
-          <PrimaryButton
-            style={{ width: "90%", padding: "8px", fontSize: "14px" }}
-            color="danger"
-            hoverColor="dangerDark"
-            onClick={() => setVisible1(true)}
-          >
-            Cofnij licencję
-          </PrimaryButton>
-        </>
-      )}
+      {renderButtons()}
     </Wrapper>
   );
 };
