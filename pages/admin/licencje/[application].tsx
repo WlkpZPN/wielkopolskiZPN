@@ -108,10 +108,7 @@ const Application = ({ authData, clubData, settings }) => {
           <div style={{ display: "flex" }}>
             <div>
               <Paragraph>Licencja</Paragraph>
-              <LicenseButton
-                isAdmin={true}
-                application={clubData.applications[0]}
-              />
+              <LicenseButton isAdmin={true} clubData={clubData} />
             </div>
             <div>
               <Paragraph>Faktura</Paragraph>
@@ -130,10 +127,7 @@ const Application = ({ authData, clubData, settings }) => {
             {" "}
             <div>
               <Paragraph>Licencja</Paragraph>
-              <LicenseButton
-                isAdmin={true}
-                application={clubData.applications[0]}
-              />
+              <LicenseButton isAdmin={true} clubData={clubData} />
             </div>
             <div>
               <Paragraph>Faktura</Paragraph>
@@ -151,10 +145,7 @@ const Application = ({ authData, clubData, settings }) => {
           <div style={{ display: "flex" }}>
             <div>
               <Paragraph>Licencja</Paragraph>
-              <LicenseButton
-                isAdmin={true}
-                application={clubData.applications[0]}
-              />
+              <LicenseButton isAdmin={true} clubData={clubData} />
             </div>
             <div>
               <Paragraph>Faktura</Paragraph>
@@ -389,6 +380,7 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
         include: {
           statuses: true,
           applications_attachments: true,
+          histories: true,
           sport_facilities: {
             include: {
               applications_attachments: true,

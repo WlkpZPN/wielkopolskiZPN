@@ -274,10 +274,7 @@ const Home = ({ authData, clubData, settings }) => {
               </Paragraph>
               <div style={{ margin: "42px 0", display: "flex" }}>
                 <AddInvoice admin={false} clubData={clubData} />
-                <LicenseButton
-                  isAdmin={false}
-                  application={clubData.applications[0]}
-                />
+                <LicenseButton isAdmin={false} clubData={clubData} />
               </div>
               <ClubSteps status="licencja wydana" />
             </>

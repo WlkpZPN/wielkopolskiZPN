@@ -59,7 +59,8 @@ const StatusContainer = styled.div`
 
 const ref = createRef();
 
-const LicenseButton = ({ application, isAdmin }) => {
+const LicenseButton = ({ clubData, isAdmin }) => {
+  const application = clubData.applications[0];
   const router = useRouter();
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -117,7 +118,7 @@ const LicenseButton = ({ application, isAdmin }) => {
           <>
             <OutlineButton
               style={{ padding: "8px", fontSize: "14px" }}
-              onClick={() => generatePdf()}
+              onClick={() => generatePdf(clubData)}
             >
               Pobierz
             </OutlineButton>
