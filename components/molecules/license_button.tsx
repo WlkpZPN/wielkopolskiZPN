@@ -7,7 +7,7 @@ import ApplicationStatus from "../atoms/application_status";
 import OutlineButton from "../atoms/outline_button";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
 import CustomScroll from "react-custom-scroll";
-import LicenseView from "./license_view";
+
 import PrimaryButton from "../atoms/primary_button";
 import UndoLicense from "./undo_license_modal";
 import GiveSupervision from "./give_supervision_modal";
@@ -54,6 +54,7 @@ const StatusContainer = styled.div`
   /* top:${({ isAdmin }) => (isAdmin ? "initial" : "absolute")}; */
   top: -20px;
   left: 50%;
+  align-self: center;
   transform: ${({ isAdmin }) => (isAdmin ? "initial" : "translateX(-50%)")};
 `;
 
@@ -184,12 +185,7 @@ const LicenseButton = ({ clubData, isAdmin }) => {
         applicationID={application.id}
         internalID={application.internal_id}
       />
-      <LicenseView
-        application={application}
-        text=""
-        visible={visible}
-        setVisible={setVisible}
-      />
+
       <StatusContainer isAdmin={isAdmin}>
         <ApplicationStatus
           size={isAdmin ? "40px" : "60px"}

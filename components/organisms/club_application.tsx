@@ -203,7 +203,7 @@ const ClubApplication = ({
   });
 
   const [currentObject, setCurrentObject] = useState(0);
-  console.log(formData.stepFour.sport_facilities);
+
   const deleteFacility = (data) => {
     console.log(data);
     if (data.id) {
@@ -277,7 +277,7 @@ const ClubApplication = ({
     // dodaj kolejny obiekt jesli klub posiada mniej niz 5 obiektów
     if (formData.stepFour.sport_facilities.length < 5) {
       // dodaj obiekt tylko jesli ich liczba w clubData i formData jest taka sama
-      console.log("adding new facility", formData.stepFour.sport_facilities);
+      //console.log("adding new facility", formData.stepFour.sport_facilities);
       const facilitiesArray = formData.stepFour.sport_facilities;
       if (
         facilitiesArray.length > 0 &&
@@ -581,7 +581,8 @@ const ClubApplication = ({
           "new sport facility arr",
           formData.stepFour.sport_facilities
         );
-        console.log("clubData", clubData);
+        newFormData.stepFour.sport_facilities = res.data.all_facilities;
+        //console.log("clubData", clubData);
         // newFormData.stepFour.sport_facilities =
         //   clubData.applications[0].sport_facilities;
         // setFormData(newFormData);

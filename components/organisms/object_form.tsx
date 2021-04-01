@@ -38,7 +38,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
   const objectFiles =
     context.formData.stepFour.sport_facilities[objectIndex]
       ?.applications_attachments;
-  console.log(objectFiles);
+  // console.log(objectFiles);
   const getCategoryFiles = (category) => {
     return objectFiles.filter((file) => file.category === category);
   };

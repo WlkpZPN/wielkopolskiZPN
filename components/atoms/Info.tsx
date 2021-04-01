@@ -31,7 +31,7 @@ const InfoContainer = styled.div`
     color: white;
     background: ${({ theme }) => theme.primary};
     width: 90%;
-    z-index: 1;
+    z-index: 999999;
     /* transform: translate(-50%, 50%); */
   }
 `;

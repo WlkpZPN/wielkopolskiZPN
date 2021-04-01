@@ -46,9 +46,8 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
 
   const handleNewForm = () => {
     const result = createNewSportFacilityForm();
-    console.log(result);
+
     if (result === true) {
-      console.log("new form added");
       setInternalError("");
     } else if (typeof result === "string") {
       setInternalError(result);
