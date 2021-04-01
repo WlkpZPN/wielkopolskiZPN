@@ -11,9 +11,11 @@ import LicenseView from "./license_view";
 import PrimaryButton from "../atoms/primary_button";
 import UndoLicense from "./undo_license_modal";
 import GiveSupervision from "./give_supervision_modal";
+import { generatePdf } from "../../middleware/generatePdf";
 const FileIcon = styled(FilePdf)`
   width: 40px;
   color: black;
+  margin: 0 auto;
 `;
 
 const Wrapper = styled.div`
@@ -115,9 +117,9 @@ const LicenseButton = ({ application, isAdmin }) => {
           <>
             <OutlineButton
               style={{ padding: "8px", fontSize: "14px" }}
-              onClick={() => setVisible(true)}
+              onClick={() => generatePdf()}
             >
-              Wyświetl
+              Pobierz
             </OutlineButton>
             {isAdmin && (
               <>

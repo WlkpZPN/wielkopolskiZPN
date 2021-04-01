@@ -37,8 +37,8 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
   // console.log(context);
   const objectFiles =
     context.formData.stepFour.sport_facilities[objectIndex]
-      .applications_attachments;
-
+      ?.applications_attachments;
+  console.log(objectFiles);
   const getCategoryFiles = (category) => {
     return objectFiles.filter((file) => file.category === category);
   };
@@ -300,6 +300,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     <FormTemplate
       onChange={() => setError({ step: null, text: "" })}
       width="100%"
+      onSubmit={(e) => e.preventDefault()}
     >
       <Fieldset disabled={readOnly}>
         <div style={{ maxWidth: "800px" }}>

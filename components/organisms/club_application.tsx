@@ -42,7 +42,6 @@ const ClubApplication = ({
   show_buttons,
   settings,
 }) => {
-  console.log(clubData);
   const improvements = errors ? JSON.parse(errors) : {};
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -204,7 +203,7 @@ const ClubApplication = ({
   });
 
   const [currentObject, setCurrentObject] = useState(0);
-
+  console.log(formData.stepFour.sport_facilities);
   const deleteFacility = (data) => {
     console.log(data);
     if (data.id) {
@@ -278,7 +277,14 @@ const ClubApplication = ({
     // dodaj kolejny obiekt jesli klub posiada mniej niz 5 obiektów
     if (formData.stepFour.sport_facilities.length < 5) {
       // dodaj obiekt tylko jesli ich liczba w clubData i formData jest taka sama
-
+      console.log("adding new facility", formData.stepFour.sport_facilities);
+      const facilitiesArray = formData.stepFour.sport_facilities;
+      if (
+        facilitiesArray.length > 0 &&
+        !facilitiesArray[facilitiesArray.length - 1].id
+      ) {
+        return "Zapisz aktualny obiekt aby utworzyć kolejny";
+      }
       const newForm = {
         name: "Obiekt 1",
         address: "",
@@ -303,7 +309,6 @@ const ClubApplication = ({
         I15_number_of_toilets_for_women: "0",
         I15_number_of_toilets_for_men: "0",
         I15_standard: "Odpowiedni",
-
         applications_attachments: [],
       };
       let newFormData = formData;
@@ -489,8 +494,8 @@ const ClubApplication = ({
       krs_documents: convertToFormData(formData.stepTwo.krs_documents),
     };
     console.log(applicationFiles);
-
     try {
+      //1. upload step one and step two files
       if (formData.stepTwo.krs_documents.length > 0) {
         // await axios.post(
         //   "/api/applications/uploadFiles",
@@ -499,19 +504,34 @@ const ClubApplication = ({
         // );
         // upload files urls to database
       }
-
       await axios.post("/api/applications/addFilesUrl", {
         applicationID: clubData.applications[0].id,
         fileNames: {
           krs_documents: formData.stepTwo.krs_documents.map(
             (file) => file.name
           ),
-
           agreement_documents: formData.stepThree.agreement_documents.map(
             (file) => file.name
           ),
         },
       });
+      //2. upload sport facility files
+      if (formData.stepFour.sport_facilities.length > 0) {
+        console.log("sport facilities", formData.stepFour.sport_facilities);
+        const facility_attachments = formData.stepFour.sport_facilities.map(
+          (facility) => {
+            return {
+              facilityID: facility.id,
+              files: facility.applications_attachments,
+            };
+          }
+        );
+
+        //console.log("facility attachments", facility_attachments);
+        axios.post("/api/applications/addFacilitiesUrl", {
+          facility_attachments,
+        });
+      }
     } catch (error) {
       console.log(error);
       return;
@@ -543,19 +563,28 @@ const ClubApplication = ({
       });
   };
 
-  const addSportFacility = () => {
+  const addSportFacility = async () => {
     let newFormData = formData;
     //1. add sport facility to database
     console.log(formData.stepFour.sport_facilities[currentObject]);
     setLoading(true);
-    axios
+    await axios
       .post("/api/applications/addSportFacility", {
         sport_facility: formData.stepFour.sport_facilities[currentObject],
         clubData,
       })
       .then((res) => {
         setLoading(false);
+        router.replace(router.asPath);
         console.log(res);
+        console.log(
+          "new sport facility arr",
+          formData.stepFour.sport_facilities
+        );
+        console.log("clubData", clubData);
+        // newFormData.stepFour.sport_facilities =
+        //   clubData.applications[0].sport_facilities;
+        // setFormData(newFormData);
       })
       .catch((err) => {
         setLoading(false);

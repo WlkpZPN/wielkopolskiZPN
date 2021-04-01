@@ -18,14 +18,14 @@ const Wrapper = styled.div`
   margin-right: 16px;
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  height: 300px;
+  height: 340px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 0;
-  width: 300px;
+  width: 260px;
 
   text-align: center;
 
@@ -136,11 +136,14 @@ const AddFile = ({ file, handleDelete, addFile }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
-    e.preventDefault();
-    addFile(file ? file.id : uniqid(), e.target.files[0]);
     console.log(e.target.files[0]);
+    const newFile = {
+      ...e.target.files[0],
+      name: `${uniqid().substring(0, 4)}_${e.target.files[0].name}`,
+    };
+    e.preventDefault();
+    addFile(file ? file.id : uniqid(), newFile);
   };
-  console.log(file);
 
   const deleteFile = async () => {
     if (!file?.id) {

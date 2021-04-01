@@ -33,7 +33,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     clearErrors,
     show_buttons,
   } = context;
-  console.log(formData);
+
   const setFiles = (id, file) => {
     handleFileChange(id, file, file.name, "agreement_documents");
     setState(!state);

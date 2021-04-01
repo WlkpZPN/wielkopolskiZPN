@@ -15,6 +15,7 @@ const s3 = new aws.S3({
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { attachment } = req.body;
+    let attachmentID = attachment.id;
     console.log("attachment", attachment);
     const params = {
       Bucket: "pdf/wnioski",
@@ -24,7 +25,9 @@ export default (req, res) => {
       if (err) console.log(err, err.stack);
       else console.log(data);
     });
-
+    if (parseInt(attachment.id) !== NaN) {
+      attachmentID = parseInt(attachmentID);
+    }
     await prisma.applications_attachments.delete({
       where: {
         id: parseInt(attachment.id),
