@@ -23,6 +23,7 @@ import AddFilesWrapper from "./add_files_wrapper";
 import ZipCodeInput from "../atoms/zip_code_input";
 import NummericInput from "../atoms/numeric_input";
 import NumericInput from "../atoms/numeric_input";
+import RadioButton from "../atoms/radio_button";
 const ObjectForm = ({ readOnly, objectIndex }) => {
   const router = useRouter();
   const [error, setError] = useState({ step: null, text: "" });
@@ -358,26 +359,26 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
         <Fieldset disabled={readOnly}>
           <FormHeader>Kryterium I.01 - Stadion - dostępność</FormHeader>
           <Label direction="row" htmlFor="1">
-            <Input
+            <RadioButton
               checked={data.I01_1 === true}
               onChange={(e) => handleChange(true, objectIndex, "I01_1")}
-              type="radio"
               id="1"
               name="seasons"
               value={1}
-            />
-            Jesteśmy właścicielem Stadionu
+            >
+              Jesteśmy właścicielem Stadionu
+            </RadioButton>
           </Label>
           <Label direction="row" htmlFor="2">
-            <Input
+            <RadioButton
               checked={data.I01_1 === false}
               onChange={(e) => handleChange(false, objectIndex, "I01_1")}
-              type="radio"
               value={0}
               name="seasons"
               id="2"
-            />
-            Posiadamy pisemną umowę z właścicielem stadionu
+            >
+              Posiadamy pisemną umowę z właścicielem stadionu
+            </RadioButton>
           </Label>
           {data.I01_1 ? null : (
             <>
@@ -389,7 +390,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                 deleteFile={(id) =>
                   handleDelete(objectIndex, id, "I01_agreement")
                 }
-                fileData={getCategoryFiles("I01_agreement")}
+                fileData={getCategoryFiles("I01_agreement") || []}
                 setFiles={(id, file) => setFiles(id, file, "I01_agreement")}
               />
               <Label pointer margin="16px 0" direction="row">
@@ -1240,7 +1241,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   deleteFile={(id) =>
                     handleDelete(objectIndex, id, "I17_intensity_document")
                   }
-                  fileData={getCategoryFiles("I17_intensity_document")}
+                  fileData={getCategoryFiles("I17_intensity_document") || []}
                   setFiles={(id, file) =>
                     setFiles(id, file, "I17_intensity_document")
                   }
