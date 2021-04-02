@@ -175,6 +175,15 @@ model leagues {
   applications_leagues applications_leagues[]
 }
 
+model messages {
+  id         Int     @id @default(autoincrement())
+  title      String?
+  rule       String? @db.VarChar(200)
+  send_date  String? @db.VarChar(200)
+  recipients String? @db.VarChar(200)
+  message    String?
+}
+
 model roles {
   id          Int       @id @default(autoincrement())
   name        String?   @db.VarChar(60)
@@ -182,6 +191,14 @@ model roles {
   created_at  DateTime? @db.Timestamp(6)
   updated_at  DateTime? @db.Timestamp(6)
   users       users[]
+}
+
+model settings {
+  start_date        String? @db.VarChar(200)
+  end_date          String? @db.VarChar(200)
+  id                Int     @id @default(autoincrement())
+  application_fee   Float?
+  no_possession_fee Float?
 }
 
 model sport_facilities {
@@ -265,6 +282,9 @@ model sport_facilities {
   I06_width                          String?                    @db.VarChar(50)
   I06_length                         String?                    @db.VarChar(50)
   I17_intensity_level                String?                    @db.VarChar(50)
+  I21_3_1_gates                      String?                    @db.VarChar(30)
+  I21_3_15_gates                     String?                    @db.VarChar(30)
+  I21_3_2_gates                      String?                    @db.VarChar(30)
   applications                       applications?              @relation(fields: [application_id], references: [id])
   applications_attachments           applications_attachments[]
 }
@@ -303,21 +323,4 @@ model youth_groups {
   created_at                DateTime?                   @db.Timestamp(6)
   updated_at                DateTime?                   @db.Timestamp(6)
   applications_youth_groups applications_youth_groups[]
-}
-
-model settings {
-  start_date        String? @db.VarChar(200)
-  end_date          String? @db.VarChar(200)
-  id                Int     @id @default(autoincrement())
-  application_fee   Float?
-  no_possession_fee Float?
-}
-
-model messages {
-  id         Int     @id @default(autoincrement())
-  title      String?
-  rule       String? @db.VarChar(200)
-  send_date  String? @db.VarChar(200)
-  recipients String? @db.VarChar(200)
-  message    String?
 }

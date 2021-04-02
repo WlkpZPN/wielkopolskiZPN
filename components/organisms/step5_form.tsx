@@ -24,7 +24,7 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
   const formData = context.formData.stepFive;
   const show_buttons = context.show_buttons;
   const { error, clearErrors } = context;
-  console.log(formData);
+
   const submitForm = (e) => {
     e.preventDefault();
     handleStepChange("next");

@@ -7,6 +7,7 @@ import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
 import Loader from "../atoms/loader";
 import { toast } from "react-toastify";
+import { makeid } from "../../middleware/utils";
 //components
 import OutlineButton from "../atoms/outline_button";
 
@@ -135,11 +136,13 @@ const DeleteButton = styled.span`
 const AddFile = ({ file, handleDelete, addFile }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  console.log(file);
   const handleChange = (e) => {
-    console.log(e.target.files[0]);
+    //console.log(e.target.files[0]);
     const newFile = {
       ...e.target.files[0],
-      name: `${uniqid().substring(0, 4)}_${e.target.files[0].name}`,
+      name: `${makeid(3)}_${e.target.files[0].name}`,
     };
     e.preventDefault();
     addFile(file ? file.id : uniqid(), newFile);

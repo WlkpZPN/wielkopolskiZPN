@@ -8,22 +8,35 @@ export default async (req, res) => {
 
     clubs.forEach(async (club, index) => {
       let securedPassword = "";
-      bcrypt
-        .hash(generator.generate({ length: 8, number: true }), saltRounds)
-        .then(async (hash) => {
-          securedPassword = hash;
-          await prisma.clubs.update({
-            where: {
-              id: club.id,
-            },
-            data: {
-              password: securedPassword,
-            },
-          });
-        });
+
+      await prisma.clubs.update({
+        where: {
+          id: club.id,
+        },
+        data: {
+          password: generator.generate({
+            length: 8,
+            numbers: true,
+          }),
+        },
+      });
+
+      // bcrypt
+      //   .hash(generator.generate({ length: 8, number: true }), saltRounds)
+      //   .then(async (hash) => {
+      //     securedPassword = hash;
+      //     await prisma.clubs.update({
+      //       where: {
+      //         id: club.id,
+      //       },
+      //       data: {
+      //         password: securedPassword,
+      //       },
+      //     });
+      //   });
     });
 
-    res.send("id's generated");
+    res.send("passwords's generated");
     return resolve();
   });
 };

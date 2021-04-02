@@ -63,6 +63,7 @@ const Application = ({ authData, clubData, settings }) => {
                 />
               </p>
               <LicenseDecision
+                clubData={clubData}
                 applicationID={clubData.applications[0].id}
                 statusID={8}
                 type="standard"
@@ -71,6 +72,7 @@ const Application = ({ authData, clubData, settings }) => {
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
+                clubData={clubData}
                 statusID={10}
                 applicationID={clubData.applications[0].id}
                 type="nadzór"
@@ -79,6 +81,7 @@ const Application = ({ authData, clubData, settings }) => {
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
+                clubData={null}
                 statusID={9}
                 applicationID={clubData.applications[0].id}
                 type="odmowa"
@@ -94,6 +97,7 @@ const Application = ({ authData, clubData, settings }) => {
           <>
             {" "}
             <LicenseDecision
+              clubData={null}
               statusID={9}
               applicationID={clubData.applications[0].id}
               type="niewydana"

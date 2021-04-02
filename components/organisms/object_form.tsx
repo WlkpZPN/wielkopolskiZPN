@@ -40,7 +40,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
       ?.applications_attachments;
   // console.log(objectFiles);
   const getCategoryFiles = (category) => {
-    return objectFiles.filter((file) => file.category === category);
+    return objectFiles?.filter((file) => file.category === category);
   };
 
   const setFiles = (id, file, category) => {
@@ -1315,6 +1315,42 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               niepełnosprawnych, w szczególności dla osób poruszających się na
               wózkach inwalidzkich i ich opiekunów
             </span>
+          </Label>
+          <FormHeader>
+            Kryterium I.21 - Ilość i wymiary dostępnych bramek na obiekcie
+          </FormHeader>
+          <Label width="50%">
+            Ilość bramek 3 m x 1 m
+            <NumericInput
+              value={data.I21_3_1_gate}
+              onChange={(e) =>
+                handleChange(data.I21_3_1_gate, objectIndex, "I21_3_1_gate")
+              }
+              suffix=""
+              placeholder="0"
+            />
+          </Label>
+          <Label width="50%">
+            Ilość bramek 3 m x 1,5 m
+            <NumericInput
+              value={data.I21_3_15_gate}
+              onChange={(e) =>
+                handleChange(data.I21_3_15_gate, objectIndex, "I21_3_1_gate")
+              }
+              suffix=""
+              placeholder="0"
+            />
+          </Label>
+          <Label width="50%">
+            Ilość bramek 5 m x 2 m
+            <NumericInput
+              value={data.I21_3_2_gate}
+              onChange={(e) =>
+                handleChange(data.I21_3_2_gate, objectIndex, "I21_3_1_gate")
+              }
+              suffix=""
+              placeholder="0"
+            />
           </Label>
           <div
             style={{

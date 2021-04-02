@@ -2,6 +2,7 @@ import nextConnect from "next-connect";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import aws from "aws-sdk";
+import prisma from "../../../middleware/prisma";
 
 const spacesEndpoint = new aws.Endpoint(process.env.DB_SPACES_ENDPOINT);
 const s3 = new aws.S3({
@@ -11,17 +12,18 @@ const s3 = new aws.S3({
 });
 
 const upload = multer({
+  limits: { fieldSize: 25 * 1024 * 1024 },
   storage: multerS3({
+    limits: { fieldSize: 25 * 1024 * 1024 },
     s3: s3,
-    bucket: "/pdf/wnioski",
+    bucket: "pdf/licencje",
     acl: "public-read",
     key: function (req, file, cb) {
-      console.log("file", file);
-
+      console.log(file);
       cb(null, file.originalname);
     },
   }),
-}).any("files");
+}).any("license");
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
@@ -34,10 +36,7 @@ const apiRoute = nextConnect({
   },
 });
 
-//const uploadMiddleware = upload.array("files", 1);
-//const uploadMiddleware = upload.any();
-
-//apiRoute.use(uploadMiddleware);
+//apiRoute.use(upload.single("invoice"));
 
 apiRoute.post((req, res) => {
   upload(req, res, function (error) {
@@ -46,6 +45,7 @@ apiRoute.post((req, res) => {
       res.status(400).send(error);
     } else {
       console.log("data", req.file);
+      res.send("");
     }
   });
 });
@@ -56,11 +56,3 @@ export const config = {
     bodyParser: false,
   },
 };
-
-// export default async (req, res) => {
-//   return new Promise(async (resolve) => {
-//     console.log("fileData", req.body);
-//     res.send("ok");
-//     return resolve();
-//   });
-// };

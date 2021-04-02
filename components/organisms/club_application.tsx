@@ -309,6 +309,10 @@ const ClubApplication = ({
         I15_number_of_toilets_for_women: "0",
         I15_number_of_toilets_for_men: "0",
         I15_standard: "Odpowiedni",
+        I21_3_1_gates: "",
+        I21_3_15_gates: "",
+        I21_3_2_gates: "",
+
         applications_attachments: [],
       };
       let newFormData = formData;
@@ -487,51 +491,61 @@ const ClubApplication = ({
         );
       },
     };
-    const applicationFiles = {
-      agreement_documents: convertToFormData(
-        formData.stepThree.agreement_documents
-      ),
-      krs_documents: convertToFormData(formData.stepTwo.krs_documents),
-    };
-    console.log(applicationFiles);
+    const applicationFiles = convertToFormData([
+      ...formData.stepTwo.krs_documents,
+      ...formData.stepThree.agreement_documents,
+    ]);
+    let facilityFilesUrls = [];
+    let helperArr = [];
+    formData.stepFour.sport_facilities.forEach((facility) => {
+      if (facility.applications_attachments) {
+        helperArr.push(...facility.applications_attachments);
+        facilityFilesUrls.push({
+          id: facility.id,
+          files: facility.applications_attachments,
+        });
+      }
+    });
+    console.log("step2files", formData.stepTwo.krs_documents);
+    const facilityFilesData = convertToFormData(helperArr);
     try {
       //1. upload step one and step two files
-      if (formData.stepTwo.krs_documents.length > 0) {
-        // await axios.post(
-        //   "/api/applications/uploadFiles",
-        //   applicationFiles.krs_documents,
-        //   config
-        // );
+      if (
+        formData.stepTwo.krs_documents.length > 0 ||
+        formData.stepThree.agreement_documents.length > 0
+      ) {
+        console.log("czy to sie wykonuje");
+        await axios.post(
+          "/api/applications/uploadFiles",
+          applicationFiles,
+          config
+        );
         // upload files urls to database
+      }
+
+      if (helperArr.length > 0) {
+        await axios.post(
+          "/api/applications/uploadFiles",
+          facilityFilesData,
+          config
+        );
+        axios.post("/api/applications/addFacilitiesUrl", {
+          facilityFilesUrls,
+        });
       }
       await axios.post("/api/applications/addFilesUrl", {
         applicationID: clubData.applications[0].id,
         fileNames: {
-          krs_documents: formData.stepTwo.krs_documents.map(
-            (file) => file.name
-          ),
-          agreement_documents: formData.stepThree.agreement_documents.map(
-            (file) => file.name
+          krs_documents: formData.stepTwo.krs_documents.filter((file) => {
+            if (isNaN(file.id)) return file.name;
+          }),
+          agreement_documents: formData.stepThree.agreement_documents.filter(
+            (file) => {
+              if (isNaN(file.id)) return file.name;
+            }
           ),
         },
       });
-      //2. upload sport facility files
-      if (formData.stepFour.sport_facilities.length > 0) {
-        console.log("sport facilities", formData.stepFour.sport_facilities);
-        const facility_attachments = formData.stepFour.sport_facilities.map(
-          (facility) => {
-            return {
-              facilityID: facility.id,
-              files: facility.applications_attachments,
-            };
-          }
-        );
-
-        //console.log("facility attachments", facility_attachments);
-        axios.post("/api/applications/addFacilitiesUrl", {
-          facility_attachments,
-        });
-      }
     } catch (error) {
       console.log(error);
       return;
@@ -554,7 +568,9 @@ const ClubApplication = ({
       .then((res) => {
         setLoading(false);
         console.log(res);
-        toast.success("zapisano jako kopie roboczą");
+        toast.success("zapisano jako kopie roboczą", {
+          autoClose: 1500,
+        });
         router.replace(router.asPath);
       })
       .catch((err) => {

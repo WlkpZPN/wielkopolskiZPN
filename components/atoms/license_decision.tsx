@@ -7,6 +7,8 @@ import Loader from "./loader";
 import ApplicationStatus from "./application_status";
 import PrimaryButton from "./primary_button";
 import RejectLicense from "../molecules/reject_license_modal";
+import { generatePdf } from "../../middleware/generatePdf";
+import { getCurrentDate } from "../../middleware/utils";
 const Wrapper = styled.div`
   display: grid;
   border-radius: 4px;
@@ -34,6 +36,7 @@ const LicenseDecision = ({
   reason,
   internalID,
   description,
+  clubData,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -49,6 +52,12 @@ const LicenseDecision = ({
         reason: reason || "",
         description,
       });
+      if (statusID === 8 || statusID === 10) {
+        //3. send email and generate license as attachment
+        axios.post("/api/mails/sendLicense", {
+          clubData: clubData,
+        });
+      }
     } catch (err) {
       console.log(err);
       setLoading(false);

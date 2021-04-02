@@ -2,16 +2,16 @@ import prisma from "../../../middleware/prisma";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { facility_attachments } = req.body;
-
+    const { facilityFilesUrls } = req.body;
+    console.log("facilityFIlesIRLS", facilityFilesUrls);
     try {
-      facility_attachments.forEach(async (facility) => {
+      facilityFilesUrls.forEach(async (facility) => {
         await prisma.applications_attachments.createMany({
           data: facility.files.map((file) => {
             console.log("facilityID", facility);
             return {
               category: file.category,
-              sport_facilities_id: parseInt(facility.facilityID),
+              sport_facilities_id: parseInt(facility.id),
               name: file.name,
               filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${file.name}`,
             };

@@ -38,7 +38,11 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
       ? context.formData.stepFour.sport_facilities[currentObject]
           .applications_attachments
       : [];
-
+  console.log(
+    "step7",
+    context.formData.stepFour.sport_facilities[currentObject]
+      .applications_attachments
+  );
   const intensityDocuments = stepFourFiles.filter(
     (file) => file.category === "I17_intensity_document"
   );
@@ -74,7 +78,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
 
   const renderFacilityNames = () => {
     const objects = formData.stepFour.sport_facilities;
-    console.log(objects);
+
     return objects.map((facility, index) => (
       <ObjectName
         onClick={() => setCurrentobject(index)}
@@ -82,7 +86,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
         saved={true}
         active={index === currentObject}
       >
-        {facility.name}
+        {facility.name || "Obiekt 1"}
       </ObjectName>
     ));
   };

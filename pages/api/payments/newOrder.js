@@ -43,7 +43,7 @@ export default (req, res) => {
           Authorization: `Bearer ${tokenData.data.access_token}`,
         },
         data: {
-          notifyUrl: `wielkopolski-zpn-m648gf8u5-licencjawlkpzpn.vercel.app/api/payments/notifyPayment`,
+          notifyUrl: `https://wielkopolski-zpn-m648gf8u5-licencjawlkpzpn.vercel.app/api/payments/notifyPayment`,
           currencyCode: "PLN",
           description: description,
           merchantPosId: "404238",

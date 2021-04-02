@@ -2,8 +2,7 @@ import { PDFDocument, StandardFonts, rgb, rgba, degrees, scale } from "pdf-lib";
 import download from "downloadjs";
 import fontKit from "@pdf-lib/fontkit";
 
-export const generatePdf = async (clubData) => {
-  console.log(clubData);
+export const generatePdf = async (clubData, date = null, dwn = true) => {
   const application = clubData.applications[0];
   let leauge = "";
   switch (clubData.leauge) {
@@ -24,9 +23,11 @@ export const generatePdf = async (clubData) => {
       leauge = "ligii młodzieżowej";
       break;
   }
-  const issueDate = application.histories
-    .find((history) => history.status_id === 8)
-    .created_at.split(",")[0];
+  const issueDate =
+    date ||
+    application.histories
+      .find((history) => history.status_id === 8 || history.status_id === 10)
+      .created_at.split(",")[0];
   const currentSeason = `${new Date().getFullYear()}/${(
     new Date().getFullYear() + 1
   )
@@ -134,7 +135,7 @@ export const generatePdf = async (clubData) => {
   });
 
   page.drawText(
-    `${clubData.name.replaceAll(/\n/g, " ")} \n ${clubData.address.replaceAll(
+    `${clubData.name.replace(/\n/g, " ")} \n ${clubData.address.replace(
       /\n/g,
       " "
     )}`,
@@ -329,40 +330,40 @@ export const generatePdf = async (clubData) => {
   ).then((res) => res.arrayBuffer());
 
   const stampPng = await pdfDoc.embedPng(stampBytes);
-  const scaledStamp = pngLogo.scale(0.6);
+  const scaledStamp = pngLogo.scale(0.4);
 
   const signBytes = await fetch(
     "https://pdf.fra1.digitaloceanspaces.com/Podpis.png"
   ).then((res) => res.arrayBuffer());
 
   const signPng = await pdfDoc.embedPng(signBytes);
-  const scaledSign = pngLogo.scale(0.8);
+  const scaledSign = pngLogo.scale(0.7);
 
   const sign2Bytes = await fetch(
     "https://pdf.fra1.digitaloceanspaces.com/Podpis2.png"
   ).then((res) => res.arrayBuffer());
 
   const sign2Png = await pdfDoc.embedPng(sign2Bytes);
-  const scaledSign2 = pngLogo.scale(0.8);
+  const scaledSign2 = pngLogo.scale(0.7);
 
   page.drawImage(stampPng, {
     x: 100,
     y: 120,
     width: scaledStamp.width,
-    height: scaledStamp.height + 20,
+    height: scaledStamp.height + 40,
   });
 
   page.drawImage(signPng, {
     x: 200,
-    y: 120,
-    width: scaledSign.width,
+    y: 130,
+    width: scaledSign.width - 20,
     height: scaledSign.height,
   });
 
   page.drawImage(sign2Png, {
     x: 380,
-    y: 120,
-    width: scaledSign2.width,
+    y: 130,
+    width: scaledSign2.width - 20,
     height: scaledSign2.height,
   });
 
@@ -387,7 +388,25 @@ export const generatePdf = async (clubData) => {
       lineHeight: 15,
     }
   );
+  page.drawLine({
+    start: { x: 200, y: 120 },
+    end: { x: 335, y: 120 },
+    thickness: 1,
+    color: rgb(0.07, 0.4, 0.7),
+  });
 
-  const pdfBytes = await pdfDoc.save();
-  download(pdfBytes, "licencja.pdf", "application/pdf");
+  page.drawLine({
+    start: { x: 380, y: 120 },
+    end: { x: 515, y: 120 },
+    thickness: 1,
+    color: rgb(0.07, 0.4, 0.7),
+  });
+
+  const baseString = await pdfDoc.save();
+
+  if (dwn) {
+    download(baseString, "licencja.pdf", "application/pdf");
+  } else {
+    return baseString;
+  }
 };

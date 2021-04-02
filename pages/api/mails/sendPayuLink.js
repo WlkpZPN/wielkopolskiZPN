@@ -64,7 +64,7 @@ export default (req, res) => {
               font-weight: bold;
               background: #0156a6;
               border-radius: 4px;
-            " href='wielkopolski-zpn.vercel.app'>Platforma Licencyjna</a>
+            " href='wielkopolski-zpn-wielkopolskizpn.vercel.app'>Platforma Licencyjna</a>
         </td>
       </tr>
       <tr>

@@ -4,16 +4,17 @@ export default (req, res) => {
   return new Promise(async (resolve) => {
     const { applicationID, fileNames } = req.body;
     const { krs_documents, agreement_documents } = fileNames;
+    //console.log(krs_documents, agreement_documents);
     try {
       if (krs_documents.length > 0) {
         await prisma.applications_attachments.createMany({
           data: krs_documents.map((doc) => {
-            console.log("doc", doc);
+            //console.log("doc", doc);
             return {
               category: "krs_documents",
               application_id: parseInt(applicationID),
-              filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${doc}`,
-              name: doc,
+              filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${doc.name}`,
+              name: doc.name,
             };
           }),
         });
@@ -25,8 +26,8 @@ export default (req, res) => {
             return {
               category: "agreement_documents",
               application_id: parseInt(applicationID),
-              filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${doc}`,
-              name: doc,
+              filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${doc.name}`,
+              name: doc.name,
             };
           }),
         });
