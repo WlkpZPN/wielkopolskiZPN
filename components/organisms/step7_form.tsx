@@ -33,23 +33,23 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const stepTwoFiles = context.formData.stepTwo.krs_documents;
   const stepThreeFiles = context.formData.stepThree.agreement_documents;
 
-  const stepFourFiles =
-    context.formData.stepFour.sport_facilities.length > 0
-      ? context.formData.stepFour.sport_facilities[currentObject]
-          .applications_attachments
-      : [];
-  console.log(
-    "step7",
-    context.formData.stepFour.sport_facilities[currentObject]
-      .applications_attachments
-  );
-  const intensityDocuments = stepFourFiles.filter(
-    (file) => file.category === "I17_intensity_document"
-  );
+  // const stepFourFiles =
+  //   context.formData.stepFour.sport_facilities.length > 0
+  //     ? context.formData.stepFour.sport_facilities[currentObject]
+  //         .applications_attachments
+  //     : [];
+  // console.log(
+  //   "step7",
+  //   context.formData.stepFour.sport_facilities[currentObject]
+  //     .applications_attachments
+  // );
+  // const intensityDocuments = stepFourFiles.filter(
+  //   (file) => file.category === "I17_intensity_document"
+  // );
 
-  const agreementDocuments = stepFourFiles.filter(
-    (file) => file.category === "I01_agreement"
-  );
+  // const agreementDocuments = stepFourFiles.filter(
+  //   (file) => file.category === "I01_agreement"
+  // );
 
   const isSuperVision = () => {
     if (stepTwoFiles.length === 0) {
@@ -63,13 +63,17 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
       return true;
     }
     if (
-      context.formData.stepFour.I01_1 === "false" &&
-      agreementDocuments.length === 0
+      context.formData.stepFour.I01_1 === "false"
+      // &&
+      // agreementDocuments.length === 0
     ) {
       return true;
     }
 
-    if (context.formData.stepFour.I17_1 && intensityDocuments.length === 0) {
+    if (
+      context.formData.stepFour.I17_1
+      // && intensityDocuments.length === 0
+    ) {
       return true;
     }
 
@@ -139,8 +143,8 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             />
           </>
         ) : null}
-        {renderFacilityNames()}
-        {agreementDocuments.length > 0 ? (
+        {/* {renderFacilityNames()} */}
+        {/* {agreementDocuments.length > 0 ? (
           <>
             <Paragraph>
               {" "}
@@ -168,8 +172,8 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
               }}
             />
           </>
-        ) : null}
-        {intensityDocuments.length > 0 ? (
+        ) : null} */}
+        {/* {intensityDocuments.length > 0 ? (
           <>
             <Paragraph>
               {" "}
@@ -197,7 +201,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
               }}
             />
           </>
-        ) : null}
+        ) : null} */}
         {isSuperVision() ? (
           <ErrorMessage>
             Brak wszystkich dokumentów, zostanie wydana licencja z nadzorem
