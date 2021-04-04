@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 const InfoContainer = styled.div`
+  position: absolute;
+  z-index: 100;
   & svg {
     width: 25px;
     z-index: 100;
@@ -37,11 +39,7 @@ const InfoContainer = styled.div`
 `;
 
 const Info = () => {
-  return (
-    <InfoContainer>
-      <InfoCircle />
-    </InfoContainer>
-  );
+  return <InfoContainer>{/* <InfoCircle /> */}</InfoContainer>;
 };
 
 export default Info;
