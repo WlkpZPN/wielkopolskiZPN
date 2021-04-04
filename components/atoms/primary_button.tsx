@@ -5,7 +5,7 @@ const PrimaryButton = styled.button`
     color ? theme[color] : theme.primary};
   border: none;
   color: white;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : "inherit")};
   width: ${({ width }) => (width ? width : "initial")};
   padding: 8px 16px;

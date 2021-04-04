@@ -11,6 +11,7 @@ import Label from "../components/atoms/form_label";
 import SearchBar from "../components/atoms/search_bar";
 import QuestionClubList from "../components/organisms/question_club_list";
 import AskQuestionModal from "../components/organisms/ask_question_modal";
+import Header from "../components/atoms/header";
 const Footer = styled.div`
   margin: 64px 0 32px 0;
 
@@ -27,6 +28,7 @@ const StyledLink = styled.a`
 `;
 
 const Pomoc = ({ authData, faq }) => {
+  console.log(faq);
   const [visible, setVisible] = useState(false);
   const [query, setQuery] = useState("");
   const [list, setList] = useState(faq);
@@ -46,7 +48,7 @@ const Pomoc = ({ authData, faq }) => {
   }, [query]);
   return (
     <ClientLayout clubData={authData} view="Pomoc">
-      <h1 style={{ margin: "32px 0" }}>Pomoc / FAQ</h1>
+      <Header>Pomoc / FAQ</Header>
 
       <Paragraph style={{ color: "black" }}>O co chcesz zapytać ?</Paragraph>
       <div>

@@ -10,8 +10,6 @@ const Footer = styled.div`
   margin: 24px 0;
 `;
 const QuestionClubList = ({ questions }) => {
-  console.log(questions);
-
   const renderList = (category) => {
     let helperArr = [];
 
@@ -27,16 +25,38 @@ const QuestionClubList = ({ questions }) => {
 
     return helperArr;
   };
+
+  const arrOne: any = renderList("Proces składania wniosku");
+  const arrTwo: any = renderList("Płatności");
+  const arrThree: any = renderList("Decyzje Komisji Licencyjnej");
+  const arrFour: any = renderList("Inne");
   return (
     <div>
-      <Header>Proces składania wniosku licencyjnego</Header>
-      {renderList("Proces składania wniosku")}
-      <Header>Płatności</Header>
-      {renderList("Płatności")}
-      <Header>Decyzje Komisji Licencyjnej</Header>
-      {renderList("Decyzje Komisji Licencyjnej")}
-      <Header>Inne</Header>
-      {renderList("Inne")}
+      {arrOne.length > 0 ? (
+        <>
+          {" "}
+          <Header>Proces składania wniosku</Header> {arrOne}{" "}
+        </>
+      ) : null}
+      {arrTwo.length > 0 ? (
+        <>
+          {" "}
+          <Header>Płatności</Header> {arrTwo}{" "}
+        </>
+      ) : null}
+
+      {arrThree.length > 0 ? (
+        <>
+          {" "}
+          <Header>Decyzje Komisji Licencyjnej</Header> {arrThree}{" "}
+        </>
+      ) : null}
+      {arrFour.length > 0 ? (
+        <>
+          {" "}
+          <Header>Inne</Header> {arrFour}{" "}
+        </>
+      ) : null}
     </div>
   );
 };

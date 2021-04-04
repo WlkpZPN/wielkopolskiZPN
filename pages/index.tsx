@@ -18,13 +18,7 @@ import ErrorMessage from "../components/atoms/error_message";
 import ClubSteps from "../components/organisms/club_steps";
 import LicenseButton from "../components/molecules/license_button";
 import AddInvoice from "../components/molecules/add_invoice";
-const Header = styled.h1`
-  margin-bottom: 16px;
-  padding: 16px 0;
-  color: ${({ theme, color }) => (color ? theme[color] : theme.dark)};
-  font-weight: 600;
-  font-size: 32px;
-`;
+import Header from "../components/atoms/header";
 
 const PaymentLink = styled.a`
   background: url("http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png");
@@ -110,7 +104,7 @@ const Home = ({ authData, clubData, settings }) => {
               ) : (
                 <>
                   {" "}
-                  <Header>Złóż wniosek liencyjny</Header>
+                  <Header>Złóż wniosek licencyjny</Header>
                 </>
               )}
 

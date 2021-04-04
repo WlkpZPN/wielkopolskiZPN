@@ -4,7 +4,7 @@ const OutlineButton = styled.button`
   padding: 6px 12px;
   border: 2px solid ${({ theme }) => theme.primaryLight};
   transition: all 0.2s;
-
+  font-size: 13px;
   font-weight: bold;
   color: ${({ theme }) => theme.primaryLight};
   border-radius: 5px;
