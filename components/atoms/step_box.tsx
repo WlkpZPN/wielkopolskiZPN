@@ -6,7 +6,7 @@ const Wrapper = styled.div`
 
   background: ${({ color }) => color};
   background: ${({ active, theme, color }) => (active ? theme.primary : color)};
-  height: 65px;
+  min-height: 65px;
 
   border: 1px solid rgba(0, 0, 0, 0.3);
   display: flex;
@@ -14,7 +14,8 @@ const Wrapper = styled.div`
   justify-content: center;
   padding: 6px 4px;
   cursor: pointer;
-  width: 180px;
+  max-width: 180px;
+  width: 100%;
   position: relative;
   border-left: 0px;
   &::after {

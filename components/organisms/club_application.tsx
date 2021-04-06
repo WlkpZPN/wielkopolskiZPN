@@ -31,6 +31,8 @@ const StepsContainer = styled.div`
   display: flex;
   position: relative;
   z-index: 1;
+  max-width: 1360px;
+  width: 100%;
 `;
 export const ApplicationContext = createContext(null);
 const ClubApplication = ({

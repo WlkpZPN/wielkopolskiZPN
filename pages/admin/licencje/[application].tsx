@@ -9,6 +9,7 @@ import AdminLayout from "../../../components/organisms/admin_layout";
 import ClubApplication from "../../../components/organisms/club_application";
 import ApplicationStatus from "../../../components/atoms/application_status";
 import IconButton from "../../../components/atoms/IconButton";
+import { makeid } from "../../../middleware/utils";
 import { ControllerFastBackward } from "@styled-icons/entypo/ControllerFastBackward";
 import PrimaryButton from "../../../components/atoms/primary_button";
 import Link from "next/link";
