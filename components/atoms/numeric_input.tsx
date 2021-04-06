@@ -34,7 +34,7 @@ const Wrapper = styled.div`
     width: 20px;
 
     color: rgba(0, 0, 0, 0.4);
-    z-index: 100;
+    z-index: 10;
   }
 `;
 

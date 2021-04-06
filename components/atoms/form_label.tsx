@@ -8,6 +8,7 @@ const Label = styled.label`
   margin: ${({ margin }) => (margin ? margin : "24px 0")};
   position: relative;
   z-index: 0;
+
   width: ${({ width }) => (width ? width : "100%")};
   cursor: ${({ pointer }) => (pointer ? "pointer" : "initial")};
   & input[type="text"] {

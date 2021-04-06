@@ -61,7 +61,8 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
           <>
             {" "}
             <Label width="50%">
-              Podaj liczbę zespołów młodzieżowych
+              <Info />
+              Podaj liczbę zespołów młodzieżowych{" "}
               <NumericInput
                 value={formData.numberOfYouthGroups}
                 onChange={(e) =>
@@ -70,7 +71,6 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
                 suffix=""
                 placeholder="0"
               />
-              <Info />
             </Label>
             <Label width="50%">
               Udział zawodników młodzieżowych
