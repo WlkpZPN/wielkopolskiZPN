@@ -592,7 +592,7 @@ const ClubApplication = ({
       .then((res) => {
         setLoading(false);
         router.replace(router.asPath);
-        console.log(res);
+
         console.log(
           "new sport facility arr",
           formData.stepFour.sport_facilities
@@ -602,6 +602,9 @@ const ClubApplication = ({
         // newFormData.stepFour.sport_facilities =
         //   clubData.applications[0].sport_facilities;
         // setFormData(newFormData);
+        toast.info("Zapisano obiekt", {
+          autoClose: 2000,
+        });
       })
       .catch((err) => {
         setLoading(false);

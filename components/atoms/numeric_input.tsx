@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import Cleave from "cleave.js/react";
 
@@ -13,6 +14,7 @@ const StyledCleave = styled(Cleave)`
   -webkit-appearance: none;
   width: 100%;
   -moz-appearance: textfield;
+  /* font-family: "Roboto Mono", monospace; */
   &:focus {
     box-shadow: 0px 0px 0px 1px ${({ theme }) => theme.primaryLight};
   }
@@ -34,6 +36,14 @@ const Wrapper = styled.div`
     color: rgba(0, 0, 0, 0.4);
     z-index: 100;
   }
+`;
+
+const Suffix = styled.span`
+  position: absolute;
+  bottom: 6px;
+  left: ${({ position }) => `${position + 15}px`};
+  /* display: ${({ position }) => (position === 0 ? "none" : "initial")}; */
+  display: none;
 `;
 
 const NumericInput = ({ value, onChange, suffix, placeholder }) => {
