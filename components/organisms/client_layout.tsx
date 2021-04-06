@@ -31,7 +31,7 @@ const TopBar = styled.div`
   max-width: 1360px;
   width: 100%;
   margin: 0 auto;
-  padding: 16px 0;
+  padding: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;

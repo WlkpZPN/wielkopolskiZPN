@@ -1,4 +1,5 @@
 import { ThemeProvider } from "styled-components";
+import styled from 'styled-components';
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/scroll.css";
@@ -16,11 +17,18 @@ const theme = {
   warningDark: "#D3E500",
   warning: "#E2F500",
 };
+
+const StyledToast = styled(ToastContainer)`
+  font-size:16px;
+  min-width:350px;
+  
+
+`;
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <Component {...pageProps} />
-      <ToastContainer />
+      <StyledToast  />
     </ThemeProvider>
   );
 }

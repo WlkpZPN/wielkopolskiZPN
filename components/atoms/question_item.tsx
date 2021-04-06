@@ -33,7 +33,7 @@ const Expandable = styled.div`
 `;
 
 const QuestionItem = ({ question }) => {
-  console.log(question.answer);
+  
   const [expanded, setExpanded] = useState(false);
   return (
     <Wrapper>

@@ -35,6 +35,7 @@ const Content = styled.div`
   display: flex;
   align-items: flex-start;
   border-radius: 5px;
+  font-size:13px;
 `;
 
 const TextArea = styled.textarea`
@@ -44,6 +45,11 @@ const TextArea = styled.textarea`
   margin-top: 4px;
   font-family: inherit;
   padding: 4px;
+`;
+
+const Bold = styled.span`
+  margin-bottom:10px;
+  font-weight:bold;
 `;
 
 const AskQuestionModal = ({ visible, setVisible }) => {
@@ -98,8 +104,9 @@ const AskQuestionModal = ({ visible, setVisible }) => {
             {loading && <Loader />}
           </div>
           <ErrorMessage> {error}</ErrorMessage>
-          Kategoria pytania
+         <Bold>  Kategoria pytania </Bold>
           <Select
+          style={{marginTop:'6px',fontSize:'13px'}}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -115,6 +122,7 @@ const AskQuestionModal = ({ visible, setVisible }) => {
           <Label>
             Pytanie
             <TextArea
+            style={{marginTop:'6px',fontSize:'13px'}}
               value={question}
               placeholder="Treść pytania"
               onChange={(e) => setQuestion(e.target.value)}

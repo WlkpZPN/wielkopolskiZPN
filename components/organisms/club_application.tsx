@@ -454,6 +454,7 @@ const ClubApplication = ({
       setError((state) => ({ ...state, stepSix: result.text }));
       return;
     }
+     toast.info("Wniosek wysyłanie do Wielkopolskiego ZPN");
     setLoading(true);
     await addSportFacility();
 
@@ -471,7 +472,7 @@ const ClubApplication = ({
       })
       .then((res) => {
         setLoading(false);
-        toast.success("Wniosek wyłsany do Wielkopolskiego ZPN");
+       
       })
       .catch((err) => {
         console.log(err);

@@ -22,12 +22,15 @@ const Bold = styled.p`
   color: ${({ theme }) => theme.darkLight};
 `;
 const ClubInfo = ({ clubData }) => {
-  //console.log(clubData);
+ // console.log(clubData);
   return (
     <Wrapper>
       <div>
         <Bold>Klub: </Bold> <span> {clubData.name}</span>
-        <Bold>Typ licencji:</Bold>
+        {
+          clubData.applications[0]?.statuses?.name ? 
+      <>  <Bold>Typ licencji:</Bold> {clubData.applications[0]?.statuses?.name}</> : null
+        }
       </div>
       <div>
         <Bold>Liga:</Bold> <span> {clubData.leauge}</span>
