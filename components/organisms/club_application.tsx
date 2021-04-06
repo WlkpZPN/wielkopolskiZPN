@@ -444,6 +444,8 @@ const ClubApplication = ({
     if (result.valid === false) {
       handleStepFill("stepOne", "error");
       setError((state) => ({ ...state, stepOne: result.text }));
+      window.scrollTo(0, 0);
+      toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
 
@@ -452,6 +454,8 @@ const ClubApplication = ({
     if (result.valid === false) {
       handleStepFill("stepTwo", "error");
       setError((state) => ({ ...state, stepTwo: result.text }));
+      window.scrollTo(0, 0);
+      toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
     //step three
@@ -459,6 +463,8 @@ const ClubApplication = ({
     if (result.valid === false) {
       handleStepFill("stepThree", "error");
       setError((state) => ({ ...state, stepThree: result.text }));
+      window.scrollTo(0, 0);
+      toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
     // step four
@@ -466,6 +472,8 @@ const ClubApplication = ({
     if (result.valid === false) {
       handleStepFill("stepFour", "error");
       setError((state) => ({ ...state, stepFour: result.text }));
+      window.scrollTo(0, 0);
+      toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
     //step five
@@ -474,6 +482,8 @@ const ClubApplication = ({
     if (result.valid === false) {
       handleStepFill("stepFive", "error");
       setError((state) => ({ ...state, stepFive: result.text }));
+      window.scrollTo(0, 0);
+      toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
 
@@ -482,6 +492,8 @@ const ClubApplication = ({
     if (result.valid === false) {
       handleStepFill("stepSix", "error");
       setError((state) => ({ ...state, stepSix: result.text }));
+      window.scrollTo(0, 0);
+      toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
     toast.info("Wniosek wysyłanie do Wielkopolskiego ZPN");

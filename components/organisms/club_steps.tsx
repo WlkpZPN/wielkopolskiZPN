@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import HistoryIcon from "../atoms/history_icon";
-
+import { ClubContext } from "../../pages/index";
 const Row = styled.div`
   display: flex;
   align-items: center;
 
   & span {
     align-self: flex-start;
-    margin-top: 25px;
+    margin-top: 20px;
   }
 `;
 
@@ -17,6 +17,21 @@ const Wrapper = styled.div`
 `;
 
 const ClubSteps = ({ status }) => {
+  const { history } = useContext(ClubContext);
+  console.log(history);
+
+  const renderLicenseDate = () => {
+    switch (status) {
+      case "licencja wydana":
+        return history.find((el) => el.status_id === 8).created_at;
+      case "licencja niewydana":
+        return history.find((el) => el.status_id === 9).created_at;
+      case "licencja wydana z nadzorem":
+        return history.find((el) => el.status_id === 10).created_at;
+      case "licencja cofnieta":
+        return history.find((el) => el.status_id === 11).created_at;
+    }
+  };
   const renderStatus = () => {
     switch (status) {
       case "wnioskowany":
@@ -25,7 +40,10 @@ const ClubSteps = ({ status }) => {
           <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
-              <span>Złożenie wniosku licencyjnego.</span>
+              <span>
+                Złożenie wniosku licencyjnego. <br />
+                {history.find((el) => el.status_id === 2).created_at}
+              </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="default" number={2} />
@@ -54,14 +72,18 @@ const ClubSteps = ({ status }) => {
           <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
-              <span>Złożenie wniosku licencyjnego.</span>
+              <span>
+                Złożenie wniosku licencyjnego. <br />
+                {history.find((el) => el.status_id === 2).created_at}
+              </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={2} />
               <span>
                 Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
-                klubu
+                klubu <br />{" "}
+                {history.find((el) => el.status_id === 6).created_at}
               </span>
             </Row>
             <Row>
@@ -83,19 +105,26 @@ const ClubSteps = ({ status }) => {
           <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
-              <span>Złożenie wniosku licencyjnego.</span>
+              <span>
+                Złożenie wniosku licencyjnego. <br />
+                {history.find((el) => el.status_id === 2).created_at}
+              </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={2} />
               <span>
                 Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
-                klubu
+                klubu <br />
+                {history.find((el) => el.status_id === 6).created_at}
               </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={3} />
-              <span>Dokonanie płatności przez klub</span>
+              <span>
+                Dokonanie płatności przez klub <br />
+                {history.find((el) => el.status_id === 7).created_at}
+              </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="default" number={4} />
@@ -112,7 +141,10 @@ const ClubSteps = ({ status }) => {
           <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
-              <span>Złożenie wniosku licencyjnego.</span>
+              <span>
+                Złożenie wniosku licencyjnego. <br />
+                {history.find((el) => el.status_id === 2).created_at}
+              </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="warning" number={2} />
@@ -189,7 +221,10 @@ const ClubSteps = ({ status }) => {
             </Row>
             <Row>
               <HistoryIcon hidden={true} state="completed" number={5} />
-              <span>Decyzja Komisji Licencyjnej</span>
+              <span>
+                Decyzja Komisji Licencyjnej <br />
+                {renderLicenseDate()}
+              </span>
             </Row>
           </Wrapper>
         );

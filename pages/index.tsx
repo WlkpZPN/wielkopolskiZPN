@@ -35,7 +35,7 @@ export const ClubContext = createContext(null);
 
 const Home = ({ authData, clubData, settings }) => {
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
-
+  console.log(clubData);
   if (!clubData) {
     return <Spinner />;
   }
@@ -312,7 +312,12 @@ const Home = ({ authData, clubData, settings }) => {
   };
 
   return (
-    <ClubContext.Provider value={settings}>
+    <ClubContext.Provider
+      value={{
+        setings: settings,
+        history: clubData.applications[0].histories,
+      }}
+    >
       <ClientLayout clubData={clubData} view="Wniosek licencyjny">
         {renderView()}
       </ClientLayout>
