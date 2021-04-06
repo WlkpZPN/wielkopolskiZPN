@@ -12,7 +12,7 @@ import SearchBar from "../components/atoms/search_bar";
 import QuestionClubList from "../components/organisms/question_club_list";
 import AskQuestionModal from "../components/organisms/ask_question_modal";
 import Header from "../components/atoms/header";
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
 const Footer = styled.div`
   margin: 64px 0 32px 0;
 
@@ -28,7 +28,7 @@ const StyledLink = styled.a`
   margin: 0 32px;
 `;
 
-const Pomoc = ({ authData, faq,clubData }) => {
+const Pomoc = ({ authData, faq, clubData }) => {
   //console.log(faq);
   const [visible, setVisible] = useState(false);
   const [query, setQuery] = useState("");
@@ -48,8 +48,6 @@ const Pomoc = ({ authData, faq,clubData }) => {
     setList(helperArr);
   }, [query]);
 
-
- 
   return (
     <ClientLayout clubData={clubData} view="Pomoc">
       <Header>Pomoc / FAQ</Header>
@@ -85,27 +83,23 @@ export const getServerSideProps = protectedClientRoute(
   async (context, data) => {
     const faq = await prisma.frequently_asked_questions.findMany();
 
-
     const clubData = await prisma.clubs.findUnique({
       where: {
-        email:data.email
+        email: data.email.toStrin(),
       },
-      include:{
-        applications:{
+      include: {
+        applications: {
           include: {
-
-          statuses:true,
-          }
-        }
-
-      }
-
-    })
+            statuses: true,
+          },
+        },
+      },
+    });
     return {
       props: {
         authData: data,
         faq: faq,
-        clubData:clubData,
+        clubData: clubData,
       },
     };
   }

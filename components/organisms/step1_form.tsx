@@ -32,8 +32,9 @@ const StepOneForm = ({
     error,
     clearErrors,
     show_buttons,
+    sendApplication,
   } = useContext(ApplicationContext);
-
+  console.log(error);
   const [loading, setLoading] = useState(false);
 
   const nextStep = () => {
@@ -209,6 +210,17 @@ const StepOneForm = ({
               <PrimaryButton type="submit" onClick={submitForm}>
                 Kolejny krok
               </PrimaryButton>
+
+              {error.stepOne ? (
+                <PrimaryButton
+                  hoverColor="success"
+                  color="successDark"
+                  type="button"
+                  onClick={() => sendApplication()}
+                >
+                  Zatwierdź i wyślij
+                </PrimaryButton>
+              ) : null}
             </FormRow>
           </Fieldset>
         </FormTemplate>

@@ -97,7 +97,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    sendApplication(isSuperVision());
+    sendApplication();
   };
   return (
     <Fieldset disabled={readOnly}>

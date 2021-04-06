@@ -19,25 +19,27 @@ import FormStatement from "../molecules/form_statement";
 import { ApplicationContext } from "./club_application";
 import ErrorMessage from "../atoms/error_message";
 const StepSixForm = ({ handleStepChange, readOnly }) => {
-  const [error, setError] = useState("");
+  //const [error, setError] = useState("");
   const context = useContext(ApplicationContext);
   const formData = context.formData.stepSix;
   const handleChange = context.handleFormChange;
   const show_buttons = context.show_buttons;
+
+  const { error, clearErrors, sendApplication } = context;
   const submitForm = (e) => {
     e.preventDefault();
 
-    if (!formData.havingFootballStaff || !formData.HavingSecurityServices) {
-      setError("Proszę zaakceptować poniższe oświadczenia");
-      return;
-    }
+    // if (!formData.havingFootballStaff || !formData.HavingSecurityServices) {
+    //   setError("Proszę zaakceptować poniższe oświadczenia");
+    //   return;
+    // }
 
     handleStepChange("next");
   };
   return (
     <Fieldset disabled={readOnly}>
-      <FormTemplate onChange={() => setError("")}>
-        <ErrorMessage>{error}</ErrorMessage>
+      <FormTemplate onChange={() => clearErrors("")}>
+        <ErrorMessage>{error.stepSix}</ErrorMessage>
         <FormStatement
           value={formData.havingFootballStaff}
           handleChange={() =>
@@ -62,22 +64,39 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
           name=" Oświadczenie o posiadaniu służb porządkowych"
         />
 
-        <FormRow margin="32px 0" cols="3">
-          <PrimaryButton onClick={() => handleStepChange("previous")}>
+        <div>
+          <PrimaryButton
+            style={{ marginRight: "16px" }}
+            onClick={() => handleStepChange("previous")}
+          >
             Cofnij
           </PrimaryButton>
           {show_buttons ? (
-            <PrimaryButton
-              color="dark"
-              type="button"
-              hoverColor="darkLight"
-              onClick={context.saveForm}
-            >
-              Zapisz wersję roboczą
-            </PrimaryButton>
+            <>
+              <PrimaryButton
+                color="dark"
+                type="button"
+                hoverColor="darkLight"
+                onClick={context.saveForm}
+                style={{ marginRight: "16px" }}
+              >
+                Zapisz wersję roboczą
+              </PrimaryButton>
+              {error.stepSix ? (
+                <PrimaryButton
+                  hoverColor="success"
+                  color="successDark"
+                  type="button"
+                  onClick={() => context.sendApplication()}
+                  style={{ marginRight: "16px" }}
+                >
+                  Zatwierdź i wyślij
+                </PrimaryButton>
+              ) : null}
+            </>
           ) : null}
           <PrimaryButton onClick={submitForm}>Kolejny krok</PrimaryButton>
-        </FormRow>
+        </div>
       </FormTemplate>
     </Fieldset>
   );

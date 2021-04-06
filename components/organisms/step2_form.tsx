@@ -26,6 +26,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     error,
     clearErrors,
     show_buttons,
+    sendApplication,
   } = context;
   const fileArr = context.formData.stepTwo.krs_documents;
   const handleChange = context.handleFormChange;
@@ -96,24 +97,44 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
           name=" Oświadczenie o stosowaniu dokumentacji ochorny danych osobowych"
         />
 
-        <FormRow cols="3">
-          <PrimaryButton onClick={() => handleStepChange("previous")}>
+        <div>
+          <PrimaryButton
+            style={{ marginRight: "16px" }}
+            onClick={() => handleStepChange("previous")}
+          >
             Cofnij
           </PrimaryButton>
           {show_buttons ? (
-            <PrimaryButton
-              type="button"
-              onClick={context.saveForm}
-              color="dark"
-              hoverColor="darkLight"
-            >
-              Zapisz wersję roboczą
-            </PrimaryButton>
+            <>
+              <PrimaryButton
+                style={{ marginRight: "16px" }}
+                type="button"
+                onClick={context.saveForm}
+                color="dark"
+                hoverColor="darkLight"
+              >
+                Zapisz wersję roboczą
+              </PrimaryButton>
+              {error.stepTwo ? (
+                <PrimaryButton
+                  hoverColor="success"
+                  color="successDark"
+                  type="button"
+                  onClick={() => sendApplication()}
+                >
+                  Zatwierdź i wyślij
+                </PrimaryButton>
+              ) : null}
+            </>
           ) : null}
-          <PrimaryButton type="submit" onClick={nextStep}>
+          <PrimaryButton
+            style={{ marginRight: "16px" }}
+            type="submit"
+            onClick={nextStep}
+          >
             Kolejny krok
           </PrimaryButton>
-        </FormRow>
+        </div>
       </FormTemplate>
     </Fieldset>
   );

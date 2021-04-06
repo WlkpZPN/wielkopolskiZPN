@@ -129,15 +129,28 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           Cofnij
         </PrimaryButton>
         {show_buttons ? (
-          <PrimaryButton
-            color="dark"
-            hoverColor="darkLight"
-            type="button"
-            onClick={context.saveForm}
-            style={{ marginRight: "16px" }}
-          >
-            Zapisz wersję roboczą
-          </PrimaryButton>
+          <>
+            <PrimaryButton
+              color="dark"
+              hoverColor="darkLight"
+              type="button"
+              onClick={context.saveForm}
+              style={{ marginRight: "16px" }}
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+            {error.stepFour ? (
+              <PrimaryButton
+                style={{ marginRight: "16px" }}
+                hoverColor="success"
+                color="successDark"
+                type="button"
+                onClick={() => context.sendApplication()}
+              >
+                Zatwierdź i wyślij
+              </PrimaryButton>
+            ) : null}
+          </>
         ) : null}
         <PrimaryButton onClick={() => handleStepChange("next")}>
           Kolejny krok

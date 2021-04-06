@@ -67,22 +67,39 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
           name="Oświadczenie o braku zobowiązań wobec klubów piłkarskich"
         />
 
-        <FormRow cols="3">
-          <PrimaryButton onClick={() => handleStepChange("previous")}>
+        <div>
+          <PrimaryButton
+            style={{ marginRight: "16px" }}
+            onClick={() => handleStepChange("previous")}
+          >
             Cofnij
           </PrimaryButton>
           {show_buttons ? (
-            <PrimaryButton
-              color="dark"
-              hoverColor="darkLight"
-              type="button"
-              onClick={context.saveForm}
-            >
-              Zapisz wersję roboczą
-            </PrimaryButton>
+            <>
+              <PrimaryButton
+                color="dark"
+                hoverColor="darkLight"
+                type="button"
+                onClick={context.saveForm}
+                style={{ marginRight: "16px" }}
+              >
+                Zapisz wersję roboczą
+              </PrimaryButton>
+              {error.stepFive ? (
+                <PrimaryButton
+                  hoverColor="success"
+                  color="successDark"
+                  type="button"
+                  onClick={() => context.sendApplication()}
+                  style={{ marginRight: "16px" }}
+                >
+                  Zatwierdź i wyślij
+                </PrimaryButton>
+              ) : null}
+            </>
           ) : null}
           <PrimaryButton onClick={submitForm}>Kolejny krok</PrimaryButton>
-        </FormRow>
+        </div>
       </FormTemplate>
     </Fieldset>
   );

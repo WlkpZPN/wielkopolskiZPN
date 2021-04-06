@@ -406,8 +406,38 @@ const ClubApplication = ({
     setFormData(newFileData);
   };
 
-  const sendApplication = async (isSuperVision) => {
+  const sendApplication = async () => {
     // validate  all steps
+
+    const checkSupervision = () => {
+      if (formData.stepTwo.krs_documents.length === 0) {
+        return true;
+      }
+      if (
+        formData.stepThree.youthGroupsPossession === "nie posiadamy zespołów" &&
+        formData.stepThree.agreement_documents.length === 0
+      ) {
+        return true;
+      }
+      if (
+        formData.stepFour.sport_facilities.I01_1 === "false"
+        // &&
+        // agreementDocuments.length === 0
+      ) {
+        return true;
+      }
+
+      if (
+        formData.stepFour.sport_facilities.I17_1
+        // && intensityDocuments.length === 0
+      ) {
+        return true;
+      }
+
+      return false;
+    };
+    const isSuperVision = checkSupervision();
+
     let result;
     // step one
     result = checkStepOne(formData.stepOne);
@@ -454,7 +484,7 @@ const ClubApplication = ({
       setError((state) => ({ ...state, stepSix: result.text }));
       return;
     }
-     toast.info("Wniosek wysyłanie do Wielkopolskiego ZPN");
+    toast.info("Wniosek wysyłanie do Wielkopolskiego ZPN");
     setLoading(true);
     await addSportFacility();
 
@@ -472,7 +502,6 @@ const ClubApplication = ({
       })
       .then((res) => {
         setLoading(false);
-       
       })
       .catch((err) => {
         console.log(err);
@@ -606,7 +635,7 @@ const ClubApplication = ({
         //   clubData.applications[0].sport_facilities;
         // setFormData(newFormData);
         toast.info("Zapisano obiekt", {
-          autoClose: 2000,
+          autoClose: 3000,
         });
       })
       .catch((err) => {

@@ -237,23 +237,23 @@ const Application = ({ authData, clubData, settings }) => {
         ? settings.application_fee + settings.no_possession_fee
         : settings.application_fee;
     try {
-      const newOrder = await axios.post("/api/payments/newOrder", {
-        description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
-        email: clubData.email,
-        amount: amount,
-        applicationID: clubData.applications[0].id,
-        firstName: clubData.name,
-        phone: clubData.phone,
-      });
+      // const newOrder = await axios.post("/api/payments/newOrder", {
+      //   description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
+      //   email: clubData.email,
+      //   amount: amount,
+      //   applicationID: clubData.applications[0].id,
+      //   firstName: clubData.name,
+      //   phone: clubData.phone,
+      // });
 
-      await axios.post("/api/mails/sendPayuLink", {
-        link: newOrder.data.link,
-        email: clubData.email,
-      });
+      // await axios.post("/api/mails/sendPayuLink", {
+      //   link: newOrder.data.link,
+      //   email: clubData.email,
+      // });
 
       await axios.post("/api/applications/acceptApplication", {
         applicationID: clubData.applications[0].id,
-        link: newOrder.data.link,
+        // link: newOrder.data.link,
         amount: amount,
       });
       router.replace(router.asPath);
