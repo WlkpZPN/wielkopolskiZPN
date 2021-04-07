@@ -88,7 +88,13 @@ const User = ({ clubData, authData }) => {
           </span>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            marginBottom: "20px",
+          }}
+        >
           <PrimaryButton
             style={{ margin: "0 6px" }}
             color="danger"

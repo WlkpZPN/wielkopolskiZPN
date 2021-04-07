@@ -88,7 +88,7 @@ const NewMessageModal = ({ visible, setVisible }) => {
         <CloseIcon onClick={() => setVisible(false)} />
         <form style={{ width: "100%" }} onSubmit={addNewMessage}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <h1 style={{ margin: "24px 0" }}>Nowe pytanie do FAQ</h1>
+            <h1 style={{ margin: "24px 0" }}>Dodaj nową wiadomość grupową</h1>
             {loading && <Loader />}
           </div>
           <ErrorMessage> {error}</ErrorMessage>

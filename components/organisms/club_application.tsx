@@ -62,13 +62,15 @@ const ClubApplication = ({
     let newStepData = { ...completedSteps };
     newStepData.stepFour = "";
 
-    if (clubData.applications[0].statuses.id === 1) {
+    if (
+      clubData.applications[0].statuses.id === 1 &&
+      clubData.applications[0].updated_at
+    ) {
       handleStepChange("jump", 1, 1);
       handleStepChange("jump", 3, 3);
       handleStepChange("jump", 4, 4);
       handleStepChange("jump", 5, 5);
       handleStepChange("jump", 6, 6);
-
       handleStepChange("jump", 2, 2);
       console.log(completedSteps);
     }
@@ -507,7 +509,7 @@ const ClubApplication = ({
       toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
-    toast.info("Wniosek wysyłanie do Wielkopolskiego ZPN");
+    toast.info("wysyłanie wniosku do Wielkopolskiego ZPN");
     setLoading(true);
     await addSportFacility();
 

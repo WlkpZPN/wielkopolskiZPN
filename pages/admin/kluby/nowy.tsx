@@ -29,7 +29,13 @@ const NewClub = ({ authData }) => {
           marginTop: "32px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "20px",
+          }}
+        >
           <h1 style={{ marginRight: "32px", marginBottom: "6px" }}>
             Dodaj nowy klub
           </h1>

@@ -14,16 +14,11 @@ import ErrorMessage from "../../../components/atoms/error_message";
 import QuestionList from "../../../components/organisms/questions_list";
 import GroupMessages from "../../../components/organisms/group_messages";
 import NumericInput from "../../../components/atoms/numeric_input";
-const NumberInput = styled(NumericInput)`
-  max-width: 250px;
-  margin-top: 6px;
-`;
 
 const Header = styled.h3`
   margin-top: 32px;
 `;
 const Ustawienia = ({ userData, settings, questions, messages }) => {
-  console.log(settings);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
   const [endDate, setEndDate] = useState(settings.end_date || new Date());
@@ -81,7 +76,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
   return (
     <AdminLayout userData={userData} view="ustawienia">
       <div style={{ display: "flex", alignItems: "center" }}>
-        <h1>Ustawienia</h1>
+        <h1 style={{ margin: "40px 0" }}>Ustawienia</h1>
         {loading && <Loader />}
       </div>
       <ErrorMessage>{error}</ErrorMessage>
@@ -132,19 +127,21 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           <Label style={{ maxWidth: "400px", marginRight: "16px" }}>
             Wysokość opłaty za złożenie wniosku licencyjnego
-            <NumberInput
-              suffix="PLN"
+            <NumericInput
+              style={{ paddingRight: "24px" }}
+              suffix="zł"
               placeholder="0"
-              value={primaryAmount}
+              value={parseFloat(primaryAmount).toFixed(2)}
               onChange={(e) => setPrimaryAmount(e.target.value)}
             />
           </Label>
           <Label style={{ maxWidth: "400px" }}>
             Wysokość opłaty za złożenie wniosku licencyjnego
-            <NumberInput
-              suffix="PLN"
+            <NumericInput
+              style={{ paddingRight: "24px" }}
+              suffix="zł"
               placeholder="0"
-              value={extraAmount}
+              value={parseFloat(extraAmount).toFixed(2)}
               onChange={(e) => setExtraAmount(e.target.value)}
             />
           </Label>

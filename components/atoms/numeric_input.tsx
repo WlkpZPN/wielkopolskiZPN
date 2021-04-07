@@ -5,16 +5,18 @@ import Cleave from "cleave.js/react";
 const StyledCleave = styled(Cleave)`
   width: ${({ width }) => width};
   margin-top: 4px;
-  padding: 6px 12px;
+  padding: 9px 12px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;
   color: black;
   font-size: 16px;
   outline: none;
   -webkit-appearance: none;
+  position: relative;
+  max-width: 150px;
   width: 100%;
   text-align: right;
-  padding-right: 24px;
+  padding-right: ${({ suffix }) => (suffix ? "20px" : "12px")};
   -moz-appearance: textfield;
   /* font-family: "Roboto Mono", monospace; */
   &:focus {
@@ -25,41 +27,55 @@ const StyledCleave = styled(Cleave)`
 const Wrapper = styled.div`
   position: relative;
   display: inline-block;
-  &::after {
+  width: max-content;
+  /* &::after {
     content: "${({ suffix }) => suffix}";
+
     display: inline;
     position: absolute;
-    right: 3px;
+    right: ${({ position }) => position || "3px"};
     line-height: 33px;
     font-size: 18px;
-    top: 5px;
+    bottom: 0px;
     width: 20px;
     font-weight: normal;
     color: black;
     z-index: 10;
-  }
+  } */
 `;
 
 const Suffix = styled.span`
   position: absolute;
-  bottom: 6px;
-  left: ${({ position }) => `${position + 15}px`};
+  bottom: 9px;
+  right: ${({ position }) => position || "6px"};
   /* display: ${({ position }) => (position === 0 ? "none" : "initial")}; */
   display: none;
 `;
 
-const NumericInput = ({ value, onChange, suffix, placeholder }) => {
+const NumericInput = ({
+  style = null,
+  value,
+  onChange,
+  suffix,
+  placeholder,
+  position = null,
+  options = null,
+}) => {
+  const defaultOptions = {
+    numeral: true,
+  };
   return (
-    <Wrapper suffix={suffix}>
+    <Wrapper position={position} suffix={suffix}>
       <StyledCleave
+        style={style}
         className="form-field"
+        suffix={suffix}
         // placeholder={placeholder}
         value={value}
         onChange={onChange}
-        options={{
-          numeral: true,
-        }}
+        options={options || defaultOptions}
       />
+      <Suffix>{suffix}</Suffix>
     </Wrapper>
   );
 };

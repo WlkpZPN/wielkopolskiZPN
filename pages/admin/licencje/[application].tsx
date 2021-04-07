@@ -316,7 +316,13 @@ const Application = ({ authData, clubData, settings }) => {
       >
         <div style={{ display: "flex" }}>
           <span>
-            <h1 style={{ marginRight: "32px", marginTop: "-3px" }}>
+            <h1
+              style={{
+                marginRight: "32px",
+                marginTop: "-3px",
+                marginBottom: "20px",
+              }}
+            >
               Wniosek {clubData.applications[0].internal_id}
             </h1>
             <Link href="/admin">
