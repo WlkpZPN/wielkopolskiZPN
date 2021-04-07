@@ -85,7 +85,7 @@ export const getServerSideProps = protectedClientRoute(
 
     const clubData = await prisma.clubs.findUnique({
       where: {
-        email: data.email.toStrin(),
+        email: data.email.toString(),
       },
       include: {
         applications: {
