@@ -27,6 +27,13 @@ export const getServerSideProps = protectedClientRoute(
       where: {
         id: data.id,
       },
+      include: {
+        applications: {
+          include: {
+            sport_facilities: true,
+          },
+        },
+      },
     });
 
     return {

@@ -26,6 +26,7 @@ const StatementContent = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  /* line-height: 1.5rem; */
   transform: translate(-50%, -50%);
   background: white;
   max-width: 1000px;

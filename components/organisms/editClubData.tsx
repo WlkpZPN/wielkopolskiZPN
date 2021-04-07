@@ -747,10 +747,9 @@ const EditClubData = ({ clubData }) => {
       </Label>
       <Label style={{ maxWidth: "350px", width: "100%" }}>
         Telefon stacjonarny
-        <Input
+        <PhoneInput
           value={landlinePhone}
           onChange={(e) => setLandlinePhone(e.target.value)}
-          type="text"
         />
         {error && error.type === "landline phone" ? (
           <ErrorMessage>{error.text}</ErrorMessage>

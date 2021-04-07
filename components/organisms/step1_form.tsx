@@ -187,6 +187,7 @@ const StepOneForm = ({
               <Label>
                 E-mail pełnomocnika
                 <Input
+                  type="text"
                   value={data.agentEmail}
                   onChange={(e) =>
                     handleChange(e.target.value, "agentEmail", 1)

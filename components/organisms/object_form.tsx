@@ -30,6 +30,8 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
   const data = context.formData.stepFour.sport_facilities[objectIndex];
+  console.log("data", data);
+
   const {
     handleObjectFileChange,
     handleObjectFileDelete,
@@ -1328,9 +1330,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <Label width="50%">
             Ilość bramek 3 m x 1 m
             <NumericInput
-              value={data.I21_3_1_gate}
+              value={data.I21_3_1_gates}
               onChange={(e) =>
-                handleChange(data.I21_3_1_gate, objectIndex, "I21_3_1_gate")
+                handleChange(e.target.value, objectIndex, "I21_3_1_gates")
               }
               suffix=""
               placeholder="0"
@@ -1339,9 +1341,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <Label width="50%">
             Ilość bramek 3 m x 1,5 m
             <NumericInput
-              value={data.I21_3_15_gate}
+              value={data.I21_3_15_gates}
               onChange={(e) =>
-                handleChange(data.I21_3_15_gate, objectIndex, "I21_3_1_gate")
+                handleChange(e.target.value, objectIndex, "I21_3_15_gates")
               }
               suffix=""
               placeholder="0"
@@ -1350,9 +1352,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <Label width="50%">
             Ilość bramek 5 m x 2 m
             <NumericInput
-              value={data.I21_3_2_gate}
+              value={data.I21_3_2_gates}
               onChange={(e) =>
-                handleChange(data.I21_3_2_gate, objectIndex, "I21_3_1_gate")
+                handleChange(e.target.value, objectIndex, "I21_3_2_gates")
               }
               suffix=""
               placeholder="0"
@@ -1369,7 +1371,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           >
             <PrimaryButton
               type="button"
-              width="min-content"
+              width="max-content"
               color="danger"
               hoverColor="dangerDark"
               onClick={() => deleteFacility(data)}
@@ -1378,7 +1380,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </PrimaryButton>
             <PrimaryButton
               type="submit"
-              width="min-content"
+              width="max-content"
               color="success"
               hoverColor="successDark"
               onClick={handleObjectSave}

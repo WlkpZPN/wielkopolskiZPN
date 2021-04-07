@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Save } from "@styled-icons/boxicons-regular/Save";
 const Wrapper = styled.div`
   width: 200px;
-  padding: 6px 16px;
+  padding: 3px 12px;
   border: ${({ active, theme }) =>
     active ? `2px solid ${theme.primary} ` : "2px solid rgba(0, 0, 0, 0.2)"};
   color: ${({ theme }) => theme.primaryLight};

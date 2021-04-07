@@ -4,7 +4,7 @@ import Input from "./input";
 import Cleave from "cleave.js/react";
 
 const StyledCleave = styled(Cleave)`
-  padding: 9px 12px;
+  padding: 6px 12px;
   font-size: 15px;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.3);
