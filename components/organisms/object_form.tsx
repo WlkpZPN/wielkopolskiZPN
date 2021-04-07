@@ -319,7 +319,6 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               }
               type="text"
             />
-            <Info />
           </Label>
           <Label>
             Adres obiektu sportowego
@@ -330,7 +329,6 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               }
               type="text"
             />
-            <Info />
           </Label>
           <FormRow>
             <Label>
@@ -358,7 +356,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
       <ObjectInfo>
         <Fieldset disabled={readOnly}>
           <FormHeader>Kryterium I.01 - Stadion - dostępność</FormHeader>
-          <Label direction="row" htmlFor="1">
+          <Label width="max-content" direction="row" htmlFor="1">
             <RadioButton
               checked={data.I01_1 === true}
               onChange={(e) => handleChange(true, objectIndex, "I01_1")}
@@ -368,8 +366,14 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
             >
               Jesteśmy właścicielem Stadionu
             </RadioButton>
+            <Info
+              text="Oświadczamy, że nasz klub posiada powyższy obiekt sportowy/obiekty sportowe umożliwiający/e rozgrywanie meczów w ramach rozgrywek klubowych, który/e spełnia/ją wszystkie minimalne wymagania określone w niniejszych.
+
+Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dotyczącą obiektu sportowego.
+"
+            />
           </Label>
-          <Label direction="row" htmlFor="2">
+          <Label width="max-content" direction="row" htmlFor="2">
             <RadioButton
               checked={data.I01_1 === false}
               onChange={(e) => handleChange(false, objectIndex, "I01_1")}
@@ -379,6 +383,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
             >
               Posiadamy pisemną umowę z właścicielem stadionu
             </RadioButton>
+            <Info text="Jeśli Klub nie jest właścicielem obiektu sportowego, należy załączyć umowę gwarantującą prawo do korzystania z obiektu sportowego przez Wnioskodawcę dla celów meczów piłkarskich rozgrywanych w charakterze gospodarza co najmniej przez cały/e Sezon/y licencyjny/e. " />
           </Label>
           {data.I01_1 ? null : (
             <>
@@ -407,7 +412,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           )}
 
           <FormHeader>Kryterium I.02 Regulaminy</FormHeader>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I02_1}
@@ -420,7 +425,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               sposób,by widzowie mogli je przeczytać przed wejściem na obiekt.
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I02_2}
@@ -434,7 +439,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               przeczytać
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I02_3}
@@ -446,7 +451,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               posiadania regulaminu imprezy masowej
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I02_4}
@@ -472,7 +477,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               placeholder="0"
             />
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I03_1}
@@ -484,7 +489,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               zdefiniowanych w kryterium I.04
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I03_2}
@@ -499,7 +504,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           <FormHeader>
             Kryterium I.04 - Indywidualne miejsca siedzące
           </FormHeader>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I04_1}
@@ -510,7 +515,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               Przytwierdzone na stałe (np. do podłoża)
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I04_2}
@@ -521,7 +526,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               Oddzielone od innych
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I04_3}
@@ -532,7 +537,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               Wygodne (anatomicznie wyprofilowane)
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I04_4}
@@ -543,7 +548,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               Z oparciami o wysokości 20-30cm, mierząc od siedziska
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I04_5}
@@ -588,7 +593,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               placeholder="0%"
             />
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I05_2}
@@ -601,7 +606,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               utworzenia strefy klubowej
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I05_3}
@@ -660,7 +665,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               />
             </div>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I06_1}
@@ -674,7 +679,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           {data.I06_type === "sztuczna" ? (
             <>
               {" "}
-              <Label pointer margin="16px 0" direction="row">
+              <Label pointer margin="24px 0" direction="row">
                 <span>
                   <RadioSquare
                     value={data.I06_2}
@@ -686,7 +691,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
                   sztucznej murawy)
                 </span>
               </Label>
-              <Label pointer margin="16px 0" direction="row">
+              <Label pointer margin="24px 0" direction="row">
                 <span>
                   <RadioSquare
                     value={data.I06_3}
@@ -700,7 +705,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               </Label>
             </>
           ) : null}
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I06_4}
@@ -713,7 +718,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               liniami końcowymi pola gry
             </span>
           </Label>
-          <Label pointer margin="16px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.I06_5}

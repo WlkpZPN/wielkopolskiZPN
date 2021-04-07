@@ -9,11 +9,12 @@ const Row = styled.div`
   display: grid;
   grid-gap: 12px;
   grid-template-columns: ${({ cols }) => `repeat(${cols},260px)`};
-  overflow-x: auto;
+  /* overflow-x: auto; */
   width: 70vw;
 `;
+//TO DO SIDE SCROLLING WITH VISIBLE TOOL TIP
 
-const AddFilesWrapper = ({ fileData, setFiles, deleteFile }) => {
+const AddFilesWrapper = ({ fileData, setFiles, deleteFile, text = null }) => {
   const [boxes, setBoxes] = useState([]);
 
   const addFile = (id, file) => {
@@ -26,6 +27,7 @@ const AddFilesWrapper = ({ fileData, setFiles, deleteFile }) => {
     for (let i = 0; i < fileData.length + 1; i++) {
       arr.push(
         <AddFile
+          text={text}
           addFile={addFile}
           key={uniqid()}
           handleDelete={deleteFile}

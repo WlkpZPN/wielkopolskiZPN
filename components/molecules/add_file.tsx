@@ -11,10 +11,14 @@ import { makeid } from "../../middleware/utils";
 //components
 import OutlineButton from "../atoms/outline_button";
 
+const Parent = styled.div`
+  position: relative;
+`;
+
 const Wrapper = styled.div`
   border-radius: 5px;
   white-space: pre-wrap;
-  word-break: break-all;
+  word-break: break-word;
   padding: 16px;
   margin-right: 16px;
   background-color: #f2f3f4;
@@ -24,27 +28,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
+
   z-index: 0;
   width: 260px;
-
+  overflow: auto;
   text-align: center;
-
-  &::after {
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ";
-    z-index: 100;
-    padding: 24px;
-    display: none;
-    position: absolute;
-    left: 16px;
-    border-radius: 5px;
-    top: 16px;
-    color: white;
-    background: ${({ theme }) => theme.primary};
-    width: 90%;
-    z-index: 2;
-    /* transform: translate(-50%, 50%); */
-  }
 `;
 
 const Info = styled.div`
@@ -66,16 +54,17 @@ const Info = styled.div`
     }
   }
   &::after {
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ";
+    content: "${({ text }) => `${text}`}";
     z-index: 100;
     padding: 32px;
     display: none;
     transition: all 0.2s;
     position: absolute;
     left: 14px;
+    min-width: 400px;
     top: 14px;
     border-radius: 5px;
-    width: 100%;
+    width: 500px;
     color: white;
     background: ${({ theme }) => theme.primary};
     width: 90%;
@@ -133,7 +122,7 @@ const DeleteButton = styled.span`
   }
 `;
 
-const AddFile = ({ file, handleDelete, addFile }) => {
+const AddFile = ({ file, handleDelete, addFile, text }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -171,35 +160,45 @@ const AddFile = ({ file, handleDelete, addFile }) => {
     }
   };
   return (
-    <Wrapper>
-      <Info>
-        <InfoCircle />
-      </Info>
-      <FileInfo>
-        <FilePdf />
-        <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
-          {file ? file.name : "Brak załączonego dokumentu."}
-        </span>
-      </FileInfo>
+    <Parent>
+      <Wrapper>
+        {text ? (
+          <Info text={text}>
+            <InfoCircle />
+          </Info>
+        ) : null}
 
-      <Label>
-        {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
+        <FileInfo>
+          <FilePdf />
+          <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+            {file ? file.name : "Brak załączonego dokumentu."}
+          </span>
+        </FileInfo>
 
-        <FileInput id="file" type="file" name="file" onChange={handleChange} />
-      </Label>
-      {file ? (
-        <DeleteButton
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            handleDelete(file.id);
-            deleteFile();
-          }}
-        >
-          Usuń
-        </DeleteButton>
-      ) : null}
-    </Wrapper>
+        <Label>
+          {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
+
+          <FileInput
+            id="file"
+            type="file"
+            name="file"
+            onChange={handleChange}
+          />
+        </Label>
+        {file ? (
+          <DeleteButton
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              handleDelete(file.id);
+              deleteFile();
+            }}
+          >
+            Usuń
+          </DeleteButton>
+        ) : null}
+      </Wrapper>
+    </Parent>
   );
 };
 

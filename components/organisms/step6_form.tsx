@@ -41,6 +41,8 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
       <FormTemplate onChange={() => clearErrors("")}>
         <ErrorMessage>{error.stepSix}</ErrorMessage>
         <FormStatement
+          text="Oświadczamy, że nasz klub ma kierownika ds. bezpieczeństwa lub osobę odpowiedzialną za problematykę ochrony i bezpieczeństwa (kryterium P.02), lekarza/ratownika medycznego lub inną osobę posiadającą stosowne uprawnienia odpowiedzialnego/ą za udzielenie pierwszej pomocy medycznej (kryterium P.03), trenera pierwszego zespołu (kryterium P.04) oraz spikera zawodów piłkarskich (kryterium P.05). 
+"
           value={formData.havingFootballStaff}
           handleChange={() =>
             handleChange(
@@ -53,6 +55,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
         />
 
         <FormStatement
+          text="Oświadczamy, że nasz klub zapewni odpowiednią ilość służb porządkowych i informacyjnych lub wolontariuszy zapewniających bezpieczeństwo i obsługę meczów rozgrywanych przez klub w charakterze gospodarza, zgodnie z kryterium P.06."
           value={formData.HavingSecurityServices}
           handleChange={() =>
             handleChange(

@@ -8,7 +8,7 @@ const InfoContainer = styled.div`
     z-index: 100;
     position: absolute;
     top: -6px;
-    right: 0px;
+    right: -30px;
     z-index: 9999;
     transition: all 0.2s;
   }
@@ -21,29 +21,28 @@ const InfoContainer = styled.div`
     }
   }
   &::after {
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ";
+    content: " ${({ text }) => `${text}`}";
     z-index: 100;
     padding: 32px;
     display: none;
     transition: all 0.2s;
     position: absolute;
-    left: 100%;
-    top: 6px;
+    left: 110%;
+    top: 18px;
     border-radius: 5px;
-    width: 100%;
+
     color: white;
     background: ${({ theme }) => theme.primary};
-    width: 90%;
+    max-width: 600px;
+    width: 300%;
     z-index: 999999;
     /* transform: translate(-50%, 50%); */
   }
 `;
 
-const Info = () => {
+const Info = ({ text, style = null }) => {
   return (
-    <InfoContainer>
-      <InfoCircle />{" "}
-    </InfoContainer>
+    <InfoContainer text={text}>{text ? <InfoCircle /> : null}</InfoContainer>
   );
 };
 

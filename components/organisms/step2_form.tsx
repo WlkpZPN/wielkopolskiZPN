@@ -72,9 +72,18 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
           deleteFile={handleDelete}
           fileData={fileArr}
           setFiles={setFiles}
+          text="Oświadczamy, że nasz klub przekazuje w załączeniu odpis aktualnego rejestru z Krajowego Rejestru Sądowego lub ewidencji prowadzonej przez właściwego starostę/prezydenta zawierający następujące informacje: nazwa Wnioskodawcy, siedziba Wnioskodawcy, forma prawna Wnioskodawcy, lista osób upoważnionych do składania oświadczeń woli w imieniu Wnioskodawcy, sposób reprezentacji Wnioskodawcy."
         />
         {<ErrorMessage>{error.stepTwo}</ErrorMessage>}
         <FormStatement
+          text="Oświadczamy, że nasz klub:
+uznaje za prawnie wiążące statuty, regulaminy, przepisy i regulacje oraz decyzje FIFA, UEFA, PZPN oraz właściwego Wojewódzkiego Związku Piłki Nożnej;
+na poziomie krajowym Wnioskodawca będzie uczestniczył w rozgrywkach uznanych i zatwierdzonych przez PZPN lub właściwy Wojewódzki Związek Piłki Nożnej;
+bezzwłocznie zawiadomi Licencjodawcę o wszelkich istotnych zmianach, zdarzeniach lub warunkach o istotnym znaczeniu,  które dotyczą Wnioskodawcy;
+będzie respektować i przestrzegać postanowienia  Przepisów licencyjnych dla klubów IV ligi i klas niższych;
+wszystkie dokumenty przedłożone Licencjodawcy przez Wnioskodawcę są kompletne, prawidłowe i wiarygodne;
+w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyskiwania wszelkich informacji niezbędnych do wydania licencji w sposób zgodny z przepisami prawa polskiego.
+"
           value={data.participateInCompetitions}
           handleChange={() =>
             handleChange(
@@ -86,6 +95,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
           name="Oświadczenie w przedmiocie udziału w rozgrywkach"
         />
         <FormStatement
+          text=""
           value={data.privateDataProtection}
           handleChange={() =>
             handleChange(

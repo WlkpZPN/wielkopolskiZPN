@@ -34,6 +34,7 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
       <FormTemplate onChange={() => clearErrors("stepFive")}>
         {<ErrorMessage>{error.stepFive}</ErrorMessage>}
         <FormStatement
+          text="Oświadczamy, że nasz klub w dniu, w którym rozpoczyna się dany Sezon Licencyjny nie ma żadnych przeterminowanych zobowiązań wobec pracowników (tj. zawodników i trenerów wszystkich drużyn klubu oraz personelu uwzględnionego w kryteriach od P.01 do P.05), które powstały do dnia 31 grudnia roku kalendarzowego poprzedzającego rok, w którym rozpoczyna się dany Sezon Licencyjny."
           value={formData.NoObligationsTowardsEmployees}
           handleChange={() =>
             handleChange(
@@ -45,6 +46,9 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
           name="Oświadczenie o braku zobowiązań wobec pracowników"
         />
         <FormStatement
+          text="
+Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Licencyjny nie ma żadnych przeterminowanych zobowiązań wobec Polskiego Związku Piłki Nożnej, Wojewódzkiego Związku Piłki Nożnej jak również innych struktur działających w ramach Wojewódzkiego Związku Piłki Nożnej z tytułu płatności składek członkowskich, opłat za uczestnictwo w rozgrywkach, z tytułu działalności transferowej, kar nałożonych przez właściwe organy dyscyplinarne czy prawomocnych wyroków Piłkarskiego Sądu Polubownego, które powstały do dnia 31 grudnia roku kalendarzowego poprzedzającego rok, w którym rozpoczyna się dany Sezon Licencyjny.
+"
           value={formData.NoObligationsTowardsPzpnAndWzpn}
           handleChange={() =>
             handleChange(
@@ -56,6 +60,8 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
           name="Oświadczenie o braku zobowiązań wobec PZPN i Wielkopolskiego ZPN"
         />
         <FormStatement
+          text="Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Licencyjny nie posiada przeterminowanych zobowiązań wobec klubów piłkarskich z tytułu działalności transferowej, które powstały do dnia 31 grudnia roku kalendarzowego poprzedzającego rok, w którym rozpoczyna się dany Sezon Licencyjny.
+"
           value={formData.NoObligationTowardsFootballClubs}
           handleChange={() =>
             handleChange(

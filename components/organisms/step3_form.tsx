@@ -55,17 +55,18 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     handleStepChange("next");
   };
 
-  const renderAmount = () => {
-    
-  }
+  const renderAmount = () => {};
   const renderForm = () => {
     switch (formData.youthGroupsPossession) {
       case "posiadamy zespoły":
         return (
           <>
             {" "}
-            <Label width="50%">
-              <Info />
+            <Label width="max-content">
+              <Info
+                text="Zobowiązuje się do posiadania w ramach własnego podmiotu prawnego co najmniej podaną liczbę zespołów młodzieżowych, które będą uczestniczyć w oficjalnych rozgrywkach lub programach zatwierdzonych przez PZPN i rozgrywanych na poziomie krajowym lub regionalnym.
+"
+              />
               Podaj liczbę zespołów młodzieżowych{" "}
               <NumericInput
                 value={formData.numberOfYouthGroups}
@@ -76,7 +77,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
                 placeholder="0"
               />
             </Label>
-            <Label width="50%">
+            <Label width="max-content">
               Udział zawodników młodzieżowych
               <NumericInput
                 value={formData.shareOfYouthGroups}
@@ -86,7 +87,10 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
                 suffix=""
                 placeholder="0"
               />
-              <Info />
+              <Info
+                text="W czasie trwania całego meczu zespołu seniorów uczestniczyć będzie minimum podana poniżej liczba zawodników młodzieżowych do lat 21 (zawodnikami młodzieżowymi są zawodnicy posiadający obywatelstwo polskie, którzy w roku kalendarzowym, w którym następuje zakończenie danego sezonu rozgrywkowego, ukończą 21. rok życia oraz zawodnicy młodsi).
+"
+              />
             </Label>
           </>
         );
@@ -110,6 +114,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               porozumienia w PDF){" "}
             </Paragraph>
             <AddFilesWrapper
+              text="W sytuacji braku zespołów własnych lub niepełnej ich liczby Wnioskodawca zawarł porozumienie na szkolenie młodzieży z podanym poniżej klubem, z którego wynika wypełnienie kryterium sportowego na posiadanie zespołów młodzieżowych."
               deleteFile={handleDelete}
               fileData={formData.agreement_documents}
               setFiles={setFiles}
@@ -161,6 +166,8 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
         {<ErrorMessage>{error.stepThree}</ErrorMessage>}
         {renderForm()}
         <FormStatement
+          text="Oświadczamy, że nasz klub zapewnia, że każdy z jego zawodników uprawniony do gry przechodzi badania okresowe uprawniające do udziału w rozgrywkach zgodnie z właściwym regulaminem rozgrywek Wojewódzkiego Związku Piłki Nożnej.
+"
           value={formData.medicalDeclaration}
           handleChange={() =>
             handleChange(!formData.medicalDeclaration, "medicalDeclaration", 3)
