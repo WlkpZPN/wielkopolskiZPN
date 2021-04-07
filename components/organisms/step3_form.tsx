@@ -54,6 +54,10 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     handleStepFill("stepThree", { completed: true, error: false });
     handleStepChange("next");
   };
+
+  const renderAmount = () => {
+    
+  }
   const renderForm = () => {
     switch (formData.youthGroupsPossession) {
       case "posiadamy zespoły":

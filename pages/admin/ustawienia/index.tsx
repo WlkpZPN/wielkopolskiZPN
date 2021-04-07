@@ -14,19 +14,38 @@ import ErrorMessage from "../../../components/atoms/error_message";
 import QuestionList from "../../../components/organisms/questions_list";
 import GroupMessages from "../../../components/organisms/group_messages";
 import NumericInput from "../../../components/atoms/numeric_input";
-
+import AmountInput from "../../../components/atoms/amount_input";
+import { parse } from "path";
 const Header = styled.h3`
   margin-top: 32px;
 `;
+
+const AmountRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  & label {
+    margin-left: 6px;
+    & > span {
+      min-height: 40px;
+    }
+  }
+`;
 const Ustawienia = ({ userData, settings, questions, messages }) => {
+  console.log(settings);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
   const [endDate, setEndDate] = useState(settings.end_date || new Date());
   const [primaryAmount, setPrimaryAmount] = useState(
-    settings.application_fee || 0
+    parseFloat(settings.application_fee).toFixed(2) || 0
   );
   const [extraAmount, setExtraAmount] = useState(
-    settings.no_possession_fee || 0
+    parseFloat(settings.iv_possession_fee).toFixed(2) || 0
+  );
+
+  const [extraAmount2, setExtraAmount2] = useState(
+    parseFloat(settings.v_possession_fee).toFixed(2)
   );
   const [error, setError] = useState("");
 
@@ -46,9 +65,17 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       );
       return;
     }
+
+    if (!validateNumber(extraAmount2).valid) {
+      setError(
+        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
+      );
+      return;
+    }
     await axios.post("/api/settings/setAmounts", {
       primaryAmount,
       extraAmount,
+      extraAmount2,
     });
     toast.success("Pomyślnie zaaktualizowano opłaty licencyjne", {
       autoClose: 2000,
@@ -72,6 +99,16 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
 
     setLoading(false);
     toast.success("Pomyślnie zaktualizowano czas trwania procesu licencyjnego");
+  };
+
+  const formatPrimaryValue = (e) => {
+    setPrimaryAmount(parseFloat(e.target.value).toFixed(2));
+  };
+  const formatExtraValue = (e) => {
+    setExtraAmount(parseFloat(e.target.value).toFixed(2));
+  };
+  const formatExtraValue2 = (e) => {
+    setExtraAmount2(parseFloat(e.target.value).toFixed(2));
   };
   return (
     <AdminLayout userData={userData} view="ustawienia">
@@ -118,36 +155,54 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
         </PrimaryButton>
       </form>
       <Header>Opłaty składane przez kluby</Header>
+
       <form
         onSubmit={setAmounts}
         onChange={() => {
           setError("");
         }}
       >
-        <div style={{ display: "flex", justifyContent: "flex-start" }}>
-          <Label style={{ maxWidth: "400px", marginRight: "16px" }}>
-            Wysokość opłaty za złożenie wniosku licencyjnego
-            <NumericInput
+        <AmountRow>
+          <Label style={{ maxWidth: "400px" }}>
+            <span>Wysokość opłaty za złożenie wniosku licencyjnego</span>
+            <AmountInput
               style={{ paddingRight: "24px" }}
-              suffix="zł"
               placeholder="0"
-              value={parseFloat(primaryAmount).toFixed(2)}
+              onBlur={formatPrimaryValue}
+              value={primaryAmount}
               onChange={(e) => setPrimaryAmount(e.target.value)}
             />
           </Label>
           <Label style={{ maxWidth: "400px" }}>
-            Wysokość opłaty za złożenie wniosku licencyjnego
-            <NumericInput
+            <span>
+              Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
+              młodzieżowych dla IV ligi
+            </span>
+            <AmountInput
               style={{ paddingRight: "24px" }}
-              suffix="zł"
               placeholder="0"
-              value={parseFloat(extraAmount).toFixed(2)}
+              onBlur={formatExtraValue}
+              value={extraAmount}
               onChange={(e) => setExtraAmount(e.target.value)}
             />
           </Label>
-        </div>
+          <Label style={{ maxWidth: "400px", marginRight: "16px" }}>
+            <span>
+              {" "}
+              Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
+              młodzieżowych dla V ligi oraz klasy okręgowej
+            </span>
+            <AmountInput
+              style={{ paddingRight: "24px" }}
+              placeholder="0"
+              onBlur={formatExtraValue2}
+              value={extraAmount2}
+              onChange={(e) => setExtraAmount2(e.target.value)}
+            />
+          </Label>
+        </AmountRow>
         <PrimaryButton
-          style={{ marginTop: "-4px" }}
+          style={{ marginTop: "8px" }}
           hoverColor="success"
           color="successDark"
           type="submit"

@@ -2,9 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import Cleave from "cleave.js/react";
 
-const StyledCleave = styled(Cleave)`
+const StyledCleave = styled.input`
   width: ${({ width }) => width};
-  margin-top: 4px;
+  margin-top: 15px;
   padding: 6px 12px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;
@@ -14,6 +14,7 @@ const StyledCleave = styled(Cleave)`
   -webkit-appearance: none;
   position: relative;
   max-width: 150px;
+
   width: 100%;
   text-align: right;
   padding-right: ${({ suffix }) => (suffix ? "20px" : "12px")};
@@ -28,20 +29,7 @@ const Wrapper = styled.div`
   position: relative;
   display: inline-block;
   width: max-content;
-  /* &::after {
-    content: "${({ suffix }) => suffix}";
-
-    display: inline;
-    position: absolute;
-    right: ${({ position }) => position || "3px"};
-    line-height: 33px;
-    font-size: 18px;
-    bottom: 0px;
-    width: 20px;
-    font-weight: normal;
-    color: black;
-    z-index: 10;
-  } */
+  height: min-content;
 `;
 
 const Suffix = styled.span`
@@ -52,32 +40,33 @@ const Suffix = styled.span`
   display: none;
 `;
 
-const NumericInput = ({
+const AmountInput = ({
   style = null,
   value,
   onChange,
-  suffix,
+  onBlur = null,
   placeholder,
   position = null,
   options = null,
 }) => {
-  const defaultOptions = {
-    numeral: true,
+  const handleChange = (e) => {
+    if (!Number(e.target.value)) {
+      return;
+    }
+    onChange(e);
   };
   return (
-    <Wrapper position={position} suffix={suffix}>
+    <Wrapper position={position}>
       <StyledCleave
+        type="number"
         style={style}
-        className="form-field"
-        suffix={suffix}
-        // placeholder={placeholder}
+        onBlur={onBlur}
         value={value}
-        onChange={onChange}
-        options={options || defaultOptions}
+        onChange={handleChange}
       />
-      <Suffix>{suffix}</Suffix>
+      <Suffix>zł</Suffix>
     </Wrapper>
   );
 };
 
-export default NumericInput;
+export default AmountInput;

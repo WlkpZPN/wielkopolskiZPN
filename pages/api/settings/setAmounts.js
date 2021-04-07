@@ -2,7 +2,7 @@ import prisma from "../../../middleware/prisma";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { primaryAmount, extraAmount } = req.body;
+    const { primaryAmount, extraAmount, extraAmount2 } = req.body;
 
     try {
       await prisma.settings.upsert({
@@ -10,17 +10,19 @@ export default (req, res) => {
           id: 1,
         },
         update: {
-          application_fee: primaryAmount,
-          no_possession_fee: extraAmount,
+          application_fee: Number(primaryAmount),
+          iv_possession_fee: Number(extraAmount),
+          v_possession_fee: Number(extraAmount2),
         },
         create: {
-          application_fee: primaryAmount,
-          no_possession_fee: extraAmount,
+          application_fee: Number(primaryAmount),
+          iv_possession_fee: Number(extraAmount),
+          v_possession_fee: Number(extraAmount2),
         },
       });
       res.send("amount updated");
     } catch (error) {
-      conosle.log(error);
+      console.log(error);
       res.status(400);
       res.send(error);
     } finally {

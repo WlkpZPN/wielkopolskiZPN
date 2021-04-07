@@ -198,7 +198,8 @@ model settings {
   end_date          String? @db.VarChar(200)
   id                Int     @id @default(autoincrement())
   application_fee   Float?
-  no_possession_fee Float?
+  iv_possession_fee Float?
+  v_possession_fee  Float?
 }
 
 model sport_facilities {
