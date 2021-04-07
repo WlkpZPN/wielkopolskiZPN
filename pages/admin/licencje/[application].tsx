@@ -55,7 +55,7 @@ const Application = ({ authData, clubData, settings }) => {
           <>
             <div style={{ display: "flex", alignItems: "flex-end" }}>
               <p>
-                <Paragraph>Dodaj fakturę</Paragraph>
+                <Paragraph>Wystaw licencję</Paragraph>
                 <AddInvoice
                   admin={true}
                   clubData={clubData}
@@ -182,8 +182,8 @@ const Application = ({ authData, clubData, settings }) => {
               Zaakceptuj
             </PrimaryButton>
             <PrimaryButton
-              color="warningDark"
-              hoverColor="warning"
+              hoverColor="warningDark"
+              color="warning"
               style={{ margin: "0 6px" }}
               onClick={() => setVisible(true)}
             >

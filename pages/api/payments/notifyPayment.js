@@ -1,6 +1,6 @@
 import prisma from "../../../middleware/prisma";
 import nodemailer from "nodemailer";
-
+import {getCurrentDate} from '../../../middleware/utils';
 var transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
@@ -29,6 +29,14 @@ export default (req, res) => {
           id: parseInt(applicationID),
         },
         data: {
+          status_id: 7,
+        },
+      });
+       await prisma.histories.create({
+        data: {
+          application_id: applicationID,
+          created_at: getCurrentDate(),
+          description: "Płatność zaakceptowana",
           status_id: 7,
         },
       });

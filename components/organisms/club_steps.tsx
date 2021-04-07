@@ -48,7 +48,7 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="default" number={2} />
               <span>
-                Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
+                Weryfikacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
                 klubu
               </span>
@@ -80,7 +80,7 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="completed" number={2} />
               <span>
-                Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
+                Weryfikacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
                 klubu <br />{" "}
                 {history.find((el) => el.status_id === 6).created_at}
@@ -113,7 +113,7 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="completed" number={2} />
               <span>
-                Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
+                Weryfikacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
                 klubu <br />
                 {history.find((el) => el.status_id === 6).created_at}
@@ -129,6 +129,7 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="default" number={4} />
               <span>Weryfikacja płatności przez Wielkopolski ZPN</span>
+              {history.find((el) => el.status_id === 7).created_at}
             </Row>
             <Row>
               <HistoryIcon hidden={true} state="default" number={5} />
@@ -206,7 +207,7 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="completed" number={2} />
               <span>
-                Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
+                Weryfikacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
                 klubu
               </span>
@@ -238,7 +239,7 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="default" number={2} />
               <span>
-                Akceptacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
+                Weryfikacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
                 klubu
               </span>

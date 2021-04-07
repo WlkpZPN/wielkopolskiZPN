@@ -1378,7 +1378,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
               hoverColor="successDark"
               onClick={handleObjectSave}
             >
-              Zapisz
+              Zapisz obiekt
             </PrimaryButton>
           </div>
         </Fieldset>

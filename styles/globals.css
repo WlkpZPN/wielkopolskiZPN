@@ -5,6 +5,7 @@ html {
   font-size: 15px;
   font-family: "Lato", sans-serif;
   scroll-behavior: smooth;
+  line-height:20px;
 }
 *,
 *:before,

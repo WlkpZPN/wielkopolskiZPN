@@ -74,7 +74,7 @@ const MainPage = ({ userData, applications }) => {
           <h1>Wnioski licencyjne</h1>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Select
-              style={{ marginTop: 0, minWidth: "200px" }}
+              style={{ marginTop: 0, minWidth: "200px",fontSize:'13px' }}
               value={filterType}
               onChange={(e) => setFilterType(parseInt(e.target.value))}
             >
