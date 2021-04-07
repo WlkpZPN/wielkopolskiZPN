@@ -13,6 +13,8 @@ const StyledCleave = styled(Cleave)`
   outline: none;
   -webkit-appearance: none;
   width: 100%;
+  text-align: right;
+  padding-right: 24px;
   -moz-appearance: textfield;
   /* font-family: "Roboto Mono", monospace; */
   &:focus {
@@ -27,13 +29,13 @@ const Wrapper = styled.div`
     content: "${({ suffix }) => suffix}";
     display: inline;
     position: absolute;
-    right: 20px;
+    right: 3px;
     line-height: 33px;
     font-size: 18px;
-    top: 6px;
+    top: 5px;
     width: 20px;
-
-    color: rgba(0, 0, 0, 0.4);
+    font-weight: normal;
+    color: black;
     z-index: 10;
   }
 `;
@@ -51,7 +53,7 @@ const NumericInput = ({ value, onChange, suffix, placeholder }) => {
     <Wrapper suffix={suffix}>
       <StyledCleave
         className="form-field"
-        placeholder={placeholder}
+        // placeholder={placeholder}
         value={value}
         onChange={onChange}
         options={{

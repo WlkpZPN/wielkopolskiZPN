@@ -53,7 +53,6 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     // }
     handleStepFill("stepThree", { completed: true, error: false });
     handleStepChange("next");
-    console.log("form submitted");
   };
   const renderForm = () => {
     switch (formData.youthGroupsPossession) {

@@ -10,7 +10,7 @@ import RadioContainer from "../atoms/radio_container";
 import Input from "../atoms/input";
 import FormRow from "../atoms/form_row";
 import PrimaryButton from "../atoms/primary_button";
-import PhoneInput from "../molecules/phone_input";
+import PhoneInput from "../atoms/phone_input";
 import Fieldset from "../atoms/fieldset";
 import Modal from "../molecules/modal";
 import StyledSpinner from "../atoms/loader";
@@ -34,7 +34,8 @@ const StepOneForm = ({
     show_buttons,
     sendApplication,
   } = useContext(ApplicationContext);
-  console.log(error);
+  // console.log(error);
+  console.log(data.seasons);
   const [loading, setLoading] = useState(false);
 
   const nextStep = () => {
@@ -91,7 +92,7 @@ const StepOneForm = ({
                   name="seasons"
                   checked={data.seasons === "1"}
                   value={"1"}
-                  onChange={(e) => handleChange(e, "seasons", 1)}
+                  onChange={(e) => handleChange("1", "seasons", 1)}
                 >
                   1 sezon
                 </RadioButton>
@@ -102,7 +103,7 @@ const StepOneForm = ({
                   name="seasons"
                   id="2"
                   checked={data.seasons === "2"}
-                  onChange={(e) => handleChange(e, "seasons", 1)}
+                  onChange={(e) => handleChange("2", "seasons", 1)}
                 >
                   2 sezony
                 </RadioButton>
@@ -112,7 +113,7 @@ const StepOneForm = ({
               Pełna nazwa klubu
               <Input
                 value={data.clubName}
-                onChange={(e) => handleChange(e, "clubName", 1)}
+                onChange={(e) => handleChange(e.target.value, "clubName", 1)}
                 type="text"
               ></Input>
             </Label>
@@ -120,7 +121,7 @@ const StepOneForm = ({
               Adres klubu
               <Input
                 value={data.clubStreet}
-                onChange={(e) => handleChange(e, "clubStreet", 1)}
+                onChange={(e) => handleChange(e.target.value, "clubStreet", 1)}
                 type="text"
               ></Input>
             </Label>
@@ -129,14 +130,16 @@ const StepOneForm = ({
                 Kod pocztowy
                 <ZipCodeInput
                   value={data.clubZipCode}
-                  onChange={(e) => handleChange(e, "clubZipCode", 1)}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "clubZipCode", 1)
+                  }
                 />
               </Label>
               <Label>
                 Miasto
                 <Input
                   value={data.clubCity}
-                  onChange={(e) => handleChange(e, "clubCity", 1)}
+                  onChange={(e) => handleChange(e.target.value, "clubCity", 1)}
                   type="text"
                 ></Input>
               </Label>
@@ -145,7 +148,7 @@ const StepOneForm = ({
               Adres e-mail klubu
               <Input
                 value={data.email}
-                onChange={(e) => handleChange(e, "email", 1)}
+                onChange={(e) => handleChange(e.target.value, "email", 1)}
                 type="text"
               ></Input>
             </Label>
@@ -157,7 +160,7 @@ const StepOneForm = ({
                 Imię pełnomocnika
                 <Input
                   value={data.agentName}
-                  onChange={(e) => handleChange(e, "agentName", 1)}
+                  onChange={(e) => handleChange(e.target.value, "agentName", 1)}
                   type="text"
                 ></Input>
               </Label>
@@ -165,7 +168,9 @@ const StepOneForm = ({
                 Nazwisko pełnomocnika
                 <Input
                   value={data.agentLastName}
-                  onChange={(e) => handleChange(e, "agentLastName", 1)}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "agentLastName", 1)
+                  }
                   type="text"
                 ></Input>
               </Label>
@@ -174,7 +179,7 @@ const StepOneForm = ({
               Funkcja / stanowisko pełnomocnika
               <Input
                 value={data.position}
-                onChange={(e) => handleChange(e, "position", 1)}
+                onChange={(e) => handleChange(e.target.value, "position", 1)}
                 type="text"
               />
             </Label>
@@ -183,15 +188,18 @@ const StepOneForm = ({
                 E-mail pełnomocnika
                 <Input
                   value={data.agentEmail}
-                  onChange={(e) => handleChange(e, "agentEmail", 1)}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "agentEmail", 1)
+                  }
                 />
               </Label>
               <Label>
                 Telefon pełnomocnika{" "}
-                <Input
-                  type="text"
+                <PhoneInput
                   value={data.agentPhone}
-                  onChange={(e) => handleChange(e, "agentPhone", 1)}
+                  onChange={(e) =>
+                    handleChange(e.target.value, "agentPhone", 1)
+                  }
                 />
               </Label>
             </FormRow>

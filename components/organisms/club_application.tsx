@@ -61,6 +61,17 @@ const ClubApplication = ({
   useEffect(() => {
     let newStepData = { ...completedSteps };
     newStepData.stepFour = "";
+
+    if (clubData.applications[0].statuses.id === 1) {
+      handleStepChange("jump", 1, 1);
+      handleStepChange("jump", 3, 3);
+      handleStepChange("jump", 4, 4);
+      handleStepChange("jump", 5, 5);
+      handleStepChange("jump", 6, 6);
+
+      handleStepChange("jump", 2, 2);
+      console.log(completedSteps);
+    }
     // let result = checkStepOne(formData.stepOne);
     // if (!result.valid) {
     //   newStepData.stepOne = "default";
@@ -243,7 +254,7 @@ const ClubApplication = ({
     let newFields = { ...formData };
     switch (step) {
       case 1:
-        newFields.stepOne[field] = event.target.value;
+        newFields.stepOne[field] = event;
         setFormData(newFields);
         break;
       case 2:
@@ -646,7 +657,7 @@ const ClubApplication = ({
         // newFormData.stepFour.sport_facilities =
         //   clubData.applications[0].sport_facilities;
         // setFormData(newFormData);
-        toast.info("Zapisano obiekt", {
+        toast.info("obiekt został zapisany", {
           autoClose: 3000,
         });
       })
@@ -662,10 +673,11 @@ const ClubApplication = ({
     setError(newErrData);
   };
 
-  const handleStepChange = (type, nextStep = 0) => {
+  const handleStepChange = (type, nextStep = 0, extraStep = null) => {
     // on change fire function that check validation for current step
+    console.log("step changed runned");
     let result;
-    switch (step) {
+    switch (extraStep || step) {
       case 1:
         result = checkStepOne(formData.stepOne);
 

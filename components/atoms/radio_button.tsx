@@ -22,7 +22,12 @@ const RadioButton = ({ name, id, checked, value, onChange, children }) => {
   return (
     <Label>
       <RadioInput>
-        <Radio type="radio" name={name}></Radio>
+        <Radio
+          checked={checked}
+          onChange={onChange}
+          type="radio"
+          name={name}
+        ></Radio>
         <RadioControl></RadioControl>
       </RadioInput>
       <RadioLabel>{children}</RadioLabel>
