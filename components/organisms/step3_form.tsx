@@ -54,8 +54,25 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     handleStepFill("stepThree", { completed: true, error: false });
     handleStepChange("next");
   };
-
-  const renderAmount = () => {};
+  console.log(settings);
+  const renderAmount = () => {
+    const leauge = context.formData.stepOne.leauge;
+    console.log(leauge == "IV liga");
+    console.log(leauge);
+    let amount = "";
+    switch (leauge) {
+      case "IV liga":
+        amount = `${settings.iv_possession_fee}`;
+        break;
+      case "V liga":
+      case "Klasa okręgowa":
+        amount = `${settings.v_possession_fee}`;
+        break;
+      default:
+        break;
+    }
+    return amount;
+  };
   const renderForm = () => {
     switch (formData.youthGroupsPossession) {
       case "posiadamy zespoły":
@@ -125,17 +142,23 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
       case "nie posiadamy zespołów":
         return (
           <>
-            <p style={{ fontWeight: "bold", margin: "24px 0 8px" }}>
+            <p
+              style={{
+                fontWeight: "bold",
+                margin: "24px 0 8px",
+                marginBottom: "15px",
+              }}
+            >
               Wysokość opłaty dodatkowej w tym sezonie
             </p>{" "}
-            <h1 style={{ fontSize: "40px" }}>
-              {settings.no_possession_fee} PLN
-            </h1>
+            <h1 style={{ fontSize: "40px" }}>{renderAmount()} PLN</h1>
             <p style={{ fontWeight: "bold", margin: "24px 0 48px 0" }}>
               Opłatę będzie można uiścić na koniec procesu składania wniosku
             </p>
           </>
         );
+      case "wystepujemy w rozgrywkach klasy A":
+        return <> </>;
     }
   };
 
@@ -160,6 +183,10 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             <option value="nie posiadamy zespołów">
               Nie posiadamy własnych zespołów młodzieżowych.Deklarujemy się
               uiścić opłatę dodatkową do Wielkopolskiego ZPN.
+            </option>
+            <option value="wystepujemy w rozgrywkach klasy A">
+              Nie posiadamy własnych zespołów młodzieżowych. Występujemy w
+              rozgrywkach Klasy A, Klasy B lub ligi młodzieżowej.
             </option>
           </Select>
         </Label>

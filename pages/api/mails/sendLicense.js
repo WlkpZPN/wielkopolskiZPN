@@ -54,7 +54,7 @@ export default (req, res) => {
             <tr style="padding: 0">
               <td style="margin: 0; padding: 16px 48px; background-color: #0156a6">
                 <h1 style="margin: 0; padding: 0; color: white">
-                  Otrzymałeś licencje na rozgrywki klubowe
+                  Twój klub otrzymał licencję
                 </h1>
               </td>
             </tr>
@@ -67,8 +67,8 @@ export default (req, res) => {
                     font-weight: bold;
                   "
                 >
-                  Wniosek licencyjny został pomyślnie zaakceptowany.Twój klub posiada
-                  uprawnienia umożliwiające udział w rozgrywkach klubowych.
+                  Twój wniosek licencyjny został pomyślnie zaakceptowany.
+                  Twój klub posiada uprawnienia umożliwiające udział w rozgrywkach w najbliższym sezonie.
                 </p>
                 <p
                   style="
@@ -77,8 +77,7 @@ export default (req, res) => {
                     font-weight: bold;
                   "
                 >
-                  Licencja znajduje się w załączniku, można ją także pobrać z poziomu
-                  aplikacji
+                  Licencja znajduje się w załączniku, ale można ją także pobrać z poziomu platformy licencyjnej - link znajdziesz poniżej.
                 </p>
               </td>
             </tr>
@@ -86,12 +85,11 @@ export default (req, res) => {
               <td style="padding: 24px 48px">
                 <a
                   style="
-                    padding: 8px 32px;
+                   
                     text-decoration: none;
-                    color: white;
+                    color: #1296D8;
                     font-weight: bold;
-                    background: #0156a6;
-                    border-radius: 4px;
+                   
                   "
                   href="wielkopolski-zpn-wielkopolskizpn.vercel.app"
                   >Platforma Licencyjna</a

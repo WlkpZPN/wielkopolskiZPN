@@ -39,31 +39,31 @@ export default (req, res) => {
       </tr>
       <tr style="padding: 0">
         <td style="margin: 0; padding: 16px 48px; background-color: #0156a6">
-          <h1 style="margin: 0; padding: 0; color: white">Opłać swój wniosek licencyjny</h1>
+          <h1 style="font-weight:bold; margin: 0; padding: 0; color: white">Opłać swój wniosek licencyjny</h1>
         </td>
       </tr>
       <tr>
         <td style="padding: 32px 48px">
         <p style='max-width:400px; color:rgba(0,0,0,0.8); font-weight:bold;'>
 
-        Twój wniosek został zaakceptowany,prosimy o dokonanie płatności klikając w poniższy link
+        Twój wniosek został zaakceptowany. 
+Prosimy o dokonanie płatności klikając w poniższy link.
         </>
           <a href="${link}" style="margin-top:24px; background-image:url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');background-repeat:no-repeat;
           background-size:contain;display:block;height:40px;margin-bottom:24px;
           " >&nbsp;</a>
-          Po zweryfikowaniu płatności wyślemy mail z decyzją Wielkopolskiego ZPN, status swojego wniosku możesz również sprawdzić korzystając z aplikacji
+          Po zweryfikowaniu płatności wyślemy e-mail z decyzją Wielkopolskiego Związku Piłki Nożnej. Status swojego wniosku możesz również sprawdzić korzystając z Platformy Licencyjnej.
           </p>
         </td>
       </tr>
       <tr>
         <td style="padding: 24px 48px">
           <a style="
-              padding: 8px 32px;
+              
               text-decoration: none;
-              color: white;
+              color: #1296D8;
               font-weight: bold;
-              background: #0156a6;
-              border-radius: 4px;
+             
             " href='wielkopolski-zpn-wielkopolskizpn.vercel.app'>Platforma Licencyjna</a>
         </td>
       </tr>

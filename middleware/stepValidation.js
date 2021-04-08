@@ -106,6 +106,7 @@ export const checkStepThree = (formData) => {
         };
       }
     case "nie posiadamy zespołów":
+    case "wystepujemy w rozgrywkach klasy A":
       break;
   }
 

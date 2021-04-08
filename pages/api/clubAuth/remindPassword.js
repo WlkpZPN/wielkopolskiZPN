@@ -53,15 +53,15 @@ export default (req, res) => {
       <tr style="padding: 0">
         <td style="margin: 0; padding: 16px 48px; background-color: #0156a6">
           <h1 style="margin: 0; padding: 0; color: white">
-            Twoje hasło do platformy licencyjnej
+            Twoje hasło do Platformy Licencyjnej
           </h1>
         </td>
       </tr>
       <tr>
         <td style="padding: 32px 48px">
-          Poniżej znajduje się twoje hasło to panelu licencyjnego
-          WielkopolskiegoZPN, aby się zalogować wpisz email, na który otrzymałeś
-          tą wiadomość oraz wpisz hasło znajdujące się poniżej
+          Poniżej znajduje się twoje nowe hasło do Platformy Licencyjnej Wielkopolskiego Związku Piłki Nożnej. 
+          Aby się zalogować wprowadź swój adres e-mail,
+           na który otrzymałeś tą wiadomość oraz wprowadź hasło znajdujące się poniżej:
           <p><span style="font-weight: bold">hasło:</span> ${clubData.password}</p>
         </td>
       </tr>
@@ -69,15 +69,14 @@ export default (req, res) => {
         <td style="padding: 24px 48px">
           <a
             style="
-              padding: 8px 32px;
+             
               text-decoration: none;
-              color: white;
+              color: black;
               font-weight: bold;
-              background: #0156a6;
-              border-radius: 4px;
+             
             "
             href=""
-            >Logowanie</a
+            >Platforma Licencyjna</a
           >
         </td>
       </tr>

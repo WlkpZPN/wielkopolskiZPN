@@ -75,7 +75,7 @@ const StepOneForm = ({
             {<ErrorMessage>{error.stepOne}</ErrorMessage>}
             <Select
               value={data.leauge}
-              onChange={(e) => handleChange(e, "leauge", 1)}
+              onChange={(e) => handleChange(e.target.value, "leauge", 1)}
             >
               <option value="IV liga">IV liga</option>
               <option value="V liga">V liga</option>
