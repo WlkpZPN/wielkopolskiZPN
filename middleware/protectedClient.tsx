@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 export function protectedClientRoute(cb) {
   return async (context) => {
     const { req, res } = context;
-
+    console.log(context);
     let decodedToken = null;
     const token = req.cookies.clubToken || null;
 

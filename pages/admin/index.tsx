@@ -15,7 +15,7 @@ const SearchBar = styled.input`
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.4);
   margin-left: 16px;
-  height: 33px;
+
   min-width: 200px;
   max-width: 350px;
   width: 100%;
@@ -69,12 +69,13 @@ const MainPage = ({ userData, applications }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            margin: "30px 0",
           }}
         >
           <h1>Wnioski licencyjne</h1>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Select
-              style={{ marginTop: 0, minWidth: "200px",fontSize:'13px' }}
+              style={{ marginTop: 0, minWidth: "200px", fontSize: "13px" }}
               value={filterType}
               onChange={(e) => setFilterType(parseInt(e.target.value))}
             >

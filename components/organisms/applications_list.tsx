@@ -25,7 +25,7 @@ const TableHeader = styled.span`
 `;
 
 const StyledRow = styled(TableRow)`
-  grid-template-columns: 40px 60px minmax(100px, 150px) minmax(60px, 250px) 90px 120px 100px 100px auto;
+  grid-template-columns: 40px 60px minmax(100px, 150px) minmax(60px, 250px) 150px 160px 100px auto;
 `;
 
 const ApplicationsList = () => {
@@ -65,7 +65,7 @@ const ApplicationsList = () => {
           </ClubName>
           <span>{application.statuses.name}</span>
           <span>{application.clubs.agent_name}</span>
-          <span>{application.clubs.agent_position}</span>
+
           <span>{application.clubs.agent_phone}</span>
           <PrimaryButton
             onClick={() =>
@@ -94,7 +94,7 @@ const ApplicationsList = () => {
           <TableHeader>Klub</TableHeader>
           <TableHeader>Status</TableHeader>
           <TableHeader>Pełnomocnik</TableHeader>
-          <TableHeader>Stanowisko</TableHeader>
+
           <TableHeader>Telefon</TableHeader>
         </StyledRow>
         {generateClubs()[page]}

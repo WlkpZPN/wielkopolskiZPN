@@ -150,7 +150,7 @@ const Home = ({ authData, clubData, settings }) => {
               <Header color="warning">Prosimy o wprowadzenie poprawek.</Header>
 
               <Paragraph>
-                Wielkopolski ZPN odrzucił Twój wniosek. <br />
+                Wielkopolski ZPN skierował Twój wniosek do poprawy. <br />
                 Zapoznaj się z poniższym uzasadnieniem oraz prosimy o
                 wprowadzenie poprawek do wniosku
               </Paragraph>

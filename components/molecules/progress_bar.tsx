@@ -46,7 +46,7 @@ const ProgressBar = () => {
         id="requests"
       >
         <option value={7}>Wnioski zaakceptowane opłacone</option>
-        <option value={6}>Wnioski zaakceptowane nie opłacone</option>
+        <option value={6}>Wnioski zaakceptowane nieopłacone</option>
         <option value={5}>Wnioski odrzucone</option>
         <option value={2}>Wnioski wysłane</option>
         <option value={0}> Wnioski niewypełnione</option>

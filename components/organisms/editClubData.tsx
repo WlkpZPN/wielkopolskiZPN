@@ -1,4 +1,5 @@
 import { useState, createContext, useEffect } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import prisma from "../../middleware/prisma";
 import { toast } from "react-toastify";
@@ -25,6 +26,13 @@ import {
 } from "../../middleware/validation";
 import ZipCodeInput from "../atoms/zip_code_input";
 import PhoneInput from "../atoms/phone_input";
+const ExtraFieldsWrapper = styled.div`
+  display: flex;
+
+  & button {
+    margin-top: 15px;
+  }
+`;
 const EditClubData = ({ clubData }) => {
   const [city, street, zipCode] = extractAddressData(clubData.address);
   const [postal_city, postal_street, postal_zipCode] = extractAddressData(
@@ -302,12 +310,6 @@ const EditClubData = ({ clubData }) => {
         setError({ text: properCity.message, type: "main address" });
         return;
       }
-      let properZipCode = validateZipCode(clubZipCode);
-
-      if (!properZipCode.valid) {
-        setError({ text: properZipCode.message, type: "main address" });
-        return;
-      }
     }
 
     // postal address validation
@@ -341,11 +343,6 @@ const EditClubData = ({ clubData }) => {
       setError({ text: properCity.message, type: "postal address" });
       return;
     }
-    let properZipCode = validateZipCode(postalZipCode);
-    if (!properZipCode.valid) {
-      setError({ text: properZipCode.message, type: "postal address" });
-      return;
-    }
 
     //stadium validation
     if (!stadiumCity) {
@@ -375,11 +372,6 @@ const EditClubData = ({ clubData }) => {
     properCity = validateText(stadiumCity);
     if (!properCity.valid) {
       setError({ text: properCity.message, type: "stadium address" });
-      return;
-    }
-    properZipCode = validateZipCode(stadiumZipCode);
-    if (!properZipCode.valid) {
-      setError({ text: properZipCode.message, type: "stadium address" });
       return;
     }
 
@@ -412,9 +404,13 @@ const EditClubData = ({ clubData }) => {
       });
       return;
     } else {
+      console.log(chairmanPhone);
       let properPhone = validatePhone(chairmanPhone);
       if (!properPhone.valid) {
-        setError({ text: properPhone.message, type: "chairman" });
+        setError({
+          text: "Nr telefonu musi posiadać 9 znaków",
+          type: "chairman",
+        });
         return;
       }
 
@@ -566,6 +562,7 @@ const EditClubData = ({ clubData }) => {
       .then(() => {
         setLoading(false);
         toast.success("Dane zaktualizowane pomyślnie");
+        setError(null);
       })
       .catch((err) => {
         setLoading(false);
@@ -724,7 +721,7 @@ const EditClubData = ({ clubData }) => {
         {error && error.type === "phone" ? (
           <ErrorMessage>{error.text}</ErrorMessage>
         ) : null}
-        <div style={{ display: "flex" }}>
+        <ExtraFieldsWrapper>
           <div
             style={{
               display: "flex",
@@ -738,12 +735,12 @@ const EditClubData = ({ clubData }) => {
           <OutlineButton
             type="button"
             align="flex-start"
-            style={{ marginTop: "4px", marginLeft: "16px" }}
+            style={{ marginTop: "15px", marginLeft: "16px" }}
             onClick={() => IncrementCount("phone")}
           >
             + Dodaj alternatywny
           </OutlineButton>
-        </div>
+        </ExtraFieldsWrapper>
       </Label>
       <Label style={{ maxWidth: "350px", width: "100%" }}>
         Telefon stacjonarny
@@ -772,7 +769,7 @@ const EditClubData = ({ clubData }) => {
             {renderEmails()}
           </div>
           <OutlineButton
-            style={{ marginTop: "4px", marginLeft: "16px" }}
+            style={{ marginTop: "15px", marginLeft: "16px" }}
             align="flex-start"
             onClick={() => IncrementCount("email")}
             type="button"
@@ -815,10 +812,9 @@ const EditClubData = ({ clubData }) => {
           </Label>
           <Label>
             Telefon prezesa{" "}
-            <Input
+            <PhoneInput
               value={chairmanPhone}
               onChange={(e) => setChairmanPhone(e.target.value)}
-              type="text"
             />
           </Label>
         </FormRow>
@@ -863,10 +859,9 @@ const EditClubData = ({ clubData }) => {
           </Label>
           <Label>
             Telefon pełnomocnika{" "}
-            <Input
+            <PhoneInput
               value={agentPhone}
               onChange={(e) => setAgentPhone(e.target.value)}
-              type="text"
             />
           </Label>
         </FormRow>
@@ -875,6 +870,7 @@ const EditClubData = ({ clubData }) => {
         style={{ marginTop: "16px" }}
         color="success"
         hoverColor="successDark"
+        type="submit"
       >
         Zapisz zmiany
       </PrimaryButton>

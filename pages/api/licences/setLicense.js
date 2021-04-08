@@ -3,7 +3,7 @@ import { getCurrentDate } from "../../../middleware/utils";
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    const { applicationID, statusID, reason, description } = req.body;
+    const { applicationID, statusID, reason, description, type } = req.body;
 
     console.log(req.body);
     await prisma.applications.update({
@@ -13,6 +13,7 @@ export default async (req, res) => {
       data: {
         status_id: parseInt(statusID),
         reject_reason: reason || "",
+        supervision_type: type || "",
       },
     });
 

@@ -23,17 +23,15 @@ export function validateEmail(email) {
 }
 
 export const validateZipCode = (zipCode) => {
-  const zipCodeRegex = /^[0-9]{2}-[0-9]{3}$/;
-
-  if (/^[0-9]{2}-[0-9]{3}$/.test(zipCode)) {
+  if (zipCode.length !== 6) {
     return {
-      valid: true,
+      valid: false,
+      message: "Kod pocztowy powinien być w formacie xx-xxx",
     };
   }
 
   return {
-    valid: false,
-    message: "Proszę podać poprawny kod pocztowy",
+    valid: true,
   };
 };
 
@@ -59,17 +57,11 @@ export const validateText = (text) => {
 };
 
 export const validatePhone = (phone) => {
-  if (phone.replace(/\s/g, "").length !== 9) {
+  if (phone.replaceAll("-", "").replace(/\s/g, "").length !== 9) {
+    console.log(phone.replaceAll("-", ""));
     return {
       valid: false,
       message: "Nr telefonu musi mieć 9 znaków",
-    };
-  }
-  if (!phone.match(/^(?:[+\d].*\d|\d)$/)) {
-    return {
-      valid: false,
-      message:
-        "Proszę podać poprawny format nr telefonu (bez numeru kierunkowego)",
     };
   }
 

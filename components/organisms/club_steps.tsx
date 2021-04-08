@@ -150,7 +150,8 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="warning" number={2} />
               <span>
-                Odrzucenie wniosku licencyjnego przez Wielkopolski ZPN
+                Skierowanie wniosku licencyjnego do poprawy przez Wielkopolski
+                ZPN
               </span>
             </Row>
             <Row>

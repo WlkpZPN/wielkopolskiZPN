@@ -283,12 +283,6 @@ const AddNewClub = () => {
         setError({ text: properCity.message, type: "main address" });
         return;
       }
-      let properZipCode = validateZipCode(clubZipCode);
-
-      if (!properZipCode.valid) {
-        setError({ text: properZipCode.message, type: "main address" });
-        return;
-      }
     }
 
     // postal address validation
@@ -322,11 +316,6 @@ const AddNewClub = () => {
       setError({ text: properCity.message, type: "postal address" });
       return;
     }
-    let properZipCode = validateZipCode(postalZipCode);
-    if (!properZipCode.valid) {
-      setError({ text: properZipCode.message, type: "postal address" });
-      return;
-    }
 
     //stadium validation
     if (!stadiumCity) {
@@ -356,11 +345,6 @@ const AddNewClub = () => {
     properCity = validateText(stadiumCity);
     if (!properCity.valid) {
       setError({ text: properCity.message, type: "stadium address" });
-      return;
-    }
-    properZipCode = validateZipCode(stadiumZipCode);
-    if (!properZipCode.valid) {
-      setError({ text: properZipCode.message, type: "stadium address" });
       return;
     }
 
@@ -718,7 +702,7 @@ const AddNewClub = () => {
           <OutlineButton
             type="button"
             align="flex-start"
-            style={{ marginTop: "4px", marginLeft: "16px" }}
+            style={{ marginTop: "15px", marginLeft: "16px" }}
             onClick={() => IncrementCount("phone")}
           >
             + Dodaj alternatywny
@@ -752,7 +736,7 @@ const AddNewClub = () => {
             {renderEmails()}
           </div>
           <OutlineButton
-            style={{ marginTop: "4px", marginLeft: "16px" }}
+            style={{ marginTop: "15px", marginLeft: "16px" }}
             align="flex-start"
             onClick={() => IncrementCount("email")}
             type="button"
@@ -795,10 +779,9 @@ const AddNewClub = () => {
           </Label>
           <Label>
             Telefon prezesa{" "}
-            <Input
+            <PhoneInput
               value={chairmanPhone}
               onChange={(e) => setChairmanPhone(e.target.value)}
-              type="text"
             />
           </Label>
         </FormRow>
@@ -843,10 +826,9 @@ const AddNewClub = () => {
           </Label>
           <Label>
             Telefon pełnomocnika{" "}
-            <Input
+            <PhoneInput
               value={agentPhone}
               onChange={(e) => setAgentPhone(e.target.value)}
-              type="text"
             />
           </Label>
         </FormRow>

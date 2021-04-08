@@ -1,8 +1,17 @@
-import { PDFDocument, StandardFonts, rgb, rgba, degrees, scale } from "pdf-lib";
+import {
+  PDFDocument,
+  StandardFonts,
+  rgb,
+  rgba,
+  degrees,
+  TextAlignment,
+} from "pdf-lib";
 import download from "downloadjs";
 import fontKit from "@pdf-lib/fontkit";
 
 export const generatePdf = async (clubData, date = null, dwn = true) => {
+  console.log(clubData);
+  const supervisionType = clubData.applications[0].supervision_type;
   const application = clubData.applications[0];
   let leauge = "";
   switch (clubData.leauge) {
@@ -56,18 +65,18 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   );
 
   const pngBackground = await pdfDoc.embedPng(backgroundBytes);
-  const scaleBackground = pngBackground.scale(0.7);
+  const scaleBackground = pngBackground.scale(0.6);
 
   const logoBytes = await fetch(
     "https://pdf.fra1.digitaloceanspaces.com/wzpn_logo.png"
   ).then((res) => res.arrayBuffer());
 
   const pngLogo = await pdfDoc.embedPng(logoBytes);
-  const scaledLogo = pngLogo.scale(0.8);
+  const scaledLogo = pngLogo.scale(0.7);
 
   page.drawImage(pngBackground, {
-    x: 190,
-    y: 230,
+    x: 230,
+    y: 350,
     width: scaleBackground.width,
     height: scaleBackground.height,
   });
@@ -133,21 +142,47 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     color: rgb(0, 0, 0),
     font: regular,
   });
+  const form = pdfDoc.getForm();
+  const textField = form.createTextField("club.info");
 
-  page.drawText(
-    `${clubData.name.replace(/\n/g, " ")} \n ${clubData.address.replace(
+  textField.setText(
+    `${clubData.name.replace(/\n/g, " ")} ${clubData.address.replace(
       /\n/g,
       " "
-    )}`,
-    {
-      x: 210,
-      y: 470,
-      size: 12,
-      color: rgb(0.07, 0.4, 0.7),
-      font: bold,
-      maxWidth: 200,
-    }
+    )}`
   );
+  textField.addToPage(page, {
+    x: 190,
+    y: 440,
+    font: bold,
+    height: 70,
+    textColor: rgb(0.07, 0.4, 0.7),
+    borderColor: rgb(1, 1, 1),
+    // backgroundColor: rgb(1, 1, 1),
+  });
+
+  form.updateFieldAppearances(bold);
+  //const field = form.getTextField("club.info");
+  textField.enableMultiline();
+  textField.enableReadOnly();
+  textField.setFontSize(12);
+  textField.defaultUpdateAppearances(bold);
+  textField.setAlignment(TextAlignment.Center);
+  textField.updateAppearances(bold);
+  // page.drawText(
+  //   `${clubData.name.replace(/\n/g, " ")} \n ${clubData.address.replace(
+  //     /\n/g,
+  //     " "
+  //   )}`,
+  //   {
+  //     x: 210,
+  //     y: 470,
+  //     size: 12,
+  //     color: rgb(0.07, 0.4, 0.7),
+  //     font: bold,
+  //     maxWidth: 200,
+  //   }
+  // );
 
   page.drawText("Na podstawie uchwały", {
     x: 50,
@@ -246,7 +281,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     color: rgb(0, 0, 0),
   });
   if (application.status_id === 10) {
-    page.drawText(`z nadzorem infrastrukturalnym`, {
+    page.drawText(`z nadzorem ${supervisionType}`, {
       x: 285,
       y: 325,
       font: regular,
@@ -350,7 +385,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     x: 100,
     y: 120,
     width: scaledStamp.width,
-    height: scaledStamp.height + 40,
+    height: scaledStamp.height + 38,
   });
 
   page.drawImage(signPng, {

@@ -10,6 +10,7 @@ import RadioSquare from "../molecules/form_radio";
 import PrimaryButton from "../atoms/primary_button";
 import ErrorMessage from "../atoms/error_message";
 import Loader from "../atoms/loader";
+import Select from "../atoms/form_select";
 const Close = styled(CloseOutline)`
   width: 32px;
   color: black;
@@ -69,7 +70,7 @@ const GiveSupervision = ({
   const [reason, setReason] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [supervision, setSupervision] = useState("infrastrukturalny");
   const handleClose = (e) => {
     if (e.target === e.currentTarget) {
       setVisible(false);
@@ -91,6 +92,7 @@ const GiveSupervision = ({
         statusID: 10,
         applicationID: applicationID,
         reason: reason,
+        type: supervision,
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +129,6 @@ const GiveSupervision = ({
         ) : (
           <form style={{ width: "100%" }}>
             <ErrorMessage>{error}</ErrorMessage>
-
             <p
               style={{
                 fontSize: "16px",
@@ -137,7 +138,28 @@ const GiveSupervision = ({
                 marginTop: "32px",
               }}
             >
-              Podaj treść uzasadnienia
+              Typ nadzoru
+            </p>
+            <Select
+              style={{ maxWidth: "200px", marginTop: "4px" }}
+              value={supervision}
+              onChange={(e) => setSupervision(e.target.value)}
+            >
+              <option value="infrastrukturalnym">infrastrukturalny</option>
+              <option value="prawnym">prawny</option>
+              <option value="sportowym">sportowy</option>
+              <option value="finansowym">finansowy</option>
+            </Select>
+            <p
+              style={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "rgba(0,0,0,0.6)",
+                marginBottom: "6px",
+                marginTop: "32px",
+              }}
+            >
+              Tryb odwoławczy
             </p>
 
             <TextArea
@@ -146,10 +168,17 @@ const GiveSupervision = ({
               placeholder="Uzasadnienie"
             ></TextArea>
 
-            <div style={{ display: "flex", marginTop: "32px" }}>
+            <div
+              style={{
+                display: "flex",
+                marginTop: "32px",
+                alignItems: "flex-start",
+              }}
+            >
               <PrimaryButton
                 hoverColor="dangerDark"
                 color="danger"
+                type="button"
                 onClick={() => setVisible(false)}
                 style={{ marginRight: "16px" }}
               >
