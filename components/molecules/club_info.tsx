@@ -22,19 +22,38 @@ const Bold = styled.p`
   color: ${({ theme }) => theme.darkLight};
 `;
 const ClubInfo = ({ clubData }) => {
- // console.log(clubData);
+  // console.log(clubData);
+
+  const renderLicense = () => {
+    switch (clubData.applications[0].statuses.id) {
+      case 8:
+      case 9:
+      case 10:
+      case 11:
+        return (
+          <>
+            <Bold>Typ licencji: </Bold>{" "}
+            {clubData.applications[0].statuses.name}{" "}
+          </>
+        );
+      default:
+        return null;
+    }
+  };
   return (
     <Wrapper>
       <div>
         <Bold>Klub: </Bold> <span> {clubData.name}</span>
-        {
-          clubData.applications[0]?.statuses?.name ? 
-      <>  <Bold>Typ licencji:</Bold> {clubData.applications[0]?.statuses?.name}</> : null
-        }
+        {renderLicense()}
       </div>
       <div>
         <Bold>Liga:</Bold> <span> {clubData.leauge}</span>
-        <Bold>Data ważności licencji:</Bold>
+        {clubData.applications[0].statuses.id > 7 ? (
+          <>
+            <Bold>Licencja ważna na sezony:</Bold>{" "}
+            {clubData.applications[0].seasons}{" "}
+          </>
+        ) : null}
       </div>
     </Wrapper>
   );

@@ -45,6 +45,7 @@ model applications {
   invoice_required                                               Boolean?                    @default(false)
   amount                                                         Float?
   supervision_type                                               String?                     @db.VarChar(100)
+  seasons                                                        String?                     @db.VarChar(200)
   clubs                                                          clubs?                      @relation(fields: [club_id], references: [id])
   statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
   annotations                                                    annotations[]

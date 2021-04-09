@@ -37,11 +37,11 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     application.histories
       .find((history) => history.status_id === 8 || history.status_id === 10)
       .created_at.split(",")[0];
-  const currentSeason = `${new Date().getFullYear()}/${(
-    new Date().getFullYear() + 1
-  )
-    .toString()
-    .substring(2)}`;
+  // const currentSeason = `${new Date().getFullYear()}/${(
+  //   new Date().getFullYear() + 1
+  // )
+  //   .toString()
+  //   .substring(2)}`;
 
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontKit);
@@ -144,15 +144,16 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   });
   const form = pdfDoc.getForm();
   const textField = form.createTextField("club.info");
-
+  const textField2 = form.createTextField("license.info");
   textField.setText(
     `${clubData.name.replace(/\n/g, " ")} ${clubData.address.replace(
       /\n/g,
       " "
     )}`
   );
+
   textField.addToPage(page, {
-    x: 190,
+    x: 195,
     y: 440,
     font: bold,
     height: 70,
@@ -161,7 +162,6 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     // backgroundColor: rgb(1, 1, 1),
   });
 
-  form.updateFieldAppearances(bold);
   //const field = form.getTextField("club.info");
   textField.enableMultiline();
   textField.enableReadOnly();
@@ -169,20 +169,27 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   textField.defaultUpdateAppearances(bold);
   textField.setAlignment(TextAlignment.Center);
   textField.updateAppearances(bold);
-  // page.drawText(
-  //   `${clubData.name.replace(/\n/g, " ")} \n ${clubData.address.replace(
-  //     /\n/g,
-  //     " "
-  //   )}`,
-  //   {
-  //     x: 210,
-  //     y: 470,
-  //     size: 12,
-  //     color: rgb(0.07, 0.4, 0.7),
-  //     font: bold,
-  //     maxWidth: 200,
-  //   }
-  // );
+
+  // textField2.setText(`Na podstawie uchwały Nr V/2020 z dnia 30 kwietnia 2021 r. w sprawie ustalenia szczegółowych kryteriów
+  // licencyjnych dla klubów IV ligi i klas niższych Wielkopolskiego ZPN na sezon ${clubData.applications[0].seasons} i następnie po
+  // rozpatrzeniu wniosku wraz z załącznikami i uzupełnieniami Komisja ds. Licencji Klubowych postanowiła:`);
+
+  // textField2.addToPage(page, {
+  //   x: 50,
+  //   y: 380,
+  //   font: regular,
+  //   textColor: rgb(0, 0, 0),
+  //   borderColor: rgb(1, 1, 1),
+  //   height: 60,
+  //   width: 500,
+  // });
+
+  // textField2.enableMultiline();
+  // textField2.enableReadOnly();
+  // textField2.setFontSize(10);
+  // textField2.defaultUpdateAppearances(regular);
+  // textField2.setAlignment(TextAlignment.Left);
+  // textField2.updateAppearances(regular);
 
   page.drawText("Na podstawie uchwały", {
     x: 50,
@@ -235,7 +242,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     }
   );
 
-  page.drawText(` sezon ${currentSeason}`, {
+  page.drawText(` sezon ${clubData.applications[0].seasons}`, {
     x: 364,
     y: 385,
     font: regular,
@@ -273,13 +280,16 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     }
   );
 
-  page.drawText(`piłki nożnej w sezonach rozgrywkowych ${currentSeason}`, {
-    x: 60,
-    y: 325,
-    font: regular,
-    size: 10,
-    color: rgb(0, 0, 0),
-  });
+  page.drawText(
+    `piłki nożnej w sezonach rozgrywkowych ${clubData.applications[0].seasons} `,
+    {
+      x: 60,
+      y: 325,
+      font: regular,
+      size: 10,
+      color: rgb(0, 0, 0),
+    }
+  );
   if (application.status_id === 10) {
     page.drawText(`z nadzorem ${supervisionType}`, {
       x: 285,

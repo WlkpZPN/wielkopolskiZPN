@@ -232,3 +232,16 @@ export const renderAmount = (leauge, settings) => {
   }
   return amount;
 };
+
+export const createSeasons = (amount) => {
+  amount = parseInt(amount);
+  const currentYear = new Date().getFullYear();
+  if (amount === 1) {
+    return `${currentYear}/${currentYear + 1}`;
+  }
+  if (amount === 2) {
+    return `${currentYear}/${currentYear + 1} i ${currentYear + 1}/${
+      currentYear + 2
+    }`;
+  }
+};
