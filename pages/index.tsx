@@ -1,7 +1,8 @@
 import { useState, createContext } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import prisma from "../middleware/prisma";
-
+import { toast } from "react-toastify";
 //utils
 import { protectedClientRoute } from "../middleware/protectedClient";
 import { useLocalStorage } from "../middleware/hooks";
@@ -19,6 +20,7 @@ import ClubSteps from "../components/organisms/club_steps";
 import LicenseButton from "../components/molecules/license_button";
 import AddInvoice from "../components/molecules/add_invoice";
 import Header from "../components/atoms/header";
+import axios from "axios";
 
 const PaymentLink = styled.a`
   background: url("http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png");
@@ -34,8 +36,27 @@ const PaymentLink = styled.a`
 export const ClubContext = createContext(null);
 
 const Home = ({ authData, clubData, settings }) => {
+  const [loading, setLoading] = useState(false);
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
   console.log(clubData);
+  const router = useRouter();
+
+  const newApplication = async () => {
+    setLoading(true);
+    try {
+      await axios.post("/api/applications/createApplication", {
+        clubID: clubData.id,
+        applicationID: clubData.application[0].id,
+      });
+      setLoading(false);
+      toast.info("Utworzono nowy wniosek");
+      router.replace(router.asPath);
+    } catch (err) {
+      console.log(err);
+      toast.error("Nie udało utworzyć się nowego wniosku, spróbuj ponownie");
+      setLoading(false);
+    }
+  };
   if (!clubData) {
     return <Spinner />;
   }
@@ -172,13 +193,19 @@ const Home = ({ authData, clubData, settings }) => {
               <Header color="danger">Twój wniosek został odrzucony</Header>
               <Paragraph>
                 Wielkopolski ZPN odrzucił Twój wniosek. <br />
-                Zapoznaj się z poniższym uzasadnieniem oraz prosimy o
-                wprowadzenie poprawek do wniosku
+                Zapoznaj się z poniższym uzasadnieniem, aby ubiegać się o
+                przyznanie licencji klubowej należy złożyć nowy wniosek
               </Paragraph>
               <ErrorMessage>
                 {clubData.applications[0].reject_reason}
               </ErrorMessage>
-              <PrimaryButton></PrimaryButton>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <PrimaryButton onClick={newApplication}>
+                  Utwórz nowy wniosek
+                </PrimaryButton>
+              )}
             </>
           );
 

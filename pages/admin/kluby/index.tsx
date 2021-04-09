@@ -71,8 +71,9 @@ const Kluby = ({ clubs, userData }) => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            margin: "16px 0",
+            margin: "32px 0",
             width: "100%",
+            alignItems: "flex-end",
           }}
         >
           <h1>Kluby</h1>
@@ -86,7 +87,12 @@ const Kluby = ({ clubs, userData }) => {
             }}
           >
             <Select
-              style={{ marginTop: 0, minWidth: "150px", maxWidth: "200px" }}
+              style={{
+                marginTop: 0,
+                minWidth: "150px",
+                maxWidth: "200px",
+                fontSize: "13px",
+              }}
               onChange={(e) => setStatus(e.target.value)}
               value={status}
             >
@@ -95,7 +101,12 @@ const Kluby = ({ clubs, userData }) => {
               <option value={0}>nieaktywny</option>
             </Select>
             <Select
-              style={{ marginTop: 0, minWidth: "150px", maxWidth: "200px" }}
+              style={{
+                marginTop: 0,
+                minWidth: "150px",
+                maxWidth: "200px",
+                fontSize: "13px",
+              }}
               value={leauge}
               onChange={(e) => setLeauge(e.target.value)}
             >

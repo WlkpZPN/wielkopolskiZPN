@@ -94,7 +94,14 @@ const Uzytkownicy = ({ users, roles, authData }) => {
 
   return (
     <AdminLayout userData={authData} view="uzytkownicy">
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          margin: "24px 0 40px 0",
+        }}
+      >
         <h1>Uzytkownicy {loading && <StyledSpinner width="40px" />}</h1>
         <PrimaryButton onClick={() => setVisibility(true)} fontWeight="600">
           + Dodaj użytkownika

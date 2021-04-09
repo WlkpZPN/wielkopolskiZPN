@@ -439,38 +439,12 @@ const AddNewClub = () => {
     //2. validate data
 
     //phone validation
-    if (landlinePhone.trim() === "") {
-      setError({
-        type: "landline phone",
-        text: "Proszę podać poprawny telefon stacjonarny",
-      });
-
-      return;
-    }
 
     let properPhone = validatePhone(phone);
     if (!properPhone.valid) {
       setError({ text: properPhone.message, type: "phone" });
       window.scrollTo(0, e.target[11].offsetTop + 100);
       return;
-    }
-
-    if (phoneCount === 2) {
-      properPhone = validatePhone(phone2);
-      if (!properPhone.valid) {
-        setError({ text: properPhone.message, type: "phone" });
-        window.scrollTo(0, e.target[11].offsetTop + 100);
-        return;
-      }
-    }
-
-    if (phoneCount === 3) {
-      properPhone = validatePhone(phone3);
-      if (!properPhone.valid) {
-        setError({ text: properPhone.message, type: "phone" });
-        window.scrollTo(0, e.target[11].offsetTop + 100);
-        return;
-      }
     }
 
     //email validation
@@ -710,7 +684,7 @@ const AddNewClub = () => {
         </div>
       </Label>
       <Label style={{ maxWidth: "350px", width: "100%" }}>
-        Telefon stacjonarny
+        Telefon stacjonarny (opcjonalnie)
         <PhoneInput
           value={landlinePhone}
           onChange={(e) => setLandlinePhone(e.target.value)}

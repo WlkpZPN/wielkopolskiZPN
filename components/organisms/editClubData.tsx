@@ -258,6 +258,33 @@ const EditClubData = ({ clubData }) => {
       }
     }
   };
+
+  // const deleteExtraField = (type, field) => {
+  //   const phonesObj = {
+  //     1: phone,
+  //     2: phone2,
+  //     3: phone3,
+  //   };
+
+  //   const emailsObj = {
+  //     1: email,
+  //     2: email2,
+  //     3: email3,
+  //   };
+  //   if (type === "phone") {
+  //     switch (field) {
+  //       case "phone2":
+  //         setPhone2("");
+  //         break;
+  //       case "phone3":
+  //         setPhone3("");
+  //         break;
+  //     }
+  //   }
+
+  //   if (type === "email") {
+  //   }
+  // };
   console.log(error);
   const handleSubmit = (e) => {
     // event.target[].offestTop + 100
@@ -470,14 +497,6 @@ const EditClubData = ({ clubData }) => {
     //2. validate data
 
     //phone validation
-    if (landlinePhone.trim() === "") {
-      setError({
-        type: "landline phone",
-        text: "Proszę podać poprawny telefon stacjonarny",
-      });
-
-      return;
-    }
 
     let properPhone = validatePhone(phone);
     if (!properPhone.valid) {
@@ -486,38 +505,20 @@ const EditClubData = ({ clubData }) => {
       return;
     }
 
-    if (phoneCount === 2) {
-      properPhone = validatePhone(phone2);
-      if (!properPhone.valid) {
-        setError({ text: properPhone.message, type: "phone" });
-        window.scrollTo(0, e.target[11].offsetTop + 100);
-        return;
-      }
-    }
-
-    if (phoneCount === 3) {
-      properPhone = validatePhone(phone3);
-      if (!properPhone.valid) {
-        setError({ text: properPhone.message, type: "phone" });
-        window.scrollTo(0, e.target[11].offsetTop + 100);
-        return;
-      }
-    }
-
     //email validation
     let properEmail = validateEmail(email);
     if (!properEmail.valid) {
       setError({ text: properEmail.message, type: "email" });
       return;
     }
-    if (emailCount === 2) {
+    if (emailCount === 2 && email2 !== "") {
       properEmail = validateEmail(email2);
       if (!properEmail.valid) {
         setError({ text: properEmail.message, type: "email" });
         return;
       }
     }
-    if (emailCount === 3) {
+    if (emailCount === 3 && email3 !== "") {
       properEmail = validateEmail(email3);
       if (!properEmail.valid) {
         setError({ text: properEmail.message, type: "email" });
@@ -743,7 +744,7 @@ const EditClubData = ({ clubData }) => {
         </ExtraFieldsWrapper>
       </Label>
       <Label style={{ maxWidth: "350px", width: "100%" }}>
-        Telefon stacjonarny
+        Telefon stacjonarny (opcjonalnie)
         <PhoneInput
           value={landlinePhone}
           onChange={(e) => setLandlinePhone(e.target.value)}
