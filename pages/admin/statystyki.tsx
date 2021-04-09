@@ -34,7 +34,7 @@ const Statystyki = ({ userData }) => {
       <PrimaryButton onClick={() => generatePdf()}>
         Pobierz licencje
       </PrimaryButton>
-      <p> testowa strona</p>
+      <p> strona</p>
       {/* <Header>Wnioski robocze</Header>
       <ProgressContainer
         status={1}
