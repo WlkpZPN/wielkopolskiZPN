@@ -38,7 +38,7 @@ export const ClubContext = createContext(null);
 const Home = ({ authData, clubData, settings }) => {
   const [loading, setLoading] = useState(false);
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
-  console.log(clubData);
+
   const router = useRouter();
 
   const newApplication = async () => {

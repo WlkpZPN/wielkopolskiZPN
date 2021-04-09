@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 
 const Suffix = styled.span`
   position: absolute;
-  bottom: 6px;
+  bottom: 3px;
   right: ${({ position }) => position || "6px"};
   /* display: ${({ position }) => (position === 0 ? "none" : "initial")}; */
   display: none;

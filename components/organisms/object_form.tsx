@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import styled from "styled-components";
@@ -28,9 +28,9 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
   const router = useRouter();
   const [error, setError] = useState({ step: null, text: "" });
   const [state, setState] = useState(false);
+  const [extraField, setExtraField] = useState({ visible: false, text: "" });
   const context = useContext(ApplicationContext);
   const data = context.formData.stepFour.sport_facilities[objectIndex];
-  console.log("data", data);
 
   const {
     handleObjectFileChange,
@@ -56,6 +56,98 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     setState(!state);
   };
   //console.log(data);
+
+  useEffect(() => {
+    console.log(data.I06_width);
+    setExtraField({
+      visible: false,
+      text: "",
+    });
+    switch (context.formData.stepOne.leauge) {
+      case "iv liga":
+        if (
+          data.I06_length < 100 ||
+          data.I06_length > 105 ||
+          data.I06_width < 60 ||
+          data.I06_width > 68
+        ) {
+          console.log(data.I06_width);
+          setExtraField({
+            visible: true,
+            text:
+              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 100 m do 105 m, szerokość od 60 m do 68 m) ZAZNACZ ABY WYSŁAĆ WNIOSEK",
+          });
+        }
+        break;
+      case "klasa okręgowa":
+        if (
+          (data.I06_length < 100 && data.I06_length > 105) ||
+          (data.I06_width < 55 && data.I06_width > 68)
+        ) {
+          setExtraField({
+            visible: true,
+            text:
+              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 100 m do 105 m, szerokość od 55 m do 68 m) ZAZNACZ ABY WYSŁAĆ WNIOSEK",
+          });
+        }
+        break;
+      case "klasa a":
+        if (
+          (data.I06_length < 95 && data.I06_length > 105) ||
+          (data.I06_width < 55 && data.I06_width > 68)
+        ) {
+          setExtraField({
+            visible: true,
+            text:
+              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 95 m do 105 m, szerokość od 55m do 68 m) ZAZNACZ ABY WYSŁAĆ WNIOSEK",
+          });
+        }
+        break;
+      case "klasa b":
+      case "klasa c":
+        if (
+          (data.I06_length < 90 && data.I06_length > 105) ||
+          (data.I06_width < 45 && data.I06_width > 68)
+        ) {
+          setExtraField({
+            visible: true,
+            text:
+              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 90 m do 105 m, szerokość od 55m do 68 m)",
+          });
+        }
+        break;
+      default:
+        break;
+    }
+    console.log(extraField);
+  }, [data.I06_length, data.I06_width]);
+
+  const capacityRecommendations = () => {
+    let capacity = "";
+
+    switch (context.formData.stepOne.leauge.toLowerCase()) {
+      case "iv liga":
+        capacity = "300";
+        break;
+      case "klasa okręgowa":
+        capacity = "200";
+        break;
+      case "klasa a":
+        capacity = "100";
+        break;
+      case "Klasa b":
+      case "Klasa c":
+      case "młodzież":
+        capacity = "50";
+        break;
+      default:
+        console.log("no match");
+        break;
+    }
+
+    return capacity;
+  };
+
   const handleChange = context.handleObjectChange;
   const handleObjectSave = (e) => {
     e.preventDefault();
@@ -295,8 +387,14 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     // }
 
     // save object to form state
-
-    console.log("all goood");
+    if (extraField.visible && !data.is_invalid_field) {
+      setError({
+        step: 6,
+        text: "Proszę potwierdzić posiadanie obiektu o błędnych wymiarach",
+      });
+      window.scrollTo(0, 2500);
+      return;
+    }
     context.addSportFacility();
   };
   return (
@@ -358,6 +456,11 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
       <ObjectInfo>
         <Fieldset disabled={readOnly}>
           <FormHeader>Kryterium I.01 - Stadion - dostępność</FormHeader>
+          {error.step === 1 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="max-content" direction="row" htmlFor="1">
             <RadioButton
               checked={data.I01_1 === true}
@@ -414,6 +517,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           )}
 
           <FormHeader>Kryterium I.02 Regulaminy</FormHeader>
+          {error.step === 2 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
@@ -467,7 +575,12 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.03 - Pojemność</FormHeader>
-          <Label width="50%">
+          {error.step === 3 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
+          <Label width="max-content">
             Całkowita liczba indywidualnych miejsc siedzących z oparciami
             udostępniona dla publiczności
             <NumericInput
@@ -478,7 +591,14 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               suffix={null}
               placeholder="0"
             />
+            {context.formData.stepOne.leauge.toLowerCase() ===
+            "v liga" ? null : (
+              <Info
+                text={`Zaleca się, aby pojemność stadionu wynosiła przynajmniej: ${capacityRecommendations()} miejsc siedzących spełniających wymogi indywidualnych miejsc siedzących  `}
+              />
+            )}
           </Label>
+
           <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
@@ -506,6 +626,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <FormHeader>
             Kryterium I.04 - Indywidualne miejsca siedzące
           </FormHeader>
+          {error.step === 4 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
@@ -564,6 +689,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <FormHeader>
             Kryterium I.05 - Miejsce dla kibiców drużyny gości
           </FormHeader>
+          {error.step === 5 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="50%">
             Liczba indywidualnych miejsc siedzących z oparciami w sektorze
             kibiców drużyny gości
@@ -620,6 +750,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.06 - Pole gry</FormHeader>
+          {error.step === 6 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="50%">
             Rodzaj nawierzchni
             <Select
@@ -651,7 +786,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <NumericInput
                 value={data.I06_length}
                 onChange={(e) =>
-                  handleChange(e.target.value, objectIndex, "I06_length")
+                  handleChange(e.target.rawValue, objectIndex, "I06_length")
                 }
                 suffix="m"
                 placeholder="0 m"
@@ -660,13 +795,30 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <NumericInput
                 value={data.I06_width}
                 onChange={(e) =>
-                  handleChange(e.target.value, objectIndex, "I06_width")
+                  handleChange(e.target.rawValue, objectIndex, "I06_width")
                 }
                 suffix="m"
                 placeholder="0 m"
               />
             </div>
           </Label>
+          {extraField.visible ? (
+            <Label margin="24px 0" direction="row">
+              <span>
+                <RadioSquare
+                  value={data.is_invalid_field}
+                  handleChange={(e) =>
+                    handleChange(
+                      !data.is_invalid_field,
+                      objectIndex,
+                      "is_invalid_field"
+                    )
+                  }
+                />
+                {extraField.text}
+              </span>
+            </Label>
+          ) : null}
           <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
@@ -732,6 +884,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.07 - Obszar pola gry</FormHeader>
+          {error.step === 7 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer margin="24px 0 16px 0" direction="row">
             <span>
               <RadioSquare
@@ -783,6 +940,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.08 - Ławki w obszarze pola gry</FormHeader>
+          {error.step === 8 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="50%">
             Liczba miejsc siedzących na ławce dla rezerwowych
             <NumericInput
@@ -848,6 +1010,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.09 - Dostęp do obszaru pola gry</FormHeader>
+          {error.step === 9 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer margin="24px 0 16px 0" direction="row">
             <span>
               <RadioSquare
@@ -874,6 +1041,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.10 - Dojazd do obszaru pola gry</FormHeader>
+          {error.step === 10 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer margin="24px 0 16px 0" direction="row">
             <span>
               <RadioSquare
@@ -886,9 +1058,22 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               bezpośredniego dojazdu do obszaru pola gry
             </span>
           </Label>
-          <FormHeader>
-            Kryterium I.11 - Szatnia dla drużyny gospodarzy
+          <FormHeader style={{ display: "flex", alignItems: "center" }}>
+            Kryterium I.11 - Szatnia dla drużyny gospodarzy{" "}
+            <Info
+              text="W każdej szatni zaleca się, aby znajdowały się:
+    miejsca do siedzenia dla minimum 20 osób,
+    wieszaki lub szafki na odzież dla minimum 20 osób,
+    minimum 3 prysznice,
+    minimum 1 toaleta z sedesem,"
+              style={{ position: "initital", marginLeft: "16px" }}
+            />
           </FormHeader>
+          {error.step === 11 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="50%">
             Liczba miejsc siedzących
             <NumericInput
@@ -968,7 +1153,22 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               niniejszego kryterium
             </span>
           </Label>
-          <FormHeader>Kryterium I.12 - Szatnia dla drużyny gości</FormHeader>
+          <FormHeader style={{ display: "flex", alignItems: "center" }}>
+            Kryterium I.12 - Szatnia dla drużyny gości{" "}
+            <Info
+              text="W każdej szatni zaleca się, aby znajdowały się:
+    miejsca do siedzenia dla minimum 20 osób,
+    wieszaki lub szafki na odzież dla minimum 20 osób,
+    minimum 3 prysznice,
+    minimum 1 toaleta z sedesem,"
+              style={{ position: "initital", marginLeft: "16px" }}
+            />
+          </FormHeader>
+          {error.step === 12 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="50%">
             Liczba miejsc siedzących
             <NumericInput
@@ -1049,6 +1249,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.13 - Szatnia dla sędziów </FormHeader>
+          {error.step === 13 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer>
             <span>
               <RadioSquare
@@ -1109,6 +1314,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.14 Parking</FormHeader>
+          {error.step === 14 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer>
             <span>
               <RadioSquare
@@ -1145,6 +1355,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.15</FormHeader>
+          {error.step === 15 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="50%">
             Liczba toalet dla kobiet
             <NumericInput
@@ -1200,6 +1415,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.16 - Nagłośnienie</FormHeader>
+          {error.step === 16 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer>
             <span>
               <RadioSquare
@@ -1213,6 +1433,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <FormHeader>Kryterium I.17 - Oświetlenie</FormHeader>
+          {error.step === 17 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer>
             <span>
               <RadioSquare
@@ -1258,6 +1483,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           ) : null}
 
           <FormHeader>Kryterium I.18 - Oznakowanie w strefie szatni</FormHeader>
+          {error.step === 18 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer>
             <span>
               <RadioSquare
@@ -1274,6 +1504,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <FormHeader>
             Kryterium I.19 - Publiczny dostęp i wyjścia ze Stadionu
           </FormHeader>
+          {error.step === 19 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer>
             <span>
               <RadioSquare
@@ -1311,6 +1546,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <FormHeader>
             Kryterium I.20 - Miejsca dla osób niepełnosprawnych
           </FormHeader>
+          {error.step === 20 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label pointer>
             <span>
               <RadioSquare
@@ -1327,6 +1567,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <FormHeader>
             Kryterium I.21 - Ilość i wymiary dostępnych bramek na obiekcie
           </FormHeader>
+          {error.step === 21 ? (
+            <>
+              <ErrorMessage>{error.text}</ErrorMessage>{" "}
+            </>
+          ) : null}
           <Label width="50%">
             Ilość bramek 3 m x 1 m
             <NumericInput

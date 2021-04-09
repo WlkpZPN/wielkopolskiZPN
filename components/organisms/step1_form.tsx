@@ -36,7 +36,7 @@ const StepOneForm = ({
     sendApplication,
   } = useContext(ApplicationContext);
   // console.log(error);
-  console.log(data.seasons);
+
   const [loading, setLoading] = useState(false);
 
   const nextStep = () => {
@@ -60,7 +60,6 @@ const StepOneForm = ({
     //   handleStepFill("stepOne", { completed: true, error: false });
     // }
     handleStepChange("next");
-    console.log("form submitted");
   };
 
   return (
@@ -78,11 +77,11 @@ const StepOneForm = ({
               value={data.leauge}
               onChange={(e) => handleChange(e.target.value, "leauge", 1)}
             >
-              <option value="IV liga">IV liga</option>
-              <option value="V liga">V liga</option>
-              <option value="Klasa okręgowa">Klasa okręgowa</option>
-              <option value="Klasa A">Klasa A</option>
-              <option value="Klasa B">Klasa B</option>
+              <option value="iv liga">IV liga</option>
+              <option value="v liga">V liga</option>
+              <option value="klasa okręgowa">Klasa okręgowa</option>
+              <option value="klasa b">Klasa A</option>
+              <option value="klasa b">Klasa B</option>
               <option value="młodzież">Ligi młodzieżowe</option>
             </Select>
             <RadioContainer>

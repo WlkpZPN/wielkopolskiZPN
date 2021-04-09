@@ -221,9 +221,11 @@ export const renderAmount = (leauge, settings) => {
   let amount = "";
   switch (leauge) {
     case "IV liga":
+    case "IV Liga":
       amount = `${settings.iv_possession_fee}`;
       break;
     case "V liga":
+    case "V Liga":
     case "Klasa okręgowa":
       amount = `${settings.v_possession_fee}`;
       break;

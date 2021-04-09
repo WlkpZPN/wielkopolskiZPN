@@ -288,6 +288,7 @@ model sport_facilities {
   I21_3_1_gates                      String?                    @db.VarChar(30)
   I21_3_15_gates                     String?                    @db.VarChar(30)
   I21_3_2_gates                      String?                    @db.VarChar(30)
+  is_invalid_field                   Boolean?
   applications                       applications?              @relation(fields: [application_id], references: [id])
   applications_attachments           applications_attachments[]
 }

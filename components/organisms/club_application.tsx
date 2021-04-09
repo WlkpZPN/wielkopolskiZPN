@@ -145,7 +145,7 @@ const ClubApplication = ({
 
   const [formData, setFormData] = useState({
     stepOne: {
-      leauge: clubData.leauge || "IV liga",
+      leauge: clubData.leauge.toLowerCase() || "iv liga",
       seasons: "1",
       clubName: clubData.name || "",
       clubCity: city || "",
