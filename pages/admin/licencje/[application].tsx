@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
 import prisma from "../../../middleware/prisma";
+import { renderAmount } from "../../../middleware/utils";
 import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
 import AdminLayout from "../../../components/organisms/admin_layout";
 import ClubApplication from "../../../components/organisms/club_application";
@@ -234,7 +235,7 @@ const Application = ({ authData, clubData, settings }) => {
     const amount =
       clubData.applications[0].youth_groups_possession ===
       "nie posiadamy zespołów"
-        ? settings.application_fee + settings.no_possession_fee
+        ? settings.application_fee + renderAmount(clubData.leauge, settings)
         : settings.application_fee;
     try {
       // const newOrder = await axios.post("/api/payments/newOrder", {

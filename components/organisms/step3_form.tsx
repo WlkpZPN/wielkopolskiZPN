@@ -18,6 +18,7 @@ import Fieldset from "../atoms/fieldset";
 import FormStatement from "../molecules/form_statement";
 import AddFilesWrapper from "./add_files_wrapper";
 import NumericInput from "../atoms/numeric_input";
+import { renderAmount } from "../../middleware/utils";
 const StepThreeForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
@@ -55,24 +56,23 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     handleStepChange("next");
   };
   console.log(settings);
-  const renderAmount = () => {
-    const leauge = context.formData.stepOne.leauge;
-    console.log(leauge == "IV liga");
-    console.log(leauge);
-    let amount = "";
-    switch (leauge) {
-      case "IV liga":
-        amount = `${settings.iv_possession_fee}`;
-        break;
-      case "V liga":
-      case "Klasa okręgowa":
-        amount = `${settings.v_possession_fee}`;
-        break;
-      default:
-        break;
-    }
-    return amount;
-  };
+  // const renderAmount = (leauge, settings) => {
+  //   console.log(leauge == "IV liga");
+  //   console.log(leauge);
+  //   let amount = "";
+  //   switch (leauge) {
+  //     case "IV liga":
+  //       amount = `${settings.iv_possession_fee}`;
+  //       break;
+  //     case "V liga":
+  //     case "Klasa okręgowa":
+  //       amount = `${settings.v_possession_fee}`;
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   return amount;
+  // };
   const renderForm = () => {
     switch (formData.youthGroupsPossession) {
       case "posiadamy zespoły":
@@ -151,7 +151,9 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             >
               Wysokość opłaty dodatkowej w tym sezonie
             </p>{" "}
-            <h1 style={{ fontSize: "40px" }}>{renderAmount()} PLN</h1>
+            <h1 style={{ fontSize: "40px" }}>
+              {renderAmount(context.formData.stepOne.leauge, settings)} PLN
+            </h1>
             <p style={{ fontWeight: "bold", margin: "24px 0 48px 0" }}>
               Opłatę będzie można uiścić na koniec procesu składania wniosku
             </p>

@@ -214,3 +214,21 @@ export const makeid = (length) => {
   }
   return result;
 };
+
+export const renderAmount = (leauge, settings) => {
+  console.log(leauge == "IV liga");
+  console.log(leauge);
+  let amount = "";
+  switch (leauge) {
+    case "IV liga":
+      amount = `${settings.iv_possession_fee}`;
+      break;
+    case "V liga":
+    case "Klasa okręgowa":
+      amount = `${settings.v_possession_fee}`;
+      break;
+    default:
+      break;
+  }
+  return amount;
+};

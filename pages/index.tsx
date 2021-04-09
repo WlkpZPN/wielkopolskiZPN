@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { protectedClientRoute } from "../middleware/protectedClient";
 import { useLocalStorage } from "../middleware/hooks";
 //components
-import { getCurrentDate } from "../middleware/utils";
+import { getCurrentDate, renderAmount } from "../middleware/utils";
 import ClientLayout from "../components/organisms/client_layout";
 import StepBox from "../components/atoms/step_box";
 import ClubApplication from "../components/organisms/club_application";
@@ -228,7 +228,7 @@ const Home = ({ authData, clubData, settings }) => {
                 <p>
                   Opłata dodatkowa (klub nie posiada zespołów młodzieżowych):{" "}
                   <span style={{ fontWeight: "bold" }}>
-                    {settings.no_possession_fee}
+                    {renderAmount(clubData.leauge, settings)}
                   </span>
                 </p>
               ) : null}
