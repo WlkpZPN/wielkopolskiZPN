@@ -1233,15 +1233,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               </Label>
               <Label>
                 Dokument poświadczający pomiar natężenia światła
-                <AddFilesWrapper
-                  deleteFile={(id) =>
-                    handleDelete(objectIndex, id, "I17_intensity_document")
-                  }
-                  fileData={getCategoryFiles("I17_intensity_document") || []}
-                  setFiles={(id, file) =>
-                    setFiles(id, file, "I17_intensity_document")
-                  }
-                />
+                <AddFilesWrapper category="" id={data.id} text={null} />
               </Label>{" "}
             </>
           ) : null}
