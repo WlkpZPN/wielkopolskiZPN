@@ -59,7 +59,13 @@ const TextArea = styled.textarea`
   padding: 4px;
 `;
 
-const UndoLicense = ({ visible, setVisible, applicationID, internalID }) => {
+const UndoLicense = ({
+  visible,
+  setVisible,
+  applicationID,
+  internalID,
+  authData,
+}) => {
   const router = useRouter();
   const [reason, setReason] = useState("");
   const [error, setError] = useState("");
@@ -85,6 +91,7 @@ const UndoLicense = ({ visible, setVisible, applicationID, internalID }) => {
         statusID: 11,
         applicationID: applicationID,
         reason: reason,
+        userID: authData.id,
       })
       .catch((err) => {
         console.log(err);

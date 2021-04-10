@@ -67,7 +67,7 @@ const TextArea = styled.textarea`
   min-height: 150px;
 `;
 
-const CorrectModal = ({ internalId, id, visible, setVisibile }) => {
+const CorrectModal = ({ internalId, id, visible, setVisibile, userID }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
@@ -103,6 +103,7 @@ const CorrectModal = ({ internalId, id, visible, setVisibile }) => {
       steps: steps,
       description: description,
       applicationID: id,
+      userID: userID,
     });
 
     setLoading(false);

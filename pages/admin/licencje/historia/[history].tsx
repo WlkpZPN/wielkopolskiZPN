@@ -17,7 +17,7 @@ const Row = styled.div`
 
   & span {
     align-self: flex-start;
-    margin-top: 25px;
+    margin-top: 10px;
   }
 `;
 
@@ -30,6 +30,9 @@ const History = ({ authData, applicationData }) => {
   const renderHistory = () => {
     let helperArr = [];
     history.forEach((item, index, array) => {
+      const user = `${item.users.name || item.users.email},${
+        item.users.roles.name
+      }`;
       switch (item.status_id) {
         case 4:
           helperArr.push(
@@ -42,7 +45,7 @@ const History = ({ authData, applicationData }) => {
               />
               <span>
                 {item.description}
-                <br /> {item.created_at}
+                <br /> {item.created_at} <br /> {user || ""}
               </span>
             </Row>
           );
@@ -59,6 +62,7 @@ const History = ({ authData, applicationData }) => {
               <span>
                 {item.description}
                 <br /> {item.created_at}
+                <br /> {user || ""}
               </span>
             </Row>
           );
@@ -75,6 +79,7 @@ const History = ({ authData, applicationData }) => {
               <span>
                 {item.description}
                 <br /> {item.created_at}
+                <br /> {user || ""}
               </span>
             </Row>
           );
@@ -125,6 +130,13 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
       histories: {
         orderBy: {
           id: "asc",
+        },
+        include: {
+          users: {
+            include: {
+              roles: true,
+            },
+          },
         },
       },
       clubs: true,

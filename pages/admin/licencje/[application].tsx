@@ -29,7 +29,7 @@ const Application = ({ authData, clubData, settings }) => {
   const [visible, setVisible] = useState(false);
   const [visibleReject, setvisibleReject] = useState(false);
   const [invoiceFiles, setInvoiceFiles] = useState();
-  console.log(invoiceFiles);
+  console.log(authData);
   const handleFileDelete = () => {};
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {
@@ -114,7 +114,11 @@ const Application = ({ authData, clubData, settings }) => {
           <div style={{ display: "flex" }}>
             <div>
               <Paragraph>Licencja</Paragraph>
-              <LicenseButton isAdmin={true} clubData={clubData} />
+              <LicenseButton
+                authData={authData}
+                isAdmin={true}
+                clubData={clubData}
+              />
             </div>
             <div>
               <Paragraph>Faktura</Paragraph>
@@ -133,7 +137,11 @@ const Application = ({ authData, clubData, settings }) => {
             {" "}
             <div>
               <Paragraph>Licencja</Paragraph>
-              <LicenseButton isAdmin={true} clubData={clubData} />
+              <LicenseButton
+                authData={authData}
+                isAdmin={true}
+                clubData={clubData}
+              />
             </div>
             <div>
               <Paragraph>Faktura</Paragraph>
@@ -151,7 +159,11 @@ const Application = ({ authData, clubData, settings }) => {
           <div style={{ display: "flex" }}>
             <div>
               <Paragraph>Licencja</Paragraph>
-              <LicenseButton isAdmin={true} clubData={clubData} />
+              <LicenseButton
+                authData={authData}
+                isAdmin={true}
+                clubData={clubData}
+              />
             </div>
             <div>
               <Paragraph>Faktura</Paragraph>
@@ -255,6 +267,7 @@ const Application = ({ authData, clubData, settings }) => {
       await axios.post("/api/applications/acceptApplication", {
         applicationID: clubData.applications[0].id,
         // link: newOrder.data.link,
+        userID: authData.id,
         amount: amount,
       });
       router.replace(router.asPath);
@@ -273,6 +286,7 @@ const Application = ({ authData, clubData, settings }) => {
       setLoading(true);
       await axios.post("/api/applications/acceptPayment", {
         applicationID: clubData.applications[0].id,
+        userID: authData.id,
       });
 
       setLoading(false);
@@ -288,6 +302,7 @@ const Application = ({ authData, clubData, settings }) => {
   return (
     <AdminLayout view="wnioski" userData={authData}>
       <CorrectModal
+        userID={authData.id}
         internalId={
           clubData.applications[0] ? clubData.applications[0].internal_id : ""
         }
@@ -297,6 +312,7 @@ const Application = ({ authData, clubData, settings }) => {
       />
 
       <RejectModal
+        userID={authData.id}
         internalID={
           clubData.applications[0] ? clubData.applications[0].internal_id : ""
         }

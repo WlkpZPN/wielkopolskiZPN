@@ -60,7 +60,7 @@ const StatusContainer = styled.div`
 
 const ref = createRef();
 
-const LicenseButton = ({ clubData, isAdmin }) => {
+const LicenseButton = ({ clubData, isAdmin, authData }) => {
   const application = clubData.applications[0];
   const router = useRouter();
   const [visible, setVisible] = useState(false);
@@ -74,6 +74,7 @@ const LicenseButton = ({ clubData, isAdmin }) => {
       await axios.post("/api/licences/setLicense", {
         applicationID: application.id,
         statusID: 8,
+        userID: authData.id,
         description: "Zmiana decyzji, licencja wydana",
       });
 
@@ -94,6 +95,7 @@ const LicenseButton = ({ clubData, isAdmin }) => {
       await axios.post("/api/licences/setLicense", {
         applicationID: application.id,
         statusID: 8,
+        userID: authData.id,
         description: "Cofnięto nadzór, wydano licencję standardową",
       });
       setLoading(false);
@@ -174,12 +176,14 @@ const LicenseButton = ({ clubData, isAdmin }) => {
   return (
     <Wrapper>
       <UndoLicense
+        authData={authData}
         applicationID={application.id}
         internalID={application.internal_id}
         visible={visible1}
         setVisible={setVisible1}
       />
       <GiveSupervision
+        authData={authData}
         visible={visible2}
         setVisible={setVisible2}
         applicationID={application.id}

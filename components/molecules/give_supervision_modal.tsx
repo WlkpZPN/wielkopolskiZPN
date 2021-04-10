@@ -65,6 +65,7 @@ const GiveSupervision = ({
   setVisible,
   applicationID,
   internalID,
+  authData,
 }) => {
   const router = useRouter();
   const [reason, setReason] = useState("");
@@ -93,6 +94,7 @@ const GiveSupervision = ({
         applicationID: applicationID,
         reason: reason,
         type: supervision,
+        userID: authData.id,
       })
       .catch((err) => {
         console.log(err);

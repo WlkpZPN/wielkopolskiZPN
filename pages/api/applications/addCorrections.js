@@ -3,7 +3,7 @@ import { getCurrentDate } from "../../../middleware/utils";
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    const { applicationID, description, steps } = req.body;
+    const { applicationID, description, steps, userID } = req.body;
     try {
       await prisma.applications.update({
         where: {
@@ -22,6 +22,7 @@ export default async (req, res) => {
           description: "Odrzucenie wniosku licencyjnego jako do poprawy",
           status_id: 4,
           created_at: getCurrentDate(),
+          user_id: parseInt(userID),
         },
       });
     } catch (err) {

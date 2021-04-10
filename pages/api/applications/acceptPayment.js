@@ -2,7 +2,7 @@ import prisma from "../../../middleware/prisma";
 import { getCurrentDate } from "../../../middleware/utils";
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    const { applicationID, description } = req.body;
+    const { applicationID, description, userID } = req.body;
     try {
       await prisma.applications.update({
         where: {
@@ -19,6 +19,7 @@ export default async (req, res) => {
           created_at: getCurrentDate(),
           description: description || "Płatność zaakceptowana",
           status_id: 7,
+          user_id: parseInt(userID),
         },
       });
     } catch (err) {
