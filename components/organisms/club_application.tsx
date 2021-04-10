@@ -72,64 +72,7 @@ const ClubApplication = ({
       handleStepChange("jump", 5, 5);
       handleStepChange("jump", 6, 6);
       handleStepChange("jump", 2, 2);
-      console.log(completedSteps);
     }
-    // let result = checkStepOne(formData.stepOne);
-    // if (!result.valid) {
-    //   newStepData.stepOne = "default";
-    // }
-    // if (result.valid) {
-    //   newStepData.stepOne = "completed";
-    // }
-
-    // result = checkStepTwo(formData.stepTwo);
-
-    // if (!result.valid) {
-    //   newStepData.stepTwo = "default";
-    // }
-    // if (result.valid) {
-    //   newStepData.stepTwo = "completed";
-    // }
-
-    // result = checkStepThree(formData.stepThree);
-    // if (!result.valid) {
-    //   newStepData.stepThree = "default";
-    // }
-    // if (result.valid) {
-    //   newStepData.stepThree = "completed";
-    // }
-
-    // result = checkStepFour(formData.stepFour);
-    // if (!result.valid) {
-    //   newStepData.stepFour = "default";
-    // }
-    // if (result.valid) {
-    //   newStepData.stepFour = "completed";
-    // }
-
-    // result = checkStepFive(formData.stepFive);
-    // if (!result.valid) {
-    //   newStepData.stepFive = "default";
-    // }
-    // if (result.valid) {
-    //   newStepData.stepFive = "completed";
-    // }
-
-    // result = checkStepSix(formData.stepSix);
-    // if (!result.valid) {
-    //   newStepData.stepSix = "default";
-    // }
-    // if (result.valid) {
-    //   newStepData.stepSix = "completed";
-    // }
-    // console.log(newStepData);
-    // setCompletedSteps((state) => ({ ...state, ...newStepData }));
-    // console.log(completedSteps);
-
-    // if (clubData.applications[0].statuses.id === 4) {
-    //   let newStepData = completedSteps;
-    //   console.log(stepErrors, errorMessage);
-    // }
   }, []);
 
   const [city, street, zipCode] = extractAddressData(clubData.address);
@@ -216,7 +159,7 @@ const ClubApplication = ({
       invoice_required: clubData.applications[0].invoice_required,
     },
   });
-
+  console.log("files", clubData.applications[0].applications_attachments);
   const [currentObject, setCurrentObject] = useState(0);
 
   const deleteFacility = (data) => {
@@ -677,7 +620,7 @@ const ClubApplication = ({
 
   const handleStepChange = (type, nextStep = 0, extraStep = null) => {
     // on change fire function that check validation for current step
-    console.log("step changed runned");
+
     let result;
     switch (extraStep || step) {
       case 1:
@@ -815,6 +758,10 @@ const ClubApplication = ({
     }
   };
 
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
   return (
     <ApplicationContext.Provider
       value={{
@@ -838,6 +785,7 @@ const ClubApplication = ({
         clubData,
         show_buttons,
         settings,
+        refreshData,
       }}
     >
       <div>

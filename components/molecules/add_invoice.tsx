@@ -154,7 +154,6 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
   const handleChange = (e) => {
     e.preventDefault();
     addFile(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
 
   const handleDelete = () => {
@@ -162,10 +161,9 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
   };
 
   const uploadFile = async () => {
-    console.log(file.name);
     const formData = new FormData();
     formData.append("invoice", file);
-    console.log(file);
+
     const config = {
       headers: { "Content-type": "multipart/form-data" },
       onUploadProgress: (event) => {
@@ -201,7 +199,6 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
   };
 
   const deleteInvoice = async (key) => {
-    console.log(key);
     setLoading(true);
     try {
       axios.post("/api/applications/deleteInvoice", {

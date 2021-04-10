@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import uniqid from "uniqid";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
 import Loader from "../atoms/loader";
 import { toast } from "react-toastify";
 import { makeid } from "../../middleware/utils";
+import { ApplicationContext } from "../../components/organisms/club_application";
 //components
 import OutlineButton from "../atoms/outline_button";
 
@@ -109,6 +110,14 @@ const AddButton = styled.span`
   }
 `;
 
+const Link = styled.a`
+  transition: all 0.2s;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const DeleteButton = styled.span`
   padding: 8px 16px;
   background-color: ${({ theme }) => theme.danger};
@@ -122,19 +131,66 @@ const DeleteButton = styled.span`
   }
 `;
 
-const AddFile = ({ file, handleDelete, addFile, text }) => {
+// const AddFile = ({ file, handleDelete, addFile, text, category, id }) => {
+const AddFile = ({ file, category, id, text }) => {
+  const { formData, clubData, refreshData } = useContext(ApplicationContext);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
   console.log(file);
-  const handleChange = (e) => {
-    //console.log(e.target.files[0]);
-    const newFile = {
-      ...e.target.files[0],
-      name: `${makeid(3)}_${e.target.files[0].name}`,
-    };
+  const handleChange = async (e) => {
     e.preventDefault();
-    addFile(file ? file.id : uniqid(), newFile);
+    //console.log(e.target.files[0]);
+    //console.log(e.target.files[0]);
+    const fileName = `${makeid(3)}_${e.target.files[0].name}`;
+
+    const newFile = new File([e.target.files[0]], fileName, {
+      type: e.target.files[0].type,
+      lastModified: e.target.files[0].lastModified,
+    });
+
+    // const blob = e.target.files[0];
+    // const newFile = new File([blob], fileName, blob.type);
+    const fileData = new FormData();
+    fileData.append("file", newFile);
+
+    const config = {
+      headers: { "Content-type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        console.log(
+          `Current progress:`,
+          Math.round((event.loaded * 100) / event.total)
+        );
+      },
+    };
+    try {
+      setLoading(true);
+      await axios.post("/api/applications/uploadFiles", fileData, config);
+
+      if (category === "agreement_documents" || category === "krs_documents") {
+        await axios.post("/api/files/addFilesUrl", {
+          applicationID: clubData.applications[0].id,
+          category: category,
+          fileName: fileName,
+        });
+      } else {
+        await axios.post("/api/files/addFilesUrl", {
+          facilityID: clubData.applications[0].id,
+          category: category,
+          fileName: fileName,
+        });
+      }
+      setLoading(false);
+      toast.success("Dodano plik na serwer", {
+        autoClose: 2000,
+      });
+      router.replace(router.asPath);
+    } catch (err) {
+      console.log(err);
+      toast.error(
+        "Dodawanie pliku się nie powiodło, prosimy spróbować później"
+      );
+      setLoading(false);
+    }
   };
 
   const deleteFile = async () => {
@@ -150,7 +206,7 @@ const AddFile = ({ file, handleDelete, addFile, text }) => {
       toast.error("Usunięto plik", {
         autoClose: 1500,
       });
-      router.replace(router.asPath);
+      refreshData();
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -170,9 +226,15 @@ const AddFile = ({ file, handleDelete, addFile, text }) => {
 
         <FileInfo>
           <FilePdf />
-          <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
-            {file ? file.name : "Brak załączonego dokumentu."}
-          </span>
+          {file ? (
+            <Link target="_blank" href={file.filepath}>
+              {file.name}
+            </Link>
+          ) : (
+            <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+              {"Brak załączonego dokumentu."}
+            </span>
+          )}
         </FileInfo>
 
         <Label>
@@ -190,7 +252,7 @@ const AddFile = ({ file, handleDelete, addFile, text }) => {
             type="button"
             onClick={(e) => {
               e.preventDefault();
-              handleDelete(file.id);
+              // handleDelete(file.id);
               deleteFile();
             }}
           >

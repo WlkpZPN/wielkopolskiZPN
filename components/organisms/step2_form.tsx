@@ -27,11 +27,12 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     clearErrors,
     show_buttons,
     sendApplication,
+    clubData,
   } = context;
   const fileArr = context.formData.stepTwo.krs_documents;
   const handleChange = context.handleFormChange;
   const data = context.formData.stepTwo;
-
+  console.log(fileArr);
   const nextStep = () => {};
 
   const handleSubmit = (e) => {
@@ -69,9 +70,8 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
           niniejszego wniosku.
         </Paragraph>
         <AddFilesWrapper
-          deleteFile={handleDelete}
-          fileData={fileArr}
-          setFiles={setFiles}
+          id={clubData.applications[0].id}
+          category="krs_documents"
           text="Oświadczamy, że nasz klub przekazuje w załączeniu odpis aktualnego rejestru z Krajowego Rejestru Sądowego lub ewidencji prowadzonej przez właściwego starostę/prezydenta zawierający następujące informacje: nazwa Wnioskodawcy, siedziba Wnioskodawcy, forma prawna Wnioskodawcy, lista osób upoważnionych do składania oświadczeń woli w imieniu Wnioskodawcy, sposób reprezentacji Wnioskodawcy."
         />
         {<ErrorMessage>{error.stepTwo}</ErrorMessage>}

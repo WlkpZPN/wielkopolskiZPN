@@ -34,6 +34,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     clearErrors,
     show_buttons,
     sendApplication,
+    clubData,
   } = context;
 
   const setFiles = (id, file) => {
@@ -132,9 +133,8 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             </Paragraph>
             <AddFilesWrapper
               text="W sytuacji braku zespołów własnych lub niepełnej ich liczby Wnioskodawca zawarł porozumienie na szkolenie młodzieży z podanym poniżej klubem, z którego wynika wypełnienie kryterium sportowego na posiadanie zespołów młodzieżowych."
-              deleteFile={handleDelete}
-              fileData={formData.agreement_documents}
-              setFiles={setFiles}
+              category="agreement_documents"
+              id={clubData.applications[0].id}
             />
           </>
         );

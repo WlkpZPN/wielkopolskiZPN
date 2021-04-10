@@ -14,23 +14,24 @@ const Row = styled.div`
 `;
 //TO DO SIDE SCROLLING WITH VISIBLE TOOL TIP
 
-const AddFilesWrapper = ({ fileData, setFiles, deleteFile, text = null }) => {
+const AddFilesWrapper = ({ text = null, category, id }) => {
   const [boxes, setBoxes] = useState([]);
-
-  const addFile = (id, file) => {
-    //console.log(file);
-    setFiles(id, file);
-  };
+  const context = useContext(ApplicationContext);
+  const fileData = context.clubData.applications[0].applications_attachments.filter(
+    (file) => file.category === category
+  );
 
   const generateBoxes = () => {
     const arr = [];
     for (let i = 0; i < fileData.length + 1; i++) {
       arr.push(
         <AddFile
+          category={category}
+          id={id}
           text={text}
-          addFile={addFile}
-          key={uniqid()}
-          handleDelete={deleteFile}
+          // addFile={addFile}
+
+          // handleDelete={deleteFile}
           file={fileData[i] ? fileData[i] : null}
         />
       );

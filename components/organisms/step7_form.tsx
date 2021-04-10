@@ -29,27 +29,18 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     show_buttons,
     setCurrentobject,
     currentObject,
+    clubData,
   } = context;
-  const stepTwoFiles = context.formData.stepTwo.krs_documents;
-  const stepThreeFiles = context.formData.stepThree.agreement_documents;
+  const stepTwoFiles = context.clubData.applications[0].applications_attachments.filter(
+    (file) => file.category === "krs_documents"
+  );
+  const stepThreeFiles = context.clubData.applications[0].applications_attachments.filter(
+    (file) => file.category === "agreement_documents"
+  );
 
-  // const stepFourFiles =
-  //   context.formData.stepFour.sport_facilities.length > 0
-  //     ? context.formData.stepFour.sport_facilities[currentObject]
-  //         .applications_attachments
-  //     : [];
-  // console.log(
-  //   "step7",
-  //   context.formData.stepFour.sport_facilities[currentObject]
-  //     .applications_attachments
-  // );
-  // const intensityDocuments = stepFourFiles.filter(
-  //   (file) => file.category === "I17_intensity_document"
-  // );
-
-  // const agreementDocuments = stepFourFiles.filter(
-  //   (file) => file.category === "I01_agreement"
-  // );
+  const stepFourFIles = context.clubData.applications[0]?.sport_facilities[
+    currentObject
+  ].applications_attachments.filter((file) => file.category === "");
 
   const isSuperVision = () => {
     if (stepTwoFiles.length === 0) {
@@ -114,15 +105,18 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           niniejszego wniosku.
         </Paragraph>{" "}
         <AddFilesWrapper
-          deleteFile={(id) => {
-            deleteFile(id, "krs_documents");
-            setState(!state);
-          }}
-          fileData={stepTwoFiles}
-          setFiles={(id, file) => {
-            handleFileChange(id, file, file.name, "krs_documents");
-            setState(!state);
-          }}
+          text="Oświadczamy, że nasz klub przekazuje w załączeniu odpis aktualnego rejestru z Krajowego Rejestru Sądowego lub ewidencji prowadzonej przez właściwego starostę/prezydenta zawierający następujące informacje: nazwa Wnioskodawcy, siedziba Wnioskodawcy, forma prawna Wnioskodawcy, lista osób upoważnionych do składania oświadczeń woli w imieniu Wnioskodawcy, sposób reprezentacji Wnioskodawcy."
+          category="krs_documents"
+          id={clubData.applications[0].id}
+          // deleteFile={(id) => {
+          //   deleteFile(id, "krs_documents");
+          //   setState(!state);
+          // }}
+          // fileData={stepTwoFiles}
+          // setFiles={(id, file) => {
+          //   handleFileChange(id, file, file.name, "krs_documents");
+          //   setState(!state);
+          // }}
         />
         {context.formData.stepThree.youthGroupsPossession ===
         "porozumienie na szkolenie" ? (
@@ -131,15 +125,9 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
               Kopia Porozumienia na szkolenie młodzieży z klubem {clubName}
             </Paragraph>{" "}
             <AddFilesWrapper
-              deleteFile={(id) => {
-                deleteFile(id, "agreement_documents");
-                setState(!state);
-              }}
-              fileData={stepThreeFiles}
-              setFiles={(id, file) => {
-                handleFileChange(id, file, file.name, "agreement_documents");
-                setState(!state);
-              }}
+              id={clubData.applications[0].id}
+              category="agreement_documents"
+              text={null}
             />
           </>
         ) : null}
