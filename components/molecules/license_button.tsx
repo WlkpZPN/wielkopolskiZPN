@@ -60,7 +60,7 @@ const StatusContainer = styled.div`
 
 const ref = createRef();
 
-const LicenseButton = ({ clubData, isAdmin, authData }) => {
+const LicenseButton = ({ clubData, isAdmin, authData = null }) => {
   const application = clubData.applications[0];
   const router = useRouter();
   const [visible, setVisible] = useState(false);
