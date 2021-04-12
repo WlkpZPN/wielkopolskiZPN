@@ -1,6 +1,6 @@
 import prisma from "../../../middleware/prisma";
 import nodemailer from "nodemailer";
-import {getCurrentDate} from '../../../middleware/utils';
+import { getCurrentDate } from "../../../middleware/utils";
 var transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
@@ -13,28 +13,28 @@ var transporter = nodemailer.createTransport({
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const newStatus = req.body.order.status;
-    const applicationID = req.body.order.extOrderId;
+    const paymentID = req.body.order.extOrderId;
     const email = req.body.order.buyer.email;
     console.log("NOTIFY ROUTE FIRED");
     console.log(req.body);
 
     const application = await prisma.applications.findUnique({
       where: {
-        id: parseInt(applicationID),
+        payment_id: paymentID,
       },
     });
     if (newStatus === "COMPLETED" && application.status_id == 6) {
       await prisma.applications.update({
         where: {
-          id: parseInt(applicationID),
+          payment_id: paymentID,
         },
         data: {
           status_id: 7,
         },
       });
-       await prisma.histories.create({
+      await prisma.histories.create({
         data: {
-          application_id: applicationID,
+          application_id: parseInt(application.id),
           created_at: getCurrentDate(),
           description: "Płatność zaakceptowana",
           status_id: 7,

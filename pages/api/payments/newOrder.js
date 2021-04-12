@@ -1,5 +1,6 @@
 import axios from "axios";
-
+import prisma from "../../../middleware/prisma";
+import uniqid from "uniqid";
 export default (req, res) => {
   const {
     description,
@@ -11,6 +12,7 @@ export default (req, res) => {
     phone,
   } = req.body;
   return new Promise(async (resolve) => {
+    const newID = uniqid();
     try {
       // GET ACCESS TOKEN
       const tokenData = await axios({
@@ -48,7 +50,7 @@ export default (req, res) => {
           description: description,
           merchantPosId: "404238",
           validityTime: "86400",
-          extOrderId: applicationID,
+          extOrderId: newID,
           customerIp: ip,
           totalAmount: amount * 100,
           buyer: {
@@ -65,6 +67,15 @@ export default (req, res) => {
               quantity: amount,
             },
           ],
+        },
+      });
+
+      await prisma.applications.update({
+        where: {
+          id: parseInt(applicationID),
+        },
+        data: {
+          payment_id: newID,
         },
       });
 
