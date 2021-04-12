@@ -54,8 +54,6 @@ export default async (req, res) => {
       console.log(error);
       res.status(400).json(error);
       return resolve();
-    } finally {
-      await prisma.$disconnect();
     }
   });
 };

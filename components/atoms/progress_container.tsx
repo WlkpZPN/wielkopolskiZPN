@@ -43,62 +43,56 @@ const Progress = styled.div`
 const ProgressContainer = ({ status, style }) => {
   const [progress, setProgress] = useState(0);
   const [number, setNumber] = useState(0);
+
+  const getData = async () => {
+    if (status === 0) {
+      const result = await axios.post("/api/applications/getApplicationStats", {
+        getUncompleted: true,
+      });
+
+      const { allApplications, applications } = result.data;
+      const percent =
+        (Math.round((applications / allApplications) * 100) / 100) * 100;
+
+      setProgress(percent);
+      setNumber(applications);
+      return;
+    } else if (status === 2) {
+      const result = await axios.post("/api/applications/getApplicationStats", {
+        statusID: status,
+      });
+
+      const result2 = await axios.post(
+        "/api/applications/getApplicationStats",
+        {
+          statusID: 3,
+        }
+      );
+      const { allApplications, applications } = result.data;
+      const { applications2 } = result2.data;
+      const percent =
+        (Math.round((applications + applications2 / allApplications) * 100) /
+          100) *
+        100;
+
+      setProgress(percent);
+      setNumber(applications + applications2);
+      return;
+    } else {
+      const result = await axios.post("/api/applications/getApplicationStats", {
+        statusID: status,
+      });
+
+      const { allApplications, applications } = result.data;
+      const percent =
+        (Math.round((applications / allApplications) * 100) / 100) * 100;
+
+      setProgress(parseInt(`${percent}`));
+      setNumber(applications);
+      return;
+    }
+  };
   useEffect(() => {
-    const getData = async () => {
-      if (status === 0) {
-        const result = await axios.post(
-          "/api/applications/getApplicationStats",
-          {
-            getUncompleted: true,
-          }
-        );
-
-        const { allApplications, applications } = result.data;
-        const percent =
-          (Math.round((applications / allApplications) * 100) / 100) * 100;
-
-        setProgress(percent);
-        setNumber(applications);
-      } else if (status === 2) {
-        const result = await axios.post(
-          "/api/applications/getApplicationStats",
-          {
-            statusID: status,
-          }
-        );
-
-        const result2 = await axios.post(
-          "/api/applications/getApplicationStats",
-          {
-            statusID: 3,
-          }
-        );
-        const { allApplications, applications } = result.data;
-        const { applications2 } = result2.data;
-        const percent =
-          (Math.round((applications + applications2 / allApplications) * 100) /
-            100) *
-          100;
-
-        setProgress(percent);
-        setNumber(applications + applications2);
-      } else {
-        const result = await axios.post(
-          "/api/applications/getApplicationStats",
-          {
-            statusID: status,
-          }
-        );
-
-        const { allApplications, applications } = result.data;
-        const percent =
-          (Math.round((applications / allApplications) * 100) / 100) * 100;
-
-        setProgress(parseInt(`${percent}`));
-        setNumber(applications);
-      }
-    };
-
     getData();
   }, [status]);
   return (

@@ -104,9 +104,9 @@ const AdminLayout = ({ userData, children, view }) => {
             <Link href="/admin/kluby">
               <NavItem active={view === "kluby"}>Kluby</NavItem>
             </Link>
-            {/* <Link href="/admin/statystyki">
+            <Link href="/admin/statystyki">
               <NavItem active={view === "statystyki"}>Statystyki</NavItem>
-            </Link> */}
+            </Link>
             <Link href="/admin/uzytkownicy">
               <NavItem active={view === "uzytkownicy"}>Użytkownicy</NavItem>
             </Link>
