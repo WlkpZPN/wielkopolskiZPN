@@ -216,7 +216,10 @@ const StepOneForm = ({
                   Zapisz werjse roboczą
                 </PrimaryButton>
               ) : null}
-              <PrimaryButton type="submit" onClick={submitForm}>
+              <PrimaryButton
+                type="button"
+                onClick={() => handleStepChange("next")}
+              >
                 Kolejny krok
               </PrimaryButton>
 

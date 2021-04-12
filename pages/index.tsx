@@ -94,7 +94,7 @@ const Home = ({ authData, clubData, settings }) => {
     }
     if (clubData.applications.length === 0) {
       // 1. tworzymy nowy wniosek
-      console.log("to sie nigdy nie wykona");
+
       return (
         <>
           <Header>Złóż wniosek licencyjny</Header>
@@ -141,6 +141,30 @@ const Home = ({ authData, clubData, settings }) => {
             </>
           );
         case 2:
+          return (
+            <>
+              <Header color="success">
+                Dziękujemy! Poczekaj na akceptację wniosku
+              </Header>
+              <Paragraph>
+                Dziękujemy za złożenie wniosku liencyjnego. <br /> Najpóźniej 20
+                kwietnia {new Date().getFullYear()} otrzymasz informację czy
+                wniosek został zaakceptowany przez Wielkopolski ZPN. <br />{" "}
+                Dalsze kroki procedury licencyjnej możesz zobaczyć poniżej{" "}
+              </Paragraph>
+              <ClubSteps status="wnioskowany" />
+              <ClubApplication
+                show_buttons={false}
+                error_message=""
+                errors=""
+                completed={true}
+                readOnly={true}
+                fileEdit={true}
+                clubData={clubData}
+                settings={settings}
+              />
+            </>
+          );
         case 3:
           return (
             <>

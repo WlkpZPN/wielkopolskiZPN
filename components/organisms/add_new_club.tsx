@@ -514,8 +514,8 @@ const AddNewClub = () => {
       });
 
     //3. send axios call
-    //4. zapal giga joya
-    console.log("form submitted");
+
+    // console.log("form submitted");
   };
 
   if (loading) {

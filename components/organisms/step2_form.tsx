@@ -32,7 +32,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
   const fileArr = context.formData.stepTwo.krs_documents;
   const handleChange = context.handleFormChange;
   const data = context.formData.stepTwo;
-  console.log(fileArr);
+
   const nextStep = () => {};
 
   const handleSubmit = (e) => {
@@ -109,6 +109,7 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
 
         <div>
           <PrimaryButton
+            type="button"
             style={{ marginRight: "16px" }}
             onClick={() => handleStepChange("previous")}
           >

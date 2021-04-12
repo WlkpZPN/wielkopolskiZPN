@@ -131,16 +131,22 @@ const DeleteButton = styled.span`
   }
 `;
 
-// const AddFile = ({ file, handleDelete, addFile, text, category, id }) => {
-const AddFile = ({ file, category, id, text }) => {
-  const { formData, clubData, refreshData } = useContext(ApplicationContext);
+const AddFacilityFile = ({ file, category, text, upload }) => {
+  const {
+    formData,
+    clubData,
+    refreshData,
+    currentObject,
+    deleteFacilityFile,
+    setFormData,
+  } = useContext(ApplicationContext);
+  const facilityID = formData.stepFour.sport_facilities[currentObject]?.id;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  //console.log(file);
+
   const handleChange = async (e) => {
     e.preventDefault();
-    //console.log(e.target.files[0]);
-    //console.log(e.target.files[0]);
+
     const fileName = `${makeid(3)}_${e.target.files[0].name}`;
 
     const newFile = new File([e.target.files[0]], fileName, {
@@ -164,26 +170,34 @@ const AddFile = ({ file, category, id, text }) => {
     };
     try {
       setLoading(true);
-      await axios.post("/api/applications/uploadFiles", fileData, config);
-
-      if (category === "agreement_documents" || category === "krs_documents") {
+      if (upload) {
+        await axios.post("/api/applications/uploadFiles", fileData, config);
         await axios.post("/api/files/addFilesUrl", {
-          applicationID: clubData.applications[0].id,
-          category: category,
-          fileName: fileName,
+          category,
+          fileName,
+          facilityID: formData.stepFour.sport_facilities[currentObject].id,
         });
-      } else {
-        await axios.post("/api/files/addFilesUrl", {
-          facilityID: clubData.applications[0].id,
-          category: category,
-          fileName: fileName,
+        toast.info("Dodano plik", {
+          autoClose: 2000,
         });
+        refreshData();
       }
-      setLoading(false);
-      toast.success("Zapisano plik", {
-        autoClose: 2000,
+
+      let newData = formData;
+      newData.stepFour.sport_facilities[
+        currentObject
+      ].applications_attachments.push({
+        filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
+        category,
+        name: fileName,
+        fileData: newFile,
       });
-      router.replace(router.asPath);
+      setFormData(newData);
+      setLoading(false);
+      // toast.success("Dodano plik na serwer", {
+      //   autoClose: 2000,
+      // });
+      // router.replace(router.asPath);
     } catch (err) {
       console.log(err);
       toast.error(
@@ -193,75 +207,94 @@ const AddFile = ({ file, category, id, text }) => {
     }
   };
 
-  const deleteFile = async () => {
-    if (!file?.id) {
-      return;
-    }
+  const deleteFile = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    try {
-      axios.post("/api/applications/deleteFile", {
-        attachment: file,
-      });
-      setLoading(false);
-      toast.error("Usunięto plik", {
-        autoClose: 1500,
-      });
-      refreshData();
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-      toast.error("Nie udało się usunąć pliku,spróbuj ponownie", {
-        autoClose: 2000,
-      });
+
+    if (file.id || upload) {
+      // delete from server
+
+      try {
+        const response = await axios.post("/api/files/deleteFacilityFile", {
+          attachment: file,
+          facilityID,
+        });
+        setLoading(false);
+        toast.info("Plik usunięty", {
+          autoClose: 2000,
+        });
+        const newFormData = formData;
+        newFormData.stepFour.sport_facilities[
+          currentObject
+        ].applications_attachments = response.data.attachments;
+
+        setFormData(newFormData);
+        refreshData();
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        toast.error("Nie udało się usunąć pliku,spróbuj ponownie", {
+          autoClose: 2500,
+        });
+        return;
+      }
+    } else {
+      // delete from state
+      deleteFacilityFile(file.name);
     }
+
+    setLoading(false);
   };
+
   return (
     <Parent>
       <Wrapper>
-        {text ? (
-          <Info text={text}>
-            <InfoCircle />
-          </Info>
-        ) : null}
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {" "}
+            {text ? (
+              <Info text={text}>
+                <InfoCircle />
+              </Info>
+            ) : null}
+            <FileInfo>
+              <FilePdf />
+              {file ? (
+                file.id ? (
+                  <Link target="_blank" href={file.filepath}>
+                    {file.name}
+                  </Link>
+                ) : (
+                  <span>{file.name}</span>
+                )
+              ) : (
+                <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+                  {"Brak załączonego dokumentu."}
+                </span>
+              )}
+            </FileInfo>
+            <Label>
+              {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
 
-        <FileInfo>
-          <FilePdf />
-          {file ? (
-            <Link target="_blank" href={file.filepath}>
-              {file.name}
-            </Link>
-          ) : (
-            <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
-              {"Brak załączonego dokumentu."}
-            </span>
-          )}
-        </FileInfo>
-
-        <Label>
-          {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
-
-          <FileInput
-            id="file"
-            type="file"
-            name="file"
-            onChange={handleChange}
-          />
-        </Label>
-        {file ? (
-          <DeleteButton
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              // handleDelete(file.id);
-              deleteFile();
-            }}
-          >
-            Usuń
-          </DeleteButton>
-        ) : null}
+              <FileInput
+                id="file"
+                type="file"
+                name="file"
+                onChange={handleChange}
+              />
+            </Label>
+            {file ? (
+              <DeleteButton type="button" onClick={deleteFile}>
+                Usuń
+              </DeleteButton>
+            ) : null}{" "}
+          </>
+        )}
       </Wrapper>
     </Parent>
   );
 };
 
-export default AddFile;
+export default AddFacilityFile;

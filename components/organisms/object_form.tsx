@@ -20,10 +20,12 @@ import FormHeader from "../atoms/form_header";
 import Fieldset from "../atoms/fieldset";
 import ErrorMessage from "../atoms/error_message";
 import AddFilesWrapper from "./add_files_wrapper";
+import AddFacilityFilesWrapper from "./add_facility_files_wrapper";
 import ZipCodeInput from "../atoms/zip_code_input";
 import NummericInput from "../atoms/numeric_input";
 import NumericInput from "../atoms/numeric_input";
 import RadioButton from "../atoms/radio_button";
+import AddFacilityFile from "../molecules/add_facility_file";
 const ObjectForm = ({ readOnly, objectIndex }) => {
   const router = useRouter();
   const [error, setError] = useState({ step: null, text: "" });
@@ -38,27 +40,28 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     deleteFacility,
   } = context;
   // console.log(context);
-  const objectFiles =
-    context.formData.stepFour.sport_facilities[objectIndex]
-      ?.applications_attachments;
+  //const objectFiles = useState(data.id ? data.applications_attachments : []);
+  const fileData = data.applications_attachments;
+  //console.log("fileData", context.formData.stepFour.sport_facilities);
+  //console.log(objectIndex);
   // console.log(objectFiles);
-  const getCategoryFiles = (category) => {
-    return objectFiles?.filter((file) => file.category === category);
-  };
 
-  const setFiles = (id, file, category) => {
-    handleObjectFileChange(id, file, file.name, category, objectIndex);
-    setState(!state);
-  };
+  // const getCategoryFiles = (category) => {
+  //   return objectFiles?.filter((file) => file.category === category);
+  // };
 
-  const handleDelete = (index, id, category) => {
-    handleObjectFileDelete(index, id, category);
-    setState(!state);
-  };
+  // const setFiles = (id, file, category) => {
+  //   handleObjectFileChange(id, file, file.name, category, objectIndex);
+  //   setState(!state);
+  // };
+
+  // const handleDelete = (index, id, category) => {
+  //   handleObjectFileDelete(index, id, category);
+  //   setState(!state);
+  // };
   //console.log(data);
 
   useEffect(() => {
-    console.log(data.I06_width);
     setExtraField({
       visible: false,
       text: "",
@@ -71,7 +74,6 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           data.I06_width < 60 ||
           data.I06_width > 68
         ) {
-          console.log(data.I06_width);
           setExtraField({
             visible: true,
             text:
@@ -119,7 +121,6 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
       default:
         break;
     }
-    console.log(extraField);
   }, [data.I06_length, data.I06_width]);
 
   const capacityRecommendations = () => {
@@ -141,7 +142,6 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
         capacity = "50";
         break;
       default:
-        console.log("no match");
         break;
     }
 
@@ -151,7 +151,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
   const handleChange = context.handleObjectChange;
   const handleObjectSave = (e) => {
     e.preventDefault();
-
+    // call function form step falidation here
     // save object to form state
     if (extraField.visible && !data.is_invalid_field) {
       setError({
@@ -256,16 +256,16 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </RadioButton>
             <Info text="Jeśli Klub nie jest właścicielem obiektu sportowego, należy załączyć umowę gwarantującą prawo do korzystania z obiektu sportowego przez Wnioskodawcę dla celów meczów piłkarskich rozgrywanych w charakterze gospodarza co najmniej przez cały/e Sezon/y licencyjny/e. " />
           </Label>
-          {data.I01_1 ? null : (
+          {data.I01_1 === false ? (
             <>
               {" "}
               <Paragraph>
                 Umowa gwarantująca prawo do korzystania z obiektu sportowego
               </Paragraph>
-              <AddFilesWrapper
+              <AddFacilityFilesWrapper
+                files={fileData}
                 category="I01_agreement"
                 text={null}
-                id={data.id}
               />
               <Label pointer margin="16px 0" direction="row">
                 <RadioSquare
@@ -278,7 +278,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 sezon,w którym ubiegamy się o licencję
               </Label>
             </>
-          )}
+          ) : null}
 
           <FormHeader>Kryterium I.02 Regulaminy</FormHeader>
           {error.step === 2 ? (
@@ -1233,7 +1233,11 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               </Label>
               <Label>
                 Dokument poświadczający pomiar natężenia światła
-                <AddFilesWrapper category="" id={data.id} text={null} />
+                <AddFacilityFilesWrapper
+                  files={fileData}
+                  category="I17_intensity_level"
+                  text={null}
+                />
               </Label>{" "}
             </>
           ) : null}

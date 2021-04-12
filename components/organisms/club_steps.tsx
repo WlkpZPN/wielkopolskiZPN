@@ -18,7 +18,6 @@ const Wrapper = styled.div`
 
 const ClubSteps = ({ status }) => {
   const { history } = useContext(ClubContext);
-  console.log(history);
 
   const renderLicenseDate = () => {
     switch (status) {

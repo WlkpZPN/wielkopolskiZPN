@@ -37,16 +37,6 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     clubData,
   } = context;
 
-  const setFiles = (id, file) => {
-    handleFileChange(id, file, file.name, "agreement_documents");
-    setState(!state);
-  };
-
-  const handleDelete = (id) => {
-    deleteFile(id, "agreement_documents");
-    setState(!state);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -56,7 +46,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     handleStepFill("stepThree", { completed: true, error: false });
     handleStepChange("next");
   };
-  console.log(settings);
+  //console.log(settings);
   // const renderAmount = (leauge, settings) => {
   //   console.log(leauge == "IV liga");
   //   console.log(leauge);
@@ -234,7 +224,10 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               ) : null}
             </>
           ) : null}
-          <PrimaryButton style={{ marginRight: "16px" }} onClick={handleSubmit}>
+          <PrimaryButton
+            style={{ marginRight: "16px" }}
+            onClick={() => handleStepChange("next")}
+          >
             Kolejny krok
           </PrimaryButton>
         </div>

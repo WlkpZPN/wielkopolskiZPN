@@ -72,7 +72,6 @@ const Uzytkownicy = ({ users, roles, authData }) => {
   const [loading, setLoading] = useState(false);
   const [visibility, setVisibility] = useState(false);
   const refreshData = () => {
-    console.log("data refreshed");
     router.replace(router.asPath);
   };
 

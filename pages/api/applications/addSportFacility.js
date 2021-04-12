@@ -36,16 +36,10 @@ export default async (req, res) => {
       });
     }
 
-    const all_facilities = await prisma.sport_facilities.findMany({
-      where: {
-        application_id: clubData.applications[0].id,
-      },
-    });
-
     await prisma.$disconnect();
 
     res.json({
-      all_facilities: all_facilities,
+      facility: new_object,
     });
     return resolve();
   });

@@ -115,7 +115,7 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
       props: {},
     };
   }
-  console.log("data", data);
+
   const applications = await prisma.applications.findMany({
     include: {
       statuses: true,

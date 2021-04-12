@@ -36,7 +36,6 @@ const Custom404 = () => {
 
   const redirectUser = (e) => {
     e.preventDefault();
-    console.log(router.asPath);
 
     if (router.asPath.search("admin") > -1) {
       // przekieruj na strone admina

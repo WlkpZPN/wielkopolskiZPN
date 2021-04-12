@@ -13,6 +13,7 @@ import ErrorMessage from "../atoms/error_message";
 import AddFilesWrapper from "./add_files_wrapper";
 import OutlineButton from "../atoms/outline_button";
 import ObjectName from "../atoms/object_name";
+import AddFacilityFilesWrapper from "../organisms/add_facility_files_wrapper";
 const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const [error, setError] = useState("");
@@ -27,9 +28,10 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     formData,
     handleFormChange,
     show_buttons,
-    setCurrentobject,
+    setCurrentObject,
     currentObject,
     clubData,
+    fileEdit,
   } = context;
   const stepTwoFiles = context.clubData.applications[0].applications_attachments.filter(
     (file) => file.category === "krs_documents"
@@ -38,35 +40,33 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     (file) => file.category === "agreement_documents"
   );
 
-  const stepFourFIles = context.clubData.applications[0]?.sport_facilities[
-    currentObject
-  ].applications_attachments.filter((file) => file.category === "");
-
   const isSuperVision = () => {
-    if (stepTwoFiles.length === 0) {
-      return true;
-    }
-    if (
-      context.formData.stepThree.youthGroupsPossession ===
-        "nie posiadamy zespołów" &&
-      stepThreeFiles.length === 0
-    ) {
-      return true;
-    }
-    if (
-      context.formData.stepFour.I01_1 === "false"
-      // &&
-      // agreementDocuments.length === 0
-    ) {
+    if (stepThreeFiles.length === 0) {
       return true;
     }
 
     if (
-      context.formData.stepFour.I17_1
-      // && intensityDocuments.length === 0
+      stepThreeFiles.length === 0 &&
+      formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
     ) {
       return true;
     }
+
+    formData.stepFour.sport_facilities.forEach((facility) => {
+      const files1 = facility.applications_attachments.filter(
+        (el) => el.category === "I01_agreement"
+      );
+
+      const files2 = facility.applications_attachments.filter(
+        (el) => el.category === "I17_intensity_level"
+      );
+      if (facility.I01_1 === false && files1.length === 0) {
+        return true;
+      }
+      if (facility.I17_1 === true && files2.length === 0) {
+        return true;
+      }
+    });
 
     return false;
   };
@@ -76,7 +76,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
 
     return objects.map((facility, index) => (
       <ObjectName
-        onClick={() => setCurrentobject(index)}
+        onClick={() => setCurrentObject(index)}
         key={index}
         saved={true}
         active={index === currentObject}
@@ -86,12 +86,50 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     ));
   };
 
+  const renderFacilityFiles = () => {
+    const fileArr = [];
+    const currentObj = formData.stepFour.sport_facilities[currentObject];
+    const fileData = currentObj.applications_attachments;
+    if (currentObj.I01_1 === false) {
+      fileArr.push(
+        <>
+          <Paragraph>
+            Umowa gwarantująca prawo do korzystania z obiektu sportowego
+          </Paragraph>
+          <AddFacilityFilesWrapper
+            upload={true}
+            files={fileData}
+            category="I01_agreement"
+            text={null}
+          />{" "}
+        </>
+      );
+    }
+
+    if (currentObj.I17_1 === true) {
+      fileArr.push(
+        <>
+          <Paragraph>
+            Dokument poświadczający pomiar natężenia światła
+          </Paragraph>
+          <AddFacilityFilesWrapper
+            upload={true}
+            files={fileData}
+            category="I17_intensity_level"
+            text={null}
+          />
+        </>
+      );
+    }
+
+    return fileArr;
+  };
   const submitForm = (e) => {
     e.preventDefault();
     sendApplication();
   };
   return (
-    <Fieldset disabled={readOnly}>
+    <Fieldset>
       <FormTemplate onChange={() => setError("")}>
         <ErrorMessage>{error}</ErrorMessage>
         <Paragraph>
@@ -108,15 +146,6 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           text="Oświadczamy, że nasz klub przekazuje w załączeniu odpis aktualnego rejestru z Krajowego Rejestru Sądowego lub ewidencji prowadzonej przez właściwego starostę/prezydenta zawierający następujące informacje: nazwa Wnioskodawcy, siedziba Wnioskodawcy, forma prawna Wnioskodawcy, lista osób upoważnionych do składania oświadczeń woli w imieniu Wnioskodawcy, sposób reprezentacji Wnioskodawcy."
           category="krs_documents"
           id={clubData.applications[0].id}
-          // deleteFile={(id) => {
-          //   deleteFile(id, "krs_documents");
-          //   setState(!state);
-          // }}
-          // fileData={stepTwoFiles}
-          // setFiles={(id, file) => {
-          //   handleFileChange(id, file, file.name, "krs_documents");
-          //   setState(!state);
-          // }}
         />
         {context.formData.stepThree.youthGroupsPossession ===
         "porozumienie na szkolenie" ? (
@@ -131,65 +160,12 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             />
           </>
         ) : null}
-        {/* {renderFacilityNames()} */}
-        {/* {agreementDocuments.length > 0 ? (
-          <>
-            <Paragraph>
-              {" "}
-              Umowa gwarantująca prawo do korzystania z obiektu sportowego{" "}
-            </Paragraph>{" "}
-            <AddFilesWrapper
-              deleteFile={(id) => {
-                handleObjectFileDelete(
-                  context.currentObject,
-                  id,
-                  "I01_agreement"
-                );
-                setState(!state);
-              }}
-              fileData={agreementDocuments}
-              setFiles={(id, file) => {
-                handleObjectFileChange(
-                  id,
-                  file,
-                  file.name,
-                  "I01_agreement",
-                  context.CurrentObject
-                );
-                setState(!state);
-              }}
-            />
-          </>
-        ) : null} */}
-        {/* {intensityDocuments.length > 0 ? (
-          <>
-            <Paragraph>
-              {" "}
-              Dokument poświadczający pomiar natężenia światła
-            </Paragraph>
-            <AddFilesWrapper
-              deleteFile={(id) => {
-                handleObjectFileDelete(
-                  context.currentObject,
-                  id,
-                  "I17_intensity_document"
-                );
-                setState(!state);
-              }}
-              fileData={intensityDocuments}
-              setFiles={(id, file) => {
-                handleObjectFileChange(
-                  id,
-                  file,
-                  file.name,
-                  "I17_intensity_document",
-                  context.CurrentObject
-                );
-                setState(!state);
-              }}
-            />
-          </>
-        ) : null} */}
+        {formData.stepFour.sport_facilities.length === 0 ? null : (
+          <Fieldset disabled={!fileEdit}>
+            {renderFacilityNames()}
+            {renderFacilityFiles()}
+          </Fieldset>
+        )}
         {isSuperVision() ? (
           <ErrorMessage>
             Brak wszystkich dokumentów, zostanie wydana licencja z nadzorem
@@ -199,23 +175,26 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
         <Paragraph>
           Informacje dotyczące płatności za procedurę licencyjną
         </Paragraph>
-        <Label pointer>
-          <span>
-            <RadioSquare
-              value={formData.stepSeven.invoice_required}
-              handleChange={(e) =>
-                handleFormChange(
-                  !formData.stepSeven.invoice_required,
-                  "invoice_required",
-                  7
-                )
-              }
-            />{" "}
-            Chcemy otrzymać fakturę przed dokonaniem płatności
-          </span>
-        </Label>
-        <div style={{ marginTop: "32px" }}>
+        <Fieldset style={{ marginBottom: "0" }} disabled={readOnly}>
+          <Label pointer>
+            <span>
+              <RadioSquare
+                value={formData.stepSeven.invoice_required}
+                handleChange={(e) =>
+                  handleFormChange(
+                    !formData.stepSeven.invoice_required,
+                    "invoice_required",
+                    7
+                  )
+                }
+              />{" "}
+              Chcemy otrzymać fakturę przed dokonaniem płatności
+            </span>
+          </Label>
+        </Fieldset>
+        <div style={{ marginTop: "16px", marginBottom: "32px" }}>
           <PrimaryButton
+            type="button"
             style={{ marginRight: "16px" }}
             onClick={() => handleStepChange("previous")}
           >

@@ -14,7 +14,7 @@ const s3 = new aws.S3({
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { attachment } = req.body;
+    const { attachment, facilityID } = req.body;
     let attachmentID = attachment.id;
     console.log("attachment", attachment);
     const params = {
@@ -34,6 +34,14 @@ export default (req, res) => {
       },
     });
 
-    res.send("file deleted");
+    const attachments = await prisma.applications_attachments.findMany({
+      where: {
+        sport_facilities_id: parseInt(facilityID),
+      },
+    });
+
+    res.json({
+      attachments,
+    });
   });
 };

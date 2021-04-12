@@ -29,7 +29,7 @@ const Application = ({ authData, clubData, settings }) => {
   const [visible, setVisible] = useState(false);
   const [visibleReject, setvisibleReject] = useState(false);
   const [invoiceFiles, setInvoiceFiles] = useState();
-  console.log(authData);
+
   const handleFileDelete = () => {};
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {

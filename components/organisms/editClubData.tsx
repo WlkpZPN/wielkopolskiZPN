@@ -575,7 +575,6 @@ const EditClubData = ({ clubData }) => {
 
     //3. send axios call
     //4. zapal giga joya
-    console.log("form submitted");
   };
 
   if (loading) {

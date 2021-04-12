@@ -123,8 +123,9 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
       )}
       <div style={{ margin: "40px 0" }}>
         <PrimaryButton
+          type="button"
           style={{ marginRight: "16px" }}
-          onClick={() => handleStepChange("previous")}
+          onClick={() => handleStepChange("jump", 3)}
         >
           Cofnij
         </PrimaryButton>
@@ -152,7 +153,10 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
             ) : null}
           </>
         ) : null}
-        <PrimaryButton onClick={() => handleStepChange("next")}>
+        <PrimaryButton
+          type="button"
+          onClick={() => handleStepChange("jump", 5)}
+        >
           Kolejny krok
         </PrimaryButton>
       </div>

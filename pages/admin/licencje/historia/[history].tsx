@@ -25,7 +25,6 @@ const History = ({ authData, applicationData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const history = applicationData.histories;
-  console.log(history);
 
   const renderHistory = () => {
     let helperArr = [];

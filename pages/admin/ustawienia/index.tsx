@@ -33,7 +33,6 @@ const AmountRow = styled.div`
   }
 `;
 const Ustawienia = ({ userData, settings, questions, messages }) => {
-  console.log(settings);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
   const [endDate, setEndDate] = useState(settings.end_date || new Date());

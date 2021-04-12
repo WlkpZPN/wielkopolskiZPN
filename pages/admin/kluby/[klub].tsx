@@ -19,7 +19,7 @@ import Spinner from "../../../components/atoms/loader";
 
 const User = ({ clubData, authData }) => {
   const router = useRouter();
-  console.log(clubData);
+
   const [loading, setLoading] = useState("");
   const markDebt = () => {
     const newDebt = !clubData.debt;
