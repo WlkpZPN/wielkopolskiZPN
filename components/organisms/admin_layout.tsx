@@ -80,6 +80,7 @@ const AdminLayout = ({ userData, children, view }) => {
         <LogoImage
           src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
           alt="wielkoposlki ZPN logo"
+          onClick={() => router.push("/admin")}
         />
         <ProgressBar />
         <ButtonWrapper>

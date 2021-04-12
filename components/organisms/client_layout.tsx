@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useRouter } from "next/router";
 import Link from "next/link";
 //icons
 import { User } from "@styled-icons/fa-solid/User";
@@ -73,13 +74,14 @@ const List = styled.ul`
 
 const ClientLayout = ({ view, children, clubData }) => {
   //const { userData, setView } = useContext(UserContext);
-
+  const router = useRouter();
   return (
     <Wrapper>
       <TopBar>
         <LogoImage
           src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
           alt="wielkoposlki ZPN logo"
+          onClick={() => router.push("/")}
         />
         <ClubInfo clubData={clubData} />
         <ButtonWrapper>

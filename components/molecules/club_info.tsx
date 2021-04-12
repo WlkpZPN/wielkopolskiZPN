@@ -32,8 +32,7 @@ const ClubInfo = ({ clubData }) => {
       case 11:
         return (
           <>
-            <Bold>Typ licencji: </Bold>{" "}
-            {clubData.applications[0].statuses.name}{" "}
+            <Bold>Typ licencji: </Bold> {clubData.applications[0].statuses.name}{" "}
           </>
         );
       default:
@@ -50,7 +49,7 @@ const ClubInfo = ({ clubData }) => {
         <Bold>Liga:</Bold> <span> {clubData.leauge}</span>
         {clubData.applications[0].statuses.id > 7 ? (
           <>
-            <Bold>Licencja ważna na sezony:</Bold>{" "}
+            <Bold>Licencja ważna na sezon/y:</Bold>{" "}
             {clubData.applications[0].seasons}{" "}
           </>
         ) : null}
