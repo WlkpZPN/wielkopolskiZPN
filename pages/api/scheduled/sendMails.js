@@ -5,7 +5,9 @@ export default (req, res) => {
     const messages = await prisma.messages.findMany();
     const clubs = await prisma.clubs.findMany();
     //1. filter messages with some rules
-
+    res.send(messages);
+    // reguły
+    //
     //2. check which rules met the conditions
 
     //3. for each rule create a list of clubs emails to send mails

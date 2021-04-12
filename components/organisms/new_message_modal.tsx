@@ -82,6 +82,28 @@ const NewMessageModal = ({ visible, setVisible }) => {
       });
   };
 
+  const sendMessage = async (e) => {
+    addNewMessage(e);
+    setLoading(true);
+    try {
+      await axios.post("/api/mails/sendMails", {
+        recipients,
+        title,
+        message,
+      });
+      setLoading(false);
+      toast.success("Wiadomości wysłane", {
+        autoClose: 2000,
+      });
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Wysyłanie wiadomości nie udało się,spróbuj ponownie", {
+        autoClose: 2000,
+      });
+    }
+  };
+
   return (
     <Background onClick={handleClose} visible={visible}>
       <Content>
@@ -140,7 +162,9 @@ const NewMessageModal = ({ visible, setVisible }) => {
             <PrimaryButton style={{ margin: "0 16px" }} type="submit">
               Utwórz
             </PrimaryButton>
-            <PrimaryButton type="submit">Dodaj</PrimaryButton>
+            <PrimaryButton onClick={sendMessage} type="button">
+              Wyślij
+            </PrimaryButton>
           </div>
         </form>
       </Content>

@@ -30,6 +30,28 @@ const Application = ({ authData, allMessages, settings, message }) => {
   const [rule, setRule] = useState(message.rule || "brak");
   const [error, setError] = useState("");
 
+  const sendMessage = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    try {
+      await axios.post("/api/mails/sendMails", {
+        recipients,
+        title,
+        message,
+      });
+      setLoading(false);
+      toast.success("Wiadomości wysłane", {
+        autoClose: 2000,
+      });
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Wysyłanie wiadomości nie udało się,spróbuj ponownie", {
+        autoClose: 2000,
+      });
+    }
+  };
   const deleteMessage = async () => {
     setLoading(true);
     axios
@@ -85,7 +107,13 @@ const Application = ({ authData, allMessages, settings, message }) => {
       >
         <div style={{ display: "flex" }}>
           <span>
-            <h1 style={{ marginRight: "32px", marginTop: "-3px" }}>
+            <h1
+              style={{
+                marginRight: "32px",
+                marginTop: "-3px",
+                marginBottom: "15px",
+              }}
+            >
               Wiadomość nr {message.id}
             </h1>
             <Link href="/admin/ustawienia">
@@ -161,7 +189,9 @@ const Application = ({ authData, allMessages, settings, message }) => {
           >
             Zapisz zmiany
           </PrimaryButton>
-          <PrimaryButton type="button">Wyślij ponownie</PrimaryButton>
+          <PrimaryButton onClick={sendMessage} type="button">
+            Wyślij ponownie
+          </PrimaryButton>
         </div>
       </form>
 

@@ -744,7 +744,7 @@ const ClubApplication = ({
       default:
         break;
     }
-    console.log("step", step);
+   
   };
   const renderCurrentStep = () => {
     console.log("rendering step", step);
