@@ -65,7 +65,7 @@ const Application = ({ authData, clubData, settings }) => {
                 />
               </p>
               <LicenseDecision
-              authData={authData}
+                authData={authData}
                 clubData={clubData}
                 applicationID={clubData.applications[0].id}
                 statusID={8}
@@ -75,7 +75,7 @@ const Application = ({ authData, clubData, settings }) => {
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
-               authData={authData}
+                authData={authData}
                 clubData={clubData}
                 statusID={10}
                 applicationID={clubData.applications[0].id}
@@ -85,7 +85,7 @@ const Application = ({ authData, clubData, settings }) => {
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
-               authData={authData}
+                authData={authData}
                 clubData={null}
                 statusID={9}
                 applicationID={clubData.applications[0].id}
@@ -102,7 +102,7 @@ const Application = ({ authData, clubData, settings }) => {
           <>
             {" "}
             <LicenseDecision
-             authData={authData}
+              authData={authData}
               clubData={null}
               statusID={9}
               applicationID={clubData.applications[0].id}
@@ -254,19 +254,19 @@ const Application = ({ authData, clubData, settings }) => {
         ? settings.application_fee + renderAmount(clubData.leauge, settings)
         : settings.application_fee;
     try {
-      // const newOrder = await axios.post("/api/payments/newOrder", {
-      //   description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
-      //   email: clubData.email,
-      //   amount: amount,
-      //   applicationID: clubData.applications[0].id,
-      //   firstName: clubData.name,
-      //   phone: clubData.phone,
-      // });
+      const newOrder = await axios.post("/api/payments/newOrder", {
+        description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
+        email: clubData.email,
+        amount: amount,
+        applicationID: clubData.applications[0].id,
+        firstName: clubData.name,
+        phone: clubData.phone,
+      });
 
-      // await axios.post("/api/mails/sendPayuLink", {
-      //   link: newOrder.data.link,
-      //   email: clubData.email,
-      // });
+      await axios.post("/api/mails/sendPayuLink", {
+        link: newOrder.data.link,
+        email: clubData.email,
+      });
 
       await axios.post("/api/applications/acceptApplication", {
         applicationID: clubData.applications[0].id,

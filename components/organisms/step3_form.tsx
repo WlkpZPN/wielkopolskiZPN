@@ -71,11 +71,13 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
           <>
             {" "}
             <Label width="max-content">
-              <Info
-                text="Zobowiązuje się do posiadania w ramach własnego podmiotu prawnego co najmniej podaną liczbę zespołów młodzieżowych, które będą uczestniczyć w oficjalnych rozgrywkach lub programach zatwierdzonych przez PZPN i rozgrywanych na poziomie krajowym lub regionalnym.
+              <span>
+                Podaj liczbę zespołów młodzieżowych
+                <Info
+                  text="Zobowiązuje się do posiadania w ramach własnego podmiotu prawnego co najmniej podaną liczbę zespołów młodzieżowych, które będą uczestniczyć w oficjalnych rozgrywkach lub programach zatwierdzonych przez PZPN i rozgrywanych na poziomie krajowym lub regionalnym.
 "
-              />
-              Podaj liczbę zespołów młodzieżowych{" "}
+                />
+              </span>
               <NumericInput
                 value={formData.numberOfYouthGroups}
                 onChange={(e) =>
@@ -86,11 +88,13 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               />
             </Label>
             <Label width="max-content">
-              <Info
-                text="W czasie trwania całego meczu zespołu seniorów uczestniczyć będzie minimum podana poniżej liczba zawodników młodzieżowych do lat 21 (zawodnikami młodzieżowymi są zawodnicy posiadający obywatelstwo polskie, którzy w roku kalendarzowym, w którym następuje zakończenie danego sezonu rozgrywkowego, ukończą 21. rok życia oraz zawodnicy młodsi).
+              <span>
+                Udział zawodników młodzieżowych
+                <Info
+                  text="W czasie trwania całego meczu zespołu seniorów uczestniczyć będzie minimum podana poniżej liczba zawodników młodzieżowych do lat 21 (zawodnikami młodzieżowymi są zawodnicy posiadający obywatelstwo polskie, którzy w roku kalendarzowym, w którym następuje zakończenie danego sezonu rozgrywkowego, ukończą 21. rok życia oraz zawodnicy młodsi).
 "
-              />
-              Udział zawodników młodzieżowych
+                />
+              </span>
               <NumericInput
                 value={formData.shareOfYouthGroups}
                 onChange={(e) =>

@@ -36,11 +36,12 @@ const ApplicationsList = () => {
     (app) => app.statuses.id === 2 || app.statuses.id === 3
   );
   const restApplications = applicationsArr.filter(
-    (app) => app.statuses.id !== 2 || app.statuses.id !== 3
+    (app) => app.statuses.id !== 2 && app.statuses.id !== 3
   );
-
+  console.log("new", newApplications);
+  console.log("old", restApplications);
   const applications = [...newApplications, ...restApplications];
-
+  console.log(applications);
   const dataToExport: any = applications;
   delete dataToExport.clubs;
   delete dataToExport.statuses;
