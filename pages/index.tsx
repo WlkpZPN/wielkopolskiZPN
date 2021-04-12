@@ -46,7 +46,7 @@ const Home = ({ authData, clubData, settings }) => {
     try {
       await axios.post("/api/applications/createApplication", {
         clubID: clubData.id,
-        applicationID: clubData.application[0].id,
+        applicationID: clubData.applications[0].id,
       });
       setLoading(false);
       toast.info("Utworzono nowy wniosek");
@@ -220,6 +220,7 @@ const Home = ({ authData, clubData, settings }) => {
                 Zapoznaj się z poniższym uzasadnieniem, aby ubiegać się o
                 przyznanie licencji klubowej należy złożyć nowy wniosek
               </Paragraph>
+              <p>Powód: </p>
               <ErrorMessage>
                 {clubData.applications[0].reject_reason}
               </ErrorMessage>
