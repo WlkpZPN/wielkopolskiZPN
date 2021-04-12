@@ -5,7 +5,7 @@ import { protectedAdminRoute } from "../../middleware/protectedAdmin";
 import ProgressContainer from "../../components/atoms/progress_container";
 
 const Header = styled.h2`
-  margin: 40px 0 12px 0;
+  margin: 48px 0 12px 0;
 `;
 
 const Statystyki = ({ userData }) => {
