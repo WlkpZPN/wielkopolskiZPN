@@ -47,6 +47,7 @@ const Home = ({ authData, clubData, settings }) => {
       await axios.post("/api/applications/createApplication", {
         clubID: clubData.id,
         applicationID: clubData.applications[0].id,
+        clubData,
       });
       setLoading(false);
       toast.info("Utworzono nowy wniosek");
