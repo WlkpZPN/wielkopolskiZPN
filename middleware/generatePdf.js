@@ -32,6 +32,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       leauge = "ligii młodzieżowej";
       break;
   }
+  console.log(application.histories);
   const issueDate =
     date ||
     application.histories
@@ -193,7 +194,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Na podstawie uchwały", {
     x: 50,
-    y: 400,
+    y: 420,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -201,7 +202,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Nr V/2020", {
     x: 155,
-    y: 400,
+    y: 420,
     font: regular,
     size: 10,
     color: rgb(0.07, 0.4, 0.7),
@@ -209,7 +210,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("z dnia", {
     x: 205,
-    y: 400,
+    y: 420,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -217,7 +218,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(" 30 kwietnia 2021 r.", {
     x: 232,
-    y: 400,
+    y: 420,
     font: regular,
     size: 10,
     color: rgb(0.07, 0.4, 0.7),
@@ -225,7 +226,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(" w sprawie ustalenia szczegółowych kryteriów ", {
     x: 320,
-    y: 400,
+    y: 420,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -235,39 +236,46 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     "licencyjnych dla klubów IV ligi i klas niższych Wielkopolskiego ZPN na",
     {
       x: 50,
-      y: 385,
+      y: 405,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
     }
   );
 
-  page.drawText(` sezon ${clubData.applications[0].seasons}`, {
+  page.drawText(` sezon ${clubData.applications[0].seasons} `, {
     x: 364,
-    y: 385,
+    y: 405,
     font: regular,
     size: 10,
     color: rgb(0.07, 0.4, 0.7),
   });
 
-  page.drawText(` i następnie po`, {
-    x: 435,
-    y: 385,
+  page.drawText(`następnie po`, {
+    x: 50,
+    y: 390,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
   });
 
   page.drawText(
-    "rozpatrzeniu wniosku wraz z załącznikami i uzupełnieniami Komisja ds. Licencji Klubowych postanowiła:",
+    "rozpatrzeniu wniosku wraz z załącznikami i uzupełnieniami  Komisja ds. Licencji Klubowych",
     {
-      x: 50,
-      y: 370,
+      x: 110,
+      y: 390,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
     }
   );
+  page.drawText("postanowiła:", {
+    x: 50,
+    y: 375,
+    font: regular,
+    size: 10,
+    color: rgb(0, 0, 0),
+  });
 
   page.drawText(
     `1. Przyznać licencję upoważniającą Klub do udziału w rozgrywkach o mistrzostwo ${leauge}`,
@@ -300,7 +308,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     });
   }
   //${application.sport_facilities[0].name}
-  page.drawText(`2. Mecze w roli gospodarza rozgrywane będą na obiektach: `, {
+  page.drawText(`2. Mecze w roli gospodarza rozgrywane będą na obiektach:${application.sport_facilities[0].name} ${application.sport_facilities[0].address}`, {
     x: 50,
     y: 310,
     font: regular,
@@ -308,17 +316,22 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     color: rgb(0, 0, 0),
   });
 
-  let y = 310;
-  application.sport_facilities.forEach((object) => {
-    y = y - 15;
-    page.drawText(`${object.name}, ${object.address}`, {
-      x: 60,
-      y: y,
+  
+  let objectsNames = [];
+  application.sport_facilities.forEach((object,index,arr) => {
+      if(index > 0) {
+      
+        objectsNames.push(`${object.name} ${object.address}`)
+      }
+  });
+  console.log(objectsNames);
+   page.drawText(`${objectsNames.join(', ')}`, {
+      x: 50,
+      y: 295,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
     });
-  });
 
   if (application.status_id === 10) {
     y = y - 25;

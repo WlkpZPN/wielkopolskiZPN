@@ -65,6 +65,7 @@ const Application = ({ authData, clubData, settings }) => {
                 />
               </p>
               <LicenseDecision
+              authData={authData}
                 clubData={clubData}
                 applicationID={clubData.applications[0].id}
                 statusID={8}
@@ -74,6 +75,7 @@ const Application = ({ authData, clubData, settings }) => {
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
+               authData={authData}
                 clubData={clubData}
                 statusID={10}
                 applicationID={clubData.applications[0].id}
@@ -83,6 +85,7 @@ const Application = ({ authData, clubData, settings }) => {
                 internalID={clubData.applications[0].internal_id}
               />
               <LicenseDecision
+               authData={authData}
                 clubData={null}
                 statusID={9}
                 applicationID={clubData.applications[0].id}
@@ -99,6 +102,7 @@ const Application = ({ authData, clubData, settings }) => {
           <>
             {" "}
             <LicenseDecision
+             authData={authData}
               clubData={null}
               statusID={9}
               applicationID={clubData.applications[0].id}
@@ -268,7 +272,7 @@ const Application = ({ authData, clubData, settings }) => {
         applicationID: clubData.applications[0].id,
         // link: newOrder.data.link,
         userID: authData.id,
-        amount: amount,
+        amount: parseFloat(amount),
       });
       router.replace(router.asPath);
 

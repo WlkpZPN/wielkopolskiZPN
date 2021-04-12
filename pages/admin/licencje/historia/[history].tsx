@@ -25,13 +25,13 @@ const History = ({ authData, applicationData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const history = applicationData.histories;
-
+  console.log("history", history);
   const renderHistory = () => {
     let helperArr = [];
     history.forEach((item, index, array) => {
-      const user = `${item.users.name || item.users.email},${
-        item.users.roles.name
-      }`;
+      const user = item.users
+        ? `${item.users.name || item.users.email}, ${item.users.roles.name}`
+        : "";
       switch (item.status_id) {
         case 4:
           helperArr.push(
@@ -102,7 +102,7 @@ const History = ({ authData, applicationData }) => {
           style={{
             marginRight: "32px",
             marginTop: "-6px",
-            marginBottom: "4px",
+            marginBottom: "15px",
           }}
         >
           Historia zmian {applicationData.internal_id}

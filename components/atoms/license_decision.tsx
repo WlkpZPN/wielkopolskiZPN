@@ -37,6 +37,7 @@ const LicenseDecision = ({
   internalID,
   description,
   clubData,
+  authData,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -51,6 +52,7 @@ const LicenseDecision = ({
         statusID,
         reason: reason || "",
         description,
+        userID:authData.id,
       });
       if (statusID === 8 || statusID === 10) {
         //3. send email and generate license as attachment
