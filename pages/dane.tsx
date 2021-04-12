@@ -31,6 +31,7 @@ export const getServerSideProps = protectedClientRoute(
         applications: {
           include: {
             sport_facilities: true,
+            statuses: true,
           },
         },
       },

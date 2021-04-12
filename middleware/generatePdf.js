@@ -308,30 +308,31 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     });
   }
   //${application.sport_facilities[0].name}
-  page.drawText(`2. Mecze w roli gospodarza rozgrywane będą na obiektach:${application.sport_facilities[0].name} ${application.sport_facilities[0].address}`, {
+  page.drawText(
+    `2. Mecze w roli gospodarza rozgrywane będą na obiektach:${application.sport_facilities[0].name} ${application.sport_facilities[0].address}`,
+    {
+      x: 50,
+      y: 310,
+      font: regular,
+      size: 10,
+      color: rgb(0, 0, 0),
+    }
+  );
+
+  let objectsNames = [];
+  application.sport_facilities.forEach((object, index, arr) => {
+    if (index > 0) {
+      objectsNames.push(`${object.name} ${object.address}`);
+    }
+  });
+  console.log(objectsNames);
+  page.drawText(`${objectsNames.join(", ")}`, {
     x: 50,
-    y: 310,
+    y: 295,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
   });
-
-  
-  let objectsNames = [];
-  application.sport_facilities.forEach((object,index,arr) => {
-      if(index > 0) {
-      
-        objectsNames.push(`${object.name} ${object.address}`)
-      }
-  });
-  console.log(objectsNames);
-   page.drawText(`${objectsNames.join(', ')}`, {
-      x: 50,
-      y: 295,
-      font: regular,
-      size: 10,
-      color: rgb(0, 0, 0),
-    });
 
   if (application.status_id === 10) {
     y = y - 25;
@@ -407,8 +408,8 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   page.drawImage(stampPng, {
     x: 100,
     y: 120,
-    width: scaledStamp.width,
-    height: scaledStamp.height + 38,
+    width: 80,
+    height: 80,
   });
 
   page.drawImage(signPng, {
