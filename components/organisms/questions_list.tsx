@@ -54,7 +54,12 @@ const QuestionsList = ({ questions }) => {
     let questionsArr = [];
     questions.forEach((question) => {
       questionsArr.push(
-        <StyledRow key={question.id}>
+        <StyledRow
+          onClick={() =>
+            router.push(`/admin/ustawienia/pytania/${question.id}`)
+          }
+          key={question.id}
+        >
           <Info />
           <span>{question.id}</span>
           <span>{question.created_at}</span>

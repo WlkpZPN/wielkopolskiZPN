@@ -31,9 +31,17 @@ const StyledRow = styled(TableRow)`
 const ApplicationsList = () => {
   const router = useRouter();
   const [page, setPage] = useLocalStorage("application_page", 0);
-  const { list: applications } = useContext(AdminContext);
+  const { list: applicationsArr } = useContext(AdminContext);
+  const newApplications = applicationsArr.filter(
+    (app) => app.statuses.id === 2 || app.statuses.id === 3
+  );
+  const restApplications = applicationsArr.filter(
+    (app) => app.statuses.id !== 2 || app.statuses.id !== 3
+  );
 
-  const dataToExport = applications;
+  const applications = [...newApplications, ...restApplications];
+
+  const dataToExport: any = applications;
   delete dataToExport.clubs;
   delete dataToExport.statuses;
   const totalPages = Math.ceil(applications.length / 10);

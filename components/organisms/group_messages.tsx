@@ -54,7 +54,12 @@ const GroupMessages = ({ messages }) => {
     let messageArr = [];
     messages.forEach((message) => {
       messageArr.push(
-        <StyledRow key={message.id}>
+        <StyledRow
+          onClick={() =>
+            router.push(`/admin/ustawienia/wiadomosci/${message.id}`)
+          }
+          key={message.id}
+        >
           <MailIcon />
           <span>{message.id}</span>
           <span>{message.send_date || "nie wysłano"}</span>

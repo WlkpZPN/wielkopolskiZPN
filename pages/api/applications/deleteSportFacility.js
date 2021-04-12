@@ -6,6 +6,12 @@ export default async (req, res) => {
     console.log(facilityId);
 
     try {
+
+      await prisma.application_attachments.deleteMany({
+        where: {
+          sport_facilities_id:parseInt(facilityId),
+        }
+      })
       await prisma.sport_facilities.delete({
         where: {
           id: parseInt(facilityId),

@@ -134,7 +134,9 @@ const LoginPage = ({ userData }) => {
         />
 
         <Header>Platforma licencyjna</Header>
-        <p style={{ marginBottom: "64px", fontSize: "18px" }}>
+        <p
+          style={{ marginTop: "15px", marginBottom: "64px", fontSize: "18px" }}
+        >
           Panel administracyjny
         </p>
         {userData ? (
