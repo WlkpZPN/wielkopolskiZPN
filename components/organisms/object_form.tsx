@@ -345,8 +345,16 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </>
           ) : null}
           <Label width="max-content">
-            Całkowita liczba indywidualnych miejsc siedzących z oparciami
-            udostępniona dla publiczności
+            <span>
+              Całkowita liczba indywidualnych miejsc siedzących z oparciami
+              udostępniona dla publiczności
+              {context.formData.stepOne.leauge.toLowerCase() ===
+              "v liga" ? null : (
+                <Info
+                  text={`Zaleca się, aby pojemność stadionu wynosiła przynajmniej: ${capacityRecommendations()} miejsc siedzących spełniających wymogi indywidualnych miejsc siedzących  `}
+                />
+              )}
+            </span>
             <NumericInput
               value={data.I03_total_capacity}
               onChange={(e) =>
@@ -355,12 +363,6 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               suffix={null}
               placeholder="0"
             />
-            {context.formData.stepOne.leauge.toLowerCase() ===
-            "v liga" ? null : (
-              <Info
-                text={`Zaleca się, aby pojemność stadionu wynosiła przynajmniej: ${capacityRecommendations()} miejsc siedzących spełniających wymogi indywidualnych miejsc siedzących  `}
-              />
-            )}
           </Label>
 
           <Label pointer margin="24px 0" direction="row">

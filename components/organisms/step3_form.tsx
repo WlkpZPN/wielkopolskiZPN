@@ -86,6 +86,10 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               />
             </Label>
             <Label width="max-content">
+              <Info
+                text="W czasie trwania całego meczu zespołu seniorów uczestniczyć będzie minimum podana poniżej liczba zawodników młodzieżowych do lat 21 (zawodnikami młodzieżowymi są zawodnicy posiadający obywatelstwo polskie, którzy w roku kalendarzowym, w którym następuje zakończenie danego sezonu rozgrywkowego, ukończą 21. rok życia oraz zawodnicy młodsi).
+"
+              />
               Udział zawodników młodzieżowych
               <NumericInput
                 value={formData.shareOfYouthGroups}
@@ -94,10 +98,6 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
                 }
                 suffix=""
                 placeholder="0"
-              />
-              <Info
-                text="W czasie trwania całego meczu zespołu seniorów uczestniczyć będzie minimum podana poniżej liczba zawodników młodzieżowych do lat 21 (zawodnikami młodzieżowymi są zawodnicy posiadający obywatelstwo polskie, którzy w roku kalendarzowym, w którym następuje zakończenie danego sezonu rozgrywkowego, ukończą 21. rok życia oraz zawodnicy młodsi).
-"
               />
             </Label>
           </>

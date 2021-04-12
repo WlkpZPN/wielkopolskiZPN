@@ -744,10 +744,8 @@ const ClubApplication = ({
       default:
         break;
     }
-   
   };
   const renderCurrentStep = () => {
-    console.log("rendering step", step);
     switch (step) {
       case 1:
         return (

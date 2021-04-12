@@ -6,7 +6,7 @@ const Label = styled.label`
   flex-direction: ${({ direction }) => (direction ? direction : "column")};
   font-weight: 600;
   margin: ${({ margin }) => (margin ? margin : "24px 0")};
-  position: relative;
+  /* position: relative; */
   z-index: 0;
   width: ${({ width }) => (width ? width : "100%")};
   cursor: ${({ pointer }) => (pointer ? "pointer" : "initial")};
