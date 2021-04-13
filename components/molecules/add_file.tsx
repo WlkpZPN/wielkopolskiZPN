@@ -217,7 +217,7 @@ const AddFile = ({ file, category, id, text }) => {
   };
   return (
     <Parent>
-      <Wrapper>
+      { loading ? <Loader/> : <Wrapper>
         {text ? (
           <Info text={text}>
             <InfoCircle />
@@ -259,7 +259,49 @@ const AddFile = ({ file, category, id, text }) => {
             Usuń
           </DeleteButton>
         ) : null}
-      </Wrapper>
+      </Wrapper><Wrapper>
+        {text ? (
+          <Info text={text}>
+            <InfoCircle />
+          </Info>
+        ) : null}
+
+        <FileInfo>
+          <FilePdf />
+          {file ? (
+            <Link target="_blank" href={file.filepath}>
+              {file.name}
+            </Link>
+          ) : (
+            <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+              {"Brak załączonego dokumentu."}
+            </span>
+          )}
+        </FileInfo>
+
+        <Label>
+          {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
+
+          <FileInput
+            id="file"
+            type="file"
+            name="file"
+            onChange={handleChange}
+          />
+        </Label>
+        {file ? (
+          <DeleteButton
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              // handleDelete(file.id);
+              deleteFile();
+            }}
+          >
+            Usuń
+          </DeleteButton>
+        ) : null}
+      </Wrapper>}
     </Parent>
   );
 };
