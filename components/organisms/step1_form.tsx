@@ -34,43 +34,19 @@ const StepOneForm = ({
     clearErrors,
     show_buttons,
     sendApplication,
+    completedSteps,
   } = useContext(ApplicationContext);
   // console.log(error);
 
   const [loading, setLoading] = useState(false);
 
-  const nextStep = () => {
-    // if (checkData()) {
-    //   handleStepFill("stepOne", true);
-    // } else {
-    //   handleStepFill("stepOne", false);
-    // }
-    handleStepChange("next");
-  };
-
-  const submitForm = (e) => {
-    e.preventDefault();
-    // to do later
-    // if (!checkData()) {
-    //   window.scrollTo(0, 0);
-    //   return;
-    // }
-    // // TO DO: field type validation,change stepBox view
-    // if (checkData()) {
-    //   handleStepFill("stepOne", { completed: true, error: false });
-    // }
-    handleStepChange("next");
-  };
-
+  console.log(completedSteps);
   return (
     <>
       {loading ? (
         <StyledSpinner />
       ) : (
-        <FormTemplate
-          onChange={() => clearErrors("stepOne")}
-          onSubmit={submitForm}
-        >
+        <FormTemplate onChange={() => clearErrors("stepOne")}>
           <Fieldset disabled={readOnly}>
             {<ErrorMessage>{error.stepOne}</ErrorMessage>}
             <Select
@@ -216,14 +192,8 @@ const StepOneForm = ({
                   Zapisz werjse roboczą
                 </PrimaryButton>
               ) : null}
-              <PrimaryButton
-                type="button"
-                onClick={() => handleStepChange("next")}
-              >
-                Kolejny krok
-              </PrimaryButton>
 
-              {error.stepOne ? (
+              {completedSteps.stepOne === "error" ? (
                 <PrimaryButton
                   hoverColor="success"
                   color="successDark"
@@ -233,6 +203,12 @@ const StepOneForm = ({
                   Zatwierdź i wyślij
                 </PrimaryButton>
               ) : null}
+              <PrimaryButton
+                type="button"
+                onClick={() => handleStepChange("next")}
+              >
+                Kolejny krok
+              </PrimaryButton>
             </FormRow>
           </Fieldset>
         </FormTemplate>

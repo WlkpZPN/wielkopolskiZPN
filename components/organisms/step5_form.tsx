@@ -23,7 +23,7 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
   const handleChange = context.handleFormChange;
   const formData = context.formData.stepFive;
   const show_buttons = context.show_buttons;
-  const { error, clearErrors } = context;
+  const { error, clearErrors, completedSteps } = context;
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -91,7 +91,7 @@ Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Lice
               >
                 Zapisz wersję roboczą
               </PrimaryButton>
-              {error.stepFive ? (
+              {completedSteps.stepFive === "error" ? (
                 <PrimaryButton
                   hoverColor="success"
                   color="successDark"

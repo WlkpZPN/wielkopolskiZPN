@@ -25,7 +25,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
   const handleChange = context.handleFormChange;
   const show_buttons = context.show_buttons;
 
-  const { error, clearErrors, sendApplication } = context;
+  const { error, clearErrors, sendApplication, completedSteps } = context;
   const submitForm = (e) => {
     e.preventDefault();
 
@@ -85,12 +85,12 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
               >
                 Zapisz wersję roboczą
               </PrimaryButton>
-              {error.stepSix ? (
+              {completedSteps.stepSix === "error" ? (
                 <PrimaryButton
                   hoverColor="success"
                   color="successDark"
                   type="button"
-                  onClick={() => context.sendApplication()}
+                  onClick={() => sendApplication()}
                   style={{ marginRight: "16px" }}
                 >
                   Zatwierdź i wyślij

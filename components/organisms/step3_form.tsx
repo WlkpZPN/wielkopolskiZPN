@@ -35,6 +35,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     show_buttons,
     sendApplication,
     clubData,
+    completedSteps,
   } = context;
 
   const handleSubmit = (e) => {
@@ -216,7 +217,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               >
                 Zapisz wersję roboczą
               </PrimaryButton>
-              {error.stepThree ? (
+              {completedSteps.stepThree === "error" ? (
                 <PrimaryButton
                   hoverColor="success"
                   color="successDark"

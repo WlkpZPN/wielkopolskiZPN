@@ -41,7 +41,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   const { applications } = context.clubData;
   const show_buttons = context.show_buttons;
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
-  const { error, clearErrors } = context;
+  const { error, clearErrors, completedSteps } = context;
   const [internalError, setInternalError] = useState("");
 
   const handleNewForm = () => {
@@ -140,7 +140,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
             >
               Zapisz wersję roboczą
             </PrimaryButton>
-            {error.stepFour ? (
+            {completedSteps.stepFour === "error" ? (
               <PrimaryButton
                 style={{ marginRight: "16px" }}
                 hoverColor="success"

@@ -23,7 +23,7 @@ const TableHeader = styled.span`
 
 const StyledRow = styled(TableRow)`
   grid-template-columns:
-    50px 100px minmax(50px, 100px) minmax(60px, 250px)
+    30px 100px minmax(50px, 100px) minmax(60px, 250px)
     minmax(200px, 350px) auto;
 `;
 

@@ -17,6 +17,8 @@ const Text = styled.span`
 const Info = styled(InfoCircle)`
   width: 26px;
   color: ${({ theme }) => theme.primary};
+  margin: 0 auto;
+  align-self: center;
 `;
 
 const Wrapper = styled.div`
@@ -29,11 +31,11 @@ const TableHeader = styled.span`
 
 const StyledRow = styled(TableRow)`
   grid-template-columns:
-    20px 80px minmax(100px, 150px) minmax(150px, 250px)
+    30px 80px minmax(100px, 150px) minmax(150px, 250px)
     minmax(200px, 350px) auto;
 
   max-height: 50px;
-  padding: 8px 0;
+  padding: 8px 12;
 `;
 
 const QuestionsList = ({ questions }) => {

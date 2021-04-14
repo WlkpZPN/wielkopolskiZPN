@@ -432,6 +432,24 @@ const ClubApplication = ({
       toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
+
+    if (
+      (formData.stepOne.leauge === "iv liga" ||
+        formData.stepOne.leauge === "v liga" ||
+        formData.stepOne.leauge === "klasa okręgowa") &&
+      formData.stepThree.youthGroupsPossession ===
+        "wystepujemy w rozgrywkach klasy A"
+    ) {
+      handleStepFill("stepThree", "error");
+      setError((state) => ({
+        ...state,
+        stepThree:
+          "Deklaracja ligii z kroku 1 nie zgadza się z deklaracją powyżej",
+      }));
+      window.scrollTo(0, 0);
+
+      return;
+    }
     //step three
     result = checkStepThree(formData.stepThree);
     if (result.valid === false) {
@@ -833,6 +851,7 @@ const ClubApplication = ({
         setFormData,
         deleteFacilityFile,
         fileEdit,
+        completedSteps,
       }}
     >
       <div>

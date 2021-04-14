@@ -28,6 +28,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     show_buttons,
     sendApplication,
     clubData,
+    completedSteps,
   } = context;
   const fileArr = context.formData.stepTwo.krs_documents;
   const handleChange = context.handleFormChange;
@@ -126,8 +127,9 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
               >
                 Zapisz wersję roboczą
               </PrimaryButton>
-              {error.stepTwo ? (
+              {completedSteps.stepTwo === "error" ? (
                 <PrimaryButton
+                  style={{ marginRight: "16px" }}
                   hoverColor="success"
                   color="successDark"
                   type="button"
@@ -138,11 +140,7 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
               ) : null}
             </>
           ) : null}
-          <PrimaryButton
-            style={{ marginRight: "16px" }}
-            type="submit"
-            onClick={nextStep}
-          >
+          <PrimaryButton type="submit" onClick={nextStep}>
             Kolejny krok
           </PrimaryButton>
         </div>
