@@ -8,6 +8,12 @@ import TableRow from "../atoms/table_row";
 import PrimaryButton from "../atoms/primary_button";
 import NewQUestionModal from "../organisms/new_question_modal";
 
+const Text = styled.span`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 const Info = styled(InfoCircle)`
   width: 26px;
   color: ${({ theme }) => theme.primary};
@@ -23,10 +29,11 @@ const TableHeader = styled.span`
 
 const StyledRow = styled(TableRow)`
   grid-template-columns:
-    50px 80px minmax(150px, 250px) minmax(150px, 250px)
+    20px 80px minmax(100px, 150px) minmax(150px, 250px)
     minmax(200px, 350px) auto;
 
   max-height: 50px;
+  padding: 8px 0;
 `;
 
 const QuestionsList = ({ questions }) => {
@@ -62,9 +69,9 @@ const QuestionsList = ({ questions }) => {
         >
           <Info />
           <span>{question.id}</span>
-          <span>{question.created_at}</span>
-          <span>{question.category}</span>
-          <span>{question.question}</span>
+          <Text>{question.created_at}</Text>
+          <Text>{question.category}</Text>
+          <Text>{question.question}</Text>
           <div style={{ display: "flex" }}>
             <PrimaryButton
               style={{ marginRight: "8px" }}

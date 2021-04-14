@@ -21,6 +21,7 @@ import Label from "../../../../components/atoms/form_label";
 import QuestionsList from "../../../../components/organisms/questions_list";
 import LicenseDecision from "../../../../components/atoms/license_decision";
 import RichTextEditor from "../../../../components/organisms/rich_text_editor";
+
 const Application = ({ authData, allQuestions, settings, question }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -75,7 +76,7 @@ const Application = ({ authData, allQuestions, settings, question }) => {
   };
 
   return (
-    <AdminLayout view="wnioski" userData={authData}>
+    <AdminLayout view="ustawienia" userData={authData}>
       <div
         style={{
           display: "flex",
