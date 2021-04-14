@@ -95,7 +95,7 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
           name="Oświadczenie w przedmiocie udziału w rozgrywkach"
         />
         <FormStatement
-          text=""
+          text="Oświadczam(y), iż Klub oraz jego przedstawiciele będę respektować i przestrzegać przepisów Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych - RODO) (Dz. Urz. UE L 2016 Nr 119, s.1) oraz realizować obowiązki nałożone przez ww. akt prawny, tj. w szczególności  wypełnianie obowiązku informacyjnego (art. 13 i 14 RODO); posiadania odpowiedniej podstawy prawnej do przetwarzania danych (art. 6 RODO); przestrzegania zasad przetwarzania danych osobowych (art. 5 RODO); nadawania upoważnień do przetwarzania danych osobowych (art. 29 RODO); zawierania umów powierzenia przetwarzania danych osobowych, wówczas kiedy jest to wymagane (art. 28 RODO); zapewnienia bezpieczeństwa przetwarzania danych osobowych oraz wdrożenia odpowiednich środków organizacyjnych i technicznych w tym zakresie (art. 32 RODO). Jednocześnie oświadczamy, że przed dopuszczeniem osoby do działalności związanej z wychowaniem, edukacją, wypoczynkiem, leczeniem małoletnich lub z opieką nad nimi, dokonujemy weryfikacji takiej osoby w oparciu o przepisy ustawy z dnia 13 maja 2016 r., o przeciwdziałaniu zagrożeniom przestępczością na tle seksualnym."
           value={data.privateDataProtection}
           handleChange={() =>
             handleChange(

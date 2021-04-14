@@ -111,7 +111,7 @@ const CorrectModal = ({ internalId, id, visible, setVisibile, userID }) => {
       autoClose: 1500,
     });
     setVisibile(false);
-    router.replace(router.asPath);
+    router.replace("/admin");
   };
   return (
     <Background onClick={handleClose} visible={visible}>

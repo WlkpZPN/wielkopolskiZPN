@@ -8,20 +8,15 @@ const Header = styled.h2`
   margin: 48px 0 12px 0;
 `;
 
+const Title = styled.h1`
+  margin-top: 24px;
+  margin-bottom: 40px;
+`;
+
 const Statystyki = ({ userData }) => {
   return (
     <AdminLayout userData={userData} view="statystyki">
-      <h1>Statystyki</h1>
-
-      <Header>Wnioski robocze</Header>
-      <ProgressContainer
-        status={1}
-        style={{
-          height: "32px",
-          maxWidth: "600px",
-          width: "100%",
-        }}
-      />
+      <Title>Statystyki</Title>
 
       <Header>Wnioski zaakceptowane opłacone</Header>
       <ProgressContainer
@@ -32,6 +27,7 @@ const Statystyki = ({ userData }) => {
           width: "100%",
         }}
       />
+
       <Header>Wnioski zaakceptowane nieopłacone</Header>
       <ProgressContainer
         status={6}
@@ -41,10 +37,28 @@ const Statystyki = ({ userData }) => {
           width: "100%",
         }}
       />
-
-      <Header>Licencje standardowe</Header>
+      <Header>Wnioski odrzucone</Header>
       <ProgressContainer
-        status={8}
+        status={5}
+        style={{
+          height: "32px",
+          maxWidth: "600px",
+          width: "100%",
+        }}
+      />
+
+      <Header>Wnioski wysłane</Header>
+      <ProgressContainer
+        status={2}
+        style={{
+          height: "32px",
+          maxWidth: "600px",
+          width: "100%",
+        }}
+      />
+      <Header>Wnioski niewypełnione</Header>
+      <ProgressContainer
+        status={0}
         style={{
           height: "32px",
           maxWidth: "600px",

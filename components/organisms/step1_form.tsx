@@ -80,7 +80,7 @@ const StepOneForm = ({
               <option value="iv liga">IV liga</option>
               <option value="v liga">V liga</option>
               <option value="klasa okręgowa">Klasa okręgowa</option>
-              <option value="klasa b">Klasa A</option>
+              <option value="klasa a">Klasa A</option>
               <option value="klasa b">Klasa B</option>
               <option value="młodzież">Ligi młodzieżowe</option>
             </Select>

@@ -86,7 +86,13 @@ const Application = ({ authData, allQuestions, settings, question }) => {
       >
         <div style={{ display: "flex" }}>
           <span>
-            <h1 style={{ marginRight: "32px", marginTop: "-3px" }}>
+            <h1
+              style={{
+                marginRight: "32px",
+                marginTop: "-3px",
+                marginBottom: "15px",
+              }}
+            >
               Pytanie nr {question.id}
             </h1>
             <Link href="/admin/ustawienia">

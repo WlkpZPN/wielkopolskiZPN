@@ -101,7 +101,7 @@ const Uzytkownicy = ({ users, roles, authData }) => {
           margin: "24px 0 40px 0",
         }}
       >
-        <h1>Uzytkownicy {loading && <StyledSpinner width="40px" />}</h1>
+        <h1>Użytkownicy {loading && <StyledSpinner width="40px" />}</h1>
         <PrimaryButton onClick={() => setVisibility(true)} fontWeight="600">
           + Dodaj użytkownika
         </PrimaryButton>

@@ -1010,7 +1010,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I12_2, objectIndex, "I12_2")
                 }
               />
-              Szatnia zawodników drużyny gospodarzy spełnia wymogi wynikające z
+              Szatnia zawodników drużyny gości spełnia wymogi wynikające z
               niniejszego kryterium
             </span>
           </Label>
