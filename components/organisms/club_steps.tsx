@@ -18,17 +18,17 @@ const Wrapper = styled.div`
 
 const ClubSteps = ({ status }) => {
   const { history } = useContext(ClubContext);
-
+  console.log(history.find((el) => el.status_id === 2 || el.status_id === 3));
   const renderLicenseDate = () => {
     switch (status) {
       case "licencja wydana":
-        return history.find((el) => el.status_id === 8).created_at;
+        return history.find((el) => el.status_id === 8)?.created_at;
       case "licencja niewydana":
-        return history.find((el) => el.status_id === 9).created_at;
+        return history.find((el) => el.status_id === 9)?.created_at;
       case "licencja wydana z nadzorem":
-        return history.find((el) => el.status_id === 10).created_at;
+        return history.find((el) => el.status_id === 10)?.created_at;
       case "licencja cofnieta":
-        return history.find((el) => el.status_id === 11).created_at;
+        return history.find((el) => el.status_id === 11)?.created_at;
     }
   };
   const renderStatus = () => {
@@ -41,7 +41,10 @@ const ClubSteps = ({ status }) => {
               <HistoryIcon hidden={false} state="completed" number={1} />
               <span>
                 Złożenie wniosku licencyjnego. <br />
-                {history.find((el) => el.status_id === 2).created_at}
+                {
+                  history.find((el) => el.status_id === 2 || el.status_id === 3)
+                    .created_at
+                }
               </span>
             </Row>
             <Row>
@@ -73,7 +76,10 @@ const ClubSteps = ({ status }) => {
               <HistoryIcon hidden={false} state="completed" number={1} />
               <span>
                 Złożenie wniosku licencyjnego. <br />
-                {history.find((el) => el.status_id === 2).created_at}
+                {
+                  history.find((el) => el.status_id === 2 || el.status_id === 3)
+                    .created_at
+                }
               </span>
             </Row>
             <Row>
@@ -106,7 +112,10 @@ const ClubSteps = ({ status }) => {
               <HistoryIcon hidden={false} state="completed" number={1} />
               <span>
                 Złożenie wniosku licencyjnego. <br />
-                {history.find((el) => el.status_id === 2).created_at}
+                {
+                  history.find((el) => el.status_id === 2 || el.status_id === 3)
+                    .created_at
+                }
               </span>
             </Row>
             <Row>
@@ -143,7 +152,10 @@ const ClubSteps = ({ status }) => {
               <HistoryIcon hidden={false} state="completed" number={1} />
               <span>
                 Złożenie wniosku licencyjnego. <br />
-                {history.find((el) => el.status_id === 2).created_at}
+                {
+                  history.find((el) => el.status_id === 2 || el.status_id === 3)
+                    .created_at
+                }
               </span>
             </Row>
             <Row>
@@ -172,7 +184,13 @@ const ClubSteps = ({ status }) => {
           <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
-              <span>Złożenie wniosku licencyjnego.</span>
+              <span>
+                Złożenie wniosku licencyjnego. <br />
+                {
+                  history.find((el) => el.status_id === 2 || el.status_id === 3)
+                    .created_at
+                }
+              </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="error" number={2} />
@@ -202,7 +220,14 @@ const ClubSteps = ({ status }) => {
           <Wrapper>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={1} />
-              <span>Złożenie wniosku licencyjnego.</span>
+              <span>
+                Złożenie wniosku licencyjnego.
+                <br />
+                {
+                  history.find((el) => el.status_id === 2 || el.status_id === 3)
+                    .created_at
+                }
+              </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={2} />
@@ -262,6 +287,7 @@ const ClubSteps = ({ status }) => {
   };
 
   return renderStatus();
+  //return <p></p>;
 };
 
 export default ClubSteps;

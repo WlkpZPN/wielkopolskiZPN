@@ -40,7 +40,6 @@ const StepOneForm = ({
 
   const [loading, setLoading] = useState(false);
 
-  console.log(completedSteps);
   return (
     <>
       {loading ? (
