@@ -6,7 +6,7 @@ import "../styles/scroll.css";
 import { ToastContainer } from "react-toastify";
 import NProgress from "nprogress";
 import Router from "next/router";
-import "nprogress/nprogress.css";
+import "../styles/customProgress.css";
 
 NProgress.configure({
   minimum: 0.3,
