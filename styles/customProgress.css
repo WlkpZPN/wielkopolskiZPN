@@ -4,7 +4,7 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   z-index: 200;
@@ -62,10 +62,8 @@
   border-top-color: #29d;
   border-left-color: #29d;
   border-radius: 50%; */
-  background: url("/logo.svg");
-  filter: invert(22%) sepia(33%) saturate(5278%) hue-rotate(194deg)
-    brightness(95%) contrast(101%);
-  fill: #0056a5;
+  background: url("/logo_white.svg");
+
   background-size: contain;
   background-repeat: no-repeat;
   -webkit-animation: nprogress-spinner 400ms linear infinite;

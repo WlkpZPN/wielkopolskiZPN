@@ -118,7 +118,7 @@ model clubs {
   id             Int            @id @default(autoincrement())
   name           String?        @db.VarChar(300)
   address        String?        @db.VarChar(200)
-  email          String?        @unique @db.VarChar(300)
+  email          String?        @db.VarChar(300)
   phone          String?        @db.VarChar(300)
   email_2        String?        @db.VarChar(300)
   agent_name     String?        @db.VarChar(300)
