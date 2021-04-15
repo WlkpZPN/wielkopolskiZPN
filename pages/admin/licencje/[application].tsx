@@ -199,8 +199,8 @@ const Application = ({ authData, clubData, settings }) => {
               Zaakceptuj
             </PrimaryButton>
             <PrimaryButton
-              hoverColor="warningDark"
-              color="warning"
+              color="warningDark"
+              hoverColor="warning"
               style={{ margin: "0 6px" }}
               onClick={() => setVisible(true)}
             >

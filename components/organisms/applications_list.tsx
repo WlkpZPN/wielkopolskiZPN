@@ -44,16 +44,8 @@ const StyledRow = styled(TableRow)`
 const ApplicationsList = ({ dateOrder, setDateOrder }) => {
   const router = useRouter();
   const [page, setPage] = useLocalStorage("application_page", 0);
-  const { list: applicationsArr } = useContext(AdminContext);
-  const newApplications = applicationsArr.filter(
-    (app) => app.statuses.id === 2 || app.statuses.id === 3
-  );
-  const restApplications = applicationsArr.filter(
-    (app) => app.statuses.id !== 2 && app.statuses.id !== 3
-  );
-  console.log("new", newApplications);
-  console.log("old", restApplications);
-  const applications = [...newApplications, ...restApplications];
+  const { list: applications } = useContext(AdminContext);
+
   console.log(applications);
   const dataToExport: any = applications;
   delete dataToExport.clubs;
