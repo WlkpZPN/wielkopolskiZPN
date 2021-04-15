@@ -32,7 +32,7 @@ export default (req, res) => {
         ip = req.connection.remoteAddress;
       }
       // CREATE NEW ORDER
-
+      console.log("TOKEN DATA", tokenData);
       const newOrder = await axios({
         maxRedirects: 0,
         method: "POST",
@@ -85,7 +85,7 @@ export default (req, res) => {
       });
       return resolve();
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err);
       res.status(400);
       res.send(err.data);
       return resolve();
