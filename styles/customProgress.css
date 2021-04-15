@@ -7,6 +7,7 @@
   background: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
+  z-index: 200;
 }
 
 #nprogress .bar {
@@ -53,6 +54,10 @@
   height: 150px;
   box-sizing: border-box;
   opacity: 1;
+  z-index: 1000;
+  stroke: 1;
+  stroke-opacity: 1;
+  fill-opacity: 1;
   /* border: solid 2px transparent;
   border-top-color: #29d;
   border-left-color: #29d;
