@@ -91,7 +91,7 @@ export default (req, res) => {
         >
           <p>Z poważaniem,</p>
           <p style="margin: 2px 0">Wielkopolski Związek Piłki Nożnej</p>
-          <p style="margin: 2px 0">ul.Warmińska 1</p>
+          <p style="margin: 2px 0">ul. Warmińska 1</p>
           <p style="margin: 2px 0">60-622 Poznań</p>
 
           <a
@@ -103,7 +103,7 @@ export default (req, res) => {
             style="color: #0156a6; text-decoration: none"
             href="https://wielkopolskizpn.pl/"
             target="_blank"
-            >www.wielkopolskizpn.pl/</a
+            >www.wielkopolskizpn.pl</a
           >
           <p style="margin: 4px 0">+ 61 679 48 30</p>
         </td>

@@ -105,7 +105,7 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
               2
             )
           }
-          name=" Oświadczenie o stosowaniu dokumentacji ochorny danych osobowych"
+          name=" Oświadczenie o stosowaniu dokumentacji ochrony danych osobowych"
         />
 
         <div>
