@@ -32,7 +32,7 @@ const MainPage = ({ userData, applications }) => {
   const [filterType, setFilterType] = useState(0);
   const [query, setQuery] = useState("");
   const [list, setList] = useState([]);
-  const [dateOrder, setDateOrder] = useState(false);
+  const [dateOrder, setDateOrder] = useState(null);
 
   useEffect(() => {
     let helperArr = [...applications];
@@ -66,7 +66,7 @@ const MainPage = ({ userData, applications }) => {
     x = b.created_at.split(",")[0].split("/");
     const dateB = new Date(+x[2], +x[1], +x[0]);
     console.log(dateA, dateB);
-    if (dateOrder) {
+    if (dateOrder === "asc") {
       if (dateA < dateB) {
         return -1;
       }
@@ -75,7 +75,7 @@ const MainPage = ({ userData, applications }) => {
       }
     }
 
-    if (!dateOrder) {
+    if (dateOrder === "desc") {
       if (dateA < dateB) {
         return 1;
       }

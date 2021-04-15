@@ -136,8 +136,8 @@ const ClubSteps = ({ status }) => {
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="default" number={4} />
-              <span>Weryfikacja płatności przez Wielkopolski ZPN</span>
-              {history.find((el) => el.status_id === 7).created_at}
+              <span>Weryfikacja płatności przez Wielkopolski ZPN <br/>  {history.find((el) => el.status_id === 7).created_at}</span>
+             
             </Row>
             <Row>
               <HistoryIcon hidden={true} state="default" number={5} />
@@ -172,6 +172,8 @@ const ClubSteps = ({ status }) => {
             <Row>
               <HistoryIcon hidden={false} state="default" number={4} />
               <span>Weryfikacja płatności przez Wielkopolski ZPN</span>
+
+              
             </Row>
             <Row>
               <HistoryIcon hidden={true} state="default" number={5} />
@@ -234,16 +236,18 @@ const ClubSteps = ({ status }) => {
               <span>
                 Weryfikacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
-                klubu
+                klubu<br />{" "}
+                {history.find((el) => el.status_id === 6).created_at}
               </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={3} />
-              <span>Dokonanie płatności przez klub</span>
+              <span>Dokonanie płatności przez klub <br />
+                {history.find((el) => el.status_id === 7).created_at}</span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={4} />
-              <span>Weryfikacja płatności przez Wielkopolski ZPN</span>
+              <span>Weryfikacja płatności przez Wielkopolski ZPN <br/>  {history.find((el) => el.status_id === 7).created_at}</span>
             </Row>
             <Row>
               <HistoryIcon hidden={true} state="completed" number={5} />

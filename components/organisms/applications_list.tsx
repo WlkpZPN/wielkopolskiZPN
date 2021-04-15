@@ -5,6 +5,7 @@ import { AdminContext } from "../../pages/admin/index";
 import { useLocalStorage } from "../../middleware/hooks";
 //icons
 import { Download } from "@styled-icons/entypo/Download";
+import { DownArrow } from "@styled-icons/boxicons-solid/DownArrow";
 //components
 import { exportApplicationData } from "../../middleware/utils";
 import TableRow from "../atoms/table_row";
@@ -14,6 +15,17 @@ import TablePagination from "../molecules/table_pagination";
 import ClubName from "../atoms/club_name";
 import PrimaryButton from "../atoms/primary_button";
 import { getInternalId } from "../../middleware/utils";
+
+const Arrow = styled(DownArrow)`
+  width: 15px;
+  transform: ${({ rotate }) => (rotate ? "rotate(180deg)" : "rotate(0deg)")};
+  color: ${({ theme, active }) => active && theme.primary};
+`;
+
+const ArrowContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Wrapper = styled.div`
   margin: 24px 0;
@@ -26,10 +38,10 @@ const TableHeader = styled.span`
 
 const StyledRow = styled(TableRow)`
   //grid-template-columns: 30px 60px minmax(100px, 150px) minmax(60px, 250px) 150px 160px 100px auto;
-  grid-template-columns: 30px 100px minmax(100px, 160px) minmax(60px, 350px) 150px 100px auto;
+  grid-template-columns: 30px 100px minmax(100px, 180px) minmax(60px, 350px) 150px 100px auto;
 `;
 
-const ApplicationsList = ({dateOrder,setDateOrder}) => {
+const ApplicationsList = ({ dateOrder, setDateOrder }) => {
   const router = useRouter();
   const [page, setPage] = useLocalStorage("application_page", 0);
   const { list: applicationsArr } = useContext(AdminContext);
@@ -94,13 +106,37 @@ const ApplicationsList = ({dateOrder,setDateOrder}) => {
 
     return applicationsArray;
   };
+
+  const changeOrder = () => {
+    if (!dateOrder) {
+      setDateOrder("desc");
+      return;
+    }
+    if (dateOrder === "desc") {
+      setDateOrder("asc");
+      return;
+    }
+
+    if (dateOrder === "asc") {
+      setDateOrder("desc");
+    }
+  };
   return (
     <Wrapper>
       <div>
         <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
           <span></span>
           <TableHeader>ID wniosku</TableHeader>
-          <TableHeader onClick={() => setDateOrder(!dateOrder)}>Data złożenia wniosku</TableHeader>
+          <TableHeader
+            style={{ display: "flex", alignItems: "center" }}
+            onClick={changeOrder}
+          >
+            Data złożenia wniosku &nbsp;
+            <ArrowContainer>
+              <Arrow active={dateOrder === "asc"} rotate />{" "}
+              <Arrow active={dateOrder === "desc"} />
+            </ArrowContainer>
+          </TableHeader>
           <TableHeader>Klub</TableHeader>
           <TableHeader>Status</TableHeader>
           {/* <TableHeader>Pełnomocnik</TableHeader> */}
