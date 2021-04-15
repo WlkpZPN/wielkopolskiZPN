@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useLocalStorage } from "../../middleware/hooks";
 import FormTemplate from "../atoms/form_template";
 import Select from "../atoms/form_select";
@@ -39,7 +39,31 @@ const StepOneForm = ({
   // console.log(error);
 
   const [loading, setLoading] = useState(false);
-
+  useEffect(() => {
+    switch (data.leauge) {
+      case "iv liga":
+        handleChange("iv liga", "leauge", 1);
+        return;
+      case "v liga":
+        handleChange("v liga", "leauge", 1);
+        return;
+      case "klasa okręgowa":
+        handleChange("iv liga", "leauge", 1);
+        return;
+      case "klasa a":
+        handleChange("iv liga", "leauge", 1);
+        return;
+      case "klasa b":
+        handleChange("iv liga", "leauge", 1);
+        return;
+      case "młodzież":
+        handleChange("iv liga", "leauge", 1);
+        return;
+      default:
+        handleChange(null, "leauge", 1);
+        return;
+    }
+  }, []);
   return (
     <>
       {loading ? (
@@ -52,6 +76,7 @@ const StepOneForm = ({
               value={data.leauge}
               onChange={(e) => handleChange(e.target.value, "leauge", 1)}
             >
+              <option value={null}>brak</option>
               <option value="iv liga">IV liga</option>
               <option value="v liga">V liga</option>
               <option value="klasa okręgowa">Klasa okręgowa</option>

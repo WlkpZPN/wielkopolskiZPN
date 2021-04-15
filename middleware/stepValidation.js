@@ -1,7 +1,8 @@
 import { validateEmail } from "./validation";
 
 export const checkStepOne = (data) => {
-  if (!data.leauge) {
+  console.log("leauge", data.leauge);
+  if (!data.leauge || data.leauge === 'brak') {
     return {
       valid: false,
       text: "Proszę podać ligę rozgrywkową",
