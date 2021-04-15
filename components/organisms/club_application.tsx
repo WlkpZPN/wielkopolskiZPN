@@ -517,83 +517,12 @@ const ClubApplication = ({
     // update data and status of application
   };
 
-  const uploadFiles = async () => {
-    const config = {
-      headers: { "Content-type": "multipart/form-data" },
-      onUploadProgress: (event) => {
-        console.log(
-          `Current progress:`,
-          Math.round((event.loaded * 100) / event.total)
-        );
-      },
-    };
-    const applicationFiles = convertToFormData([
-      ...formData.stepTwo.krs_documents,
-      ...formData.stepThree.agreement_documents,
-    ]);
-    let facilityFilesUrls = [];
-    let helperArr = [];
-    formData.stepFour.sport_facilities.forEach((facility) => {
-      if (facility.applications_attachments) {
-        helperArr.push(...facility.applications_attachments);
-        facilityFilesUrls.push({
-          id: facility.id,
-          files: facility.applications_attachments,
-        });
-      }
-    });
-
-    const facilityFilesData = convertToFormData(helperArr);
-    try {
-      //1. upload step one and step two files
-      if (
-        formData.stepTwo.krs_documents.length > 0 ||
-        formData.stepThree.agreement_documents.length > 0
-      ) {
-        console.log("czy to sie wykonuje");
-        await axios.post(
-          "/api/applications/uploadFiles",
-          applicationFiles,
-          config
-        );
-        // upload files urls to database
-      }
-
-      if (helperArr.length > 0) {
-        await axios.post(
-          "/api/applications/uploadFiles",
-          facilityFilesData,
-          config
-        );
-        axios.post("/api/applications/addFacilitiesUrl", {
-          facilityFilesUrls,
-        });
-      }
-      await axios.post("/api/applications/addFilesUrl", {
-        applicationID: clubData.applications[0].id,
-        fileNames: {
-          krs_documents: formData.stepTwo.krs_documents.filter((file) => {
-            if (isNaN(file.id)) return file.name;
-          }),
-          agreement_documents: formData.stepThree.agreement_documents.filter(
-            (file) => {
-              if (isNaN(file.id)) return file.name;
-            }
-          ),
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-  };
-
   const saveForm = () => {
     // save data in the application table
     // save data in the club table
 
     setLoading(true);
-    uploadFiles();
+
     addSportFacility();
     axios
       .post("/api/applications/updateApplication", {
