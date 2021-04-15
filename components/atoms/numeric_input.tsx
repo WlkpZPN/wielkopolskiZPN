@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 
 const Suffix = styled.span`
   position: absolute;
-  bottom: 4px;
+  bottom: 5px;
   right: ${({ position }) => position || "6px"};
   /* display: ${({ position }) => (position === 0 ? "none" : "initial")}; */
   display: none;
@@ -70,7 +70,7 @@ const NumericInput = ({
         style={style}
         className="form-field"
         suffix={suffix}
-        // placeholder={placeholder}
+        placeholder={placeholder}
         value={value}
         onChange={onChange}
         options={options || defaultOptions}

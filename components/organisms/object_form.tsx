@@ -488,7 +488,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 )
               }
               suffix="%"
-              placeholder="0%"
+              placeholder="0"
             />
           </Label>
           <Label pointer margin="24px 0" direction="row">
@@ -555,7 +555,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(e.target.rawValue, objectIndex, "I06_length")
                 }
                 suffix="m"
-                placeholder="0 m"
+                placeholder="0"
               />{" "}
               <span style={{ margin: "0 8px" }}>x</span>
               <NumericInput
@@ -564,7 +564,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(e.target.rawValue, objectIndex, "I06_width")
                 }
                 suffix="m"
-                placeholder="0 m"
+                placeholder="0"
               />
             </div>
           </Label>

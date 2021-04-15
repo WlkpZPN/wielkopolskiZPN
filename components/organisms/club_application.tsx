@@ -120,9 +120,8 @@ const ClubApplication = ({
         : [],
     },
     stepThree: {
-      numberOfYouthGroups:
-        clubData.applications[0].number_of_youth_groups || "0",
-      shareOfYouthGroups: clubData.applications[0].share_of_youth_groups || "0",
+      numberOfYouthGroups: clubData.applications[0].number_of_youth_groups,
+      shareOfYouthGroups: clubData.applications[0].share_of_youth_groups,
       medicalDeclaration:
         clubData.applications[0].declaration_on_medical_care_for_the_players ||
         false,
