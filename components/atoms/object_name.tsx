@@ -35,9 +35,9 @@ const SavedIcon = styled(Save)`
   color: ${({ theme }) => theme.danger};
 `;
 
-const ObjectName = ({ active, onClick, saved, children }) => {
+const ObjectName = ({ active, onClick, saved, children, style = null }) => {
   return (
-    <Wrapper onClick={onClick} active={active}>
+    <Wrapper style={style} onClick={onClick} active={active}>
       {saved ? null : <SavedIcon />}
       {children === "" ? "Obiekt 1" : children}
     </Wrapper>

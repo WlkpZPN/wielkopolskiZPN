@@ -80,16 +80,21 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const renderFacilityNames = () => {
     const objects = formData.stepFour.sport_facilities;
 
-    return objects.map((facility, index) => (
-      <ObjectName
-        onClick={() => setCurrentObject(index)}
-        key={index}
-        saved={true}
-        active={index === currentObject}
-      >
-        {facility.name || "Obiekt 1"}
-      </ObjectName>
-    ));
+    return objects.map((facility, index) => {
+      if (facility.I01_1 || facility.I17_1) {
+        return (
+          <ObjectName
+            style={{ marginLeft: "-10px" }}
+            onClick={() => setCurrentObject(index)}
+            key={index}
+            saved={true}
+            active={index === currentObject}
+          >
+            {facility.name || "Obiekt 1"}
+          </ObjectName>
+        );
+      }
+    });
   };
 
   const renderFacilityFiles = () => {

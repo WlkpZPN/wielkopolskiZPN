@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 const Info = styled.div`
   & svg {
     width: 30px;
-    z-index: 100;
+    z-index: 0;
     position: absolute;
     top: 16px;
     left: 16px;
@@ -49,21 +49,21 @@ const Info = styled.div`
 
   color: ${({ theme }) => theme.primaryLight};
   &:hover {
-    color: white;
+    /* color: white; */
     &::after {
       display: block;
     }
   }
   &::after {
     content: "${({ text }) => `${text}`}";
-    z-index: 100;
+    z-index: 200;
     padding: 32px;
     display: none;
     transition: all 0.2s;
     position: absolute;
-    left: 14px;
+    left: 40px;
     min-width: 400px;
-    top: 14px;
+    top: 40px;
     border-radius: 5px;
     width: 500px;
     color: white;
