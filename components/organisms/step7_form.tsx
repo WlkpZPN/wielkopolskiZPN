@@ -41,11 +41,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   );
 
   const isSuperVision = () => {
-    if (
-      stepThreeFiles.length === 0 &&
-      formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
-    ) {
-      console.log("1");
+    if (stepTwoFiles.length === 0) {
       return true;
     }
 
@@ -53,7 +49,12 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
       stepThreeFiles.length === 0 &&
       formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
     ) {
-      console.log("2");
+      return true;
+    }
+    if (
+      stepThreeFiles.length === 0 &&
+      formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
+    ) {
       return true;
     }
 
@@ -66,11 +67,9 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
         (el) => el.category === "I17_intensity_level"
       );
       if (facility.I01_1 === false && files1.length === 0) {
-        console.log("3");
         return true;
       }
       if (facility.I17_1 === true && files2.length === 0) {
-        console.log("4");
         return true;
       }
     });
@@ -186,7 +185,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           style={{ marginBottom: "0", paddingLeft: "0" }}
           disabled={readOnly}
         >
-          <Label pointer>
+          <Label style={{ marginTop: 0 }} pointer>
             <span>
               <RadioSquare
                 value={formData.stepSeven.invoice_required}

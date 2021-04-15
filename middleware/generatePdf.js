@@ -84,7 +84,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawImage(pngLogo, {
     x: 230,
-    y: 730,
+    y: 750,
     width: scaledLogo.width,
     height: scaledLogo.height,
   });
@@ -94,7 +94,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     {
       //x: 170,
       x: 180,
-      y: 690,
+      y: 710,
       font: bold,
       lineHeight: 20,
       size: 14,
@@ -104,7 +104,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("z dnia", {
     x: 280,
-    y: 620,
+    y: 640,
     size: 10,
     color: rgb(0, 0, 0),
     font: regular,
@@ -112,7 +112,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(issueDate, {
     x: 255,
-    y: 590,
+    y: 610,
     size: 14,
     // color: rgb(18, 104, 179),
     color: rgb(0.07, 0.4, 0.7),
@@ -121,7 +121,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("w sprawie przyznania licencji nr", {
     x: 225,
-    y: 560,
+    y: 580,
     size: 10,
     color: rgb(0, 0, 0),
     font: regular,
@@ -129,7 +129,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(application.internal_id, {
     x: 257,
-    y: 530,
+    y: 550,
     size: 14,
     // color: rgb(18, 104, 179),
     color: rgb(0.07, 0.4, 0.7),
@@ -138,7 +138,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("dla klubu", {
     x: 270,
-    y: 500,
+    y: 520,
     size: 10,
     color: rgb(0, 0, 0),
     font: regular,
@@ -154,10 +154,11 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   );
 
   textField.addToPage(page, {
-    x: 195,
-    y: 440,
+    x: 100,
+    y: 450,
     font: bold,
-    height: 70,
+    height: 60,
+    width: 400,
     textColor: rgb(0.07, 0.4, 0.7),
     borderColor: rgb(1, 1, 1),
     // backgroundColor: rgb(1, 1, 1),
@@ -194,7 +195,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Na podstawie uchwały", {
     x: 50,
-    y: 420,
+    y: 440,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -202,7 +203,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Nr V/2020", {
     x: 155,
-    y: 420,
+    y: 440,
     font: regular,
     size: 10,
     color: rgb(0.07, 0.4, 0.7),
@@ -210,7 +211,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("z dnia", {
     x: 205,
-    y: 420,
+    y: 440,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -218,7 +219,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(" 30 kwietnia 2021 r.", {
     x: 232,
-    y: 420,
+    y: 440,
     font: regular,
     size: 10,
     color: rgb(0.07, 0.4, 0.7),
@@ -226,7 +227,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(" w sprawie ustalenia szczegółowych kryteriów ", {
     x: 320,
-    y: 420,
+    y: 440,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -236,7 +237,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     "licencyjnych dla klubów IV ligi i klas niższych Wielkopolskiego ZPN na",
     {
       x: 50,
-      y: 405,
+      y: 425,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
@@ -245,7 +246,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(` sezon ${clubData.applications[0].seasons} `, {
     x: 364,
-    y: 405,
+    y: 425,
     font: regular,
     size: 10,
     color: rgb(0.07, 0.4, 0.7),
@@ -253,7 +254,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText(`następnie po`, {
     x: 50,
-    y: 390,
+    y: 410,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -263,7 +264,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     "rozpatrzeniu wniosku wraz z załącznikami i uzupełnieniami  Komisja ds. Licencji Klubowych",
     {
       x: 110,
-      y: 390,
+      y: 410,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
@@ -271,7 +272,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   );
   page.drawText("postanowiła:", {
     x: 50,
-    y: 375,
+    y: 395,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -281,27 +282,34 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     `1. Przyznać licencję upoważniającą Klub do udziału w rozgrywkach o mistrzostwo ${leauge}`,
     {
       x: 50,
-      y: 340,
+      y: 360,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
     }
   );
+  let position = { x: 295, y: 345 };
+  if (application.number_of_seasons === "2" && application.statuses.id === 10) {
+    position = {
+      x: 350,
+      y: 345,
+    };
+  }
 
   page.drawText(
     `piłki nożnej w sezonach rozgrywkowych ${clubData.applications[0].seasons} `,
     {
       x: 60,
-      y: 325,
+      y: 345,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
     }
   );
   if (application.status_id === 10) {
-    page.drawText(`z nadzorem ${supervisionType}`, {
-      x: 285,
-      y: 325,
+    page.drawText(`z nadzorem ${supervisionType}m`, {
+      x: position.x,
+      y: position.y,
       font: regular,
       size: 10,
       color: rgb(0.07, 0.4, 0.7),
@@ -335,17 +343,16 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   });
 
   if (application.status_id === 10) {
-    y = y - 25;
     page.drawText("Uzasadnienie: ", {
       x: 50,
-      y: y,
+      y: 280,
       font: bold,
       size: 10,
       color: rgb(0, 0, 0),
     });
     page.drawText(`${application.reject_reason}`, {
       x: 50,
-      y: y - 15,
+      y: 265,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),

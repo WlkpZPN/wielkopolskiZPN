@@ -147,10 +147,10 @@ const GiveSupervision = ({
               value={supervision}
               onChange={(e) => setSupervision(e.target.value)}
             >
-              <option value="infrastrukturalnym">infrastrukturalny</option>
-              <option value="prawnym">prawny</option>
-              <option value="sportowym">sportowy</option>
-              <option value="finansowym">finansowy</option>
+              <option value="infrastrukturalny">infrastrukturalny</option>
+              <option value="prawny">prawny</option>
+              <option value="sportowy">sportowy</option>
+              <option value="finansowy">finansowy</option>
             </Select>
             <p
               style={{

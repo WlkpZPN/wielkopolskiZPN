@@ -9,6 +9,7 @@ import PrimaryButton from "./primary_button";
 import RejectLicense from "../molecules/reject_license_modal";
 import { generatePdf } from "../../middleware/generatePdf";
 import { getCurrentDate } from "../../middleware/utils";
+import GiveSupervisionModal from "../molecules/give_supervision_modal";
 const Wrapper = styled.div`
   display: grid;
   border-radius: 4px;
@@ -40,7 +41,7 @@ const LicenseDecision = ({
   authData,
 }) => {
   const [visible, setVisible] = useState(false);
-
+  const [visible2, setVisible2] = useState(false);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +53,7 @@ const LicenseDecision = ({
         statusID,
         reason: reason || "",
         description,
-        userID:authData.id,
+        userID: authData.id,
       });
       if (statusID === 8 || statusID === 10) {
         //3. send email and generate license as attachment
@@ -100,7 +101,7 @@ const LicenseDecision = ({
             />
             <Text> Wydaj licencję z nadzorem</Text>
             <PrimaryButton
-              onClick={IssueLicense}
+              onClick={() => setVisible2(true)}
               color="successDark"
               hoverColor="success"
             >
@@ -156,6 +157,13 @@ const LicenseDecision = ({
               setVisible={setVisible}
               internalID={internalID}
               applicationID={applicationID}
+            />
+            <GiveSupervisionModal
+              authData={authData}
+              internalID={internalID}
+              applicationID={applicationID}
+              visible={visible2}
+              setVisible={setVisible2}
             />
             <ApplicationStatus size="40px" status="licencja niewydana" />
             <Text> Licencja niewydana</Text>
