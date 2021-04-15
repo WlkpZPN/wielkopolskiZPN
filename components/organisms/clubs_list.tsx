@@ -30,7 +30,7 @@ const ClubsList = () => {
   const [page, setPage] = useLocalStorage("club_page", 0);
   //const [page, setPage] = useState(0);
   const { list: clubs } = useContext(AdminContext);
-
+  console.log(clubs);
   const totalPages = Math.ceil(clubs.length / 10);
   // console.log("total pages", totalPages);
   // console.log("current page", page);

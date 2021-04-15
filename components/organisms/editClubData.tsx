@@ -285,7 +285,7 @@ const EditClubData = ({ clubData }) => {
   //   if (type === "email") {
   //   }
   // };
-  console.log(error);
+
   const handleSubmit = (e) => {
     // event.target[].offestTop + 100
     // console.log(e.target);

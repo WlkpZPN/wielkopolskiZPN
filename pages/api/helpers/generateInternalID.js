@@ -1,5 +1,6 @@
 import prisma from "../../../middleware/prisma";
 import generator from "generate-password";
+import {getCurrentDate} from '../../../middleware/utils';
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 export default async (req, res) => {
@@ -12,6 +13,7 @@ export default async (req, res) => {
           id: club.id,
         },
         data: {
+          updated_at:getCurrentDate(),
           internal_id: `K/${new Date().getFullYear()}/${index.toLocaleString(
             "en-US",
             {
