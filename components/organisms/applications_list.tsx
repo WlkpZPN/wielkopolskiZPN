@@ -26,10 +26,10 @@ const TableHeader = styled.span`
 
 const StyledRow = styled(TableRow)`
   //grid-template-columns: 30px 60px minmax(100px, 150px) minmax(60px, 250px) 150px 160px 100px auto;
-  grid-template-columns: 30px 100px minmax(100px, 150px) minmax(60px, 350px) 150px 100px auto;
+  grid-template-columns: 30px 100px minmax(100px, 160px) minmax(60px, 350px) 150px 100px auto;
 `;
 
-const ApplicationsList = () => {
+const ApplicationsList = ({dateOrder,setDateOrder}) => {
   const router = useRouter();
   const [page, setPage] = useLocalStorage("application_page", 0);
   const { list: applicationsArr } = useContext(AdminContext);
@@ -100,7 +100,7 @@ const ApplicationsList = () => {
         <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
           <span></span>
           <TableHeader>ID wniosku</TableHeader>
-          <TableHeader>Data złożenia wniosku</TableHeader>
+          <TableHeader onClick={() => setDateOrder(!dateOrder)}>Data złożenia wniosku</TableHeader>
           <TableHeader>Klub</TableHeader>
           <TableHeader>Status</TableHeader>
           {/* <TableHeader>Pełnomocnik</TableHeader> */}

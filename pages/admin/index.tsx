@@ -32,20 +32,16 @@ const MainPage = ({ userData, applications }) => {
   const [filterType, setFilterType] = useState(0);
   const [query, setQuery] = useState("");
   const [list, setList] = useState([]);
+  const [dateOrder,setDateOrder] = useState(false);
 
   useEffect(() => {
     let helperArr = [...applications];
     console.log(helperArr);
-    // console.log(query !== "");
-    // console.log(query);
-
-    //1 check for filter type
-    // TO DO : double check filtering types
+   
 
     if (filterType > 0) {
       helperArr = helperArr.filter((application) => {
         let appCopy = Object.assign({}, application);
-        // const appArr = Object.values(appCopy).join().toLowerCase();
         return appCopy.status_id === filterType;
       });
     } else if (filterType === 0) {
@@ -59,8 +55,38 @@ const MainPage = ({ userData, applications }) => {
       });
     }
 
+ 
+        helperArr = helperArr.sort(sortByDate);
+    
+
     setList(helperArr);
-  }, [filterType, query]);
+  }, [filterType, query,dateOrder]);
+
+  const sortByDate = (a,b) => {
+    let x = '';
+    x = a.created_at.split(',')[0].split('/');
+    const dateA = new Date(x[2],x[1],x[0])
+    x = b.created_at.split(',')[0].split('/');
+     const dateB = new Date(x[2],x[1],x[0])
+    console.log(dateA,dateB);
+    if(dateOrder) {
+      if(dateA < dateB) {
+        return -1;
+      } 
+      if (dateA > dateB) {
+        return 1;
+      }
+    }
+
+     if(!dateOrder) {
+      if(dateA < dateB) {
+        return 1;
+      } 
+      if (dateA > dateB) {
+        return -1;
+      }
+    }
+  }
   return (
     <AdminContext.Provider value={{ userData, list }}>
       <AdminLayout userData={userData} view="wnioski">
@@ -99,7 +125,7 @@ const MainPage = ({ userData, applications }) => {
             />
           </div>
         </div>
-        {applications ? <ApplicationsList /> : null}
+        {applications ? <ApplicationsList dateOrder={dateOrder} setDateOrder={setDateOrder} /> : null}
       </AdminLayout>
     </AdminContext.Provider>
   );
