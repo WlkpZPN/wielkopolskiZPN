@@ -110,7 +110,7 @@ const ApplicationsList = ({ dateOrder, setDateOrder }) => {
     }
 
     if (dateOrder === "asc") {
-      setDateOrder("desc");
+      setDateOrder(null);
     }
   };
   return (

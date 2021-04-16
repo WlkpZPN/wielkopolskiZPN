@@ -53,8 +53,9 @@ const MainPage = ({ userData, applications }) => {
         return string.indexOf(query.toLowerCase()) > -1 ? true : false;
       });
     }
-
-    helperArr = helperArr.sort(sortByDate);
+    if (dateOrder) {
+      helperArr = helperArr.sort(sortByDate);
+    }
 
     setList(helperArr);
   }, [filterType, query, dateOrder]);

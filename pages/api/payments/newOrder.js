@@ -17,12 +17,11 @@ export default (req, res) => {
       // GET ACCESS TOKEN
       const tokenData = await axios({
         method: "POST",
-        url: "https://secure.snd.payu.com/pl/standard/user/oauth/authorize",
+        url: `${process.env.PAYU_URL}/pl/standard/user/oauth/authorize`,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        data:
-          "grant_type=client_credentials&client_id=404238&client_secret=c1b15e22e4031f006c1e1f97dafe665c",
+        data: `grant_type=client_credentials&client_id=${process.env.PAYU_CLIENT_ID}&client_secret=${process.env.PAYU_CLIENT_SECRET}`,
       });
       // GET IP
       let ip = "";
@@ -32,11 +31,11 @@ export default (req, res) => {
         ip = req.connection.remoteAddress;
       }
       // CREATE NEW ORDER
-      
+
       const newOrder = await axios({
         maxRedirects: 0,
         method: "POST",
-        url: "https://secure.snd.payu.com/api/v2_1/orders",
+        url: `${process.env.PAYU_URL}/api/v2_1/orders`,
         validateStatus: function (status) {
           return status < 303;
         },
@@ -45,10 +44,10 @@ export default (req, res) => {
           Authorization: `Bearer ${tokenData.data.access_token}`,
         },
         data: {
-          notifyUrl: `https://wielkopolski-zpn-m648gf8u5-licencjawlkpzpn.vercel.app/api/payments/notifyPayment`,
+          notifyUrl: `https://wielkopolski-zpn-three.vercel.app/api/payments/notifyPayment`,
           currencyCode: "PLN",
           description: description,
-          merchantPosId: "404238",
+          merchantPosId: process.env.PAYU_POS_ID,
           validityTime: "86400",
           extOrderId: newID,
           customerIp: ip,
