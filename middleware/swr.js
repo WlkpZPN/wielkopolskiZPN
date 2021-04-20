@@ -24,13 +24,17 @@ export const getFaqData = () => {
 };
 
 export const getApplications = () => {
-  const { data, error } = useSWR(
+  const { data, error, mutate } = useSWR(
     "/api/applications/getAllApplications",
-    fetcher
+    fetcher,
+    {
+      refreshInterval: 3000,
+    }
   );
   console.log("applications", data);
   return {
     applications: data,
+    mutateApplications: mutate,
     isApplicationsLoading: !error && !data,
     isApplicationsError: error,
   };

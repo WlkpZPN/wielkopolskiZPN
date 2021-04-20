@@ -14,6 +14,7 @@ export default (req, res) => {
     } catch (err) {
       console.log(err);
       res.status(400);
+      res.send(err);
     } finally {
       await prisma.$disconnect();
     }

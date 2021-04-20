@@ -10,6 +10,7 @@ import { protectedAdminRoute } from "../../middleware/protectedAdmin";
 import ApplicationsList from "../../components/organisms/applications_list";
 import Select from "../../components/atoms/form_select";
 import Loader from "../../components/atoms/loader";
+import RefreshIcon from "../../components/atoms/refresh_icon";
 
 const SearchBar = styled.input`
   padding: 6px 12px;
@@ -34,6 +35,7 @@ const MainPage = ({ userData }) => {
     applications,
     isApplicationsError,
     isApplicationsLoading,
+    mutateApplications,
   } = getApplications();
   const [filterType, setFilterType] = useState(0);
   const [query, setQuery] = useState("");
@@ -126,7 +128,7 @@ const MainPage = ({ userData }) => {
             margin: "30px 0",
           }}
         >
-          <h1>Wnioski licencyjne</h1>
+          <h1>Wnioski licencyjne </h1>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Select
               style={{ marginTop: 0, minWidth: "200px", fontSize: "13px" }}
