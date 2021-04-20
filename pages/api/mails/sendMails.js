@@ -2,6 +2,7 @@ import prisma from "../../../middleware/prisma";
 import transporter from "../../../middleware/transporter";
 import axios from "axios";
 import emailTemplate from "../../../middleware/emailTemplate";
+import { getCurrentDate } from "../../../middleware/utils";
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { message, recipients, title } = req.body;
@@ -138,6 +139,15 @@ export default (req, res) => {
               body: emailTemplate(title, message.message),
             },
           ],
+        },
+      });
+
+      await prisma.messages.update({
+        where: {
+          id: parseInt(message.id),
+        },
+        data: {
+          send_date:getCurrentDate(),
         },
       });
       console.log("response", response);

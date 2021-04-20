@@ -149,12 +149,14 @@ const ApplicationsList = ({ dateOrder, setDateOrder }) => {
           <Download />
           Eksportuj tabelę do CSV
         </IconButton>
-
-        <TablePagination
-          pages={totalPages}
-          setPage={setPage}
-          currentPage={page}
-        />
+        <div style={{ display: "flex" }}>
+          <p>{applications.length} wniosków</p>
+          <TablePagination
+            pages={totalPages}
+            setPage={setPage}
+            currentPage={page}
+          />
+        </div>
       </div>
     </Wrapper>
   );

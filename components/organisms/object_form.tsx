@@ -66,60 +66,63 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
       visible: false,
       text: "",
     });
-    switch (context.formData.stepOne.leauge) {
-      case "iv liga":
-        if (
-          data.I06_length < 100 ||
-          data.I06_length > 105 ||
-          data.I06_width < 60 ||
-          data.I06_width > 68
-        ) {
-          setExtraField({
-            visible: true,
-            text:
-              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 100 m do 105 m, szerokość od 60 m do 68 m) ZAZNACZ ABY WYSŁAĆ WNIOSEK",
-          });
-        }
-        break;
-      case "klasa okręgowa":
-        if (
-          (data.I06_length < 100 && data.I06_length > 105) ||
-          (data.I06_width < 55 && data.I06_width > 68)
-        ) {
-          setExtraField({
-            visible: true,
-            text:
-              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 100 m do 105 m, szerokość od 55 m do 68 m) ZAZNACZ ABY WYSŁAĆ WNIOSEK",
-          });
-        }
-        break;
-      case "klasa a":
-        if (
-          (data.I06_length < 95 && data.I06_length > 105) ||
-          (data.I06_width < 55 && data.I06_width > 68)
-        ) {
-          setExtraField({
-            visible: true,
-            text:
-              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 95 m do 105 m, szerokość od 55m do 68 m) ZAZNACZ ABY WYSŁAĆ WNIOSEK",
-          });
-        }
-        break;
-      case "klasa b":
-      case "klasa c":
-        if (
-          (data.I06_length < 90 && data.I06_length > 105) ||
-          (data.I06_width < 45 && data.I06_width > 68)
-        ) {
-          setExtraField({
-            visible: true,
-            text:
-              "Wymiary obiektu nie spełniają wymaganych kryterów ( długość od 90 m do 105 m, szerokość od 55m do 68 m)",
-          });
-        }
-        break;
-      default:
-        break;
+
+    if (data.I06_length > 0 && data.I06_width > 0) {
+      switch (context.formData.stepOne.leauge) {
+        case "iv liga":
+          if (
+            data.I06_length < 100 ||
+            data.I06_length > 105 ||
+            data.I06_width < 60 ||
+            data.I06_width > 68
+          ) {
+            setExtraField({
+              visible: true,
+              text:
+                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 100 m do 105 m, szerokość od 60 m do 68 m) ",
+            });
+          }
+          break;
+        case "klasa okręgowa":
+          if (
+            (data.I06_length < 100 && data.I06_length > 105) ||
+            (data.I06_width < 55 && data.I06_width > 68)
+          ) {
+            setExtraField({
+              visible: true,
+              text:
+                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 100 m do 105 m, szerokość od 55 m do 68 m)",
+            });
+          }
+          break;
+        case "klasa a":
+          if (
+            (data.I06_length < 95 && data.I06_length > 105) ||
+            (data.I06_width < 55 && data.I06_width > 68)
+          ) {
+            setExtraField({
+              visible: true,
+              text:
+                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 95 m do 105 m, szerokość od 55m do 68 m)",
+            });
+          }
+          break;
+        case "klasa b":
+        case "klasa c":
+          if (
+            (data.I06_length < 90 && data.I06_length > 105) ||
+            (data.I06_width < 45 && data.I06_width > 68)
+          ) {
+            setExtraField({
+              visible: true,
+              text:
+                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 90 m do 105 m, szerokość od 55m do 68 m)",
+            });
+          }
+          break;
+        default:
+          break;
+      }
     }
   }, [data.I06_length, data.I06_width]);
 

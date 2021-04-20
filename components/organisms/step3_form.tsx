@@ -82,7 +82,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               <NumericInput
                 value={formData.numberOfYouthGroups}
                 onChange={(e) =>
-                  handleChange(e.target.value, "numberOfYouthGroups", 3)
+                  handleChange(e.target.rawValue, "numberOfYouthGroups", 3)
                 }
                 suffix=""
                 placeholder="0"
@@ -99,7 +99,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               <NumericInput
                 value={formData.shareOfYouthGroups}
                 onChange={(e) =>
-                  handleChange(e.target.value, "shareOfYouthGroups", 3)
+                  handleChange(e.target.rawValue, "shareOfYouthGroups", 3)
                 }
                 suffix=""
                 placeholder="0"
@@ -171,14 +171,14 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             }
           >
             <option value="posiadamy zespoły">
-              Posiadamy zespoły młodzieżowe w ramach naszego podmiotu prawnego
+              Posiadamy zespoły młodzieżowe w ramach naszego podmiotu prawnego.
             </option>
             <option value="porozumienie na szkolenie">
               Nie posiadamy własnych zespołów młodzieżowych. Posiadamy
               porozumienie na szkolenie młodzieży z innym klubem.
             </option>
             <option value="nie posiadamy zespołów">
-              Nie posiadamy własnych zespołów młodzieżowych.Deklarujemy się
+              Nie posiadamy własnych zespołów młodzieżowych. Deklarujemy się
               uiścić opłatę dodatkową do Wielkopolskiego ZPN.
             </option>
             <option value="wystepujemy w rozgrywkach klasy A">

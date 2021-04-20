@@ -42,7 +42,7 @@ export const extractAddressData = (address) => {
     street = splitedAddress[0];
     zipCode = splitedAddress[1];
     city = splitedAddress[2];
-    return [city, street, zipCode.replace(/\n/g, "")];
+    return [city, street, zipCode?.replace(/\n/g, "")];
   } else if (address.includes(",")) {
     // ulica nr,miasto
     street = splitedAddress[0];
@@ -79,8 +79,8 @@ export const convertToFormData = (files) => {
 
 export const getCurrentDate = () => {
   const newDate = new Date();
-  const date = ` ${newDate.getDate()}/${(newDate
-    .getMonth() + 1)
+  const date = ` ${newDate.getDate()}/${newDate
+    .getMonth()
     .toLocaleString("en-US", {
       minimumIntegerDigits: 2,
       useGrouping: false,
@@ -222,7 +222,7 @@ export const renderAmount = (leauge, settings) => {
   switch (leauge) {
     case "iv liga":
     case "IV Liga":
-      console.log('opłata',settings.iv_possession_fee)
+      console.log("opłata", settings.iv_possession_fee);
       amount = `${settings.iv_possession_fee}`;
       break;
     case "v liga":

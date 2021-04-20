@@ -261,8 +261,9 @@ const Application = ({ clubData, authData, settings }) => {
     const amount =
       clubData.applications[0].youth_groups_possession ===
       "nie posiadamy zespołów"
-        ? settings.application_fee + renderAmount(clubData.leauge, settings)
-        : settings.application_fee;
+        ? parseFloat(settings.application_fee) +
+          parseFloat(renderAmount(clubData.leauge, settings))
+        : parseFloat(settings.application_fee);
     try {
       const newOrder = await axios.post("/api/payments/newOrder", {
         description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
@@ -282,7 +283,7 @@ const Application = ({ clubData, authData, settings }) => {
         applicationID: clubData.applications[0].id,
         // link: newOrder.data.link,
         userID: authData.id,
-        amount: parseFloat(amount),
+        amount: amount,
       });
       router.replace(router.asPath);
 

@@ -6,11 +6,11 @@ import { toast } from "react-toastify";
 //utils
 import { getClubData } from "../middleware/swr";
 import { protectedClientRoute } from "../middleware/protectedClient";
-import { useLocalStorage } from "../middleware/hooks";
+
 //components
 import { getCurrentDate, renderAmount } from "../middleware/utils";
 import ClientLayout from "../components/organisms/client_layout";
-import StepBox from "../components/atoms/step_box";
+
 import ClubApplication from "../components/organisms/club_application";
 import LastChange from "../components/molecules/last_change";
 import Spinner from "../components/atoms/loader";
@@ -37,7 +37,6 @@ const PaymentLink = styled.a`
 export const ClubContext = createContext(null);
 
 const Home = ({ clubData, authData, settings }) => {
-  //const { clubData, isError, isLoading } = getClubData(authData.id);
   console.log(authData);
   const [loading, setLoading] = useState(false);
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
@@ -149,13 +148,12 @@ const Home = ({ clubData, authData, settings }) => {
           return (
             <>
               <Header color="success">
-                Dziękujemy! Poczekaj na akceptację wniosku
+                Dziękujemy za złożenie wniosku licencyjnego.
               </Header>
               <Paragraph>
-                Dziękujemy za złożenie wniosku liencyjnego. <br /> Najpóźniej 20
-                kwietnia {new Date().getFullYear()} otrzymasz informację czy
-                wniosek został zaakceptowany przez Wielkopolski ZPN. <br />{" "}
-                Dalsze kroki procedury licencyjnej możesz zobaczyć poniżej{" "}
+                Niezwłocznie po rozpatrzeniu wniosku otrzymasz informację czy
+                wniosek został zaakceptowany przez Wielkopolski ZPN. Dalsze
+                kroki procedury licencyjnej możesz zobaczyć poniżej:
               </Paragraph>
               <ClubSteps status="wnioskowany" />
               <ClubApplication
@@ -250,7 +248,13 @@ const Home = ({ clubData, authData, settings }) => {
                 Wielkopolski ZPN zaakceptował Twój wniosek. <br />
                 Prosimy dokonaj płatności używając poniższego linka
               </Paragraph>
-              <p style={{ fontSize: "48px", fontWeight: "bold" }}>
+              <p
+                style={{
+                  fontSize: "48px",
+                  fontWeight: "bold",
+                  margin: "15px 0",
+                }}
+              >
                 {clubData.applications[0].amount} PLN
               </p>
               {clubData.applications[0].youth_groups_possession ===
@@ -426,7 +430,8 @@ export const getServerSideProps = protectedClientRoute(
         },
       },
     });
-
+    console.log(clubData);
+    console.log(data.id);
     if (clubData.applications.length === 0) {
       // create application with empty data
       // create one sport facility with empty data

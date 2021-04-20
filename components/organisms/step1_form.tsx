@@ -48,16 +48,16 @@ const StepOneForm = ({
         handleChange("v liga", "leauge", 1);
         return;
       case "klasa okręgowa":
-        handleChange("iv liga", "leauge", 1);
+        handleChange("klasa okręgowa", "leauge", 1);
         return;
       case "klasa a":
         handleChange("iv liga", "leauge", 1);
         return;
       case "klasa b":
-        handleChange("iv liga", "leauge", 1);
+        handleChange("klasa a", "leauge", 1);
         return;
       case "młodzież":
-        handleChange("iv liga", "leauge", 1);
+        handleChange("klasa b", "leauge", 1);
         return;
       default:
         handleChange(null, "leauge", 1);

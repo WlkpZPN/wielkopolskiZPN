@@ -41,6 +41,9 @@ const Header = styled.h2`
 `;
 const StatementText = styled.p`
   margin-bottom: 32px;
+  line-height: 1.8rem;
+  text-align: justify;
+  max-width: 800px;
 `;
 
 const CloseIcon = styled(CloseOutline)`
