@@ -1,4 +1,5 @@
 import prisma from "../../../middleware/prisma";
+import { getCurrentDate } from "../../../middleware/utils";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -10,7 +11,7 @@ export default (req, res) => {
       },
       data: {
         ...data,
-        updated_at: `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
+        updated_at: getCurrentDate(),
       },
     });
     res.send("data updated");
