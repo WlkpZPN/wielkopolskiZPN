@@ -23,8 +23,13 @@ const Bold = styled.p`
 `;
 const ClubInfo = ({ clubData }) => {
   // console.log(clubData);
-
+  if (!clubData?.applications) {
+    return <p></p>;
+  }
   const renderLicense = () => {
+    if (!clubData?.applications) {
+      return null;
+    }
     switch (clubData.applications[0].statuses.id) {
       case 8:
       case 9:

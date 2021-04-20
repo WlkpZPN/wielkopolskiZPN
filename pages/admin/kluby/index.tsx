@@ -5,7 +5,9 @@ import AdminLayout from "../../../components/organisms/admin_layout";
 import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
 import prisma from "../../../middleware/prisma";
 import PrimaryButton from "../../../components/atoms/primary_button";
+import { getClubs } from "../../../middleware/swr";
 //componens
+import Loader from "../../../components/atoms/loader";
 import ClubsList from "../../../components/organisms/clubs_list";
 import Select from "../../../components/atoms/form_select";
 
@@ -26,8 +28,9 @@ const SearchBar = styled.input`
 `;
 
 export const AdminContext = createContext(null);
-const Kluby = ({ clubs, userData }) => {
+const Kluby = ({ userData }) => {
   const router = useRouter();
+  const { clubs, isClubsError, isClubsLoading } = getClubs();
   const [list, setList] = useState(clubs);
   const [leauge, setLeauge] = useState("wszystkie");
   const [status, setStatus] = useState("wszystkie");
@@ -62,7 +65,16 @@ const Kluby = ({ clubs, userData }) => {
     }
 
     setList(helperArr);
-  }, [leauge, status, query]);
+  }, [leauge, status, query, clubs]);
+
+  if (isClubsLoading) {
+    return (
+      <AdminLayout userData={userData} view="kluby">
+        {" "}
+        <Loader />
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminContext.Provider value={{ list }}>
@@ -136,19 +148,19 @@ const Kluby = ({ clubs, userData }) => {
             </PrimaryButton>
           </div>
         </div>
-        <ClubsList />
+        {list ? <ClubsList /> : <p>Brak klubów w bazie daych</p>}
       </AdminLayout>
     </AdminContext.Provider>
   );
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  const clubs = await prisma.clubs.findMany();
+  // const clubs = await prisma.clubs.findMany();
 
   return {
     props: {
       userData: data,
-      clubs: clubs,
+      // clubs: clubs,
     },
   };
 });

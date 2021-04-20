@@ -587,6 +587,10 @@ const EditClubData = ({ clubData }) => {
       width="100%"
       style={{ marginBottom: "32px" }}
     >
+      <ErrorMessage>
+        {error?.type &&
+          "Nie można zapisać formularza,wypełnij wszystkie pola oraz sprawdź ich poprawność"}
+      </ErrorMessage>
       <h2>Dane podstawowe</h2>
 
       <Label width="50%">

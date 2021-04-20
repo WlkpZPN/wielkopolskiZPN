@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, createContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { getClubData } from "../../../middleware/swr";
 import { toast } from "react-toastify";
 import prisma from "../../../middleware/prisma";
 import { renderAmount } from "../../../middleware/utils";
@@ -23,13 +24,22 @@ import ErrorMessage from "../../../components/atoms/error_message";
 import LicenseDecision from "../../../components/atoms/license_decision";
 import LicenseButton from "../../../components/molecules/license_button";
 import AddInvoice from "../../../components/molecules/add_invoice";
-const Application = ({ authData, clubData, settings }) => {
+const Application = ({ clubData, authData, settings }) => {
   const router = useRouter();
+  // const { clubData, isError, isLoading } = getClubData(authData.id);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [visibleReject, setvisibleReject] = useState(false);
   const [invoiceFiles, setInvoiceFiles] = useState();
 
+  // if (isLoading) {
+  //   console.log(clubData);
+  //   return (
+  //     <AdminLayout view="wnioski" userData={authData}>
+  //       <Loader />
+  //     </AdminLayout>
+  //   );
+  // }
   const handleFileDelete = () => {};
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {

@@ -75,6 +75,7 @@ export default (req, res) => {
         },
         data: {
           payment_id: newID,
+          payment_link: newOrder.headers.location,
         },
       });
 

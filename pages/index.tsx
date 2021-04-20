@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import prisma from "../middleware/prisma";
 import { toast } from "react-toastify";
 //utils
+import { getClubData } from "../middleware/swr";
 import { protectedClientRoute } from "../middleware/protectedClient";
 import { useLocalStorage } from "../middleware/hooks";
 //components
@@ -35,7 +36,9 @@ const PaymentLink = styled.a`
 
 export const ClubContext = createContext(null);
 
-const Home = ({ authData, clubData, settings }) => {
+const Home = ({ clubData, authData, settings }) => {
+  //const { clubData, isError, isLoading } = getClubData(authData.id);
+  console.log(authData);
   const [loading, setLoading] = useState(false);
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
 
@@ -58,6 +61,7 @@ const Home = ({ authData, clubData, settings }) => {
       setLoading(false);
     }
   };
+
   if (!clubData) {
     return <Spinner />;
   }
@@ -242,7 +246,7 @@ const Home = ({ authData, clubData, settings }) => {
                 Twój wniosek został zaakceptowany. Prosimy o dokonanie
                 płatności.
               </Header>
-              <Paragraph>
+              <Paragraph style={{ marginBottom: "15px" }}>
                 Wielkopolski ZPN zaakceptował Twój wniosek. <br />
                 Prosimy dokonaj płatności używając poniższego linka
               </Paragraph>
@@ -258,7 +262,13 @@ const Home = ({ authData, clubData, settings }) => {
                   </span>
                 </p>
               ) : null}
-              <p style={{ fontSize: "14px", marginBottom: "32px" }}>
+              <p
+                style={{
+                  fontSize: "14px",
+                  marginBottom: "32px",
+                  marginTop: "15px",
+                }}
+              >
                 Opłata licencyjna:{" "}
                 <span style={{ fontWeight: "bold" }}>
                   {settings.application_fee}

@@ -8,7 +8,7 @@ export default (req, res) => {
     let clubs = [];
     //1. check the rule for clubs
     //2. get all clubs that met conditions
-
+    // console.log("message", message);
     try {
       switch (recipients) {
         case "aktywne":
@@ -63,44 +63,88 @@ export default (req, res) => {
       clubs.forEach((club, index) => {
         let i = 0;
 
-        recipientsEmails[i].push({
+        recipientsEmails.push({
           name: club.name,
-          email: club.email,
+          // email: club.email,
+          email: "hondakkia@gmail.com",
         });
-        content[i].push({
+        content.push({
           type: "text/html",
-          body: emailTemaplate(title, message),
+          // body: emailTemplate(title, message.message),
+          body: "test",
         });
       });
 
+      // let response = await axios({
+      //   url: "https://api.freshmail.com/v3/messaging/emails",
+      //   method: "POST",
+      //   headers: {
+      //     Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+      //     "Content-Type": "application/json",
+      //   },
+      //   data: {
+      //     from: {
+      //       email: "licklub@wielkopolskizpn.pl",
+      //       name: "Wielkopolski ZPN",
+      //     },
+      //     recipients: recipientsEmails,
+      //     subject: title,
+      //     contents: content,
+      //   },
+      // });
       let i,
         tmpRecipients,
         tmpContent,
         chunk = 100;
-      for (i = 0, j = recipientsEmails.length; i < j; i += chunk) {
-        tmpRecipients = recipientsEmails.slice(i, i + chunk);
-        tmpContent = content.slice(i, i + chunk);
-        // do whatever
+      // for (i = 0; i < recipientsEmails.length; i += chunk) {
+      //   tmpRecipients = recipientsEmails.slice(i, i + chunk);
+      //   tmpContent = content.slice(i, i + chunk);
 
-        await axios({
-          mathod: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-            "Content-Type": "application/json",
+      //   console.log("response", response);
+      // }
+
+      //***********************************************************
+
+      const response = await axios({
+        url: "https://api.freshmail.com/v3/messaging/emails",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        data: {
+          from: {
+            email: "licklub@wielkopolskizpn.pl",
+            name: "Wielkopolski ZPN",
           },
-          data: {
-            from: {
-              email: "licklub@wielkopolskizpn.pl",
-              name: "Wielkopolski ZPN",
+          recipients: [
+            {
+              email: "hondakkia@gmail.com",
+              name: "test",
             },
-            recipients: recipientsEmails,
-            subject: title,
-            contents: content,
-          },
-        });
-      }
+            {
+              email: "aleksanderfranczak99@gmail.com",
+              name: "test",
+            },
+          ],
+          subject: title,
+          contents: [
+            {
+              type: "text/html",
+              body: emailTemplate(title, message.message),
+            },
+            {
+              type: "text/html",
+              body: emailTemplate(title, message.message),
+            },
+          ],
+        },
+      });
+      console.log("response", response);
+      res.send("email sended");
     } catch (err) {
       console.log(err);
+      console.log(err.response?.data);
       res.status(400);
       res.json({
         type: "error",
@@ -115,7 +159,7 @@ export default (req, res) => {
     //wszystkie
     //res.send(clubs);
 
-    res.send("test");
+    //res.send("test");
     //3. send maild to all that clubs
     await prisma.$disconnect();
   });

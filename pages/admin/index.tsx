@@ -2,13 +2,14 @@ import { useState, createContext, useEffect } from "react";
 
 import styled from "styled-components";
 import prisma from "../../middleware/prisma";
-
+import { getApplications } from "../../middleware/swr";
 import AdminLayout from "../../components/organisms/admin_layout";
 import { protectedAdminRoute } from "../../middleware/protectedAdmin";
 
 //components
 import ApplicationsList from "../../components/organisms/applications_list";
 import Select from "../../components/atoms/form_select";
+import Loader from "../../components/atoms/loader";
 
 const SearchBar = styled.input`
   padding: 6px 12px;
@@ -28,15 +29,35 @@ const SearchBar = styled.input`
 
 export const AdminContext = createContext(null);
 
-const MainPage = ({ userData, applications }) => {
+const MainPage = ({ userData }) => {
+  const {
+    applications,
+    isApplicationsError,
+    isApplicationsLoading,
+  } = getApplications();
   const [filterType, setFilterType] = useState(0);
   const [query, setQuery] = useState("");
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(applications);
   const [dateOrder, setDateOrder] = useState(null);
+  console.log("applications", applications);
+  console.log("list", list);
+  useEffect(() => {
+    console.log("effect worked");
+    setList(applications || []);
+  }, [applications]);
 
   useEffect(() => {
-    let helperArr = [...applications];
-    console.log(helperArr);
+    let helperArr = applications;
+    if (applications) {
+      helperArr = [
+        ...applications.filter(
+          (el) => el.status_id === 2 || el.status_id === 3
+        ),
+        ...applications.filter(
+          (el) => el.status_id !== 2 && el.status_id !== 3
+        ),
+      ];
+    }
 
     if (filterType > 0) {
       helperArr = helperArr.filter((application) => {
@@ -66,7 +87,7 @@ const MainPage = ({ userData, applications }) => {
     const dateA = new Date(+x[2], +x[1], +x[0]);
     x = b.created_at.split(",")[0].split("/");
     const dateB = new Date(+x[2], +x[1], +x[0]);
-    console.log(dateA, dateB);
+
     if (dateOrder === "asc") {
       if (dateA < dateB) {
         return -1;
@@ -85,6 +106,15 @@ const MainPage = ({ userData, applications }) => {
       }
     }
   };
+
+  if (isApplicationsLoading) {
+    return (
+      <AdminLayout userData={userData} view="wnioski">
+        {" "}
+        <Loader />
+      </AdminLayout>
+    );
+  }
   return (
     <AdminContext.Provider value={{ userData, list }}>
       <AdminLayout userData={userData} view="wnioski">
@@ -123,9 +153,11 @@ const MainPage = ({ userData, applications }) => {
             />
           </div>
         </div>
-        {applications ? (
+        {list ? (
           <ApplicationsList dateOrder={dateOrder} setDateOrder={setDateOrder} />
-        ) : null}
+        ) : (
+          <p>Brak wniosków</p>
+        )}
       </AdminLayout>
     </AdminContext.Provider>
   );
@@ -142,17 +174,9 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
     };
   }
 
-  const applications = await prisma.applications.findMany({
-    include: {
-      statuses: true,
-      clubs: true,
-    },
-  });
-
   return {
     props: {
       userData: data,
-      applications: applications,
     },
   };
 });

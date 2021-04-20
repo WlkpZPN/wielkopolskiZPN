@@ -3,15 +3,23 @@ import axios from "axios";
 import prisma from "../middleware/prisma";
 import { toast } from "react-toastify";
 //components
+import { getClubData } from "../middleware/swr";
 import { protectedClientRoute } from "../middleware/protectedClient";
 import ClientLayout from "../components/organisms/client_layout";
-
+import Loader from "../components/atoms/loader";
 import EditClubData from "../components/organisms/editClubData";
 import Header from "../components/atoms/header";
 
-const Dane = ({ authData, clubData }) => {
+const Dane = ({ authData }) => {
+  const { clubData, isError, isLoading } = getClubData(authData.id);
   //console.log(clubData);
-
+  if (isLoading) {
+    return (
+      <ClientLayout clubData={authData} view="Dane klubu">
+        <Loader />
+      </ClientLayout>
+    );
+  }
   return (
     <ClientLayout clubData={clubData} view="Dane klubu">
       <Header>Dane klubu</Header>
@@ -23,24 +31,9 @@ const Dane = ({ authData, clubData }) => {
 
 export const getServerSideProps = protectedClientRoute(
   async (context, data) => {
-    const clubData = await prisma.clubs.findUnique({
-      where: {
-        id: data.id,
-      },
-      include: {
-        applications: {
-          include: {
-            sport_facilities: true,
-            statuses: true,
-          },
-        },
-      },
-    });
-
     return {
       props: {
         authData: data,
-        clubData: clubData,
       },
     };
   }

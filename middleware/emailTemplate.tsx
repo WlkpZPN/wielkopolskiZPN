@@ -47,8 +47,7 @@ const emailTemplate = (title, message) => {
       <tr>
         <td style="
             padding: 32px 48px;
-            display: flex;
-            flex-direction: column;
+           
             width: 50%;
           ">
           <p>Z poważaniem,</p>

@@ -7,8 +7,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 //components
+import Loader from "../../../components/atoms/loader";
+import { getUsers, getRoles } from "../../../middleware/swr";
 import AdminLayout from "../../../components/organisms/admin_layout";
-import { User } from "@styled-icons/fa-solid/User";
+import UsersList from "../../../components/molecules/users_list";
 import PrimaryButton from "../../../components/atoms/primary_button";
 import AddUserModal from "../../../components/organisms/add_user_modal";
 import StyledSpinner from "../../../components/atoms/loader";
@@ -34,62 +36,24 @@ const TableHeader = styled.div`
   }
 `;
 
-const UserIcon = styled(User)`
-  width: 20px;
-  color: ${({ theme }) => theme.primary};
-  position: absolute;
-  left: 8px;
-`;
-const ButtonRow = styled.div`
-  position: absolute;
-  right: 8px;
-  display: flex;
-  height: 100%;
-  align-items: center;
-  padding: 0 16px;
-
-  & button:first-child {
-    margin-right: 8px;
-  }
-`;
-const TableRow = styled.div`
-  padding-left: 30px;
-  display: grid;
-  position: relative;
-  grid-template-columns: repeat(4, 180px);
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-top: 0px;
-  align-items: center;
-  justify-items: center;
-  transition: all 0.2s;
-  cursor: pointer;
-  &:hover {
-    background: #dedede;
-  }
-`;
-const Uzytkownicy = ({ users, roles, authData }) => {
+const Uzytkownicy = ({ authData }) => {
   const router = useRouter();
+  const { users, isUsersError, isUsersLoading } = getUsers();
+  const { roles, isRolesError, isRolesLoading } = getRoles();
   const [loading, setLoading] = useState(false);
   const [visibility, setVisibility] = useState(false);
   const refreshData = () => {
     router.replace(router.asPath);
   };
 
-  useEffect(() => {
-    refreshData();
-  }, [visibility, loading]);
-
-  const deleteUser = (userID, name) => {
-    setLoading(true);
-    axios
-      .post("/api/users/deleteUser", {
-        userID,
-      })
-      .then(() => {
-        toast.warn(`Użytkownik ${name} pomyślnie usunięty`);
-        setLoading(false);
-      });
-  };
+  if (isUsersLoading || isRolesLoading) {
+    return (
+      <AdminLayout userData={authData} view="uzytkownicy">
+        {" "}
+        <Loader />{" "}
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout userData={authData} view="uzytkownicy">
@@ -113,64 +77,30 @@ const Uzytkownicy = ({ users, roles, authData }) => {
           <p>Rola</p>
           <p>E-mail</p>
         </TableHeader>
-        {users.map((user, index) => {
-          return (
-            <TableRow key={index}>
-              <UserIcon />
-              <p>{user.name.split(" ")[0]}</p> <p>{user.name.split(" ")[1]}</p>
-              <p>{user.roles.name}</p>
-              <p>{user.email}</p>
-              <ButtonRow>
-                <PrimaryButton
-                  onClick={() => deleteUser(user.id, user.name)}
-                  color="danger"
-                  hoverColor="dangerDark"
-                >
-                  Usuń użytkownika
-                </PrimaryButton>
-                <PrimaryButton
-                  onClick={() =>
-                    router.push(`/admin/uzytkownicy/${user.email}`)
-                  }
-                >
-                  Szczegóły
-                </PrimaryButton>
-              </ButtonRow>
-            </TableRow>
-          );
-        })}
+        {users && !isUsersLoading ? (
+          <UsersList users={users} loading={loading} setLoading={setLoading} />
+        ) : (
+          <p>Brak użytkowników</p>
+        )}
       </Table>
-      <AddUserModal
-        refreshData={refreshData}
-        roles={roles}
-        visibility={visibility ? 1 : 0}
-        setVisibility={setVisibility}
-      />
+      {roles && !isRolesLoading ? (
+        <AddUserModal
+          refreshData={refreshData}
+          roles={roles}
+          visibility={visibility ? 1 : 0}
+          setVisibility={setVisibility}
+        />
+      ) : (
+        <p></p>
+      )}
     </AdminLayout>
   );
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  const users = await prisma.users.findMany({
-    include: {
-      roles: true,
-    },
-  });
-
-  const roles = await prisma.roles.findMany({
-    where: {
-      NOT: [
-        {
-          name: "klub",
-        },
-      ],
-    },
-  });
   return {
     props: {
       authData: data,
-      roles: roles,
-      users: users,
     },
   };
 });
