@@ -41,11 +41,11 @@ const MainPage = ({ userData }) => {
   const [query, setQuery] = useState("");
   const [list, setList] = useState(applications);
   const [dateOrder, setDateOrder] = useState(null);
-  console.log("applications", applications);
-  console.log("list", list);
+
   useEffect(() => {
-    console.log("effect worked");
-    setList(applications || []);
+    if (!dateOrder) {
+      setList(applications || []);
+    }
   }, [applications]);
 
   useEffect(() => {
@@ -77,6 +77,7 @@ const MainPage = ({ userData }) => {
       });
     }
     if (dateOrder) {
+      console.log("sorting");
       helperArr = helperArr.sort(sortByDate);
     }
 
@@ -93,7 +94,7 @@ const MainPage = ({ userData }) => {
     x = b.created_at.split(",")[0].split("/");
     x1 = b.created_at.split(",")[1].split(":");
     const dateB = new Date(+x[2], +x[1], +x[0], +x1[0], +x1[1]);
-
+    //console.log(dateA < dateB);
     if (dateOrder === "asc") {
       if (dateA < dateB) {
         return -1;

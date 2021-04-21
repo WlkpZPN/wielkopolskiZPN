@@ -31,7 +31,7 @@ export const getApplications = () => {
       refreshInterval: 3000,
     }
   );
-  console.log("applications", data);
+
   return {
     applications: data,
     mutateApplications: mutate,

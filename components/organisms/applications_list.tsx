@@ -46,7 +46,6 @@ const ApplicationsList = ({ dateOrder, setDateOrder }) => {
   const [page, setPage] = useLocalStorage("application_page", 0);
   const { list: applications } = useContext(AdminContext);
 
-  console.log(applications);
   const dataToExport: any = applications;
   delete dataToExport.clubs;
   delete dataToExport.statuses;
