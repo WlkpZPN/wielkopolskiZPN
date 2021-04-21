@@ -84,11 +84,15 @@ const MainPage = ({ userData }) => {
   }, [filterType, query, dateOrder]);
 
   const sortByDate = (a, b) => {
-    let x = "";
+    let x,
+      x1 = "";
     x = a.created_at.split(",")[0].split("/");
-    const dateA = new Date(+x[2], +x[1], +x[0]);
+    x1 = a.created_at.split(",")[1].split(":");
+
+    const dateA = new Date(+x[2], +x[1], +x[0], +x1[0], +x1[1]);
     x = b.created_at.split(",")[0].split("/");
-    const dateB = new Date(+x[2], +x[1], +x[0]);
+    x1 = b.created_at.split(",")[1].split(":");
+    const dateB = new Date(+x[2], +x[1], +x[0], +x1[0], +x1[1]);
 
     if (dateOrder === "asc") {
       if (dateA < dateB) {
