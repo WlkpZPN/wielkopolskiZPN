@@ -7,7 +7,7 @@ import { useLocalStorage } from "../../middleware/hooks";
 import { Download } from "@styled-icons/entypo/Download";
 
 //components
-import { exportClubData } from "../../middleware/utils";
+import { exportClubData, convertLeauge } from "../../middleware/utils";
 
 import TableRow from "../atoms/table_row";
 import ClubStatus from "../atoms/club_status";
@@ -64,7 +64,7 @@ const ClubsList = () => {
           </ClubName>
           <span>{club.active ? "aktywny" : "niekatywny"}</span>
           <span>{club.region}</span>
-          <span>{club.leauge}</span>
+          <span>{convertLeauge(club.leauge)}</span>
           <PrimaryButton
             onClick={() => router.push(`/admin/kluby/${club.id}`)}
             style={{ width: "min-content", justifySelf: "end" }}

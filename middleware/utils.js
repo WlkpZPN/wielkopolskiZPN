@@ -248,3 +248,22 @@ export const createSeasons = (amount) => {
     }`;
   }
 };
+
+export const convertLeauge = (leauge) => {
+  switch (leauge) {
+    case "iv liga":
+      return "IV Liga";
+    case "v liga":
+      return "V Liga";
+    case "klasa okręgowa":
+      return "Klasa okręgowa";
+    case "klasa a":
+      return "Klasa A";
+    case "klasa b":
+      return "Klasa B";
+    case "młodzież":
+      return "Ligi młodzieżowe";
+    default:
+      return null;
+  }
+};

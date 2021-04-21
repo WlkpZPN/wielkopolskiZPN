@@ -90,7 +90,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             </Label>
             <Label width="max-content">
               <span>
-                Udział zawodników młodzieżowych
+                Udział zawodników młodzieżowych w meczach seniorów
                 <Info
                   text="W czasie trwania całego meczu zespołu seniorów uczestniczyć będzie minimum podana poniżej liczba zawodników młodzieżowych do lat 21 (zawodnikami młodzieżowymi są zawodnicy posiadający obywatelstwo polskie, którzy w roku kalendarzowym, w którym następuje zakończenie danego sezonu rozgrywkowego, ukończą 21. rok życia oraz zawodnicy młodsi).
 "
