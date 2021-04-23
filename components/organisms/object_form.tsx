@@ -151,6 +151,38 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     return capacity;
   };
 
+  const bullPenCapacity = () => {
+    let capacity = "";
+
+    switch (context.formData.stepOne.leauge.toLowerCase()) {
+      case "iv liga":
+        capacity = "13";
+        break;
+      case "klasa okręgowa":
+      case "v liga":
+        capacity = "10";
+        break;
+      case "klasa a":
+        capacity = "100";
+        break;
+      case "Klasa b":
+      case "Klasa c":
+      case "młodzież":
+        capacity = "8";
+        break;
+      default:
+        break;
+    }
+
+    if (capacity !== "") {
+      return (
+        <Info
+          text={`Wymagane jest posiadanie minimum ${capacity} miejsc siedzących`}
+        />
+      );
+    }
+  };
+
   const handleChange = context.handleObjectChange;
   const handleObjectSave = (e) => {
     e.preventDefault();
@@ -354,7 +386,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               {context.formData.stepOne.leauge.toLowerCase() ===
               "v liga" ? null : (
                 <Info
-                  text={`Zaleca się, aby pojemność stadionu wynosiła przynajmniej: ${capacityRecommendations()} miejsc siedzących spełniających wymogi indywidualnych miejsc siedzących  `}
+                  text={`Zaleca się, aby pojemność stadionu wynosiła przynajmniej ${capacityRecommendations()} miejsc siedzących spełniających wymogi indywidualnych miejsc siedzących  `}
                 />
               )}
             </span>
@@ -714,8 +746,12 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
             </>
           ) : null}
-          <Label width="50%">
-            Liczba miejsc siedzących na ławce dla rezerwowych
+          <Label>
+            <span style={{ width: "max-content" }}>
+              Liczba miejsc siedzących na ławce dla rezerwowych{" "}
+              {bullPenCapacity()}
+            </span>
+
             <NumericInput
               value={data.I08_number_of_seats_on_the_bench}
               onChange={(e) =>

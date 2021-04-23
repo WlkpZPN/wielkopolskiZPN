@@ -140,7 +140,7 @@ const User = ({ clubData, authData }) => {
         </IconButton>
       </Link>
       <LastChange>{clubData.updated_at}</LastChange>
-      <EditClubData clubData={clubData} />
+      <EditClubData clubData={clubData} isAdmin={true} />
     </AdminLayout>
   );
 };

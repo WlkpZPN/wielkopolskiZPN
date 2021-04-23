@@ -2,7 +2,7 @@ import { validateEmail } from "./validation";
 
 export const checkStepOne = (data) => {
   console.log("leauge", data.leauge);
-  if (!data.leauge || data.leauge === 'brak') {
+  if (!data.leauge || data.leauge === "brak") {
     return {
       valid: false,
       text: "Proszę podać ligę rozgrywkową",
@@ -113,7 +113,7 @@ export const checkStepThree = (formData, leauge) => {
           if (parseInt(formData.youthGroupsPossession) < 1) {
             return {
               valid: false,
-              text: "Klub musi posiadać przynajmniej 1 zespół młodzieżowe",
+              text: "Klub musi posiadać przynajmniej 1 zespół młodzieżowy",
             };
           }
       }

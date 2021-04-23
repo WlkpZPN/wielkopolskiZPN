@@ -33,7 +33,7 @@ const ExtraFieldsWrapper = styled.div`
     margin-top: 15px;
   }
 `;
-const EditClubData = ({ clubData }) => {
+const EditClubData = ({ clubData, isAdmin = false }) => {
   const [city, street, zipCode] = extractAddressData(clubData.address);
   const [postal_city, postal_street, postal_zipCode] = extractAddressData(
     clubData.postal_address
@@ -291,238 +291,240 @@ const EditClubData = ({ clubData }) => {
     // console.log(e.target);
     e.preventDefault();
     //1. check required fields
-    //console.log(clubName);
-    if (clubName.trim() === "") {
-      setError({ text: "Proszę podać nazwe klubu", type: "main data" });
-      window.scrollTo(0, 0);
-      return;
-    } else if (clubName) {
-      let { valid, message } = validateText(clubName);
-      if (!valid) {
-        setError({ text: message, type: "main data" });
+
+    if (!isAdmin) {
+      if (clubName.trim() === "") {
+        setError({ text: "Proszę podać nazwe klubu", type: "main data" });
+        window.scrollTo(0, 0);
+        return;
+      } else if (clubName) {
+        let { valid, message } = validateText(clubName);
+        if (!valid) {
+          setError({ text: message, type: "main data" });
+          window.scrollTo(0, 0);
+          return;
+        }
+      }
+
+      //club address validation
+      if (!clubCity) {
+        setError({
+          text: "Proszę podać miasto ",
+          type: "main city",
+        });
         window.scrollTo(0, 0);
         return;
       }
-    }
-
-    //club address validation
-    if (!clubCity) {
-      setError({
-        text: "Proszę podać miasto ",
-        type: "main city",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (!clubZipCode) {
-      setError({
-        text: "Proszę podać kod pocztowy ",
-        type: "main zipCode",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (!clubStreet) {
-      setError({
-        text: "Proszę podać ulice,na której znajduje się klub ",
-        type: "main street",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    if (clubCity && clubZipCode && clubStreet) {
-      let properCity = validateText(clubCity);
-      if (!properCity.valid) {
-        setError({ text: properCity.message, type: "main address" });
+      if (!clubZipCode) {
+        setError({
+          text: "Proszę podać kod pocztowy ",
+          type: "main zipCode",
+        });
+        window.scrollTo(0, 0);
         return;
       }
-    }
-
-    // postal address validation
-    if (!postalCity) {
-      setError({
-        text: "Proszę podać miasto ",
-        type: "postal city",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (!postalZipCode) {
-      setError({
-        text: "Proszę podać kod pocztowy ",
-        type: "postal zipCode",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (!postalStreet) {
-      setError({
-        text: "Proszę podać ulice ",
-        type: "postal street",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    let properCity = validateText(postalCity);
-    if (!properCity.valid) {
-      setError({ text: properCity.message, type: "postal address" });
-      return;
-    }
-
-    //stadium validation
-    if (!stadiumCity) {
-      setError({
-        text: "Proszę podać miasto ",
-        type: "stadium city",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (!stadiumZipCode) {
-      setError({
-        text: "Proszę podać kod pocztowy ",
-        type: "stadium zipCode",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (!stadiumStreet) {
-      setError({
-        text: "Proszę podać ulice ",
-        type: "stadium street",
-      });
-      window.scrollTo(0, 0);
-      return;
-    }
-    properCity = validateText(stadiumCity);
-    if (!properCity.valid) {
-      setError({ text: properCity.message, type: "stadium address" });
-      return;
-    }
-
-    if (!phone) {
-      setError({
-        text: "Proszę podać przynajmniej jeden telefon komórkowy",
-        type: "phone",
-      });
-      return;
-    }
-
-    if (!email) {
-      setError({
-        text: "Proszę podać przynajmniej jeden email",
-        type: "email",
-      });
-      return;
-    }
-
-    // chairman validation
-    if (
-      !chairmanPhone ||
-      !chairmanName ||
-      !chairmanLastName ||
-      !chairmanEmail
-    ) {
-      setError({
-        text: "Proszę podać wszystkie dane prezesa",
-        type: "chairman",
-      });
-      return;
-    } else {
-      console.log(chairmanPhone);
-      let properPhone = validatePhone(chairmanPhone);
-      if (!properPhone.valid) {
+      if (!clubStreet) {
         setError({
-          text: "Nr telefonu musi posiadać 9 znaków",
-          type: "chairman",
+          text: "Proszę podać ulice,na której znajduje się klub ",
+          type: "main street",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      if (clubCity && clubZipCode && clubStreet) {
+        let properCity = validateText(clubCity);
+        if (!properCity.valid) {
+          setError({ text: properCity.message, type: "main address" });
+          return;
+        }
+      }
+
+      // postal address validation
+      if (!postalCity) {
+        setError({
+          text: "Proszę podać miasto ",
+          type: "postal city",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (!postalZipCode) {
+        setError({
+          text: "Proszę podać kod pocztowy ",
+          type: "postal zipCode",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (!postalStreet) {
+        setError({
+          text: "Proszę podać ulice ",
+          type: "postal street",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      let properCity = validateText(postalCity);
+      if (!properCity.valid) {
+        setError({ text: properCity.message, type: "postal address" });
+        return;
+      }
+
+      //stadium validation
+      if (!stadiumCity) {
+        setError({
+          text: "Proszę podać miasto ",
+          type: "stadium city",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (!stadiumZipCode) {
+        setError({
+          text: "Proszę podać kod pocztowy ",
+          type: "stadium zipCode",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+      if (!stadiumStreet) {
+        setError({
+          text: "Proszę podać ulice ",
+          type: "stadium street",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
+      properCity = validateText(stadiumCity);
+      if (!properCity.valid) {
+        setError({ text: properCity.message, type: "stadium address" });
+        return;
+      }
+
+      if (!phone) {
+        setError({
+          text: "Proszę podać przynajmniej jeden telefon komórkowy",
+          type: "phone",
         });
         return;
       }
 
-      let properName = validateText(chairmanName);
-      let properLastName = validateText(chairmanLastName);
-      if (!properName.valid) {
-        setError({ text: properName.message, type: "chairman" });
-        return;
-      }
-      if (!properLastName.valid) {
-        setError({ text: properLastName.message, type: "chairman" });
+      if (!email) {
+        setError({
+          text: "Proszę podać przynajmniej jeden email",
+          type: "email",
+        });
         return;
       }
 
-      let properEmail = validateEmail(chairmanEmail);
-      if (!properEmail.valid) {
-        setError({ text: properEmail.message, type: "chairman" });
+      // chairman validation
+      if (
+        !chairmanPhone ||
+        !chairmanName ||
+        !chairmanLastName ||
+        !chairmanEmail
+      ) {
+        setError({
+          text: "Proszę podać wszystkie dane prezesa",
+          type: "chairman",
+        });
         return;
-      }
-    }
+      } else {
+        console.log(chairmanPhone);
+        let properPhone = validatePhone(chairmanPhone);
+        if (!properPhone.valid) {
+          setError({
+            text: "Nr telefonu musi posiadać 9 znaków",
+            type: "chairman",
+          });
+          return;
+        }
 
-    //agent validation
-    if (
-      !agentName ||
-      !agentLastName ||
-      !agentPhone ||
-      !agentEmail ||
-      !position
-    ) {
-      setError({ text: "Proszę podać dane pełnomocnika", type: "agent" });
-      return;
-    } else {
-      let properName = validateText(agentLastName);
-      let properLastName = validateText(agentName);
+        let properName = validateText(chairmanName);
+        let properLastName = validateText(chairmanLastName);
+        if (!properName.valid) {
+          setError({ text: properName.message, type: "chairman" });
+          return;
+        }
+        if (!properLastName.valid) {
+          setError({ text: properLastName.message, type: "chairman" });
+          return;
+        }
 
-      if (!properName.valid) {
-        setError({ text: properName.message, type: "agent" });
-        return;
+        let properEmail = validateEmail(chairmanEmail);
+        if (!properEmail.valid) {
+          setError({ text: properEmail.message, type: "chairman" });
+          return;
+        }
       }
-      if (!properLastName.valid) {
-        setError({ text: properLastName.message, type: "agent" });
+
+      //agent validation
+      if (
+        !agentName ||
+        !agentLastName ||
+        !agentPhone ||
+        !agentEmail ||
+        !position
+      ) {
+        setError({ text: "Proszę podać dane pełnomocnika", type: "agent" });
         return;
+      } else {
+        let properName = validateText(agentLastName);
+        let properLastName = validateText(agentName);
+
+        if (!properName.valid) {
+          setError({ text: properName.message, type: "agent" });
+          return;
+        }
+        if (!properLastName.valid) {
+          setError({ text: properLastName.message, type: "agent" });
+          return;
+        }
+        let properPhone = validatePhone(agentPhone);
+        if (!properPhone.valid) {
+          setError({ text: properPhone.message, type: "agent" });
+          return;
+        }
+
+        let properEmail = validateEmail(agentEmail);
+        if (!properEmail.valid) {
+          setError({ text: properEmail.message, type: "agent" });
+          return;
+        }
       }
-      let properPhone = validatePhone(agentPhone);
+
+      //2. validate data
+
+      //phone validation
+
+      let properPhone = validatePhone(phone);
       if (!properPhone.valid) {
-        setError({ text: properPhone.message, type: "agent" });
+        setError({ text: properPhone.message, type: "phone" });
+        window.scrollTo(0, e.target[11].offsetTop + 100);
         return;
       }
 
-      let properEmail = validateEmail(agentEmail);
-      if (!properEmail.valid) {
-        setError({ text: properEmail.message, type: "agent" });
-        return;
-      }
-    }
-
-    //2. validate data
-
-    //phone validation
-
-    let properPhone = validatePhone(phone);
-    if (!properPhone.valid) {
-      setError({ text: properPhone.message, type: "phone" });
-      window.scrollTo(0, e.target[11].offsetTop + 100);
-      return;
-    }
-
-    //email validation
-    let properEmail = validateEmail(email);
-    if (!properEmail.valid) {
-      setError({ text: properEmail.message, type: "email" });
-      return;
-    }
-    if (emailCount === 2 && email2 !== "") {
-      properEmail = validateEmail(email2);
+      //email validation
+      let properEmail = validateEmail(email);
       if (!properEmail.valid) {
         setError({ text: properEmail.message, type: "email" });
         return;
       }
-    }
-    if (emailCount === 3 && email3 !== "") {
-      properEmail = validateEmail(email3);
-      if (!properEmail.valid) {
-        setError({ text: properEmail.message, type: "email" });
-        return;
+      if (emailCount === 2 && email2 !== "") {
+        properEmail = validateEmail(email2);
+        if (!properEmail.valid) {
+          setError({ text: properEmail.message, type: "email" });
+          return;
+        }
+      }
+      if (emailCount === 3 && email3 !== "") {
+        properEmail = validateEmail(email3);
+        if (!properEmail.valid) {
+          setError({ text: properEmail.message, type: "email" });
+          return;
+        }
       }
     }
 
