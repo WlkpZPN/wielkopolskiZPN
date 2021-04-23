@@ -50,8 +50,8 @@
 }
 
 #nprogress .spinner-icon {
-  width: 150px;
-  height: 150px;
+  width: 105px;
+  height: 105px;
   box-sizing: border-box;
   opacity: 1;
   z-index: 1000;
