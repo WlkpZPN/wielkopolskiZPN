@@ -79,7 +79,6 @@ export const convertToFormData = (files) => {
 
 export const getCurrentDate = () => {
   const newDate = new Date();
-  console.log("newdate", newDate);
   const date = ` ${newDate.getDate()}/${newDate
     .getMonth()
     .toLocaleString("en-US", {
@@ -91,6 +90,7 @@ export const getCurrentDate = () => {
     minimumIntegerDigits: 2,
     useGrouping: false,
   })}`;
+  console.log("newdate", date);
   return date;
 };
 

@@ -76,7 +76,7 @@ const StepOneForm = ({
               value={data.leauge}
               onChange={(e) => handleChange(e.target.value, "leauge", 1)}
             >
-              <option value={null}>brak</option>
+              <option value={null}>Wybierz ligę rozgrywkową</option>
               <option value="iv liga">IV liga</option>
               <option value="v liga">V liga</option>
               <option value="klasa okręgowa">Klasa okręgowa</option>
