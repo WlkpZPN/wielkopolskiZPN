@@ -345,7 +345,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               Regulaminy zawodów piłkarskich niebędących imprezą masową w
               formacie nie mniejszym niż B1 (70cm x 100cm) rozmieszczone są
               przed każdym wejściem w taki sposób,by widzowie mogli je
-              przeczytać
+              przeczytać.
             </span>
           </Label>
           <Label pointer margin="24px 0" direction="row">
@@ -357,7 +357,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Właściwe przepisy prawa powszechnego nakładają na Klub obowiązek
-              posiadania regulaminu imprezy masowej
+              posiadania regulaminu imprezy masowej.
             </span>
           </Label>
           <Label pointer margin="24px 0" direction="row">
@@ -382,7 +382,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <Label width="max-content">
             <span>
               Całkowita liczba indywidualnych miejsc siedzących z oparciami
-              udostępniona dla publiczności
+              udostępniona dla publiczności.
               {context.formData.stepOne.leauge.toLowerCase() ===
               "v liga" ? null : (
                 <Info
@@ -409,7 +409,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Miejsca siedzące spełniają wymogi indywidualnych miejsc siedzących
-              zdefiniowanych w kryterium I.04
+              zdefiniowanych w kryterium I.04.
             </span>
           </Label>
           <Label pointer margin="24px 0" direction="row">
@@ -421,7 +421,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Ilość miejsc udostępnionych dla publiczności spełnia wymogi
-              ninejszego kryterium
+              ninejszego kryterium.
             </span>
           </Label>
           <FormHeader>
@@ -497,7 +497,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           ) : null}
           <Label width="50%">
             Liczba indywidualnych miejsc siedzących z oparciami w sektorze
-            kibiców drużyny gości
+            kibiców drużyny gości.
             <NumericInput
               value={data.I05_number_of_seats_for_guests}
               onChange={(e) => {
@@ -536,7 +536,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Obszar oddzielony od pozostałych widzów ogrodzeniem trwałym o
               wysokości min. 2,2m z każdej ze stron oraz z możliwością
-              utworzenia strefy klubowej
+              utworzenia strefy klubowej.
             </span>
           </Label>
           <Label pointer margin="24px 0" direction="row">
@@ -547,7 +547,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I05_3, objectIndex, "I05_3")
                 }
               />
-              Zapewniono odrębny dostęp i niezależne urządzenia sanitarne
+              Zapewniono odrębny dostęp i niezależne urządzenia sanitarne.
             </span>
           </Label>
           <FormHeader>Kryterium I.06 - Pole gry</FormHeader>
@@ -628,7 +628,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I06_1, objectIndex, "I06_1")
                 }
               />
-              Można na nim grać w ciągu całego sezonu rozgrywkowego
+              Można na nim grać w ciągu całego sezonu rozgrywkowego.
             </span>
           </Label>
           {data.I06_type === "sztuczna" ? (
@@ -643,7 +643,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                     }
                   />
                   Nawierzchnia ma kolor zielony ( widoczne w przypadku wyboru
-                  sztucznej murawy)
+                  sztucznej murawy).
                 </span>
               </Label>
               <Label pointer margin="24px 0" direction="row">
@@ -655,7 +655,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                     }
                   />
                   Nawierzchnia zatwierdzona przez Wielkopolski ZPN ( w przypadku
-                  wyboru sztucznej murawy)
+                  wyboru sztucznej murawy).
                 </span>
               </Label>
             </>
@@ -670,7 +670,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Pole gry ma trawiaste lub pokryte sztuczną murawą pobocze pola gry
               o szerokości min. 3 m za liniami bocznymi i szerokości min. 5 m za
-              liniami końcowymi pola gry
+              liniami końcowymi pola gry.
             </span>
           </Label>
           <Label pointer margin="24px 0" direction="row">
@@ -699,7 +699,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Obszar pola gry jest odgrodzony od miejsc udostępnionych dla
-              publiczności stabilnym ogrodzeniem o wysokości min. 1,2 m
+              publiczności stabilnym ogrodzeniem o wysokości min. 1,2 m.
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
@@ -711,7 +711,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Ogrodzenie obszaru pola gry wyposażone jest w bramki ewakuacyjne
-              pomalowane odróżniającym je od pozostałego ogrodzenia kolorem
+              pomalowane odróżniającym je od pozostałego ogrodzenia kolorem.
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
@@ -724,7 +724,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Tablice,bandy reklamowe lub inne przeszkody stałe znajdujące się w
               obszarze gry są usytuowane w min. odległości 3 m od linii bocznych
-              i 5 m od linii końcowych pola gry
+              i 5 m od linii końcowych pola gry.
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
@@ -737,7 +737,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Słupki odciągów siatek na bramkach,a także słupy piłkochwytów
               znajdują się w odległości nie mniejszej niż 5 m od liniii końcowej
-              gry
+              gry.
             </span>
           </Label>
           <FormHeader>Kryterium I.08 - Ławki w obszarze pola gry</FormHeader>
@@ -774,7 +774,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Ławki dla rezerwowych spełniają wymogi wynikające z niniejszego
-              kryterium z uwzględnieniem właściwej ligi lub klasy rozgrywkowej
+              kryterium z uwzględnieniem właściwej ligi lub klasy rozgrywkowej.
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
@@ -787,7 +787,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Ławki dla rezerwowych usytuowane są w odległości nie mniejszej niż
               3 m od linii bocznej pola gry,rozstawione symetrycznie w sotsunku
-              do osi pola gry i w odległości od siebie nie większej niż 30 m
+              do osi pola gry i w odległości od siebie nie większej niż 30 m.
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
@@ -799,7 +799,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Punkt sanitarny oraz stanowisko dla min. dwóch noszowych jest
-              wyznaczone i oznakowane białym krzyżem na zielonym tle
+              wyznaczone i oznakowane białym krzyżem na zielonym tle.
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
@@ -811,7 +811,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Stanowisko dla noszowych wyposażone jest w min. jedną pare noszy z
-              usztywnieniem
+              usztywnieniem.
             </span>
           </Label>
           <FormHeader>Kryterium I.09 - Dostęp do obszaru pola gry</FormHeader>
@@ -830,7 +830,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Wyjście na obszar pola gry jest osłonięte ogniotrwałym wysuwanym
               tunelem lub w inny sposób zapewniający bezpieczeństwo sędziów i
-              zawodników
+              zawodników.
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
@@ -842,7 +842,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Sędziowie i zawodnicy mają w czasie pobytu na Stadionie zapewnioną
-              odpowiednią ochronę
+              odpowiednią ochronę.
             </span>
           </Label>
           <FormHeader>Kryterium I.10 - Dojazd do obszaru pola gry</FormHeader>
@@ -860,7 +860,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Pojazdy pogotowia,straży pożarnej,policji itp. mają możliwość
-              bezpośredniego dojazdu do obszaru pola gry
+              bezpośredniego dojazdu do obszaru pola gry.
             </span>
           </Label>
           <FormHeader style={{ display: "flex", alignItems: "center" }}>
@@ -943,7 +943,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I11_1, objectIndex, "I11_1")
                 }
               />
-              W szatni znajduje się tablica do prezentacji taktyki
+              W szatni znajduje się tablica do prezentacji taktyki.
             </span>
           </Label>
           <Label pointer>
@@ -955,7 +955,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Szatnia zawodników drużyny gospodarzy spełnia wymogi wynikające z
-              niniejszego kryterium
+              niniejszego kryterium.
             </span>
           </Label>
           <FormHeader style={{ display: "flex", alignItems: "center" }}>
@@ -1038,7 +1038,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I12_1, objectIndex, "I12_1")
                 }
               />
-              W szatni znajduje się tablica do prezentacji taktyki
+              W szatni znajduje się tablica do prezentacji taktyki.
             </span>
           </Label>
           <Label pointer>
@@ -1050,7 +1050,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Szatnia zawodników drużyny gości spełnia wymogi wynikające z
-              niniejszego kryterium
+              niniejszego kryterium.
             </span>
           </Label>
           <FormHeader>Kryterium I.13 - Szatnia dla sędziów </FormHeader>
@@ -1067,7 +1067,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I13_1, objectIndex, "I13_1")
                 }
               />
-              Szatnia dla sędziów jest zapewniona
+              Szatnia dla sędziów jest zapewniona.
             </span>
           </Label>
           <Label pointer>
@@ -1079,7 +1079,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Szatnia dla sędziów oddzielona jest od szatni dla zawodników lecz
-              w ich pobliżu
+              w ich pobliżu.
             </span>
           </Label>
           <Label pointer>
@@ -1091,7 +1091,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               W szatni dostępne są miejsca do siedzenia, wieszaki lub szafki na
-              odzież dla 4 osób
+              odzież dla 4 osób.
             </span>
           </Label>
           <Label pointer>
@@ -1103,7 +1103,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               W szatni lub w bezpośrednim jej pobliżu dostępny jest min. 1
-              prysznic
+              prysznic.
             </span>
           </Label>
           <Label pointer>
@@ -1115,7 +1115,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               W szatni lub w bezpośrednim jej pobliżu dostępna jest min. 1
-              toaleta
+              toaleta.
             </span>
           </Label>
           <FormHeader>Kryterium I.14 Parking</FormHeader>
@@ -1134,7 +1134,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Na obiekcie dostępna jest min. liczba miejsc parkingowych w
               strefie chronionej przeznaczonych dla sędziów, oficjalnych
-              przedstawicieli i uczestniczących w zawodach klubów
+              przedstawicieli i uczestniczących w zawodach klubów.
             </span>
           </Label>
           <Label pointer>
@@ -1145,7 +1145,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I14_2, objectIndex, "I14_2")
                 }
               />
-              Min. 1 miejsce parkingowe dla autokarów
+              Min. 1 miejsce parkingowe dla autokarów.
             </span>
           </Label>
           <Label pointer>
@@ -1156,7 +1156,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I14_3, objectIndex, "I14_3")
                 }
               />
-              Min. 10 miejsc parkingowych dla samochodów
+              Min. 10 miejsc parkingowych dla samochodów.
             </span>
           </Label>
           <FormHeader>Kryterium I.15</FormHeader>
@@ -1234,7 +1234,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Stadion wyposażony jest w dobrze słyszalny w każdej częsci system
-              nagłaśniający
+              nagłaśniający.
             </span>
           </Label>
           <FormHeader>Kryterium I.17 - Oświetlenie</FormHeader>
@@ -1252,13 +1252,13 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Stadion wyposażony jest w oświetlenie pokrywające równomiernie
-              cały obszar pola gry
+              cały obszar pola gry.
             </span>
           </Label>
           {data.I17_1 ? (
             <>
               <Label width="50%">
-                Poziom natężenia oświetlenia w lx
+                Poziom natężenia oświetlenia w lx.
                 <NumericInput
                   value={data.I17_intensity_level}
                   onChange={(e) =>
@@ -1273,7 +1273,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 />
               </Label>
               <Label>
-                Dokument poświadczający pomiar natężenia światła
+                Dokument poświadczający pomiar natężenia światła.
                 <AddFacilityFilesWrapper
                   files={fileData}
                   category="I17_intensity_level"
@@ -1299,7 +1299,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Wszystkie pomieszczenia meczowe są odpowiednio i w dobrze widoczny
               sposób, oznakowane (np. szatnia drużyny gospodarzy, szatnia
-              drużyny gości, sędziowie)
+              drużyny gości, sędziowie).
             </span>
           </Label>
           <FormHeader>
@@ -1318,7 +1318,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I19_1, objectIndex, "I19_1")
                 }
               />
-              Stadion wyposażony jest w ogrodzenie zewnętrzne
+              Stadion wyposażony jest w ogrodzenie zewnętrzne.
             </span>
           </Label>
           <Label pointer>
@@ -1329,7 +1329,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I19_2, objectIndex, "I19_2")
                 }
               />
-              Przy wejściu są oznakowane punkty kasowe i depozytowe
+              Przy wejściu są oznakowane punkty kasowe i depozytowe.
             </span>
           </Label>
           <Label pointer>
@@ -1341,7 +1341,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 }
               />
               Wejścia na Stadion są wyposażone w barierki kierujące lub
-              kołowrotki
+              kołowrotki.
             </span>
           </Label>
           <FormHeader>
@@ -1362,7 +1362,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               />
               Stadion wyposażony jest w min. 3 miejsca dla widzów
               niepełnosprawnych, w szczególności dla osób poruszających się na
-              wózkach inwalidzkich i ich opiekunów
+              wózkach inwalidzkich i ich opiekunów.
             </span>
           </Label>
           <FormHeader>

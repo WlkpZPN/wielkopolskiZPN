@@ -15,6 +15,7 @@ import OutlineButton from "../atoms/outline_button";
 import ObjectName from "../atoms/object_name";
 import AddFacilityFilesWrapper from "../organisms/add_facility_files_wrapper";
 const StepSevenForm = ({ handleStepChange, readOnly }) => {
+  const [regulations, setRegulations] = useState(false);
   const [state, setState] = useState(false);
   const [error, setError] = useState("");
   const context = useContext(ApplicationContext);
@@ -203,6 +204,24 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
                 }
               />{" "}
               Chcemy otrzymać fakturę przed dokonaniem płatności
+            </span>
+          </Label>
+          <Label pointer margin="16px 0" direction="row">
+            <span>
+              <RadioSquare
+                value={regulations}
+                handleChange={(e) => setRegulations(e.target.value)}
+              />
+              Zapoznałam/em się z regulaminem płatności opłat administracyjnych
+              za przyznanie licencji
+              <a
+                style={{ color: "#0056A5" }}
+                target="_blank"
+                href="https://pdf.fra1.digitaloceanspaces.com/Regulamin_Licencje_WZPN.pdf"
+              >
+                &nbsp;Regulamin PDF
+              </a>
+              .
             </span>
           </Label>
         </Fieldset>

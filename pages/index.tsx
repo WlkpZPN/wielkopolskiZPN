@@ -37,7 +37,6 @@ const PaymentLink = styled.a`
 export const ClubContext = createContext(null);
 
 const Home = ({ clubData, authData, settings }) => {
-  console.log(authData);
   const [loading, setLoading] = useState(false);
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
 

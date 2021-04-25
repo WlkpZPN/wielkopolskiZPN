@@ -24,10 +24,7 @@ if (process.env.NODE_ENV === "production") {
 
   if (!global.prisma) {
 
-    global.prisma = new PrismaClient({
-  __internal:{
-    useUds: true
-  }} as any);
+    global.prisma = new PrismaClient();
 
   }
 

@@ -7,13 +7,19 @@ import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
 import Loader from "../atoms/loader";
 import { toast } from "react-toastify";
-import { makeid } from "../../middleware/utils";
+import { makeid, checkMimeType } from "../../middleware/utils";
 import { ApplicationContext } from "../../components/organisms/club_application";
+import ErrorMessage from "../atoms/error_message";
 //components
 import OutlineButton from "../atoms/outline_button";
 
 const Parent = styled.div`
   position: relative;
+`;
+
+const StyledErrorMessage = styled(ErrorMessage)`
+  position: relative;
+  bottom: 16px;
 `;
 
 const Wrapper = styled.div`
@@ -143,10 +149,17 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
   const facilityID = formData.stepFour.sport_facilities[currentObject]?.id;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState(null);
+  console.log(error);
   const handleChange = async (e) => {
+    const result = checkMimeType(e);
+    if (!result.valid) {
+      // setError(result.error);
+      console.log("error", result.error);
+      toast.error(result.text);
+      return;
+    }
     e.preventDefault();
-
     const fileName = `${makeid(3)}_${e.target.files[0].name}`;
 
     const newFile = new File([e.target.files[0]], fileName, {
@@ -276,13 +289,30 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
               )}
             </FileInfo>
             <Label>
-              {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
+              {file ? null : (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {" "}
+                  <AddButton>+ Dodaj dokument</AddButton>
+                  <span
+                    style={{
+                      color: "#363636",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Dopuszczalne formaty to PDF oraz JPG, maksymalnie 5 Mb
+                  </span>{" "}
+                </div>
+              )}
 
               <FileInput
                 id="file"
                 type="file"
                 name="file"
-                onChange={handleChange}
+                onChange={(e) => {
+                  // setError(null);
+                  handleChange(e);
+                }}
               />
             </Label>
             {file ? (
@@ -292,6 +322,8 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
             ) : null}{" "}
           </>
         )}
+
+        <ErrorMessage>{error}</ErrorMessage>
       </Wrapper>
     </Parent>
   );

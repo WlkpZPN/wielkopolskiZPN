@@ -7,7 +7,7 @@ import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
 import Loader from "../atoms/loader";
 import { toast } from "react-toastify";
-import { makeid } from "../../middleware/utils";
+import { makeid, checkMimeType } from "../../middleware/utils";
 import { ApplicationContext } from "../../components/organisms/club_application";
 //components
 import OutlineButton from "../atoms/outline_button";
@@ -136,11 +136,17 @@ const AddFile = ({ file, category, id, text }) => {
   const { formData, clubData, refreshData } = useContext(ApplicationContext);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
   //console.log(file);
   const handleChange = async (e) => {
     e.preventDefault();
-    //console.log(e.target.files[0]);
-    //console.log(e.target.files[0]);
+    const result = checkMimeType(e);
+    if (!result.valid) {
+      toast.error(result.error);
+      return;
+    }
+    console.log(e.target.files[0].type);
+
     const fileName = `${makeid(3)}_${e.target.files[0].name}`;
 
     const newFile = new File([e.target.files[0]], fileName, {
@@ -148,8 +154,6 @@ const AddFile = ({ file, category, id, text }) => {
       lastModified: e.target.files[0].lastModified,
     });
 
-    // const blob = e.target.files[0];
-    // const newFile = new File([blob], fileName, blob.type);
     const fileData = new FormData();
     fileData.append("file", newFile);
 
@@ -241,7 +245,21 @@ const AddFile = ({ file, category, id, text }) => {
               )}
             </FileInfo>
             <Label>
-              {file ? null : <AddButton>+ Dodaj dokument</AddButton>}
+              {file ? null : (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {" "}
+                  <AddButton>+ Dodaj dokument</AddButton>
+                  <span
+                    style={{
+                      color: "#363636",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Dopuszczalne formaty to PDF oraz JPG, maksymalnie 5 Mb
+                  </span>{" "}
+                </div>
+              )}
 
               <FileInput
                 id="file"

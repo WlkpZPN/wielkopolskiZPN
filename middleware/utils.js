@@ -268,3 +268,39 @@ export const convertLeauge = (leauge) => {
       return null;
   }
 };
+
+export const checkMimeType = (event) => {
+  //getting file object
+  let files = event.target.files;
+  //define message container
+  let err = "";
+  // list allow mime type
+  const types = ["image/png", "image/jpeg", "application/pdf"];
+  // loop access array
+  if (files[0].size > 625000) {
+    return {
+      valid: false,
+      error:
+        "Plik jest zbyt duży,upewnij się że przesyłasz odpowiedni plik, możesz przesłać także kilka mniejszych plików",
+    };
+  }
+  // compare file type find doesn't matach
+  if (types.every((type) => files[0].type !== type)) {
+    // create error message and assign to container
+    err =
+      "Wybrany plik zawiera niedozwolone rozszerzenie, prześlij plik w formacie PNG,JPG lub PDF";
+  }
+
+  if (err !== "") {
+    // if message not same old that mean has error
+    event.target.value = null; // discard selected file
+    // console.log(err);
+    return {
+      valid: false,
+      error: err,
+    };
+  }
+  return {
+    valid: true,
+  };
+};
