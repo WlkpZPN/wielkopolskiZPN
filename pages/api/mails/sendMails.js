@@ -66,88 +66,50 @@ export default (req, res) => {
 
         recipientsEmails.push({
           name: club.name,
-          // email: club.email,
-          email: "hondakkia@gmail.com",
+          email: club.email,
         });
         content.push({
           type: "text/html",
-          // body: emailTemplate(title, message.message),
-          body: "test",
+          body: emailTemplate(title, message.message),
         });
       });
 
-      // let response = await axios({
-      //   url: "https://api.freshmail.com/v3/messaging/emails",
-      //   method: "POST",
-      //   headers: {
-      //     Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-      //     "Content-Type": "application/json",
-      //   },
-      //   data: {
-      //     from: {
-      //       email: "licklub@wielkopolskizpn.pl",
-      //       name: "Wielkopolski ZPN",
-      //     },
-      //     recipients: recipientsEmails,
-      //     subject: title,
-      //     contents: content,
-      //   },
-      // });
       let i,
         tmpRecipients,
+        response,
         tmpContent,
         chunk = 100;
-      // for (i = 0; i < recipientsEmails.length; i += chunk) {
-      //   tmpRecipients = recipientsEmails.slice(i, i + chunk);
-      //   tmpContent = content.slice(i, i + chunk);
-
-      //   console.log("response", response);
-      // }
+      for (i = 0; i < recipientsEmails.length; i += chunk) {
+        tmpRecipients = recipientsEmails.slice(i, i + chunk);
+        tmpContent = content.slice(i, i + chunk);
+        response = await axios({
+          url: "https://api.freshmail.com/v3/messaging/emails",
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          data: {
+            from: {
+              email: "licklub@wielkopolskizpn.pl",
+              name: "Wielkopolski ZPN",
+            },
+            recipients: tmpRecipients,
+            subject: title,
+            contents: tmpContent,
+          },
+        });
+        console.log("response", response);
+      }
 
       //***********************************************************
-
-      const response = await axios({
-        url: "https://api.freshmail.com/v3/messaging/emails",
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        data: {
-          from: {
-            email: "licklub@wielkopolskizpn.pl",
-            name: "Wielkopolski ZPN",
-          },
-          recipients: [
-            {
-              email: "hondakkia@gmail.com",
-              name: "test",
-            },
-            {
-              email: "aleksanderfranczak99@gmail.com",
-              name: "test",
-            },
-          ],
-          subject: title,
-          contents: [
-            {
-              type: "text/html",
-              body: emailTemplate(title, message.message),
-            },
-            {
-              type: "text/html",
-              body: emailTemplate(title, message.message),
-            },
-          ],
-        },
-      });
 
       await prisma.messages.update({
         where: {
           id: parseInt(message.id),
         },
         data: {
-          send_date:getCurrentDate(),
+          send_date: getCurrentDate(),
         },
       });
       console.log("response", response);

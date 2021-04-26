@@ -9,7 +9,6 @@ export default (req, res) => {
           email: true,
         },
       });
-      console.log(clubs);
 
       const response = await axios({
         method: "POST",
@@ -19,13 +18,13 @@ export default (req, res) => {
           "Content-Type": "application/json",
         },
         data: {
-          subscribers: [
-            { email: "hondakkia@gmail.com" },
-            { email: "aleksanderfranczak99@gmail.com" },
-          ],
-          list: makeid(10),
+          subscribers: clubs,
+          list: "qhvvftn3og",
+          state: 1,
         },
       });
+      res.status(200);
+      res.send("subsribers added");
     } catch (error) {
       console.log(error.response.data);
       res.status(400).send(error);

@@ -7,7 +7,7 @@ export default (req, res) => {
   return new Promise(async (resolve) => {
     const { clubEmail } = req.body;
     try {
-      const clubData = await prisma.clubs.findUnique({
+      const clubData = await prisma.clubs.findMany({
         where: {
           email: clubEmail,
         },
@@ -21,7 +21,7 @@ export default (req, res) => {
 
       await transporter.sendMail({
         from: "licklub@wielkopolskizpn.pl",
-        to: clubData.email,
+        to: clubData[0].email,
         subject: "WielkopolskiZPN - przypomnienie hasła",
         html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -62,7 +62,7 @@ export default (req, res) => {
           Poniżej znajduje się twoje nowe hasło do Platformy Licencyjnej Wielkopolskiego Związku Piłki Nożnej. 
           Aby się zalogować wprowadź swój adres e-mail,
            na który otrzymałeś tą wiadomość oraz wprowadź hasło znajdujące się poniżej:
-          <p><span style="font-weight: bold">hasło:</span> ${clubData.password}</p>
+          <p><span style="font-weight: bold">hasło:</span> ${clubData[0].password}</p>
         </td>
       </tr>
       <tr>

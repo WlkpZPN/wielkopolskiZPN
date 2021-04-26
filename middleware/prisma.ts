@@ -1,35 +1,65 @@
-import { PrismaClient } from "@prisma/client"
 
-declare global {
+import { PrismaClient } from "@prisma/client";
 
-    namespace NodeJS {
 
-        interface Global {
+// add prisma to the NodeJS global type
 
-            prisma: PrismaClient;
+interface CustomNodeJsGlobal extends NodeJS.Global {
 
-        }
-
-    }
+  prisma: PrismaClient;
 
 }
 
-let prisma: PrismaClient;
 
-if (process.env.NODE_ENV === "production") {
+// Prevent multiple instances of Prisma Client in development
 
-  prisma = new PrismaClient()
+declare const global: CustomNodeJsGlobal;
 
-} else {
 
-  if (!global.prisma) {
+const prisma = global.prisma || new PrismaClient();
 
-    global.prisma = new PrismaClient();
 
-  }
+if (process.env.NODE_ENV === "development") global.prisma = prisma;
 
-  prisma = global.prisma
 
-}
+export default prisma;
 
-export default prisma
+
+
+
+
+// import { PrismaClient } from "@prisma/client"
+
+// declare global {
+
+//     namespace NodeJS {
+
+//         interface Global {
+
+//             prisma: PrismaClient;
+
+//         }
+
+//     }
+
+// }
+
+// let prisma: PrismaClient;
+
+// if (process.env.NODE_ENV === "production") {
+
+//   prisma = new PrismaClient()
+
+// } else {
+
+//   if (!global.prisma) {
+
+//     global.prisma = new PrismaClient();
+
+//   }
+
+//   prisma = global.prisma
+
+// }
+
+// export default prisma

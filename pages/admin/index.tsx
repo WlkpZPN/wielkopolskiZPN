@@ -5,7 +5,7 @@ import prisma from "../../middleware/prisma";
 import { getApplications } from "../../middleware/swr";
 import AdminLayout from "../../components/organisms/admin_layout";
 import { protectedAdminRoute } from "../../middleware/protectedAdmin";
-
+import { useLocalStorage } from "../../middleware/hooks";
 //components
 import ApplicationsList from "../../components/organisms/applications_list";
 import Select from "../../components/atoms/form_select";
@@ -40,7 +40,7 @@ const MainPage = ({ userData }) => {
   const [filterType, setFilterType] = useState(0);
   const [query, setQuery] = useState("");
   const [list, setList] = useState(applications);
-  const [dateOrder, setDateOrder] = useState(null);
+  const [dateOrder, setDateOrder] = useLocalStorage("date_order", null);
 
   useEffect(() => {
     if (!dateOrder) {
