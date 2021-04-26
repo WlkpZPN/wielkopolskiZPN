@@ -317,7 +317,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   }
   //${application.sport_facilities[0].name}
   page.drawText(
-    `2. Mecze w roli gospodarza rozgrywane będą na obiektach:${application.sport_facilities[0].name} ${application.sport_facilities[0].address}`,
+    `2. Mecze w roli gospodarza rozgrywane będą na obiektach: ${application.sport_facilities[0].name} ${application.sport_facilities[0].address}`,
     {
       x: 50,
       y: 310,
@@ -357,6 +357,27 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       size: 10,
       color: rgb(0, 0, 0),
     });
+  } else {
+    page.drawText(
+      "Ad.1. W związku ze spełnieniem wymogów wyżej wymienionych przepisów licencyjnych PZPN",
+      {
+        x: 50,
+        y: 280,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
+    page.drawText(
+      `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały.`,
+      {
+        x: 50,
+        y: 265,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
   }
 
   page.drawText("Otrzymują:", {
