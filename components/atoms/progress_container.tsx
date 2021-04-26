@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+
 import { getStats } from "../../middleware/swr";
 const Progress = styled.div`
   background-color: #e6e6e6;

@@ -1,6 +1,6 @@
 import AdminLayout from "../../components/organisms/admin_layout";
 import styled from "styled-components";
-import axios from "axios";
+
 import { protectedAdminRoute } from "../../middleware/protectedAdmin";
 import ProgressContainer from "../../components/atoms/progress_container";
 import { stat } from "../../middleware/types/stats";
