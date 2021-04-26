@@ -140,6 +140,7 @@ const DeleteButton = styled.span`
   color: white;
   font-weight: bold;
   transition: all 0.2s;
+  font-size: 13px;
   border-radius: 5px;
   cursor: pointer;
   &:hover {
@@ -284,7 +285,9 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
           >
             Wyślij
           </PrimaryButton>
-          <DeleteButton
+          <PrimaryButton
+            hoverColor="dangerDark"
+            color="danger"
             type="button"
             onClick={(e) => {
               e.preventDefault();
@@ -292,7 +295,7 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
             }}
           >
             Usuń
-          </DeleteButton>
+          </PrimaryButton>
         </>
       );
     }

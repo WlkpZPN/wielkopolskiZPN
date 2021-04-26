@@ -13,7 +13,7 @@ const PrimaryButton = styled.button`
   font-weight: 600;
   transition: all 0.2s;
   cursor: pointer;
-
+  font-family: "Lato", sans-serif;
   outline: none;
   &:hover {
     background-color: ${({ theme, hoverColor }) =>

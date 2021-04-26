@@ -97,10 +97,10 @@ const MainPage = ({ userData }) => {
     //console.log(dateA < dateB);
     if (dateOrder === "asc") {
       if (dateA < dateB) {
-        return -1;
+        return 1;
       }
       if (dateA > dateB) {
-        return 1;
+        return -1;
       }
     }
 
