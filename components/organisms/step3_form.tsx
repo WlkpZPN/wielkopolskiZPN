@@ -197,7 +197,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
           name=" Oświadczenie o opiece medycznej nad zawodnikami"
         />
       </Fieldset>
-      <div>
+      <div style={{ marginBottom: "32px" }}>
         <PrimaryButton
           style={{ marginRight: "16px" }}
           onClick={() =>

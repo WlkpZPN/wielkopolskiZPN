@@ -150,7 +150,6 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   return (
     <Fieldset>
       <FormTemplate style={{ maxWidth: "100%" }} onChange={() => setError("")}>
-        <ErrorMessage>{error}</ErrorMessage>
         <Paragraph>
           W swoim zgłoszeniu licencyjnym załączyłeś poniższe załączniki. Prosimy
           sprawdź ich aktualność.
@@ -219,6 +218,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
                 value={regulations}
                 handleChange={(e) => setRegulations(e.target.value)}
               />
+              <ErrorMessage>{error}</ErrorMessage>
               Zapoznałam/em się z regulaminem płatności opłat administracyjnych
               za przyznanie licencji
               <a

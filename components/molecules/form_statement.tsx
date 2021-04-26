@@ -25,6 +25,7 @@ const StatementContent = styled.div`
   padding: 32px;
   position: fixed;
   top: 50%;
+  max-width: 800px;
   left: 50%;
   /* line-height: 1.5rem; */
   transform: translate(-50%, -50%);
@@ -43,7 +44,6 @@ const StatementText = styled.p`
   margin-bottom: 32px;
   line-height: 1.8rem;
   text-align: justify;
-  max-width: 800px;
 `;
 
 const CloseIcon = styled(CloseOutline)`

@@ -483,7 +483,7 @@ const ClubApplication = ({
       toast.error("Prosimy wypełnić wszystkie etapy");
       return;
     }
-    toast.info("wysyłanie wniosku do Wielkopolskiego ZPN");
+    toast.info("Wysyłanie wniosku do Wielkopolskiego ZPN");
     setLoading(true);
     await addSportFacility();
 

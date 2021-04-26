@@ -74,7 +74,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
         />
       </Fieldset>
 
-      <div>
+      <div style={{ marginBottom: "32px" }}>
         <PrimaryButton
           style={{ marginRight: "16px" }}
           onClick={() =>

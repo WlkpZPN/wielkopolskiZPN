@@ -99,7 +99,7 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
           name=" Oświadczenie o stosowaniu dokumentacji ochrony danych osobowych"
         />
       </Fieldset>
-      <div>
+      <div style={{ marginBottom: "32px" }}>
         <PrimaryButton
           type="button"
           style={{ marginRight: "16px" }}

@@ -73,7 +73,7 @@ Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Lice
           name="Oświadczenie o braku zobowiązań wobec klubów piłkarskich"
         />
       </Fieldset>
-      <div>
+      <div style={{ marginBottom: "32px" }}>
         <PrimaryButton
           style={{ marginRight: "16px" }}
           onClick={() =>
