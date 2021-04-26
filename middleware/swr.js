@@ -69,3 +69,13 @@ export const getRoles = () => {
     isRolesError: error,
   };
 };
+
+export const getStats = (type) => {
+  const { data, error } = useSWR(`/api/fetch/stats/${type}`);
+
+  return {
+    data,
+    isError: error,
+    isLoading: !error && !data,
+  };
+};

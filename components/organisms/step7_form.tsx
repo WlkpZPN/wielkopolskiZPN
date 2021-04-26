@@ -21,10 +21,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const context = useContext(ApplicationContext);
   const clubName = context.formData.stepThree.clubAgreementName;
   const {
-    handleObjectFileChange,
-    handleObjectFileDelete,
-    handleFileChange,
-    deleteFile,
+    setStep,
     sendApplication,
     formData,
     handleFormChange,
@@ -137,12 +134,22 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     return fileArr;
   };
   const submitForm = (e) => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
     e.preventDefault();
+
+    if (!regulations) {
+      setError(
+        "Prosimy o zapoznanie się i zaakceptowanie regulaminu płatności przed wysłaniem wniosku"
+      );
+      return;
+    }
     sendApplication();
   };
   return (
     <Fieldset>
-      <FormTemplate onChange={() => setError("")}>
+      <FormTemplate style={{ maxWidth: "100%" }} onChange={() => setError("")}>
         <ErrorMessage>{error}</ErrorMessage>
         <Paragraph>
           W swoim zgłoszeniu licencyjnym załączyłeś poniższe załączniki. Prosimy

@@ -26,14 +26,12 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
   const formData = context.formData.stepThree;
   const handleChange = context.handleFormChange;
   const {
-    fileData,
-    handleFileChange,
-    deleteFile,
     handleStepFill,
     error,
     clearErrors,
     show_buttons,
     sendApplication,
+    setStep,
     clubData,
     completedSteps,
   } = context;
@@ -160,8 +158,8 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
   };
 
   return (
-    <Fieldset disabled={readOnly}>
-      <FormTemplate onChange={() => clearErrors("stepThree")} width="80%">
+    <FormTemplate onChange={() => clearErrors("stepThree")} width="80%">
+      <Fieldset disabled={readOnly}>
         <Label>
           Zespoły młodzieżowe
           <Select
@@ -198,46 +196,49 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
           }
           name=" Oświadczenie o opiece medycznej nad zawodnikami"
         />
-
-        <div>
-          <PrimaryButton
-            style={{ marginRight: "16px" }}
-            onClick={() => handleStepChange("previous")}
-          >
-            Cofnij
-          </PrimaryButton>
-          {show_buttons ? (
-            <>
+      </Fieldset>
+      <div>
+        <PrimaryButton
+          style={{ marginRight: "16px" }}
+          onClick={() =>
+            show_buttons ? handleStepChange("previous") : setStep(2)
+          }
+        >
+          Cofnij
+        </PrimaryButton>
+        {show_buttons ? (
+          <>
+            <PrimaryButton
+              style={{ marginRight: "16px" }}
+              color="dark"
+              hoverColor="darkLight"
+              type="button"
+              onClick={context.saveForm}
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+            {completedSteps.stepThree === "error" ? (
               <PrimaryButton
-                style={{ marginRight: "16px" }}
-                color="dark"
-                hoverColor="darkLight"
+                hoverColor="success"
+                color="successDark"
                 type="button"
-                onClick={context.saveForm}
+                style={{ marginRight: "16px" }}
+                onClick={() => sendApplication()}
               >
-                Zapisz wersję roboczą
+                Zatwierdź i wyślij
               </PrimaryButton>
-              {completedSteps.stepThree === "error" ? (
-                <PrimaryButton
-                  hoverColor="success"
-                  color="successDark"
-                  type="button"
-                  onClick={() => sendApplication()}
-                >
-                  Zatwierdź i wyślij
-                </PrimaryButton>
-              ) : null}
-            </>
-          ) : null}
-          <PrimaryButton
-            style={{ marginRight: "16px" }}
-            onClick={() => handleStepChange("next")}
-          >
-            Kolejny krok
-          </PrimaryButton>
-        </div>
-      </FormTemplate>
-    </Fieldset>
+            ) : null}
+          </>
+        ) : null}
+        <PrimaryButton
+          type="button"
+          style={{ marginRight: "16px" }}
+          onClick={() => (show_buttons ? handleStepChange("next") : setStep(4))}
+        >
+          Kolejny krok
+        </PrimaryButton>
+      </div>
+    </FormTemplate>
   );
 };
 

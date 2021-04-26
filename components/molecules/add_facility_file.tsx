@@ -108,7 +108,7 @@ const AddButton = styled.span`
   font-weight: bold;
   color: ${({ theme }) => theme.primaryLight};
   border-radius: 5px;
-
+  text-align: center;
   cursor: pointer;
   background: transparent;
   &:hover {
@@ -152,14 +152,15 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
   const [error, setError] = useState(null);
   console.log(error);
   const handleChange = async (e) => {
+    e.preventDefault();
     const result = checkMimeType(e);
     if (!result.valid) {
       // setError(result.error);
+
       console.log("error", result.error);
-      toast.error(result.text);
+      toast.error(result.error);
       return;
     }
-    e.preventDefault();
     const fileName = `${makeid(3)}_${e.target.files[0].name}`;
 
     const newFile = new File([e.target.files[0]], fileName, {

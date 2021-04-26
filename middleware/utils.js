@@ -90,7 +90,7 @@ export const getCurrentDate = () => {
     minimumIntegerDigits: 2,
     useGrouping: false,
   })}`;
-  console.log("newdate", date);
+
   return date;
 };
 

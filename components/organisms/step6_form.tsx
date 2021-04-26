@@ -25,7 +25,13 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
   const handleChange = context.handleFormChange;
   const show_buttons = context.show_buttons;
 
-  const { error, clearErrors, sendApplication, completedSteps } = context;
+  const {
+    error,
+    clearErrors,
+    sendApplication,
+    completedSteps,
+    setStep,
+  } = context;
   const submitForm = (e) => {
     e.preventDefault();
 
@@ -37,8 +43,8 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
     handleStepChange("next");
   };
   return (
-    <Fieldset disabled={readOnly}>
-      <FormTemplate onChange={() => clearErrors("")}>
+    <FormTemplate onChange={() => clearErrors("")}>
+      <Fieldset disabled={readOnly}>
         <ErrorMessage>{error.stepSix}</ErrorMessage>
         <FormStatement
           text="Oświadczamy, że nasz klub ma kierownika ds. bezpieczeństwa lub osobę odpowiedzialną za problematykę ochrony i bezpieczeństwa (kryterium P.02), lekarza/ratownika medycznego lub inną osobę posiadającą stosowne uprawnienia odpowiedzialnego/ą za udzielenie pierwszej pomocy medycznej (kryterium P.03), trenera pierwszego zespołu (kryterium P.04) oraz spikera zawodów piłkarskich (kryterium P.05). 
@@ -66,42 +72,49 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
           }
           name=" Oświadczenie o posiadaniu służb porządkowych"
         />
+      </Fieldset>
 
-        <div>
-          <PrimaryButton
-            style={{ marginRight: "16px" }}
-            onClick={() => handleStepChange("previous")}
-          >
-            Cofnij
-          </PrimaryButton>
-          {show_buttons ? (
-            <>
+      <div>
+        <PrimaryButton
+          style={{ marginRight: "16px" }}
+          onClick={() =>
+            show_buttons ? handleStepChange("previous") : setStep(5)
+          }
+        >
+          Cofnij
+        </PrimaryButton>
+        {show_buttons ? (
+          <>
+            <PrimaryButton
+              color="dark"
+              type="button"
+              hoverColor="darkLight"
+              onClick={context.saveForm}
+              style={{ marginRight: "16px" }}
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+            {completedSteps.stepSix === "error" ? (
               <PrimaryButton
-                color="dark"
+                hoverColor="success"
+                color="successDark"
                 type="button"
-                hoverColor="darkLight"
-                onClick={context.saveForm}
+                onClick={() => sendApplication()}
                 style={{ marginRight: "16px" }}
               >
-                Zapisz wersję roboczą
+                Zatwierdź i wyślij
               </PrimaryButton>
-              {completedSteps.stepSix === "error" ? (
-                <PrimaryButton
-                  hoverColor="success"
-                  color="successDark"
-                  type="button"
-                  onClick={() => sendApplication()}
-                  style={{ marginRight: "16px" }}
-                >
-                  Zatwierdź i wyślij
-                </PrimaryButton>
-              ) : null}
-            </>
-          ) : null}
-          <PrimaryButton onClick={submitForm}>Kolejny krok</PrimaryButton>
-        </div>
-      </FormTemplate>
-    </Fieldset>
+            ) : null}
+          </>
+        ) : null}
+        <PrimaryButton
+          type="button"
+          onClick={() => (show_buttons ? handleStepChange("next") : setStep(7))}
+        >
+          Kolejny krok
+        </PrimaryButton>
+      </div>
+    </FormTemplate>
   );
 };
 

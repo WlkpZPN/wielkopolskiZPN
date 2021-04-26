@@ -34,6 +34,7 @@ const StepOneForm = ({
     clearErrors,
     show_buttons,
     sendApplication,
+    setStep,
     completedSteps,
   } = useContext(ApplicationContext);
   // console.log(error);
@@ -76,7 +77,7 @@ const StepOneForm = ({
               value={data.leauge}
               onChange={(e) => handleChange(e.target.value, "leauge", 1)}
             >
-              <option value={null}>Wybierz ligę rozgrywkową</option>
+              <option value="brak">Wybierz ligę rozgrywkową</option>
               <option value="iv liga">IV liga</option>
               <option value="v liga">V liga</option>
               <option value="klasa okręgowa">Klasa okręgowa</option>
@@ -204,37 +205,38 @@ const StepOneForm = ({
                 />
               </Label>
             </FormRow>
-
-            <FormRow margin="48px 0" cols={3}>
-              {show_buttons ? (
-                <PrimaryButton
-                  type="button"
-                  color="dark"
-                  hoverColor="darkLight"
-                  onClick={saveForm}
-                >
-                  Zapisz werjse roboczą
-                </PrimaryButton>
-              ) : null}
-
-              {completedSteps.stepOne === "error" ? (
-                <PrimaryButton
-                  hoverColor="success"
-                  color="successDark"
-                  type="button"
-                  onClick={() => sendApplication()}
-                >
-                  Zatwierdź i wyślij
-                </PrimaryButton>
-              ) : null}
+          </Fieldset>
+          <FormRow margin="48px 0" cols={3}>
+            {show_buttons ? (
               <PrimaryButton
                 type="button"
-                onClick={() => handleStepChange("next")}
+                color="dark"
+                hoverColor="darkLight"
+                onClick={saveForm}
               >
-                Kolejny krok
+                Zapisz werjse roboczą
               </PrimaryButton>
-            </FormRow>
-          </Fieldset>
+            ) : null}
+
+            {completedSteps.stepOne === "error" ? (
+              <PrimaryButton
+                hoverColor="success"
+                color="successDark"
+                type="button"
+                onClick={() => sendApplication()}
+              >
+                Zatwierdź i wyślij
+              </PrimaryButton>
+            ) : null}
+            <PrimaryButton
+              type="button"
+              onClick={() =>
+                show_buttons ? handleStepChange("next") : setStep(2)
+              }
+            >
+              Kolejny krok
+            </PrimaryButton>
+          </FormRow>
         </FormTemplate>
       )}
     </>

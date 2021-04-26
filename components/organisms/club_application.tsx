@@ -776,6 +776,7 @@ const ClubApplication = ({
         deleteFacilityFile,
         fileEdit,
         completedSteps,
+        setStep,
       }}
     >
       <div>

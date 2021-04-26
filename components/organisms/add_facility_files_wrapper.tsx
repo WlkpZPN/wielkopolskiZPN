@@ -24,7 +24,6 @@ const AddFacilityFilesWrapper = ({
   const context = useContext(ApplicationContext);
   const { currentObject, clubData, formData } = context;
   const fileData = files?.filter((file) => file.category === category);
-  console.log(category, fileData);
 
   // check if this sport facility is saved
   if (formData.stepFour.sport_facilities[currentObject]?.id) {

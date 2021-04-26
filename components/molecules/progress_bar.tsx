@@ -3,6 +3,7 @@ import Loader from "../atoms/loader";
 import styled from "styled-components";
 import axios from "axios";
 import Progress from "../atoms/progress_container";
+import { stat } from "../../middleware/types/stats";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,11 +46,11 @@ const ProgressBar = () => {
         name="requests"
         id="requests"
       >
-        <option value={7}>Wnioski zaakceptowane opłacone</option>
-        <option value={6}>Wnioski zaakceptowane nieopłacone</option>
-        <option value={5}>Wnioski odrzucone</option>
-        <option value={2}>Wnioski wysłane</option>
-        <option value={0}> Wnioski niewypełnione</option>
+        <option value={stat.paid}>Wnioski zaakceptowane opłacone</option>
+        <option value={stat.unpaid}>Wnioski zaakceptowane nieopłacone</option>
+        <option value={stat.rejected}>Wnioski odrzucone</option>
+        <option value={stat.sended}>Wnioski wysłane</option>
+        <option value={stat.uncompleted}> Wnioski niewypełnione</option>
       </Select>
 
       <Progress style={{}} status={status}></Progress>

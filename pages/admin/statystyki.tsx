@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { protectedAdminRoute } from "../../middleware/protectedAdmin";
 import ProgressContainer from "../../components/atoms/progress_container";
-
+import { stat } from "../../middleware/types/stats";
 const Header = styled.h2`
   margin: 48px 0 12px 0;
 `;
@@ -20,7 +20,7 @@ const Statystyki = ({ userData }) => {
 
       <Header>Wnioski zaakceptowane opłacone</Header>
       <ProgressContainer
-        status={7}
+        status={stat.paid}
         style={{
           height: "32px",
           maxWidth: "600px",
@@ -30,7 +30,7 @@ const Statystyki = ({ userData }) => {
 
       <Header>Wnioski zaakceptowane nieopłacone</Header>
       <ProgressContainer
-        status={6}
+        status={stat.unpaid}
         style={{
           height: "32px",
           maxWidth: "600px",
@@ -39,7 +39,7 @@ const Statystyki = ({ userData }) => {
       />
       <Header>Wnioski odrzucone</Header>
       <ProgressContainer
-        status={5}
+        status={stat.rejected}
         style={{
           height: "32px",
           maxWidth: "600px",
@@ -49,7 +49,7 @@ const Statystyki = ({ userData }) => {
 
       <Header>Wnioski wysłane</Header>
       <ProgressContainer
-        status={2}
+        status={stat.sended}
         style={{
           height: "32px",
           maxWidth: "600px",
@@ -58,7 +58,7 @@ const Statystyki = ({ userData }) => {
       />
       <Header>Wnioski niewypełnione</Header>
       <ProgressContainer
-        status={0}
+        status={stat.uncompleted}
         style={{
           height: "32px",
           maxWidth: "600px",

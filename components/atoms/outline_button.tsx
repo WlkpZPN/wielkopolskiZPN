@@ -11,6 +11,7 @@ const OutlineButton = styled.button`
   align-self: ${({ align }) => align || "initial"};
   cursor: pointer;
   background: transparent;
+  text-align: center;
 
   &:hover {
     border: 2px solid rgba(0, 0, 0, 0.3);

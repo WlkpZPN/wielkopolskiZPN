@@ -1269,7 +1269,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                     )
                   }
                   suffix="lx"
-                  placeholder="0 luksów"
+                  placeholder="0"
                 />
               </Label>
               <Label>

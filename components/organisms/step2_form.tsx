@@ -28,43 +28,34 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     show_buttons,
     sendApplication,
     clubData,
+    setStep,
     completedSteps,
   } = context;
-  const fileArr = context.formData.stepTwo.krs_documents;
+
   const handleChange = context.handleFormChange;
   const data = context.formData.stepTwo;
 
-  const nextStep = () => {};
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const valid = checkData();
-    // if (!valid) {
-    //   return;
-    // }
-    handleStepFill("stepTwo", {
-      completed: true,
-      error: false,
-    });
-    handleStepChange("next");
-  };
 
-  const setFiles = (id, file) => {
-    handleFileChange(id, file, file.name, "krs_documents");
-    setState(!state);
-  };
-
-  const handleDelete = (id) => {
-    deleteFile(id, "krs_documents");
-    setState(!state);
+    // handleStepFill("stepTwo", {
+    //   completed: true,
+    //   error: false,
+    // });
+    // handleStepChange("next");
+    if (show_buttons) {
+      handleStepChange("next");
+      return;
+    }
+    setStep(3);
   };
 
   return (
-    <Fieldset disabled={readOnly}>
-      <FormTemplate
-        onChange={() => clearErrors("stepTwo")}
-        onSubmit={handleSubmit}
-      >
+    <FormTemplate
+      onChange={() => clearErrors("stepTwo")}
+      onSubmit={handleSubmit}
+    >
+      <Fieldset disabled={readOnly}>
         <Paragraph>
           Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty
           potwierdzony za zgodność ze stanem faktycznym na dzień składania
@@ -107,45 +98,49 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
           }
           name=" Oświadczenie o stosowaniu dokumentacji ochrony danych osobowych"
         />
-
-        <div>
-          <PrimaryButton
-            type="button"
-            style={{ marginRight: "16px" }}
-            onClick={() => handleStepChange("previous")}
-          >
-            Cofnij
-          </PrimaryButton>
-          {show_buttons ? (
-            <>
+      </Fieldset>
+      <div>
+        <PrimaryButton
+          type="button"
+          style={{ marginRight: "16px" }}
+          onClick={() =>
+            show_buttons ? handleStepChange("previous") : setStep(1)
+          }
+        >
+          Cofnij
+        </PrimaryButton>
+        {show_buttons ? (
+          <>
+            <PrimaryButton
+              style={{ marginRight: "16px" }}
+              type="button"
+              onClick={context.saveForm}
+              color="dark"
+              hoverColor="darkLight"
+            >
+              Zapisz wersję roboczą
+            </PrimaryButton>
+            {completedSteps.stepTwo === "error" ? (
               <PrimaryButton
                 style={{ marginRight: "16px" }}
+                hoverColor="success"
+                color="successDark"
                 type="button"
-                onClick={context.saveForm}
-                color="dark"
-                hoverColor="darkLight"
+                onClick={() => sendApplication()}
               >
-                Zapisz wersję roboczą
+                Zatwierdź i wyślij
               </PrimaryButton>
-              {completedSteps.stepTwo === "error" ? (
-                <PrimaryButton
-                  style={{ marginRight: "16px" }}
-                  hoverColor="success"
-                  color="successDark"
-                  type="button"
-                  onClick={() => sendApplication()}
-                >
-                  Zatwierdź i wyślij
-                </PrimaryButton>
-              ) : null}
-            </>
-          ) : null}
-          <PrimaryButton type="submit" onClick={nextStep}>
-            Kolejny krok
-          </PrimaryButton>
-        </div>
-      </FormTemplate>
-    </Fieldset>
+            ) : null}
+          </>
+        ) : null}
+        <PrimaryButton
+          type="button"
+          onClick={() => (show_buttons ? handleStepChange("next") : setStep(3))}
+        >
+          Kolejny krok
+        </PrimaryButton>
+      </div>
+    </FormTemplate>
   );
 };
 
