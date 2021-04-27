@@ -15,19 +15,19 @@ export default (req, res) => {
       },
     });
 
-    await axios({
-      method: "POST",
-      url: "https://api.freshmail.com/rest/subscriber/addMultiple",
-      headers: {
-        Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      data: {
-        email: data.email,
-        list: "qhvvftn3og",
-        state: 1,
-      },
-    });
+    // await axios({
+    //   method: "POST",
+    //   url: "https://api.freshmail.com/rest/subscriber/addMultiple",
+    //   headers: {
+    //     Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+    //     "Content-Type": "application/json",
+    //   },
+    //   data: {
+    //     email: data.email,
+    //     list: "qhvvftn3og",
+    //     state: 1,
+    //   },
+    // });
     res.send("data updated");
     return resolve();
   });

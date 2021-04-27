@@ -55,7 +55,8 @@ const Application = ({ clubData, authData, settings }) => {
               addFile={setInvoiceFiles}
             />
             <ErrorMessage>
-              {clubData.applications[0].invoice_required
+              {clubData.applications[0].invoice_required &&
+              !clubData.invoice_url
                 ? "UWAGA! Klub prosi o fakturę przed dokonaniem płatności"
                 : null}
             </ErrorMessage>{" "}
