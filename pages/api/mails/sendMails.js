@@ -74,35 +74,71 @@ export default (req, res) => {
         });
       });
 
-      let i,
-        tmpRecipients,
-        response,
-        tmpContent,
-        chunk = 100;
-      for (i = 0; i < recipientsEmails.length; i += chunk) {
-        tmpRecipients = recipientsEmails.slice(i, i + chunk);
-        tmpContent = content.slice(i, i + chunk);
-        response = await axios({
-          url: "https://api.freshmail.com/v3/messaging/emails",
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          data: {
-            from: {
-              email: "licklub@wielkopolskizpn.pl",
-              name: "Wielkopolski ZPN",
-            },
-            recipients: tmpRecipients,
-            subject: title,
-            contents: tmpContent,
-          },
-        });
-        console.log("response", response);
-      }
+      // let i,
+      //   tmpRecipients,
+      //   response,
+      //   tmpContent,
+      //   chunk = 100;
+      // for (i = 0; i < recipientsEmails.length; i += chunk) {
+      //   tmpRecipients = recipientsEmails.slice(i, i + chunk);
+      //   tmpContent = content.slice(i, i + chunk);
+      //   response = await axios({
+      //     url: "https://api.freshmail.com/v3/messaging/emails",
+      //     method: "POST",
+      //     headers: {
+      //       Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //     data: {
+      //       from: {
+      //         email: "licklub@wielkopolskizpn.pl",
+      //         name: "Wielkopolski ZPN",
+      //       },
+      //       recipients: tmpRecipients,
+      //       subject: title,
+      //       contents: tmpContent,
+      //     },
+      //   });
+      //   console.log("response", response);
+      // }
 
       //***********************************************************
+
+      const response = await axios({
+        url: "https://api.freshmail.com/v3/messaging/emails",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        data: {
+          from: {
+            email: "licklub@wielkopolskizpn.pl",
+            name: "Wielkopolski ZPN",
+          },
+          recipients: [
+            {
+              email: "aleksanderfranczak99@gmail.com",
+              name: "Olek",
+            },
+            {
+              email: "hondakkia@gmail.com",
+              name: "Olek",
+            },
+          ],
+          contents: [
+            {
+              type: "text/html",
+              body: "<p>akdmdwmawldmalkdmlm TEST HTML</p>",
+            },
+            {
+              type: "text/html",
+              body: "<p>akdmdwmawldmalkdmlm TEST HTML</p>",
+            },
+          ],
+          subject: title,
+        },
+      });
 
       await prisma.messages.update({
         where: {
@@ -112,7 +148,8 @@ export default (req, res) => {
           send_date: getCurrentDate(),
         },
       });
-      console.log("response", response);
+      console.log("response", response.data, response.status);
+      //console.log("data", recipientsEmails);
       res.send("email sended");
     } catch (err) {
       console.log(err);

@@ -49,40 +49,42 @@ const MainPage = ({ userData }) => {
   }, [applications]);
 
   useEffect(() => {
-    let helperArr = applications;
     if (applications) {
-      helperArr = [
-        ...applications.filter(
-          (el) => el.status_id === 2 || el.status_id === 3
-        ),
-        ...applications.filter(
-          (el) => el.status_id !== 2 && el.status_id !== 3
-        ),
-      ];
-    }
+      let helperArr = applications;
+      if (applications) {
+        helperArr = [
+          ...applications.filter(
+            (el) => el.status_id === 2 || el.status_id === 3
+          ),
+          ...applications.filter(
+            (el) => el.status_id !== 2 && el.status_id !== 3
+          ),
+        ];
+      }
 
-    if (filterType > 0) {
-      helperArr = helperArr.filter((application) => {
-        let appCopy = Object.assign({}, application);
-        return appCopy.status_id === filterType;
-      });
-    } else if (filterType === 0) {
-      helperArr = applications;
-    }
+      if (filterType > 0) {
+        helperArr = helperArr.filter((application) => {
+          let appCopy = Object.assign({}, application);
+          return appCopy.status_id === filterType;
+        });
+      } else if (filterType === 0) {
+        helperArr = applications;
+      }
 
-    if (query !== "") {
-      helperArr = helperArr.filter((application) => {
-        const string = JSON.stringify(application).toLowerCase();
-        return string.indexOf(query.toLowerCase()) > -1 ? true : false;
-      });
-    }
-    if (dateOrder) {
-      console.log("sorting");
-      helperArr = helperArr.sort(sortByDate);
-    }
+      if (query !== "") {
+        helperArr = helperArr.filter((application) => {
+          const string = JSON.stringify(application).toLowerCase();
+          return string.indexOf(query.toLowerCase()) > -1 ? true : false;
+        });
+      }
+      if (dateOrder) {
+        console.log("sorting");
+        helperArr = helperArr.sort(sortByDate);
+      }
 
-    setList(helperArr);
-  }, [filterType, query, dateOrder]);
+      setList(helperArr);
+    }
+  }, [filterType, query, dateOrder, applications]);
 
   const sortByDate = (a, b) => {
     let x,
