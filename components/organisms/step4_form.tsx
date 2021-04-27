@@ -105,8 +105,9 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
 
       {sport_facilities.length === 0 ? (
         <NoObjects>
-          Nie posiadasz żadnych obiektów sportowych,dodaj je klikając przycisk
-          poniżej (wymagane jest posiadanie min. 1 obiektu)
+          Nie posiadasz żadnych obiektów sportowych. Dodaj je, klikając przycisk
+          poniżej Wymagane jest wprowadzenie min. 1 obiektu. Pamiętaj aby
+          zapisać obiekt po wypełnieniu danych, klikając przycisk "Zapisz".
           <span>Pamiętaj aby zapisać obiekt po wypełnienu danych</span>
           <OutlineButton
             onClick={() => {
