@@ -23,9 +23,11 @@ const Table = styled.div`
 
 const TableHeader = styled.div`
   background: #f9fafb;
-  padding-left: 30px;
+
   display: grid;
-  grid-template-columns: repeat(4, 180px);
+  grid-template-columns:
+    40px minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px)
+    minmax(100px, 250px) auto;
 
   border: 2px solid rgba(0, 0, 0, 0.1);
 
@@ -72,6 +74,7 @@ const Uzytkownicy = ({ authData }) => {
       </div>
       <Table size={users.length + 1}>
         <TableHeader>
+          <p></p>
           <p>Nazwisko</p>
           <p>Imię</p>
           <p>Rola</p>

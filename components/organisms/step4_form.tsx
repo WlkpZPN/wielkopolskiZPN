@@ -14,13 +14,15 @@ import ErrorMessage from "../atoms/error_message";
 import ObjectForm from "./object_form";
 
 const NoObjects = styled.div`
-  margin: 32px 0;
+  margin: 24px 0;
+
   margin-top: 0;
   font-size: 18px;
-  padding: 24px 32px;
+  padding: 24px 0;
   border-radius: 5px;
   /* border: 2px solid ${({ theme }) => theme.primary}; */
-  width: max-content;
+  max-width: 1000px;
+
   font-weight: 600;
   display: flex;
   flex-direction: column;
@@ -108,8 +110,10 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           Nie posiadasz żadnych obiektów sportowych. Dodaj je, klikając przycisk
           poniżej Wymagane jest wprowadzenie min. 1 obiektu. Pamiętaj aby
           zapisać obiekt po wypełnieniu danych, klikając przycisk "Zapisz".
-          <span>Pamiętaj aby zapisać obiekt po wypełnienu danych</span>
           <OutlineButton
+            style={{
+              marginTop: "15px",
+            }}
             onClick={() => {
               clearErrors("stepFour");
               handleNewForm();

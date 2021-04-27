@@ -8,8 +8,8 @@ import { User } from "@styled-icons/fa-solid/User";
 const UserIcon = styled(User)`
   width: 20px;
   color: ${({ theme }) => theme.primary};
-  position: absolute;
-  left: 8px;
+  /* position: absolute;
+  left: 8px; */
 `;
 const ButtonRow = styled.div`
   position: absolute;
@@ -24,10 +24,11 @@ const ButtonRow = styled.div`
   }
 `;
 const TableRow = styled.div`
-  padding-left: 30px;
   display: grid;
   position: relative;
-  grid-template-columns: repeat(4, 180px);
+  grid-template-columns:
+    40px minmax(100px, 200px) minmax(100px, 200px) minmax(100px, 200px)
+    minmax(100px, 250px) auto;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-top: 0px;
   align-items: center;
