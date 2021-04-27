@@ -74,7 +74,7 @@ export default async (req, res) => {
     const allApplications = await prisma.clubs.count();
 
     await prisma.$disconnect();
-    console.log(applications, allApplications);
+    //console.log(applications, allApplications);
     const percent =
       (Math.round((applications / allApplications) * 100) / 100) * 100;
     res.status(200);
