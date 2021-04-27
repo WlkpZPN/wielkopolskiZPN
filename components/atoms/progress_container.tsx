@@ -42,18 +42,22 @@ const Progress = styled.div`
 
 const ProgressContainer = ({ status, style }) => {
   const { data, isLoading } = getStats(status);
-  // console.log(status, data);
-  // return <p></p>;
-  console.log(data);
-  return <p></p>;
-  // return (
-  //   <Progress
-  //     style={style}
-  //     visible={data.percent > 0 ? true : false}
-  //     number={data.allApplications}
-  //     progress={data.percent}
-  //   />
-  // );
+  console.log(status, data);
+
+  if(isLoading) {
+
+    return <p>pobieranie danych...</p>;
+  }
+ 
+ 
+  return (
+    <Progress
+      style={style}
+      visible={data.percent > 0 ? true : false}
+      number={data.allApplications}
+      progress={data.percent}
+    />
+  );
 };
 
 export default ProgressContainer;
