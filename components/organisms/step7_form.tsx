@@ -213,12 +213,12 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             </span>
           </Label>
           <Label pointer margin="16px 0" direction="row">
+            <ErrorMessage>{error}</ErrorMessage>
             <span>
               <RadioSquare
                 value={regulations}
                 handleChange={(e) => setRegulations(e.target.value)}
               />
-              <ErrorMessage>{error}</ErrorMessage>
               Zapoznałam/em się z regulaminem płatności opłat administracyjnych
               za przyznanie licencji
               <a

@@ -1,8 +1,5 @@
-import styled from "styled-components";
-import axios from "axios";
-import { toast } from "react-toastify";
 import { useContext, useState, useEffect } from "react";
-import { useLocalStorage } from "../../middleware/hooks";
+
 import FormTemplate from "../atoms/form_template";
 import Select from "../atoms/form_select";
 import Label from "../atoms/form_label";
@@ -12,14 +9,14 @@ import FormRow from "../atoms/form_row";
 import PrimaryButton from "../atoms/primary_button";
 import PhoneInput from "../atoms/phone_input";
 import Fieldset from "../atoms/fieldset";
-import Modal from "../molecules/modal";
+import Info from "../atoms/Info";
 import StyledSpinner from "../atoms/loader";
-import { extractAddressData, convertAddressData } from "../../middleware/utils";
+
 import { ApplicationContext } from "./club_application";
 import ErrorMessage from "../atoms/error_message";
 import ZipCodeInput from "../atoms/zip_code_input";
 import RadioButton from "../atoms/radio_button";
-import { createSeasons } from "../../middleware/utils";
+
 const StepOneForm = ({
   data,
   handleChange,
@@ -73,18 +70,23 @@ const StepOneForm = ({
         <FormTemplate onChange={() => clearErrors("stepOne")}>
           <Fieldset disabled={readOnly}>
             {<ErrorMessage>{error.stepOne}</ErrorMessage>}
-            <Select
-              value={data.leauge}
-              onChange={(e) => handleChange(e.target.value, "leauge", 1)}
-            >
-              <option value="brak">Wybierz ligę rozgrywkową</option>
-              <option value="iv liga">IV liga</option>
-              <option value="v liga">V liga</option>
-              <option value="klasa okręgowa">Klasa okręgowa</option>
-              <option value="klasa a">Klasa A</option>
-              <option value="klasa b">Klasa B</option>
-              <option value="młodzież">Ligi młodzieżowe</option>
-            </Select>
+            <div style={{ display: "flex" }}>
+              <Select
+                value={data.leauge}
+                onChange={(e) => handleChange(e.target.value, "leauge", 1)}
+              >
+                <option value="brak">Wybierz ligę rozgrywkową</option>
+                <option value="iv liga">IV liga</option>
+                <option value="v liga">V liga</option>
+                <option value="klasa okręgowa">Klasa okręgowa</option>
+                <option value="klasa a">Klasa A</option>
+                <option value="klasa b">Klasa B</option>
+                <option value="młodzież">Ligi młodzieżowe</option>
+              </Select>
+              <Info
+                text={`Kluby IV ligi mogą ubiegać się tylko o licencję na jeden sezon. Kluby z pozostałych klas rozgrywkowych mogą wnioskować o licencje na dwa sezony jeśli: \n -posiadają prawo do użytkowania obiektu sportowego na minimum dwa sezony \n- będą wnioskowały o licencję na dwa sezony \n- wniosą opłatę za dwa sezony`}
+              />
+            </div>
             <RadioContainer>
               <p>Zaznacz,na ile sezonów ubiegasz się o licencje</p>
               <Label direction="row" htmlFor="1">
@@ -145,16 +147,16 @@ const StepOneForm = ({
                 ></Input>
               </Label>
             </FormRow>
-            <Label>
+            {/* <Label>
               Adres e-mail klubu
               <Input
                 value={data.email}
                 onChange={(e) => handleChange(e.target.value, "email", 1)}
                 type="text"
               ></Input>
-            </Label>
+            </Label> */}
 
-            <h2>Dane pełnomocnika</h2>
+            <h2 style={{ marginTop: "24px" }}>Dane pełnomocnika</h2>
 
             <FormRow>
               <Label>

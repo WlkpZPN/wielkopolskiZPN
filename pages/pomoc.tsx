@@ -86,9 +86,9 @@ const Pomoc = ({ authData }) => {
             <PrimaryButton onClick={() => setVisible(true)}>
               Dodaj pytanie
             </PrimaryButton>
-            <StyledLink>+ 48 500 000 000</StyledLink>
+
             <StyledLink href="mailto:licencje@wielkopolskizpn.pl">
-              licencje@wielkopolskizpn.pl
+              licklub@wielkopolskizpn.pl
             </StyledLink>
           </div>
         </Footer>

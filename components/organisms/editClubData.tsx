@@ -160,6 +160,7 @@ const EditClubData = ({ clubData, isAdmin = false }) => {
       case 1:
         return (
           <Input
+            disabled
             key={1}
             type="text"
             value={email}
@@ -171,6 +172,7 @@ const EditClubData = ({ clubData, isAdmin = false }) => {
         return (
           <>
             <Input
+              disabled
               key={2}
               type="text"
               value={email}
@@ -190,6 +192,7 @@ const EditClubData = ({ clubData, isAdmin = false }) => {
         return (
           <>
             <Input
+              disabled
               key={4}
               type="text"
               value={email}

@@ -15,7 +15,7 @@ import QuestionList from "../../../components/organisms/questions_list";
 import GroupMessages from "../../../components/organisms/group_messages";
 import NumericInput from "../../../components/atoms/numeric_input";
 import AmountInput from "../../../components/atoms/amount_input";
-import { parse } from "path";
+import LockButton from "../../../components/molecules/lock_sending_button";
 const Header = styled.h3`
   margin-top: 32px;
 `;
@@ -47,7 +47,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
     parseFloat(settings.v_possession_fee).toFixed(2)
   );
   const [error, setError] = useState("");
-  
+
   const setAmounts = async (e) => {
     e.preventDefault();
 
@@ -111,9 +111,17 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
   };
   return (
     <AdminLayout userData={userData} view="ustawienia">
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <h1 style={{ margin: "40px 0" }}>Ustawienia</h1>
-        {loading && <Loader />}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <>
+          <h1 style={{ margin: "40px 0" }}>Ustawienia</h1>
+          {loading && <Loader />}
+        </>
       </div>
       <ErrorMessage>{error}</ErrorMessage>
       <Header>Czas trwania procesu licencyjnego</Header>
@@ -144,6 +152,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
             />
           </Label>
         </div>
+        <LockButton locked={settings.locked_sending} />
         <PrimaryButton
           hoverColor="success"
           color="successDark"

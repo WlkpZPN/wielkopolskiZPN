@@ -21,7 +21,7 @@ const User = ({ roles, userData }) => {
   return (
     <AdminLayout userData={userData} view="uzytkownicy">
       {" "}
-      <h1> {user} </h1>
+      <h1 style={{ margin: "24px 0" }}> {user} </h1>
       <Link href="/admin/uzytkownicy">
         <IconButton>
           <ControllerFastBackward />

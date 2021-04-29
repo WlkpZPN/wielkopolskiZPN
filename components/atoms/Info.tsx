@@ -31,10 +31,11 @@ const Text = styled.p`
   position: absolute;
   display: none;
   background: ${({ theme }) => theme.primary};
-  max-width: 600px;
+  width: 500px;
+  white-space: pre-wrap;
   padding: 32px;
   border-radius: 5px;
-  width: 400px;
+
   color: white;
 `;
 

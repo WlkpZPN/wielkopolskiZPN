@@ -251,22 +251,32 @@ export const createSeasons = (amount) => {
 };
 
 export const convertLeauge = (leauge) => {
-  switch (leauge) {
+  console.log(leauge);
+  let formatedLeauge = "";
+  switch (leauge.toLowerCase()) {
     case "iv liga":
-      return "IV Liga";
+      formatedLeauge = "IV Liga";
+      break;
     case "v liga":
-      return "V Liga";
+      formatedLeauge = "V Liga";
+      break;
+
     case "klasa okręgowa":
-      return "Klasa okręgowa";
+      formatedLeauge = "Klasa okręgowa";
+      break;
     case "klasa a":
-      return "Klasa A";
+      formatedLeauge = "Klasa A";
+      break;
     case "klasa b":
-      return "Klasa B";
+      formatedLeauge = "Klasa B";
+      break;
     case "młodzież":
-      return "Ligi młodzieżowe";
+      formatedLeauge = "Ligi młodzieżowe";
+      break;
     default:
-      return null;
+      formatedLeauge = null;
   }
+  return formatedLeauge;
 };
 
 export const checkMimeType = (event) => {

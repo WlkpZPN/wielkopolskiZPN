@@ -120,9 +120,15 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               />
             </Label>
             <Paragraph>
-              Kopa porozumienia na szkolenie młodzieży z powyższym klubem.(
-              <span style={{ color: "#0056A5" }}>pobierz</span> wzór umowy
-              porozumienia w PDF){" "}
+              Kopa porozumienia na szkolenie młodzieży z powyższym klubem. (
+              <a
+                href="https://pdf.fra1.digitaloceanspaces.com/10.4.2.-Wzo%CC%81r-umowy-z-klubem-m%C5%82odziez%CC%87owym.pdf"
+                target="_blank"
+                style={{ color: "#0056A5" }}
+              >
+                Pobierz
+              </a>{" "}
+              wzór umowy porozumienia w PDF){" "}
             </Paragraph>
             <AddFilesWrapper
               text="W sytuacji braku zespołów własnych lub niepełnej ich liczby Wnioskodawca zawarł porozumienie na szkolenie młodzieży z podanym poniżej klubem, z którego wynika wypełnienie kryterium sportowego na posiadanie zespołów młodzieżowych."

@@ -66,7 +66,8 @@ const Home = ({ clubData, authData, settings }) => {
   const renderView = () => {
     if (
       new Date() < new Date(settings.start_date) &&
-      clubData.applications[0].status_id < 6
+      clubData.applications[0].status_id < 6 &&
+      settings.locked_sending
     ) {
       return (
         <>
@@ -82,7 +83,8 @@ const Home = ({ clubData, authData, settings }) => {
 
     if (
       new Date() > new Date(settings.end_date) &&
-      clubData.applications[0].status_id < 6
+      clubData.applications[0].status_id < 6 &&
+      settings.locked_sending
     ) {
       return (
         <>
