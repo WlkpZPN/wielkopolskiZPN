@@ -254,6 +254,9 @@ export const createSeasons = (amount) => {
 export const convertLeauge = (leauge) => {
   console.log(leauge);
   let formatedLeauge = "";
+  if (!leauge) {
+    return "";
+  }
   switch (leauge.toLowerCase()) {
     case "iv liga":
       formatedLeauge = "IV Liga";

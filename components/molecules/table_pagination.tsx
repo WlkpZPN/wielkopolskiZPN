@@ -56,7 +56,12 @@ const TablePagination = ({ pages, setPage, currentPage }) => {
       );
     }
 
-    return helperArr;
+    return [
+      helperArr[currentPage - 1],
+      helperArr[currentPage],
+      helperArr[currentPage + 1],
+      helperArr[currentPage + 2],
+    ];
   };
 
   return (

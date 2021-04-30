@@ -2,8 +2,6 @@ import prisma from "../../../middleware/prisma";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { clubID } = req.query;
-
     const clubData = await prisma.clubs.findMany({
       include: {
         applications: {
@@ -20,6 +18,7 @@ export default (req, res) => {
         },
       },
     });
+    console.log("clubs", clubData);
     res.send(clubData);
     await prisma.$disconnect();
     return resolve();

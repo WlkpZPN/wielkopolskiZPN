@@ -432,7 +432,7 @@ export const getServerSideProps = protectedClientRoute(
       },
     });
 
-    if (clubData.applications.length === 0) {
+    if (clubData?.applications.length === 0) {
       // create application with empty data
       // create one sport facility with empty data
 
