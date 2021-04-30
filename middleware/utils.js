@@ -96,10 +96,10 @@ export const getCurrentDate = () => {
 };
 
 export const getInternalId = (id, isApplication) => {
-  if (!isApplication) {
+  if (isApplication) {
     return `W/${id}/${new Date().getFullYear()}`;
   }
-  return `${id}/${new Date().getFullYear()}`;
+  return `K/${new Date().getFullYear()}/${id}`;
 };
 
 export const exportApplicationData = (data) => {

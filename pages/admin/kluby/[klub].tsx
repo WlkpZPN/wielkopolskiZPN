@@ -70,6 +70,23 @@ const User = ({ clubData, authData }) => {
       });
   };
 
+  const deleteClub = async () => {
+    setLoading("deleting");
+
+    try {
+      await axios.post("/api/clubs/deleteClub", {
+        clubID: clubData.id,
+      });
+      setLoading("");
+      toast.warn("Klub usunięty");
+      router.replace("/admin/kluby");
+    } catch (error) {
+      console.log(error);
+      setLoading("");
+      toast.error("Usuwanie klubu nie powiodło się,spróbuj ponownie");
+    }
+  };
+
   return (
     <AdminLayout userData={authData} view="kluby">
       {" "}
@@ -100,7 +117,11 @@ const User = ({ clubData, authData }) => {
             color="danger"
             hoverColor="dangerDark"
           >
-            Usuń
+            {loading === "deleting" ? (
+              <Spinner style={{ height: "16px", color: "white" }} />
+            ) : (
+              "Usuń"
+            )}
           </PrimaryButton>
           <PrimaryButton
             style={{ margin: "0 6px" }}

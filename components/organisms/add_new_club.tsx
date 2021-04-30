@@ -812,7 +812,7 @@ const AddNewClub = () => {
         color="success"
         hoverColor="successDark"
       >
-        Zapisz zmiany
+        Dodaj klub
       </PrimaryButton>
     </FormTemplate>
   );

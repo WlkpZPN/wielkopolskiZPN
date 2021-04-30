@@ -110,7 +110,7 @@ export default (req, res) => {
             ],
           },
         });
-        console.log("response", response);
+        console.log("response", response.statusText);
       }
 
       //***********************************************************
