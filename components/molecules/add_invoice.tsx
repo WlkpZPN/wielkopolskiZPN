@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 //components
 import OutlineButton from "../atoms/outline_button";
 import PrimaryButton from "../atoms/primary_button";
-
+import SendAbnormalitites from "../molecules/send_abnormalities";
 const Wrapper = styled.div`
   border-radius: 5px;
   white-space: pre-wrap;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   align-items: stretch;
   justify-content: center;
   position: relative;
-  z-index: 0;
+  z-index: 10;
   width: 260px;
 
   text-align: center;
@@ -150,6 +150,7 @@ const DeleteButton = styled.span`
 
 const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -236,9 +237,15 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
             >
               <OutlineButton>Pobierz fakturę</OutlineButton>
             </a>
-            <PrimaryButton color="danger" hoverColor="dangerDark">
-              Zgłoś nieprawidłowość
+            <PrimaryButton
+              hoverColor="dangerDark"
+              color="danger"
+              type="button"
+              onClick={() => setVisible(true)}
+            >
+              Zgłoś nieprawidłowości
             </PrimaryButton>
+            <SendAbnormalitites visible={visible} setVisible={setVisible} />
           </>
         );
       } else {

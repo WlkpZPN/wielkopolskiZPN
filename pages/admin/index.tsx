@@ -51,24 +51,22 @@ const MainPage = ({ userData }) => {
   useEffect(() => {
     if (applications) {
       let helperArr = applications;
-      if (applications) {
-        helperArr = [
-          ...applications.filter(
-            (el) => el.status_id === 2 || el.status_id === 3
-          ),
-          ...applications.filter(
-            (el) => el.status_id !== 2 && el.status_id !== 3
-          ),
-        ];
-      }
+
+      helperArr = [
+        ...applications.filter(
+          (el) => el.status_id === 2 || el.status_id === 3
+        ),
+        ...applications.filter(
+          (el) => el.status_id !== 2 && el.status_id !== 3
+        ),
+      ];
+      console.log("this not runs");
 
       if (filterType > 0) {
         helperArr = helperArr.filter((application) => {
           let appCopy = Object.assign({}, application);
           return appCopy.status_id === filterType;
         });
-      } else if (filterType === 0) {
-        helperArr = applications;
       }
 
       if (query !== "") {
