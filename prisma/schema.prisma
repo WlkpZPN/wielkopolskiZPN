@@ -197,13 +197,17 @@ model roles {
 }
 
 model settings {
-  start_date        String?  @db.VarChar(200)
-  end_date          String?  @db.VarChar(200)
-  id                Int      @id @default(autoincrement())
-  application_fee   Float?
-  iv_possession_fee Float?
-  v_possession_fee  Float?
-  locked_sending    Boolean? @default(true)
+  start_date            String?  @db.VarChar(200)
+  end_date              String?  @db.VarChar(200)
+  id                    Int      @id @default(autoincrement())
+  application_fee       Float?
+  iv_possession_fee     Float?
+  v_possession_fee      Float?
+  locked_sending        Boolean? @default(true)
+  iv_application_fee    Float?
+  v_application_fee     Float?
+  ab_application_fee    Float?
+  young_application_fee Float?
 }
 
 model sport_facilities {

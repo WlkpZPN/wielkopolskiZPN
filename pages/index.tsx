@@ -9,7 +9,11 @@ import { getClubData } from "../middleware/swr";
 import { protectedClientRoute } from "../middleware/protectedClient";
 
 //components
-import { getCurrentDate, renderAmount } from "../middleware/utils";
+import {
+  getCurrentDate,
+  renderAmount,
+  renderMainAmount,
+} from "../middleware/utils";
 import ClientLayout from "../components/organisms/client_layout";
 
 import ClubApplication from "../components/organisms/club_application";
@@ -256,7 +260,9 @@ const Home = ({ clubData, authData, settings }) => {
                   margin: "15px 0",
                 }}
               >
-                {clubData.applications[0].amount} PLN
+                {renderMainAmount(clubData.leauge, settings) +
+                  parseFloat(renderAmount(clubData.leauge, settings))}
+                PLN
               </p>
               {clubData.applications[0].youth_groups_possession ===
               "nie posiadamy zespołów" ? (
@@ -276,7 +282,7 @@ const Home = ({ clubData, authData, settings }) => {
               >
                 Opłata licencyjna:{" "}
                 <span style={{ fontWeight: "bold" }}>
-                  {settings.application_fee}
+                  {renderMainAmount(clubData.leauge, settings)} PLN
                 </span>
               </p>
               <PaymentLink

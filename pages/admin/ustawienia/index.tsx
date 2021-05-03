@@ -38,8 +38,12 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
   const [endDate, setEndDate] = useState(settings.end_date || new Date());
   const [primaryAmount, setPrimaryAmount] = useState(
-    parseFloat(settings.application_fee).toFixed(2) || 0
+    parseFloat(settings.iv_application_fee).toFixed(2) || 0
   );
+
+  const [vFee, setVFee] = useState(settings.v_application_fee || 0);
+  const [abFee, setAbFee] = useState(settings.ab_application_fee || 0);
+  const [youngFee, setYoungFee] = useState(settings.young_application_fee || 0);
   const [extraAmount, setExtraAmount] = useState(
     parseFloat(settings.iv_possession_fee).toFixed(2) || 0
   );
@@ -53,6 +57,25 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
     e.preventDefault();
 
     if (!validateNumber(extraAmount).valid) {
+      setError(
+        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
+      );
+      return;
+    }
+    if (!validateNumber(vFee).valid) {
+      setError(
+        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
+      );
+      return;
+    }
+    if (!validateNumber(abFee).valid) {
+      setError(
+        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
+      );
+      return;
+    }
+
+    if (!validateNumber(youngFee).valid) {
       setError(
         "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
       );
@@ -72,11 +95,16 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       );
       return;
     }
+    setLoading(true);
     await axios.post("/api/settings/setAmounts", {
       primaryAmount,
       extraAmount,
       extraAmount2,
+      abFee,
+      youngFee,
+      vFee,
     });
+    setLoading(false);
     toast.success("Pomyślnie zaaktualizowano opłaty licencyjne", {
       autoClose: 2000,
     });
@@ -181,16 +209,65 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           }}
         >
           <AmountRow>
-            <Label style={{ maxWidth: "400px" }}>
-              <span>Wysokość opłaty za złożenie wniosku licencyjnego</span>
-              <AmountInput
-                style={{ paddingRight: "24px" }}
-                placeholder="0"
-                onBlur={formatPrimaryValue}
-                value={primaryAmount}
-                onChange={(e) => setPrimaryAmount(e.target.value)}
-              />
-            </Label>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {" "}
+              <Label style={{ maxWidth: "400px" }}>
+                <span>
+                  Wysokość opłaty za złożenie wniosku licencyjnego w lidze IV
+                </span>
+                <AmountInput
+                  style={{ paddingRight: "24px" }}
+                  placeholder="0"
+                  onBlur={formatPrimaryValue}
+                  value={primaryAmount}
+                  onChange={(e) => setPrimaryAmount(e.target.value)}
+                />
+              </Label>
+              <Label style={{ maxWidth: "400px" }}>
+                <span>
+                  Wysokość opłaty za złożenie wniosku licencyjnego w lidze V i
+                  klasie okręgowej
+                </span>
+                <AmountInput
+                  style={{ paddingRight: "24px" }}
+                  placeholder="0"
+                  onBlur={(e) => setVFee(parseFloat(e.target.value).toFixed(2))}
+                  value={vFee}
+                  onChange={(e) => setVFee(e.target.value)}
+                />
+              </Label>
+              <Label style={{ maxWidth: "400px" }}>
+                <span>
+                  Wysokość opłaty za złożenie wniosku licencyjnego w klasie A i
+                  B
+                </span>
+                <AmountInput
+                  style={{ paddingRight: "24px" }}
+                  placeholder="0"
+                  onBlur={(e) =>
+                    setAbFee(parseFloat(e.target.value).toFixed(2))
+                  }
+                  value={abFee}
+                  onChange={(e) => setAbFee(e.target.value)}
+                />
+              </Label>
+              <Label style={{ maxWidth: "400px" }}>
+                <span>
+                  Wysokość opłaty za złożenie wniosku licencyjnego w klasie
+                  młodzieżowej
+                </span>
+                <AmountInput
+                  style={{ paddingRight: "24px" }}
+                  placeholder="0"
+                  onBlur={(e) =>
+                    setYoungFee(parseFloat(e.target.value).toFixed(2))
+                  }
+                  value={youngFee}
+                  onChange={(e) => setYoungFee(e.target.value)}
+                />
+              </Label>
+            </div>
+
             <Label style={{ maxWidth: "400px" }}>
               <span>
                 Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów

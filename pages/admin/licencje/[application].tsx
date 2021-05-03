@@ -5,7 +5,7 @@ import axios from "axios";
 import { getClubData } from "../../../middleware/swr";
 import { toast } from "react-toastify";
 import prisma from "../../../middleware/prisma";
-import { renderAmount } from "../../../middleware/utils";
+import { renderAmount, renderMainAmount } from "../../../middleware/utils";
 import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
 import AdminLayout from "../../../components/organisms/admin_layout";
 import ClubApplication from "../../../components/organisms/club_application";
@@ -276,9 +276,9 @@ const Application = ({ clubData, authData, settings }) => {
     const amount =
       clubData.applications[0].youth_groups_possession ===
       "nie posiadamy zespołów"
-        ? parseFloat(settings.application_fee) +
+        ? renderMainAmount(clubData.leauge, settings) +
           parseFloat(renderAmount(clubData.leauge, settings))
-        : parseFloat(settings.application_fee);
+        : renderMainAmount(clubData.leauge, settings);
     try {
       const newOrder = await axios.post("/api/payments/newOrder", {
         description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,

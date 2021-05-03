@@ -316,3 +316,28 @@ export const checkMimeType = (event) => {
     valid: true,
   };
 };
+
+export const renderMainAmount = (leauge, settings) => {
+  let amount = 0;
+  switch (leauge.toLowerCase()) {
+    case "iv liga":
+      amount = settings.iv_application_fee;
+      break;
+    case "v liga":
+    case "klasa okręgowa":
+      amount = settings.v_application_fee;
+      break;
+
+    case "klasa a":
+    case "klasa b":
+      amount = settings.ab_application_fee;
+      break;
+
+    case "młodzież":
+      amount = settings.young_application_fee;
+      break;
+    default:
+      amount = settings.young_application_fee;
+  }
+  return parseFloat(amount);
+};
