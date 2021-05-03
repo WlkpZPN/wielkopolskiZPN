@@ -196,7 +196,7 @@ const Application = ({ authData, allMessages, settings, message }) => {
       </form>
 
       <h1 style={{ margin: "40px 0 24px 0" }}> Inne wiadomości grupowe </h1>
-      <GroupMessages messages={allMessages} />
+      <GroupMessages userData={authData} messages={allMessages} />
     </AdminLayout>
   );
 };

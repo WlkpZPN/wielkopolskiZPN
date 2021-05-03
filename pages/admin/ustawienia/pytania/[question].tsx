@@ -156,7 +156,7 @@ const Application = ({ authData, allQuestions, settings, question }) => {
       </form>
 
       <h1 style={{ margin: "40px 0 24px 0" }}> Inne pytania do działu FAQ </h1>
-      <QuestionsList questions={allQuestions} />
+      <QuestionsList userData={authData} questions={allQuestions} />
     </AdminLayout>
   );
 };
