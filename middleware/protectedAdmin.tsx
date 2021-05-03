@@ -12,8 +12,8 @@ export function protectedAdminRoute(cb) {
     } else {
       decodedToken = jwt.verify(token, process.env.AUTH_KEY);
       // console.log("token", decodedToken);
-
-      if ( decodedToken.role !== "administrator") {
+      console.log(decodedToken);
+      if (decodedToken.role === "klub") {
         res.statusCode = 302;
         res.setHeader("Location", "/admin/login");
       }

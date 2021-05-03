@@ -40,7 +40,7 @@ const TableRow = styled.div`
   }
 `;
 
-const UsersList = ({ users, loading, setLoading }) => {
+const UsersList = ({ authData, users, loading, setLoading }) => {
   const router = useRouter();
   const deleteUser = (userID, name) => {
     setLoading(true);
@@ -67,13 +67,16 @@ const UsersList = ({ users, loading, setLoading }) => {
             <p>{user.roles.name}</p>
             <p>{user.email}</p>
             <ButtonRow>
-              <PrimaryButton
-                onClick={() => deleteUser(user.id, user.name)}
-                color="danger"
-                hoverColor="dangerDark"
-              >
-                Usuń użytkownika
-              </PrimaryButton>
+              {authData.id !== 5 && (
+                <PrimaryButton
+                  onClick={() => deleteUser(user.id, user.name)}
+                  color="danger"
+                  hoverColor="dangerDark"
+                >
+                  Usuń użytkownika
+                </PrimaryButton>
+              )}
+
               <PrimaryButton
                 onClick={() => router.push(`/admin/uzytkownicy/${user.email}`)}
               >

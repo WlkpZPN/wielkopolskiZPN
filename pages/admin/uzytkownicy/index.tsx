@@ -68,9 +68,11 @@ const Uzytkownicy = ({ authData }) => {
         }}
       >
         <h1>Użytkownicy {loading && <StyledSpinner width="40px" />}</h1>
-        <PrimaryButton onClick={() => setVisibility(true)} fontWeight="600">
-          + Dodaj użytkownika
-        </PrimaryButton>
+        {authData.id !== 5 && (
+          <PrimaryButton onClick={() => setVisibility(true)} fontWeight="600">
+            + Dodaj użytkownika
+          </PrimaryButton>
+        )}
       </div>
       <Table size={users.length + 1}>
         <TableHeader>
@@ -81,7 +83,12 @@ const Uzytkownicy = ({ authData }) => {
           <p>E-mail</p>
         </TableHeader>
         {users && !isUsersLoading ? (
-          <UsersList users={users} loading={loading} setLoading={setLoading} />
+          <UsersList
+            authData={authData}
+            users={users}
+            loading={loading}
+            setLoading={setLoading}
+          />
         ) : (
           <p>Brak użytkowników</p>
         )}

@@ -27,7 +27,7 @@ const StyledRow = styled(TableRow)`
     minmax(200px, 350px) auto;
 `;
 
-const GroupMessages = ({ messages }) => {
+const GroupMessages = ({ userData, messages }) => {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 
@@ -66,14 +66,16 @@ const GroupMessages = ({ messages }) => {
           <span>{message.recipients}</span>
           <span>{message.title}</span>
           <div style={{ display: "flex" }}>
-            <PrimaryButton
-              style={{ marginRight: "8px" }}
-              hoverColor="dangerDark"
-              color="danger"
-              onClick={() => deleteMessage(message.id)}
-            >
-              Usuń wiadomość
-            </PrimaryButton>
+            {userData.role === "administrator" && (
+              <PrimaryButton
+                style={{ marginRight: "8px" }}
+                hoverColor="dangerDark"
+                color="danger"
+                onClick={() => deleteMessage(message.id)}
+              >
+                Usuń wiadomość
+              </PrimaryButton>
+            )}
             <PrimaryButton
               onClick={() =>
                 router.push(`/admin/ustawienia/wiadomosci/${message.id}`)

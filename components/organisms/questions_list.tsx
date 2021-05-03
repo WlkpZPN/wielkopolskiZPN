@@ -38,7 +38,8 @@ const StyledRow = styled(TableRow)`
   padding: 8px 12;
 `;
 
-const QuestionsList = ({ questions }) => {
+const QuestionsList = ({ userData, questions }) => {
+  console.log(userData);
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 
@@ -75,14 +76,16 @@ const QuestionsList = ({ questions }) => {
           <Text>{question.category}</Text>
           <Text>{question.question}</Text>
           <div style={{ display: "flex" }}>
-            <PrimaryButton
-              style={{ marginRight: "8px" }}
-              hoverColor="dangerDark"
-              color="danger"
-              onClick={() => deleteQuestion(question.id)}
-            >
-              Usuń pytanie
-            </PrimaryButton>
+            {userData.role === "administrator" && (
+              <PrimaryButton
+                style={{ marginRight: "8px" }}
+                hoverColor="dangerDark"
+                color="danger"
+                onClick={() => deleteQuestion(question.id)}
+              >
+                Usuń pytanie
+              </PrimaryButton>
+            )}
             <PrimaryButton
               onClick={() =>
                 router.push(`/admin/ustawienia/pytania/${question.id}`)

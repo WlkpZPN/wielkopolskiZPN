@@ -96,7 +96,7 @@ const Application = ({ authData, allMessages, settings, message }) => {
   };
 
   return (
-    <AdminLayout view="wnioski" userData={authData}>
+    <AdminLayout view="ustawienia" userData={authData}>
       <div
         style={{
           display: "flex",

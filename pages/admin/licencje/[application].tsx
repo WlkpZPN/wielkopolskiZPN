@@ -383,7 +383,7 @@ const Application = ({ clubData, authData, settings }) => {
           </div>
         </div>
         <div style={{ display: "flex" }}>
-          {renderButtons()}
+          {authData.role !== "pomoc administracyjna" && renderButtons()}
           <PrimaryButton
             onClick={() =>
               router.push(
@@ -396,7 +396,9 @@ const Application = ({ clubData, authData, settings }) => {
           </PrimaryButton>
         </div>
       </div>
-      <div style={{ marginBottom: "32px" }}>{renderTopPanel()}</div>
+      <div style={{ marginBottom: "32px" }}>
+        {authData.role !== "pomoc administracyjna" && renderTopPanel()}
+      </div>
       {loading ? (
         <Loader />
       ) : (

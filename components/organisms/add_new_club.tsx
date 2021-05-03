@@ -503,7 +503,7 @@ const AddNewClub = () => {
       })
       .then(() => {
         setLoading(false);
-        toast.success("Dane zaktualizowane pomyślnie");
+        toast.success("Utworzono nowy klub");
       })
       .catch((err) => {
         setLoading(false);

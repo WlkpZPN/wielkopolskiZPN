@@ -77,6 +77,7 @@ const LicenseDecision = ({
     if (loading) {
       return <Loader />;
     }
+
     switch (type) {
       case "standard":
         return (

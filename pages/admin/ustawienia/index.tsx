@@ -14,6 +14,7 @@ import ErrorMessage from "../../../components/atoms/error_message";
 import QuestionList from "../../../components/organisms/questions_list";
 import GroupMessages from "../../../components/organisms/group_messages";
 import NumericInput from "../../../components/atoms/numeric_input";
+import Fieldset from "../../../components/atoms/fieldset";
 import AmountInput from "../../../components/atoms/amount_input";
 import LockButton from "../../../components/molecules/lock_sending_button";
 const Header = styled.h3`
@@ -136,6 +137,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           >
             Rozpoczęcie wniosku licencyjnego{" "}
             <Input
+              disabled={userData.role !== "administrator"}
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               type="date"
@@ -145,6 +147,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           <Label style={{ width: "250px", fontSize: "14px" }}>
             zakończenie wniosku licencyjnego{" "}
             <Input
+              disabled={userData.role !== "administrator"}
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
@@ -152,8 +155,12 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
             />
           </Label>
         </div>
-        <LockButton locked={settings.locked_sending} />
+        {userData.role === "administrator" && (
+          <LockButton locked={settings.locked_sending} />
+        )}
+
         <PrimaryButton
+          disabled={userData.id !== 1}
           hoverColor="success"
           color="successDark"
           onClick={setDates}
@@ -163,65 +170,70 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
         </PrimaryButton>
       </form>
       <Header>Opłaty składane przez kluby</Header>
-
-      <form
-        onSubmit={setAmounts}
-        onChange={() => {
-          setError("");
-        }}
+      <Fieldset
+        style={{ margin: 0, padding: 0 }}
+        disabled={userData.role !== "administrator"}
       >
-        <AmountRow>
-          <Label style={{ maxWidth: "400px" }}>
-            <span>Wysokość opłaty za złożenie wniosku licencyjnego</span>
-            <AmountInput
-              style={{ paddingRight: "24px" }}
-              placeholder="0"
-              onBlur={formatPrimaryValue}
-              value={primaryAmount}
-              onChange={(e) => setPrimaryAmount(e.target.value)}
-            />
-          </Label>
-          <Label style={{ maxWidth: "400px" }}>
-            <span>
-              Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
-              młodzieżowych dla IV ligi
-            </span>
-            <AmountInput
-              style={{ paddingRight: "24px" }}
-              placeholder="0"
-              onBlur={formatExtraValue}
-              value={extraAmount}
-              onChange={(e) => setExtraAmount(e.target.value)}
-            />
-          </Label>
-          <Label style={{ maxWidth: "400px", marginRight: "16px" }}>
-            <span>
-              {" "}
-              Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
-              młodzieżowych dla V ligi oraz klasy okręgowej
-            </span>
-            <AmountInput
-              style={{ paddingRight: "24px" }}
-              placeholder="0"
-              onBlur={formatExtraValue2}
-              value={extraAmount2}
-              onChange={(e) => setExtraAmount2(e.target.value)}
-            />
-          </Label>
-        </AmountRow>
-        <PrimaryButton
-          style={{ marginTop: "8px" }}
-          hoverColor="success"
-          color="successDark"
-          type="submit"
+        <form
+          onSubmit={setAmounts}
+          onChange={() => {
+            setError("");
+          }}
         >
-          Zapisz
-        </PrimaryButton>
-      </form>
+          <AmountRow>
+            <Label style={{ maxWidth: "400px" }}>
+              <span>Wysokość opłaty za złożenie wniosku licencyjnego</span>
+              <AmountInput
+                style={{ paddingRight: "24px" }}
+                placeholder="0"
+                onBlur={formatPrimaryValue}
+                value={primaryAmount}
+                onChange={(e) => setPrimaryAmount(e.target.value)}
+              />
+            </Label>
+            <Label style={{ maxWidth: "400px" }}>
+              <span>
+                Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
+                młodzieżowych dla IV ligi
+              </span>
+              <AmountInput
+                style={{ paddingRight: "24px" }}
+                placeholder="0"
+                onBlur={formatExtraValue}
+                value={extraAmount}
+                onChange={(e) => setExtraAmount(e.target.value)}
+              />
+            </Label>
+            <Label style={{ maxWidth: "400px", marginRight: "16px" }}>
+              <span>
+                {" "}
+                Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
+                młodzieżowych dla V ligi oraz klasy okręgowej
+              </span>
+              <AmountInput
+                style={{ paddingRight: "24px" }}
+                placeholder="0"
+                onBlur={formatExtraValue2}
+                value={extraAmount2}
+                onChange={(e) => setExtraAmount2(e.target.value)}
+              />
+            </Label>
+          </AmountRow>
+          <PrimaryButton
+            style={{ marginTop: "8px" }}
+            hoverColor="success"
+            color="successDark"
+            type="submit"
+          >
+            Zapisz
+          </PrimaryButton>
+        </form>
+      </Fieldset>
+
       <Header style={{ marginTop: "64px" }}> Wiadomości grupowe </Header>
-      <GroupMessages messages={messages} />
+      <GroupMessages userData={userData} messages={messages} />
       <Header>Pytania do działu FAQ</Header>
-      <QuestionList questions={questions} />
+      <QuestionList userData={userData} questions={questions} />
     </AdminLayout>
   );
 };

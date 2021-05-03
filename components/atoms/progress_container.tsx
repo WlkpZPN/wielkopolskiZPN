@@ -42,14 +42,12 @@ const Progress = styled.div`
 
 const ProgressContainer = ({ status, style }) => {
   const { data, isLoading } = getStats(status);
-  console.log(status, data);
+  //console.log(status, data);
 
-  if(isLoading) {
-
+  if (isLoading) {
     return <p>pobieranie danych...</p>;
   }
- 
- 
+
   return (
     <Progress
       style={style}

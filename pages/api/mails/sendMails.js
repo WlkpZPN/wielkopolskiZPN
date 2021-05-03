@@ -10,80 +10,104 @@ export default (req, res) => {
     //1. check the rule for clubs
     //2. get all clubs that met conditions
     // console.log("message", message);
-    try {
-      switch (recipients) {
-        case "aktywne":
-          clubs = await prisma.clubs.findMany({
-            where: {
-              active: true,
+
+    switch (recipients) {
+      case "aktywne":
+        clubs = await prisma.clubs.findMany({
+          where: {
+            active: true,
+          },
+        });
+        break;
+      case "niekatywne":
+        clubs = await prisma.clubs.findMany({
+          where: {
+            active: false,
+          },
+        });
+        break;
+      case "nierozpoczęte":
+        clubs = await prisma.clubs.findMany({
+          where: {
+            applications: {
+              none: {},
             },
-          });
-          break;
-        case "niekatywne":
-          clubs = await prisma.clubs.findMany({
-            where: {
-              active: false,
-            },
-          });
-          break;
-        case "nierozpoczęte":
-          clubs = await prisma.clubs.findMany({
-            where: {
-              applications: {
-                none: {},
+          },
+        });
+        break;
+      case "zatwierdzone":
+        clubs = await prisma.clubs.findMany({
+          where: {
+            applications: {
+              every: {
+                OR: [
+                  {
+                    id: 2,
+                  },
+                  {
+                    id: 3,
+                  },
+                ],
               },
             },
-          });
-          break;
-        case "zatwierdzone":
-          clubs = await prisma.clubs.findMany({
-            where: {
-              applications: {
-                every: {
-                  OR: [
-                    {
-                      id: 2,
-                    },
-                    {
-                      id: 3,
-                    },
-                  ],
-                },
-              },
-            },
-          });
-          break;
-        case "wszystkie":
-          clubs = await prisma.clubs.findMany();
-          break;
-      }
-
-      let recipientsEmails = [];
-      let content = [];
-
-      clubs.forEach((club, index) => {
-        let i = 0;
-
-        recipientsEmails.push({
-          name: club.name,
-          email: club.email,
+          },
         });
-        content.push({
-          type: "text/html",
-          body: emailTemplate(title, message.message),
-        });
+        break;
+      case "wszystkie":
+        clubs = await prisma.clubs.findMany();
+        break;
+    }
+
+    let recipientsEmails = [];
+    let content = [];
+    console.log("clubs", clubs.length);
+    clubs.forEach((club, index) => {
+      let i = 0;
+
+      recipientsEmails.push({
+        email: club.email,
+
+        //name: club.name.replace(/\r?\n|\r/g, " ") || "",
       });
+      content.push({
+        type: "text/html",
+        body: "<p>Test</p>",
+        // body: emailTemplate(title, message.message),
+      });
+    });
 
-      let i,
-        tmpRecipients,
-        response,
-        tmpContent,
-        chunk = 100;
-      //for (i = 0; i < recipientsEmails.length; i += chunk) {
-      for (i = 0; i < clubs.length; i++) {
-        tmpRecipients = recipientsEmails.slice(i, i + chunk);
-        tmpContent = content.slice(i, i + chunk);
-        response = await axios({
+    let i,
+      tmpRecipients,
+      response,
+      tmpContent,
+      chunk = 100;
+
+    let promises = [];
+    let iterationCount = 0;
+    //for (i = 0; i < recipientsEmails.length; i += chunk) {
+    for (i = 0; i < clubs.length; i++) {
+      // tmpRecipients = recipientsEmails.slice(i, i + chunk);
+      //tmpContent = content.slice(i, i + chunk);
+      // console.log(tmpRecipients.length);
+      // console.log(tmpContent.length);
+
+      // tmpRecipients = tmpRecipients.filter((content) => {
+      //   if (!content.email) {
+      //     return false;
+      //   }
+      //   return true;
+      // });
+
+      // tmpRecipients = tmpRecipients.forEach((content) => {
+      //   if (!content.email || !content.name) {
+      //     console.log(content);
+      //   }
+      // });
+      if (!recipientsEmails[i].email) {
+        continue;
+      }
+      promises.push(
+        axios({
           url: "https://api.freshmail.com/v3/messaging/emails",
           method: "POST",
           headers: {
@@ -91,86 +115,55 @@ export default (req, res) => {
             "Content-Type": "application/json",
           },
           data: {
+            //recipients: tmpRecipients,
+            recipients: [recipientsEmails[i]],
             from: {
-              email: "licklub@wielkopolskizpn.pl",
               name: "Wielkopolski ZPN",
+              email: "licklub@wielkopolskizpn.pl",
             },
-            recipients: [
-              {
-                email: clubs[i].email,
-                name: clubs[i].name,
-              },
-            ],
+
             subject: title,
-            contents: [
-              {
-                type: "text/html",
-                body: emailTemplate(title, message.message),
-              },
-            ],
+            // contents: tmpContent,
+            contents: [content[i]],
+          },
+        })
+
+        // transporter.sendMail({
+        //   from: "licklub@wielkopolskizpn.pl",
+        //   to: recipientsEmails[i].email,
+        //   subject: "WielkopolskiZPN - opłata za złożenie wniosku",
+        //   html: `<p>test</p>`,
+
+        // })
+      );
+      iterationCount++;
+      //console.log("response", response.statusText);
+    }
+
+    Promise.all(promises)
+      .then(async (response) => {
+        await prisma.messages.update({
+          where: {
+            id: parseInt(message.id),
+          },
+          data: {
+            send_date: getCurrentDate(),
           },
         });
-        console.log("response", response.statusText);
-      }
 
-      //***********************************************************
-
-      // const response = await axios({
-      //   url: "https://api.freshmail.com/v3/messaging/emails",
-      //   method: "POST",
-      //   headers: {
-      //     Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-      //     "Content-Type": "application/json",
-      //   },
-      //   data: {
-      //     from: {
-      //       email: "licklub@wielkopolskizpn.pl",
-      //       name: "Wielkopolski ZPN",
-      //     },
-      //     recipients: [
-      //       {
-      //         email: "aleksanderfranczak99@gmail.com",
-      //         name: "Olek",
-      //       },
-      //       {
-      //         email: "hondakkia@gmail.com",
-      //         name: "Olek",
-      //       },
-      //     ],
-      //     contents: [
-      //       {
-      //         type: "text/html",
-      //         body: "<p>akdmdwmawldmalkdmlm TEST HTML</p>",
-      //       },
-      //       {
-      //         type: "text/html",
-      //         body: "<p>akdmdwmawldmalkdmlm TEST HTML</p>",
-      //       },
-      //     ],
-      //     subject: title,
-      //   },
-      // });
-
-      await prisma.messages.update({
-        where: {
-          id: parseInt(message.id),
-        },
-        data: {
-          send_date: getCurrentDate(),
-        },
+        //console.log("data", recipientsEmails);
+        res.send("email sended");
+      })
+      .catch((err) => {
+        console.log(err.response?.data || err);
+        res.status(400);
+        res.json({
+          type: "error",
+          message: err,
+        });
       });
-      console.log("response", response.data, response.status);
-      //console.log("data", recipientsEmails);
-      res.send("email sended");
-    } catch (err) {
-      console.log(err);
-      console.log(err.response?.data);
-      res.status(400);
-      res.json({
-        type: "error",
-        message: err,
-      });
-    }
+
+    // console.log(err);
 
     //aktywne
     //nieaktywne

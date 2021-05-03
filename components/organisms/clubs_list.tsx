@@ -30,7 +30,7 @@ const ClubsList = () => {
   const [page, setPage] = useLocalStorage("club_page", 0);
   //const [page, setPage] = useState(0);
   const { list: clubs } = useContext(AdminContext);
-  console.log(clubs);
+
   const totalPages = Math.ceil(clubs.length / 10);
   // console.log("total pages", totalPages);
   // console.log("current page", page);
@@ -57,7 +57,7 @@ const ClubsList = () => {
         >
           <DebtIcon debt={club.debt} />
           <ClubStatus active={club.active} />
-          <span>{club.internal_id}</span>
+          <span>{club.internal_id.replaceAll(".", "")}</span>
           <span>{club.updated_at}</span>
           <ClubName style={{ display: "block", width: "100%" }}>
             {club.name}

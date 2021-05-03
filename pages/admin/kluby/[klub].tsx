@@ -105,54 +105,56 @@ const User = ({ clubData, authData }) => {
           </span>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            marginBottom: "20px",
-          }}
-        >
-          <PrimaryButton
-            style={{ margin: "0 6px" }}
-            color="danger"
-            hoverColor="dangerDark"
+        {authData.id !== 5 && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              marginBottom: "20px",
+            }}
           >
-            {loading === "deleting" ? (
-              <Spinner style={{ height: "16px", color: "white" }} />
-            ) : (
-              "Usuń"
-            )}
-          </PrimaryButton>
-          <PrimaryButton
-            style={{ margin: "0 6px" }}
-            color={clubData.active ? "danger" : "primary"}
-            hoverColor={clubData.active ? "danger" : "primaryLight"}
-            onClick={changeActive}
-          >
-            {loading === "active" ? (
-              <Spinner style={{ height: "16px", color: "white" }} />
-            ) : clubData.active ? (
-              "Oznacz jako nieaktywny"
-            ) : (
-              "Oznacz jako aktywny"
-            )}
-          </PrimaryButton>
+            <PrimaryButton
+              style={{ margin: "0 6px" }}
+              color="danger"
+              hoverColor="dangerDark"
+            >
+              {loading === "deleting" ? (
+                <Spinner style={{ height: "16px", color: "white" }} />
+              ) : (
+                "Usuń"
+              )}
+            </PrimaryButton>
+            <PrimaryButton
+              style={{ margin: "0 6px" }}
+              color={clubData.active ? "danger" : "primary"}
+              hoverColor={clubData.active ? "danger" : "primaryLight"}
+              onClick={changeActive}
+            >
+              {loading === "active" ? (
+                <Spinner style={{ height: "16px", color: "white" }} />
+              ) : clubData.active ? (
+                "Oznacz jako nieaktywny"
+              ) : (
+                "Oznacz jako aktywny"
+              )}
+            </PrimaryButton>
 
-          <PrimaryButton
-            style={{ margin: "0 6px" }}
-            color={clubData.debt ? "danger" : "primary"}
-            hoverColor={clubData.active ? "danger" : "primaryLight"}
-            onClick={markDebt}
-          >
-            {loading === "debt" ? (
-              <Spinner style={{ height: "16px", color: "white" }} />
-            ) : clubData.debt ? (
-              "Usuń zadłużenie"
-            ) : (
-              "Oznacz jako zadłużony"
-            )}
-          </PrimaryButton>
-        </div>
+            <PrimaryButton
+              style={{ margin: "0 6px" }}
+              color={clubData.debt ? "danger" : "primary"}
+              hoverColor={clubData.active ? "danger" : "primaryLight"}
+              onClick={markDebt}
+            >
+              {loading === "debt" ? (
+                <Spinner style={{ height: "16px", color: "white" }} />
+              ) : clubData.debt ? (
+                "Usuń zadłużenie"
+              ) : (
+                "Oznacz jako zadłużony"
+              )}
+            </PrimaryButton>
+          </div>
+        )}
       </div>
       <Link href="/admin/kluby">
         <IconButton>

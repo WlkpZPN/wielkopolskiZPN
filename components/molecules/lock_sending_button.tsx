@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 `;
 
 const Icon = styled.div`
-  width: 50px;
+  width: 45px;
   height: 25px;
   background: #d6d6d6;
   margin-left: 8px;
@@ -25,6 +25,7 @@ const Icon = styled.div`
   cursor: pointer;
   &::after {
     content: "";
+
     transition: all 0.2s;
     width: 25px;
     height: 25px;
@@ -39,7 +40,6 @@ const Icon = styled.div`
 `;
 
 const LockButton = ({ locked }) => {
-  console.log(locked);
   const [loading, setLoading] = useState(false);
   const [lockMode, setLockMode] = useState(locked);
   const changeLockMode = async () => {
