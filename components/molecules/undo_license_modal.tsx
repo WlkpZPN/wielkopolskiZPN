@@ -48,6 +48,8 @@ const Content = styled.div`
   width: 100%;
   align-items: flex-start;
   text-align: start;
+  max-height: 90vh;
+  overflow: auto;
 `;
 
 const TextArea = styled.textarea`

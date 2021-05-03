@@ -35,6 +35,8 @@ const Content = styled.div`
   display: flex;
   align-items: flex-start;
   border-radius: 5px;
+  max-height: 90vh;
+  overflow: auto;
 `;
 const NewQUestionModal = ({ visible, setVisible }) => {
   const router = useRouter();

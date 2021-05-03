@@ -47,6 +47,8 @@ const Content = styled.div`
   flex-direction: column;
   align-items: flex-start;
   position: relative;
+  max-height: 90vh;
+  overflow: auto;
 `;
 
 const StyledLabel = styled(Label)`

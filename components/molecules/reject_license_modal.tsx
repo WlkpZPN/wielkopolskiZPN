@@ -46,6 +46,8 @@ const Content = styled.div`
   flex-direction: column;
   max-width: 1000px;
   width: 100%;
+  max-height: 90vh;
+  overflow: auto;
 `;
 
 const TextArea = styled.textarea`

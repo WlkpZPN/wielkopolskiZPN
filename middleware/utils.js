@@ -79,13 +79,13 @@ export const convertToFormData = (files) => {
 
 export const getCurrentDate = () => {
   const newDate = new Date();
-  const date = ` ${newDate.getDate()}/${
-    newDate.getMonth() +
-    (1).toLocaleString("en-US", {
+  const date = ` ${newDate.getDate()}/${(newDate.getMonth() + 1).toLocaleString(
+    "en-US",
+    {
       minimumIntegerDigits: 2,
       useGrouping: false,
-    })
-  }/${newDate.getFullYear()}, ${
+    }
+  )}/${newDate.getFullYear()}, ${
     newDate.getHours() + 2
   }:${newDate.getMinutes().toLocaleString("en-US", {
     minimumIntegerDigits: 2,

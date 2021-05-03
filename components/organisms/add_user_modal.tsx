@@ -36,6 +36,8 @@ const Content = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  max-height: 90vh;
+  overflow: auto;
 `;
 
 const AddUserModal = ({ visibility, setVisibility, roles, refreshData }) => {
