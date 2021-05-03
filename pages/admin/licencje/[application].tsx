@@ -44,6 +44,9 @@ const Application = ({ clubData, authData, settings }) => {
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {
       case 6:
+        if (authData.role === "nadzór finansów") {
+          return null;
+        }
         return (
           <>
             {" "}
@@ -63,6 +66,9 @@ const Application = ({ clubData, authData, settings }) => {
           </>
         );
       case 7:
+        if (authData.role === "nadzór finansów") {
+          return null;
+        }
         return (
           <>
             <div style={{ display: "flex", alignItems: "flex-end" }}>
@@ -135,15 +141,17 @@ const Application = ({ clubData, authData, settings }) => {
                 clubData={clubData}
               />
             </div>
-            <div>
-              <Paragraph>Faktura</Paragraph>
-              <AddInvoice
-                admin={true}
-                clubData={clubData}
-                file={invoiceFiles}
-                addFile={setInvoiceFiles}
-              />
-            </div>
+            {authData.role !== "nadzór finansów" && (
+              <div>
+                <Paragraph>Faktura</Paragraph>
+                <AddInvoice
+                  admin={true}
+                  clubData={clubData}
+                  file={invoiceFiles}
+                  addFile={setInvoiceFiles}
+                />
+              </div>
+            )}
           </div>
         );
       case 10:
@@ -199,6 +207,9 @@ const Application = ({ clubData, authData, settings }) => {
       case 2:
       case 3:
       case 4:
+        if (authData.role === "nadzór finansów") {
+          return null;
+        }
         return (
           <div>
             <PrimaryButton
@@ -229,6 +240,9 @@ const Application = ({ clubData, authData, settings }) => {
         );
 
       case 6:
+        if (authData.role === "nadzór finansów") {
+          return null;
+        }
         return (
           <div>
             <PrimaryButton

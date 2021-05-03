@@ -186,141 +186,123 @@ export const checkStepSix = (formData) => {
 };
 
 export const validateObject = (data, leauge) => {
+  console.log(data);
   // // check all required fields
-  // if (!data.name || !data.address || !data.post_code || !data.city) {
-  //   setError({ step: 0, text: "Proszę wpisać nazwę oraz adres obiektu" });
-  //   window.scrollTo(0, 0);
-  //   return;
-  // }
-  // if (!data.I01_1 || !data.I01_2) {
-  //   setError({ step: 1, text: "Proszę zaznaczyć wszystkie pola formularza" });
-  //   return;
-  // }
-  // if (!data.I02_1 || !data.I02_2 || !data.I02_3 || !data.I02_4) {
-  //   setError({ step: 2, text: "Proszę zaznaczyć wszystkie pola formularza" });
-  //   return;
-  // }
-  // if (!data.I03_1 || !data.I03_2 || !data.I03_total_capacity) {
-  //   setError({
-  //     step: 3,
-  //     text: "Proszę podać liczbę miejsc oraz zaznaczyć wszystkie pola",
-  //   });
-  //   return;
-  // }
-
-  // if (
-  //   !data.I04_1 ||
-  //   !data.I04_2 ||
-  //   !data.I04_3 ||
-  //   !data.I04_4 ||
-  //   !data.I04_5
-  // ) {
-  //   setError({
-  //     step: 4,
-  //     text: "Proszę zaznaczyć wszystkie pola formularza",
-  //   });
-  //   return;
-  // }
-  // if (
-  //   !data.I05_number_of_seats_for_quests ||
-  //   !data.I05_percentage_of_seats_for_guests ||
-  //   !data.I05_1 ||
-  //   !data.I05_2
-  // ) {
-  //   setError({
-  //     step: 5,
-  //     text:
-  //       "Proszę podać liczbę miejsc,procent pojemności oraz zaznaczyć wszystkie pola",
-  //   });
-  //   return;
-  // }
-
-  if (leauge === "iv liga") {
-    if (
-      data.I05_number_of_seats_for_quests < 30 ||
-      data.I05_percentage_of_seats_for_guests < 5
-    ) {
-      setError({
-        step: 5,
-        text:
-          "Na obiektach IV ligi musi być co najmniej 5% łącznej liczby miejsc przewidzianych dla publiczności, jednak nie mniej niż 30 miejsc",
-      });
-    }
+  if (!data.name || !data.address || !data.post_code || !data.city) {
+    window.scrollTo(0, 0);
+    return {
+      valid: false,
+      step: 0,
+      text: "Proszę podac nazwę obiektu, ulicę, kod pocztowy oraz miasto",
+    };
+  }
+  if (data.I01_1 === null) {
+    window.scrollTo(0, 400);
+    return {
+      valid: false,
+      step: 1,
+      text: "Proszę wybrać jedną z poniższych opcji",
+    };
   }
 
-  // if (
-  //   !data.I06_type ||
-  //   !data.I06_condition ||
-  //   !data.I06_width ||
-  //   !data.I06_length ||
-  //   !data.I06_1 ||
-  //   !data.I06_4 ||
-  //   !data.I06_5
-  // ) {
-  //   setError({
-  //     step: 6,
-  //     text:
-  //       "Proszę określić rodzaj i stan nawierzchni oraz zaznaczyć wszystkie pola",
-  //   });
-  //   return;
-  // }
-  // if (data.I06_type === "sztuczna" && (!data.I06_2 || !data.I06_3)) {
-  //   setError({
-  //     step: 6,
-  //     text: "Proszę zaznaczyć wszystkie pola",
-  //   });
-  //   return;
-  // }
-
-  // if (!data.I07_1 || !data.I07_2 || !data.I07_3 || !data.I07_4) {
-  //   setError({
-  //     step: 7,
-  //     text: "Proszę zaznaczyć wszystkie pola",
-  //   });
-  //   return;
-  // }
-  // if (
-  //   !data.I08_number_of_seats_on_the_bench ||
-  //   !data.I08_1 ||
-  //   !data.I08_2 ||
-  //   !data.I08_3 ||
-  //   !data.I08_4
-  // ) {
-  //   setError({
-  //     step: 8,
-  //     text: "Proszę zaznaczyć wszystkie pola",
-  //   });
-  //   return;
-  // }
-
-  switch (leauge) {
-    case "iv liga":
-      if (data.I08_number_of_seats_on_the_bench < 13) {
-        setError({
-          step: 8,
-          text: "Wymagane jest posiadanie minimum 13 miejsc siedzących",
-        });
-      }
-      break;
-    case "v liga":
-    case "klasa okręgowa":
-      if (data.I08_number_of_seats_on_the_bench < 10) {
-        setError({
-          step: 8,
-          text: "Wymagane jest posiadanie minimum 10 miejsc siedzących",
-        });
-      }
-      break;
-    case "klasa a":
-    case "klasa b":
-    case "klasa c":
-      if (data.I08_number_of_seats_on_the_bench < 8) {
-        setError({
-          step: 8,
-          text: "Wymagane jest posiadanie minimum 8 miejsc siedzących",
-        });
-      }
+  if (data.I01_1 === false && data.I01_2 !== true) {
+    window.scrollTo(0, 400);
+    return {
+      valid: false,
+      step: 1,
+      text:
+        "Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu",
+    };
   }
+  if (!data.I02_1 || !data.I02_2 || !data.I02_3 || !data.I02_4) {
+    window.scrollTo(0, 800);
+    return {
+      valid: false,
+      step: 2,
+      text: "Proszę zaznaczyć wszystkie pola formularza",
+    };
+  }
+
+  // if (leauge === "iv liga") {
+  //   if (
+  //     data.I05_number_of_seats_for_quests < 30 ||
+  //     data.I05_percentage_of_seats_for_guests < 5
+  //   ) {
+  //     window.scrollTo(0, 1700);
+  //     return {
+  //       valid: false,
+  //       step: 5,
+  //       text:
+  //         "Na obiektach IV ligi musi być co najmniej 5% łącznej liczby miejsc przewidzianych dla publiczności, jednak nie mniej niż 30 miejsc",
+  //     };
+  //   }
+  // }
+
+  if (
+    !data.I06_type ||
+    !data.I06_condition ||
+    !data.I06_width ||
+    !data.I06_length ||
+    !data.I06_1 ||
+    !data.I06_4 ||
+    !data.I06_5
+  ) {
+    window.scrollTo(0, 2100);
+    return {
+      valid: false,
+      step: 6,
+      text:
+        "Proszę określić rodzaj i stan nawierzchni oraz zaznaczyć wszystkie pola",
+    };
+  }
+  if (data.I06_type === "sztuczna" && (!data.I06_2 || !data.I06_3)) {
+    return {
+      valid: false,
+      step: 6,
+      text: "Proszę zaznaczyć wszystkie pola",
+    };
+  }
+
+  if (!data.I07_1 || !data.I07_2 || !data.I07_3 || !data.I07_4) {
+    window.scrollTo(0, 2500);
+    return {
+      valid: false,
+      step: 7,
+      text: "Proszę zaznaczyć wszystkie pola",
+    };
+  }
+
+  // switch (leauge) {
+  //   case "iv liga":
+  //     if (data.I08_number_of_seats_on_the_bench < 13) {
+  //       return {
+  //         valid: false,
+  //         step: 8,
+  //         text: "Wymagane jest posiadanie minimum 13 miejsc siedzących",
+  //       };
+  //     }
+  //     break;
+  //   case "v liga":
+  //   case "klasa okręgowa":
+  //     if (data.I08_number_of_seats_on_the_bench < 10) {
+  //       return {
+  //         valid: false,
+  //         step: 8,
+  //         text: "Wymagane jest posiadanie minimum 10 miejsc siedzących",
+  //       };
+  //     }
+  //     break;
+  //   case "klasa a":
+  //   case "klasa b":
+  //   case "klasa c":
+  //     if (data.I08_number_of_seats_on_the_bench < 8) {
+  //       return {
+  //         valid: false,
+  //         step: 8,
+  //         text: "Wymagane jest posiadanie minimum 8 miejsc siedzących",
+  //       };
+  //     }
+  // }
 
   // if (!data.I09_1 || !data.I09_2) {
   //   setError({
@@ -442,4 +424,6 @@ export const validateObject = (data, leauge) => {
   //   });
   //   return;
   // }
+
+  return { valid: true };
 };

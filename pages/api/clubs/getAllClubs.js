@@ -18,7 +18,7 @@ export default (req, res) => {
         },
       },
     });
-    console.log("clubs", clubData);
+
     res.send(clubData);
     await prisma.$disconnect();
     return resolve();

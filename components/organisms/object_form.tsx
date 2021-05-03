@@ -14,18 +14,18 @@ import RadioSquare from "../molecules/form_radio";
 import Paragraph from "../atoms/paragraph";
 
 import Info from "../atoms/Info";
-
+import { validateObject } from "../../middleware/stepValidation";
 import ObjectInfo from "../molecules/object_info";
 import FormHeader from "../atoms/form_header";
 import Fieldset from "../atoms/fieldset";
 import ErrorMessage from "../atoms/error_message";
-import AddFilesWrapper from "./add_files_wrapper";
+
 import AddFacilityFilesWrapper from "./add_facility_files_wrapper";
 import ZipCodeInput from "../atoms/zip_code_input";
-import NummericInput from "../atoms/numeric_input";
+
 import NumericInput from "../atoms/numeric_input";
 import RadioButton from "../atoms/radio_button";
-import AddFacilityFile from "../molecules/add_facility_file";
+
 const ObjectForm = ({ readOnly, objectIndex }) => {
   const router = useRouter();
   const [error, setError] = useState({ step: null, text: "" });
@@ -188,12 +188,26 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     e.preventDefault();
     // call function form step falidation here
     // save object to form state
+    const { valid, step, text } = validateObject(
+      data,
+      context.formData.stepOne.leauge
+    );
+
+    if (!valid) {
+      setError({
+        step: step,
+        text: text,
+      });
+      return;
+    }
+
     if (extraField.visible && !data.is_invalid_field) {
       setError({
         step: 6,
-        text: "Proszę potwierdzić posiadanie obiektu o błędnych wymiarach",
+        text:
+          "Proszę potwierdzić posiadanie obiektu o wymiarach niespełniających wymagań",
       });
-      window.scrollTo(0, 2500);
+      window.scrollTo(0, 2100);
       return;
     }
     context.addSportFacility();
@@ -583,7 +597,13 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           </Label>
           <Label>
             Wymiar pola gry (długość x szerokość)
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "max-content",
+              }}
+            >
               <NumericInput
                 value={data.I06_length}
                 onChange={(e) =>
@@ -592,7 +612,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 suffix="m"
                 placeholder="0"
               />{" "}
-              <span style={{ margin: "0 8px" }}>x</span>
+              <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
                 value={data.I06_width}
                 onChange={(e) =>

@@ -517,8 +517,9 @@ const ClubApplication = ({
     // save data in the club table
 
     setLoading(true);
-
-    addSportFacility();
+    if (true) {
+      addSportFacility();
+    }
     axios
       .post("/api/applications/updateApplication", {
         formData,
@@ -541,6 +542,10 @@ const ClubApplication = ({
 
   const addSportFacility = async (toastHidden = false) => {
     let newFormData = formData;
+
+    if (newFormData.stepFour.sport_facilities.length === 0) {
+      return;
+    }
     //1. add sport facility to database
     // console.log(formData.stepFour.sport_facilities[currentObject]);
     setLoading(true);

@@ -218,19 +218,18 @@ export const makeid = (length) => {
 };
 
 export const renderAmount = (leauge, settings) => {
-  console.log(leauge == "IV liga");
   console.log(leauge);
   let amount = "";
   switch (leauge) {
     case "iv liga":
     case "IV Liga":
       console.log("opłata", settings.iv_possession_fee);
-      amount = `${settings.iv_possession_fee}`;
+      amount = `${settings.iv_possession_fee} PLN`;
       break;
     case "v liga":
     case "V Liga":
     case "klasa okręgowa":
-      amount = `${settings.v_possession_fee}`;
+      amount = `${settings.v_possession_fee} PLN`;
       break;
     default:
       break;
@@ -252,7 +251,6 @@ export const createSeasons = (amount) => {
 };
 
 export const convertLeauge = (leauge) => {
-  console.log(leauge);
   let formatedLeauge = "";
   if (!leauge) {
     return "";

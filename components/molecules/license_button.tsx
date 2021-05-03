@@ -117,6 +117,28 @@ const LicenseButton = ({ clubData, isAdmin, authData = null }) => {
       case 7:
       case 8:
       case 10:
+        if (authData?.role === "księgowa") {
+          return (
+            <OutlineButton
+              style={{ padding: "8px", fontSize: "14px" }}
+              onClick={() => generatePdf(clubData)}
+            >
+              Pobierz
+            </OutlineButton>
+          );
+        }
+        if (authData?.role === "nadzór finansów") {
+          return (
+            <PrimaryButton
+              style={{ padding: "8px", fontSize: "14px" }}
+              color="danger"
+              hoverColor="dangerDark"
+              onClick={() => setVisible1(true)}
+            >
+              Cofnij licencję
+            </PrimaryButton>
+          );
+        }
         return (
           <>
             <OutlineButton
@@ -164,6 +186,9 @@ const LicenseButton = ({ clubData, isAdmin, authData = null }) => {
         );
 
       case 11:
+        if (authData.role !== "administrator") {
+          return null;
+        }
         return (
           <>
             <PrimaryButton onClick={changeDecision}>

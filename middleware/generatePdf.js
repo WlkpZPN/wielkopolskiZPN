@@ -329,8 +329,8 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   let objectsNames = [];
   application.sport_facilities.forEach((object, index, arr) => {
-    if (index > 0) {
-      objectsNames.push(`${object.name} ${object.address}`);
+    if (index > 0 && object.name) {
+      objectsNames.push(`${object.name} ${object.address || ""}`);
     }
   });
   console.log(objectsNames);

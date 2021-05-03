@@ -71,6 +71,10 @@ const User = ({ clubData, authData }) => {
   };
 
   const deleteClub = async () => {
+    if (authData.role === "nadzór finansów") {
+      toast.error("Nie posiadasz uprawnień aby usunąc klub");
+      return;
+    }
     setLoading("deleting");
 
     try {
@@ -105,7 +109,7 @@ const User = ({ clubData, authData }) => {
           </span>
         </div>
 
-        {authData.id !== 5 && (
+        {authData.role !== "pomoc administracyjna" && (
           <div
             style={{
               display: "flex",
@@ -114,6 +118,7 @@ const User = ({ clubData, authData }) => {
             }}
           >
             <PrimaryButton
+              onClick={deleteClub}
               style={{ margin: "0 6px" }}
               color="danger"
               hoverColor="dangerDark"
