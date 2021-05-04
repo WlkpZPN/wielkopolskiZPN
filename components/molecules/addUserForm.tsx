@@ -31,6 +31,9 @@ const AddUserForm = ({ userData, roles, setVisible, refreshData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (userData.role !== "administrator" && userData.email !== email) {
+      toast.error("Nie masz uprawnień do edycji danych innych użytkowników ");
+    }
     const { valid, message } = validateEmail(email);
     setLoading(true);
     if (userData) {
