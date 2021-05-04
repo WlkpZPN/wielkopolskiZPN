@@ -41,7 +41,7 @@ Procedura licencyjna jest już dostępna. Co bardzo istotne, system umożliwia z
 <br/><br/>
 Przypominamy, że wszystkie Kluby mają obowiązek złożyć wnioski w terminie do 31 maja, zgodnie z klasą rozgrywkową, w której występuje pierwsza drużyna w obecnym sezonie.
  <br/><br/>
-W razie pytań lub wątpliwości prosimy o kontakt na licencje@wielkopolskizpn.pl.`
+W razie pytań lub wątpliwości prosimy o kontakt na licklub@wielkopolskizpn.pl.`
         ),
       });
     });
