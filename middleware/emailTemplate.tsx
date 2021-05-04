@@ -32,23 +32,7 @@ const emailTemplate = (title, message) => {
         
         </td>
       </tr>
-      <tr>
-        <td style="padding: 24px 48px">
-            <a
-  style="
-            padding: 8px 32px;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            background: #0156a6;
-            border-radius: 4px;
-          "
-  href="https://licencje.wielkopolskizpn.pl"
->
-  Platforma licencyjna
-</a>
-        </td>
-      </tr>
+     
       <tr>
         <td style="
             padding: 32px 48px;
@@ -76,3 +60,21 @@ const emailTemplate = (title, message) => {
 };
 
 export default emailTemplate;
+
+//  <tr>
+//    <td style="padding: 24px 48px">
+//      <a
+//        style="
+//             padding: 8px 32px;
+//             text-decoration: none;
+//             color: white;
+//             font-weight: bold;
+//             background: #0156a6;
+//             border-radius: 4px;
+//           "
+//        href="https://licencje.wielkopolskizpn.pl"
+//      >
+//        Platforma licencyjna
+//      </a>
+//    </td>
+//  </tr>;
