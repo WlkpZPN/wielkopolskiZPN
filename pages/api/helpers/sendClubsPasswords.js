@@ -28,7 +28,7 @@ export default (req, res) => {
         type: "text/html",
 
         body: emailTemplate(
-          title,
+          "Dane dostępowe do Platformy Licencyjnej",
           `Dzień dobry, <br/><br/>
 
 Poniżej przesyłamy dane dla klubu do logowania do platformy licencyjnej uruchomionej celem składania wniosków licencyjnych wraz z załącznikami na sezon 2021/2022 i kolejne. Począwszy od tego roku jest to jedyna możliwa forma przesyłania aplikacji.<br/><br/>
