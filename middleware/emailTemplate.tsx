@@ -43,10 +43,10 @@ const emailTemplate = (title, message) => {
             background: #0156a6;
             border-radius: 4px;
           "
-  href="wielkopolski-zpn.vercel.app"
+  href="https://licencje.wielkopolskizpn.pl"
 >
   Platforma licencyjna
-</a>;
+</a>
         </td>
       </tr>
       <tr>

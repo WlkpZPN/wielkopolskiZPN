@@ -4,7 +4,7 @@ export default (req, res) => {
   return new Promise(async (resolve) => {
     transporter.sendMail({
       from: "licklub@wielkopolskizpn.pl",
-      to: email,
+      to: "licklub@wielkopolskizpn.pl",
       subject: "WielkopolskiZPN - uwagi do faktury",
       html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
