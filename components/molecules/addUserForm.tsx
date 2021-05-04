@@ -14,7 +14,14 @@ import Select from "../atoms/form_select";
 import ErrorMessage from "../atoms/error_message";
 import StyledSpinner from "../atoms/loader";
 
-const AddUserForm = ({ userData, roles, setVisible, refreshData }) => {
+const AddUserForm = ({
+  authData,
+  userData,
+  roles,
+  setVisible,
+  refreshData,
+}) => {
+  console.log(userData);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState(
@@ -31,8 +38,9 @@ const AddUserForm = ({ userData, roles, setVisible, refreshData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userData.role !== "administrator" && userData.email !== email) {
+    if (authData.role !== "administrator" && authData.email !== email) {
       toast.error("Nie masz uprawnień do edycji danych innych użytkowników ");
+      return;
     }
     const { valid, message } = validateEmail(email);
     setLoading(true);

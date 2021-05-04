@@ -14,7 +14,7 @@ import AddUserForm from "../../../components/molecules/addUserForm";
 
 //functions
 
-const User = ({ roles, userData }) => {
+const User = ({ roles, userData, authData }) => {
   const router = useRouter();
   const { user } = router.query;
 
@@ -29,6 +29,7 @@ const User = ({ roles, userData }) => {
         </IconButton>
       </Link>
       <AddUserForm
+        authData={authData}
         refreshData={null}
         setVisible={null}
         userData={userData}
