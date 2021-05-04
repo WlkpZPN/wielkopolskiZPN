@@ -260,7 +260,7 @@ const Home = ({ clubData, authData, settings }) => {
                   margin: "15px 0",
                 }}
               >
-                {renderMainAmount(clubData.leauge, settings) +
+                {renderMainAmount(clubData.leauge, settings,clubData.seasons) +
                   parseFloat(renderAmount(clubData.leauge, settings))}
                 PLN
               </p>

@@ -317,7 +317,7 @@ export const checkMimeType = (event) => {
   };
 };
 
-export const renderMainAmount = (leauge, settings) => {
+export const renderMainAmount = (leauge, settings,seasons) => {
   let amount = 0;
   switch (leauge.toLowerCase()) {
     case "iv liga":
@@ -339,5 +339,11 @@ export const renderMainAmount = (leauge, settings) => {
     default:
       amount = settings.young_application_fee;
   }
-  return parseFloat(amount);
+
+  if(seasons === '1') {
+    
+    return parseFloat(amount);
+  } else if (seasons === '2') {
+    return parseFloat(amount*2)
+  }
 };
