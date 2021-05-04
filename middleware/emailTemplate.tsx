@@ -26,7 +26,7 @@ const emailTemplate = (title, message) => {
       </tr>
       <tr>
         <td style="padding: 32px 48px">
-          <p style="margin:24px 0; max-width:400px; font-weight:bold; color:rgba(0,0,0,0.7">
+          <p style="margin:24px 0; max-width:400px;font-size:15px; font-weight:bold; color:rgba(0,0,0,0.7">
             ${message}
           </p>
         
@@ -34,7 +34,19 @@ const emailTemplate = (title, message) => {
       </tr>
       <tr>
         <td style="padding: 24px 48px">
-        
+            <a
+  style="
+            padding: 8px 32px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background: #0156a6;
+            border-radius: 4px;
+          "
+  href="wielkopolski-zpn.vercel.app"
+>
+  Platforma licencyjna
+</a>;
         </td>
       </tr>
       <tr>
@@ -64,17 +76,3 @@ const emailTemplate = (title, message) => {
 };
 
 export default emailTemplate;
-
-// <a
-//   style="
-//             padding: 8px 32px;
-//             text-decoration: none;
-//             color: white;
-//             font-weight: bold;
-//             background: #0156a6;
-//             border-radius: 4px;
-//           "
-//   href="wielkopolski-zpn.vercel.app"
-// >
-//   Platforma licencyjna
-// </a>;

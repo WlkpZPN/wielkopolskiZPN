@@ -71,8 +71,8 @@ export default (req, res) => {
       });
       content.push({
         type: "text/html",
-        body: "<p>Test</p>",
-        // body: emailTemplate(title, message.message),
+        // body: "<p>Test</p>",
+        body: emailTemplate(title, message.message),
       });
     });
 
