@@ -52,6 +52,7 @@ const AddUserModal = ({ visibility, setVisibility, roles, refreshData }) => {
       <Content>
         <h1>Dodaj użytkownika</h1>
         <AddUserForm
+          authData={null}
           refreshData={refreshData}
           setVisible={setVisibility}
           userData={null}
