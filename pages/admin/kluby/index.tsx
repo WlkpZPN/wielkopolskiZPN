@@ -46,11 +46,14 @@ const Kluby = ({ userData }) => {
     if (leauge !== "wszystkie") {
       if (leauge === "Klasa A / B") {
         helperArr = helperArr.filter((club) => {
-          return club.leauge === "Klasa A" || club.leauge === "Klasa B";
+          return (
+            club?.leauge?.toLowerCase() === "klasa a" ||
+            club?.leauge?.toLowerCase() === "klasa b"
+          );
         });
       } else {
         helperArr = helperArr.filter((club) => {
-          return club.leauge.toLowerCase() === leauge.toLowerCase();
+          return club.leauge?.toLowerCase() === leauge.toLowerCase();
         });
       }
     }
