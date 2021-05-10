@@ -247,6 +247,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
                 style={{ marginRight: "16px" }}
                 color="dark"
                 hoverColor="darkLight"
+                onClick={context.saveForm}
               >
                 Zapisz wersję roboczą
               </PrimaryButton>
