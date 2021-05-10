@@ -26,7 +26,7 @@ export default async (req, res) => {
         },
       });
     } catch (err) {
-      console.log(err);
+      console.log("błąd", err?.response?.data);
       res.status(400);
       res.json(err);
       return resolve();

@@ -317,8 +317,10 @@ export const checkMimeType = (event) => {
   };
 };
 
-export const renderMainAmount = (leauge, settings,seasons) => {
+export const renderMainAmount = (leauge, settings, seasons) => {
   let amount = 0;
+  console.log("liga", leauge);
+  console.log("sezony", seasons);
   switch (leauge.toLowerCase()) {
     case "iv liga":
       amount = settings.iv_application_fee;
@@ -340,10 +342,9 @@ export const renderMainAmount = (leauge, settings,seasons) => {
       amount = settings.young_application_fee;
   }
 
-  if(seasons === '1') {
-    
+  if (seasons === "1") {
     return parseFloat(amount);
-  } else if (seasons === '2') {
-    return parseFloat(amount*2)
+  } else if (seasons === "2") {
+    return parseFloat(amount * 2);
   }
 };

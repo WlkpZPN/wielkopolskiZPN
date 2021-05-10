@@ -8,7 +8,7 @@ import {
 } from "pdf-lib";
 import download from "downloadjs";
 import fontKit from "@pdf-lib/fontkit";
-
+import { createSeasons } from "../middleware/utils";
 export const generatePdf = async (clubData, date = null, dwn = true) => {
   console.log(clubData);
   const supervisionType = clubData.applications[0].supervision_type;
@@ -244,7 +244,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     }
   );
 
-  page.drawText(` sezon ${clubData.applications[0].seasons} `, {
+  page.drawText(` sezon ${createSeasons(clubData.applications[0].seasons)} `, {
     x: 364,
     y: 425,
     font: regular,

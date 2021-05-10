@@ -42,7 +42,7 @@ export default async (req, res) => {
       club_id: clubData.id,
       status_id: parseInt(statusId),
       number_of_seasons: stepOne.seasons,
-      seasons: createSeasons(stepOne.seasons),
+      seasons: stepOne.seasons,
       declaration_on_the_subject_of_participation_in_the_competition:
         stepTwo.participateInCompetitions,
       declaration_on_the_use_of_personal_data_documentation:

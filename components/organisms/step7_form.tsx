@@ -30,7 +30,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     clubData,
     fileEdit,
   } = context;
-  const [regulations, setRegulations] = useState(show_buttons ? true : false);
+  const [regulations, setRegulations] = useState(show_buttons ? false : true);
   const stepTwoFiles = context.clubData.applications[0].applications_attachments.filter(
     (file) => file.category === "krs_documents"
   );

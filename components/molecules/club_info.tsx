@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { ClubContext } from "../../pages/index";
-import { convertLeauge } from "../../middleware/utils";
+import { convertLeauge, createSeasons } from "../../middleware/utils";
 const Wrapper = styled.div`
   color: ${({ theme }) => theme.lightDark};
   display: flex;
@@ -55,7 +55,7 @@ const ClubInfo = ({ clubData }) => {
         {clubData.applications[0].statuses.id > 7 ? (
           <>
             <Bold>Licencja ważna na sezon/y:</Bold>{" "}
-            {clubData.applications[0].seasons}{" "}
+            {createSeasons(clubData.applications[0].seasons)}{" "}
           </>
         ) : null}
       </div>

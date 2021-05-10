@@ -87,10 +87,12 @@ const ClubApplication = ({
     stepSeven: improvements.seven ? error_message : "",
   });
 
+  console.log("sezony", clubData.applications[0].seasons);
+
   const [formData, setFormData] = useState({
     stepOne: {
       leauge: clubData.leauge?.toLowerCase() || "brak",
-      seasons: "1",
+      seasons: clubData.applications[0].seasons || "1",
       clubName: clubData.name || "",
       clubCity: city || "",
       clubZipCode: zipCode || "",
