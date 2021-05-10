@@ -260,9 +260,26 @@ const Home = ({ clubData, authData, settings }) => {
                   margin: "15px 0",
                 }}
               >
-                {renderMainAmount(clubData.leauge, settings,clubData.seasons) +
-                  parseFloat(renderAmount(clubData.leauge, settings))}
-                PLN
+                {clubData.applications[0].youth_groups_possession ===
+                  "nie posiadamy zespołów" ||
+                clubData.applications[0].youth_groups_possession ===
+                  "wystepujemy w rozgrywkach klasy A" ? (
+                  <p>
+                    {" "}
+                    {renderMainAmount(
+                      clubData.leauge,
+                      settings,
+                      clubData.applications[0].seasons
+                    ) + parseFloat(renderAmount(clubData.leauge, settings))}
+                  </p>
+                ) : (
+                  renderMainAmount(
+                    clubData.leauge,
+                    settings,
+                    clubData.applications[0].seasons
+                  )
+                )}
+                &nbsp;PLN
               </p>
               {clubData.applications[0].youth_groups_possession ===
               "nie posiadamy zespołów" ? (
@@ -282,7 +299,12 @@ const Home = ({ clubData, authData, settings }) => {
               >
                 Opłata licencyjna:{" "}
                 <span style={{ fontWeight: "bold" }}>
-                  {renderMainAmount(clubData.leauge, settings)} PLN
+                  {renderMainAmount(
+                    clubData.leauge,
+                    settings,
+                    clubData.applications[0].seasons
+                  )}{" "}
+                  PLN
                 </span>
               </p>
               <PaymentLink
