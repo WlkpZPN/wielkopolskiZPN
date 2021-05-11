@@ -165,7 +165,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           >
             Rozpoczęcie wniosku licencyjnego{" "}
             <Input
-              disabled={userData.role !== "administrator"}
+              disabled={userData?.role !== "administrator"}
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               type="date"
@@ -175,7 +175,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           <Label style={{ width: "250px", fontSize: "14px" }}>
             zakończenie wniosku licencyjnego{" "}
             <Input
-              disabled={userData.role !== "administrator"}
+              disabled={userData?.role !== "administrator"}
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
@@ -183,7 +183,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
             />
           </Label>
         </div>
-        {userData.role === "administrator" && (
+        {userData?.role === "administrator" && (
           <LockButton locked={settings.locked_sending} />
         )}
 
@@ -200,7 +200,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       <Header>Opłaty składane przez kluby</Header>
       <Fieldset
         style={{ margin: 0, padding: 0 }}
-        disabled={userData.role !== "administrator"}
+        disabled={userData?.role !== "administrator"}
       >
         <form
           onSubmit={setAmounts}
