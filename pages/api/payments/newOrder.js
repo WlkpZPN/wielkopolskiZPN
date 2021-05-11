@@ -31,7 +31,7 @@ export default (req, res) => {
         ip = req.connection.remoteAddress;
       }
       // CREATE NEW ORDER
-
+      console.log("amount", amount * 100);
       const newOrder = await axios({
         maxRedirects: 0,
         method: "POST",
