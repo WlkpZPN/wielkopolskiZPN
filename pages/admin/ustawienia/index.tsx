@@ -52,7 +52,8 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
     parseFloat(settings.v_possession_fee).toFixed(2)
   );
   const [error, setError] = useState("");
-
+  console.log(settings);
+  console.log(vFee, abFee, youngFee, primaryAmount);
   const setAmounts = async (e) => {
     e.preventDefault();
 
