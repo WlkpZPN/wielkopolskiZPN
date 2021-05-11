@@ -275,19 +275,21 @@ const Application = ({ clubData, authData, settings }) => {
     //TO DO: api route for generate paynament link
     const amount =
       clubData.applications[0].youth_groups_possession ===
-      "nie posiadamy zespołów"
+        "nie posiadamy zespołów" ||
+      clubData.applications[0].youth_groups_possession ===
+        "wystepujemy w rozgrywkach klasy A"
         ? renderMainAmount(
             clubData.leauge,
             settings,
             clubData.applications[0].seasons
-          ) + parseFloat(renderAmount(clubData.leauge, settings))
+          ) + renderAmount(clubData.leauge, settings)
         : renderMainAmount(
             clubData.leauge,
             settings,
             clubData.applications[0].seasons
           );
     //console.log(clubData.applications[0].seasons);
-    //console.log("amount", amount);
+    console.log("amount", amount);
 
     try {
       const newOrder = await axios.post("/api/payments/newOrder", {

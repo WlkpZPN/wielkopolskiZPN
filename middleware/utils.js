@@ -85,12 +85,12 @@ export const getCurrentDate = () => {
       minimumIntegerDigits: 2,
       useGrouping: false,
     }
-  )}/${newDate.getFullYear()}, ${
-    newDate.getHours() + 2
-  }:${newDate.getMinutes().toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}`;
+  )}/${newDate.getFullYear()}, ${newDate.getHours() + 2}:${newDate
+    .getMinutes()
+    .toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    })}`;
 
   return date;
 };
@@ -234,7 +234,8 @@ export const renderAmount = (leauge, settings) => {
     default:
       break;
   }
-  return amount;
+  console.log("extra amount", amount);
+  return parseFloat(amount);
 };
 
 export const createSeasons = (amount) => {
@@ -341,10 +342,11 @@ export const renderMainAmount = (leauge, settings, seasons) => {
     default:
       amount = settings.young_application_fee;
   }
-
-  if (seasons === "1") {
+  console.log("main amount", amount);
+  console.log(seasons);
+  if (seasons === "1" || seasons.match(/\//g)?.length === 1) {
     return parseFloat(amount);
-  } else if (seasons === "2") {
+  } else if (seasons === "2" || seasons.match(/\//g)?.length === 2) {
     return parseFloat(amount * 2);
   }
 };

@@ -270,7 +270,7 @@ const Home = ({ clubData, authData, settings }) => {
                       clubData.leauge,
                       settings,
                       clubData.applications[0].seasons
-                    ) + parseFloat(renderAmount(clubData.leauge, settings))}
+                    ) + renderAmount(clubData.leauge, settings)}
                   </p>
                 ) : (
                   renderMainAmount(
