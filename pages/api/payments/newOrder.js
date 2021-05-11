@@ -63,7 +63,7 @@ export default (req, res) => {
             {
               name: "Wniosek licencyjny",
               unitPrice: "1000",
-              quantity: amount,
+              quantity: 1,
             },
           ],
         },
