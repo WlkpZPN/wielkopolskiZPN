@@ -86,7 +86,7 @@ const RemindAdminPasswordModal = ({ visible, setVisible }) => {
     }
     setLoading(true);
     try {
-      await axios.post("/api/clubAuth/remindAdminPassword", {
+      await axios.post("/api/auth/remindAdminPassword", {
         userEmail: email,
       });
       setLoading(false);
