@@ -2,9 +2,11 @@ import prisma from "../../../middleware/prisma";
 import transporter from "../../../middleware/transporter";
 export default (req, res) => {
   return new Promise(async (resolve) => {
+    const { reason, club } = req.body;
     transporter.sendMail({
       from: "licklub@wielkopolskizpn.pl",
       to: "licklub@wielkopolskizpn.pl",
+
       subject: "WielkopolskiZPN - uwagi do faktury",
       html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -28,20 +30,17 @@ export default (req, res) => {
       </tr>
       <tr style="padding: 0">
         <td style="margin: 0; padding: 16px 48px; background-color: #0156a6">
-          <h1 style="font-weight:bold; margin: 0; padding: 0; color: white">Opłać swój wniosek licencyjny</h1>
+          <h1 style="font-weight:bold; margin: 0; padding: 0; color: white; font-size:21px">Klub  ${club.name} zgłosił uwagi do faktury</h1>
         </td>
       </tr>
       <tr>
         <td style="padding: 32px 48px">
         <p style='max-width:400px; color:rgba(0,0,0,0.8); font-weight:bold;'>
 
-        Twój wniosek został zaakceptowany. 
-Prosimy o dokonanie płatności klikając w poniższy link.
-        </>
-          <a href="${link}" style="margin-top:24px; background-image:url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');background-repeat:no-repeat;
-          background-size:contain;display:block;height:40px;margin-bottom:24px;
-          " >&nbsp;</a>
-          Po zweryfikowaniu płatności wyślemy e-mail z decyzją Wielkopolskiego Związku Piłki Nożnej. Status swojego wniosku możesz również sprawdzić korzystając z Platformy Licencyjnej.
+       Nieprawidłowości zgłoszone przez klub:<br/>
+      <span style="font-weight:normal"> ${reason} </span>  
+      
+         
           </p>
         </td>
       </tr>
@@ -59,7 +58,7 @@ Prosimy o dokonanie płatności klikając w poniższy link.
       <tr>
         <td style="
             padding: 32px 48px;
-            display: flex;
+           
             flex-direction: column;
             width: 50%;
           ">
@@ -93,6 +92,7 @@ Prosimy o dokonanie płatności klikając w poniższy link.
       //   content: "testowa wiadomosc",
       // },
     });
+    res.send("Nieprawidłowości zgłoszone");
     return resolve();
   });
 };

@@ -4,6 +4,8 @@ import axios from "axios";
 import Loader from "../atoms/loader";
 import PrimaryButton from "../atoms/primary_button";
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
+import { toast } from "react-toastify";
+import ErrorMessage from "../atoms/error_message";
 
 const Close = styled(CloseOutline)`
   width: 32px;
@@ -53,14 +55,54 @@ const TextArea = styled.textarea`
   font-family: inherit;
   padding: 4px;
 `;
-const SendAbnormalitites = ({ visible, setVisible }) => {
+const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
   const [text, setText] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   console.log(visible);
 
   const handleClose = (e) => {
     if (e.target === e.currentTarget) {
       setVisible(false);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (text.trim() === "") {
+      setError(
+        "Aby wysłać nieprawidłowości należy opsiać je poniżej w polu tekstowym"
+      );
+      return;
+    }
+    try {
+      setLoading(true);
+      await axios.post("/api/applications/sendAbnormalities", {
+        reason: text,
+        club: {
+          name: clubData.name,
+          email: clubData.email,
+        },
+      });
+      setLoading(false);
+      toast.info("Nieprawidłowości zgłoszone", {
+        autoClose: 2000,
+      });
+      setText("");
+      setVisible(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error(
+        "Nie udało się zgłosić nieprawidłowości,spróbuj ponownie za chwilę"
+      );
+    }
+  };
+
+  const handleChange = (e) => {
+    setError("");
+    setText(e.target.value);
   };
   return (
     <Background onClick={handleClose} visible={visible}>
@@ -69,16 +111,23 @@ const SendAbnormalitites = ({ visible, setVisible }) => {
         <h3 style={{ marginBottom: "32px" }}>
           Zgłoś nieprawidłowości w fakturze
         </h3>
+        {error ? <ErrorMessage>{error}</ErrorMessage> : null}
         <TextArea
+          placeholder="Opisz nieprawidłowości jakie wystąpiły w Twojej fakturze"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleChange}
         ></TextArea>
-        <PrimaryButton
-          type="button"
-          style={{ marginTop: "24px", width: "130px" }}
-        >
-          Wyślij
-        </PrimaryButton>
+        {loading ? (
+          <Loader />
+        ) : (
+          <PrimaryButton
+            type="button"
+            style={{ marginTop: "24px", width: "130px" }}
+            onClick={handleSubmit}
+          >
+            Wyślij
+          </PrimaryButton>
+        )}
       </Content>
     </Background>
   );

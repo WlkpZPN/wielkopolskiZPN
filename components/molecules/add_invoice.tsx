@@ -245,7 +245,11 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
             >
               Zgłoś nieprawidłowości
             </PrimaryButton>
-            <SendAbnormalitites visible={visible} setVisible={setVisible} />
+            <SendAbnormalitites
+              clubData={clubData}
+              visible={visible}
+              setVisible={setVisible}
+            />
           </>
         );
       } else {
