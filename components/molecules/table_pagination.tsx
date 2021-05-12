@@ -31,6 +31,7 @@ const PageNumber = styled.span`
   cursor: pointer;
 `;
 const TablePagination = ({ pages, setPage, currentPage }) => {
+  console.log(pages);
   const handleNextPage = () => {
     if (currentPage < pages - 1) {
       setPage(currentPage + 1);
@@ -44,7 +45,7 @@ const TablePagination = ({ pages, setPage, currentPage }) => {
   };
   const generatePages = () => {
     let helperArr = [];
-    for (let i = 0; i < pages; i++) {
+    for (let i = 0; i < pages - 1; i++) {
       helperArr.push(
         <PageNumber
           key={i}
@@ -68,6 +69,9 @@ const TablePagination = ({ pages, setPage, currentPage }) => {
     <Wrapper>
       <NavigatePrevious onClick={handlePreviousPage} />
       {generatePages()}
+      {/* <PageNumber onClick={() => setPage(pages)} active={currentPage === pages}>
+        {pages}
+      </PageNumber> */}
       <NavigateNext onClick={handleNextPage} />
     </Wrapper>
   );

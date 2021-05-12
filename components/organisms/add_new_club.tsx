@@ -502,6 +502,9 @@ const AddNewClub = () => {
         },
       })
       .then(() => {
+        axios.post("/api/helpers/sendSinglePassword", {
+          clubEmail: email,
+        });
         setLoading(false);
         toast.success("Utworzono nowy klub");
       })

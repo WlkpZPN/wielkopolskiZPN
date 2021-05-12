@@ -1,6 +1,7 @@
 import prisma from "../../../middleware/prisma";
 import { getInternalId } from "../../../middleware/utils";
 import axios from "axios";
+import generator from "generate-password";
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { data } = req.body;
@@ -16,6 +17,10 @@ export default (req, res) => {
       },
       data: {
         internal_id: getInternalId(club.id, false),
+        password: generator.generate({
+          length: 8,
+          numbers: true,
+        }),
       },
     });
 
