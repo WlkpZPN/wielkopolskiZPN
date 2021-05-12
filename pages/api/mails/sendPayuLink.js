@@ -27,7 +27,6 @@ export default (req, res) => {
     <table style="
         width: min-content;
         margin: 16px auto;
-
         max-width: 650px;
         width: 100%;
       ">
@@ -51,22 +50,12 @@ Prosimy o dokonanie płatności klikając w poniższy link.
         </>
           <a href="${link}" style="margin-top:24px; background-image:url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');background-repeat:no-repeat;
           background-size:contain;display:block;height:40px;margin-bottom:24px;
-          " >&nbsp;</a>
+          " ></a>
           Po zweryfikowaniu płatności wyślemy e-mail z decyzją Wielkopolskiego Związku Piłki Nożnej. Status swojego wniosku możesz również sprawdzić korzystając z Platformy Licencyjnej.
           </p>
         </td>
       </tr>
-      <tr>
-        <td style="padding: 24px 48px">
-          <a style="
-              
-              text-decoration: none;
-              color: #1296D8;
-              font-weight: bold;
-             
-            " href='wielkopolski-zpn-wielkopolskizpn.vercel.app'>Platforma Licencyjna</a>
-        </td>
-      </tr>
+     
       <tr>
         <td style="
             padding: 32px 48px;
@@ -108,3 +97,20 @@ Prosimy o dokonanie płatności klikając w poniższy link.
     return resolve();
   });
 };
+
+//  <tr>
+//    <td style="padding: 24px 48px">
+//      <a
+//        style="
+
+//               text-decoration: none;
+//               color: #1296D8;
+//               font-weight: bold;
+
+//             "
+//        href="wielkopolski-zpn-wielkopolskizpn.vercel.app"
+//      >
+//        Platforma Licencyjna
+//      </a>
+//    </td>
+//  </tr>;
