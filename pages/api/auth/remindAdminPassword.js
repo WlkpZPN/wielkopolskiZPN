@@ -23,6 +23,7 @@ export default (req, res) => {
         length: 8,
         numbers: true,
       });
+      let securedPassword = "";
       bcrypt.hash(pass, saltRounds).then(async (hash) => {
         securedPassword = hash;
         await prisma.users.updateMany({
@@ -37,7 +38,7 @@ export default (req, res) => {
 
       await transporter.sendMail({
         from: "licklub@wielkopolskizpn.pl",
-        to: clubData[0].email,
+        to: userData[0].email,
         subject: "WielkopolskiZPN - przypomnienie hasła",
         html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -100,7 +101,7 @@ export default (req, res) => {
         <td
           style="
             padding: 32px 48px;
-            display: flex;
+            
             flex-direction: column;
             width: 50%;
           "

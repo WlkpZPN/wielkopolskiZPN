@@ -84,7 +84,7 @@ export default (req, res) => {
         <td
           style="
             padding: 32px 48px;
-            display: flex;
+           
             flex-direction: column;
             width: 50%;
           "
