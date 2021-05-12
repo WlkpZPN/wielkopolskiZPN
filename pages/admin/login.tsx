@@ -167,7 +167,9 @@ const LoginPage = ({ userData }) => {
                 setPassword(e.target.value);
               }}
             />
-            <ForgetPassword>Przypomnij hasło</ForgetPassword>
+            <ForgetPassword onClick={() => setVisible(true)}>
+              Przypomnij hasło
+            </ForgetPassword>
             <PrimaryButton
               type="submit"
               onClick={submitLogin}
