@@ -1,23 +1,39 @@
 import bcrypt from "bcrypt";
 import prisma from "../../../middleware/prisma";
 import transporter from "../../../middleware/transporter";
+import generator from "generate-password";
 const saltRounds = 10;
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { clubEmail } = req.body;
+    const { userEmail } = req.body;
     try {
-      const clubData = await prisma.clubs.findMany({
+      const userData = await prisma.users.findMany({
         where: {
-          email: clubEmail,
+          email: userEmail,
         },
       });
-      console.log(clubData);
 
-      if (!clubData) {
+      if (!userData) {
         res.status(400).send("Klub z podanym mailem nie istnieje");
         return resolve();
       }
+
+      const pass = generator.generate({
+        length: 8,
+        numbers: true,
+      });
+      bcrypt.hash(pass, saltRounds).then(async (hash) => {
+        securedPassword = hash;
+        await prisma.users.updateMany({
+          where: {
+            email: userEmail,
+          },
+          data: {
+            password: securedPassword,
+          },
+        });
+      });
 
       await transporter.sendMail({
         from: "licklub@wielkopolskizpn.pl",
@@ -59,10 +75,10 @@ export default (req, res) => {
       </tr>
       <tr>
         <td style="padding: 32px 48px">
-          Poniżej znajduje się twoje hasło do Platformy Licencyjnej Wielkopolskiego Związku Piłki Nożnej. 
+          Poniżej znajduje się twoje nowe hasło do Platformy Licencyjnej Wielkopolskiego Związku Piłki Nożnej. 
           Aby się zalogować wprowadź swój adres e-mail,
            na który otrzymałeś tą wiadomość oraz wprowadź hasło znajdujące się poniżej:
-          <p><span style="font-weight: bold">hasło:</span> ${clubData[0].password}</p>
+          <p><span style="font-weight: bold">hasło:</span> ${pass}</p>
         </td>
       </tr>
       <tr>
@@ -75,7 +91,7 @@ export default (req, res) => {
               font-weight: bold;
              
             "
-            href="https://licencje.wielkopolskizpn.pl/login"
+            href="https://licencje.wielkopolskizpn.pl/admin"
             >Platforma Licencyjna</a
           >
         </td>

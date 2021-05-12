@@ -12,6 +12,7 @@ import LoggedUserInfo from "../../components/molecules/loggedUserInfo";
 import PrimaryButton from "../../components/atoms/primary_button";
 import Loader from "../../components/atoms/loader";
 import BigLogo from "../../components/atoms/big_logo";
+import RemindAdminPasswordModal from "../../components/molecules/remind_admin_password";
 //helpers
 
 import { validateEmail } from "../../middleware/validation";
@@ -89,7 +90,7 @@ const LoginPage = ({ userData }) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-
+  const [visible, setVisible] = useState(false);
   const submitLogin = async (e) => {
     e.preventDefault();
 
@@ -127,6 +128,7 @@ const LoginPage = ({ userData }) => {
   };
   return (
     <Wrapper>
+      <RemindAdminPasswordModal visible={visible} setVisible={setVisible} />
       <Left>
         <Image
           src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
