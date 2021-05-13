@@ -59,7 +59,7 @@ Prosimy o dokonanie płatności klikając w poniższy link.
       <tr>
         <td style="
             padding: 32px 48px;
-            display: flex;
+           
             flex-direction: column;
             width: 50%;
           ">
@@ -77,8 +77,8 @@ Prosimy o dokonanie płatności klikając w poniższy link.
             style="color: #0156a6; text-decoration: none"
             href="https://wielkopolskizpn.pl/"
             target="_blank"
-            >www.wielkopolskizpn.pl</a
-          >
+            >www.wielkopolskizpn.pl
+            </a>
           <p style="margin: 4px 0">+ 61 679 48 30</p>
         </td>
       </tr>

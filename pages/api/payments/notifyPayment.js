@@ -14,7 +14,7 @@ export default (req, res) => {
   return new Promise(async (resolve) => {
     const newStatus = req.body.order.status;
     const paymentID = req.body.order.extOrderId;
-    const email = req.body.order.buyer.email;
+    const email = req.body.order?.buyer.email;
     console.log("NOTIFY ROUTE FIRED");
     console.log(req.body);
 
@@ -40,12 +40,12 @@ export default (req, res) => {
           status_id: 7,
         },
       });
-
-      transporter.sendMail({
-        from: "licklub@wielkopolskizpn.pl",
-        to: email,
-        subject: "WielkopolskiZPN - opłata za złożenie wniosku",
-        html: `<head>
+      if (email) {
+        transporter.sendMail({
+          from: "licklub@wielkopolskizpn.pl",
+          to: email,
+          subject: "WielkopolskiZPN - opłata za złożenie wniosku",
+          html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
@@ -126,7 +126,8 @@ export default (req, res) => {
     </table>
   </main>
 </body>`,
-      });
+        });
+      }
     }
 
     res.status(200);
