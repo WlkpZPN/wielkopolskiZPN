@@ -17,7 +17,7 @@ import AddUserForm from "../../../components/molecules/addUserForm";
 const User = ({ roles, userData, authData }) => {
   const router = useRouter();
   const { user } = router.query;
-
+  console.log("user data", userData);
   return (
     <AdminLayout userData={userData} view="uzytkownicy">
       {" "}

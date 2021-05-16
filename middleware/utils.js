@@ -350,3 +350,7 @@ export const renderMainAmount = (leauge, settings, seasons) => {
     return parseFloat(amount * 2);
   }
 };
+
+export const filterArr = (el) => {
+  return el != "" && el != " ";
+};

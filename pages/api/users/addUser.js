@@ -19,9 +19,8 @@ export default (req, res) => {
         },
       });
       res.send("user added");
+      return resolve();
     });
-
-    return resolve();
   });
 };
 

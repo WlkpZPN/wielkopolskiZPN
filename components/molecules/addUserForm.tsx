@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 //components
+import { filterArr } from "../../middleware/utils";
 import { validateEmail } from "../../middleware/validation";
 import FormTemplate from "../atoms/form_template";
 import Label from "../atoms/form_label";
@@ -21,14 +22,14 @@ const AddUserForm = ({
   setVisible,
   refreshData,
 }) => {
-  console.log(userData);
+  console.log(userData.name.trim().split(" ").filter(filterArr));
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState(
-    userData ? userData.name.split(" ")[0] : ""
+    userData ? userData.name.split(" ").filter(filterArr)[0] : ""
   );
   const [lastName, setLastName] = useState(
-    userData ? userData.name.split(" ")[1] : ""
+    userData ? userData.name.split(" ").filter(filterArr)[1] : ""
   );
   const [role, setRole] = useState(userData ? userData.roles.id : roles[0].id);
   const [email, setEmail] = useState(userData ? userData.email : "");
