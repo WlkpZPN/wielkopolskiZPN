@@ -9,17 +9,18 @@ const Row = styled.div`
   display: grid;
   grid-gap: 12px;
   grid-template-columns: ${({ cols }) => `repeat(${cols},260px)`};
-  /* overflow-x: auto; */
-  width: 70vw;
+  overflow-x: auto;
+  max-width: 60vw;
 `;
 //TO DO SIDE SCROLLING WITH VISIBLE TOOL TIP
 
 const AddFilesWrapper = ({ text = null, category, id }) => {
   const [boxes, setBoxes] = useState([]);
   const context = useContext(ApplicationContext);
-  const fileData = context.clubData.applications[0].applications_attachments.filter(
-    (file) => file.category === category
-  );
+  const fileData =
+    context.clubData.applications[0].applications_attachments.filter(
+      (file) => file.category === category
+    );
 
   const generateBoxes = () => {
     const arr = [];

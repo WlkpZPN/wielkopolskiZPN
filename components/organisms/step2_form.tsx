@@ -1,17 +1,13 @@
 import { useState, useContext } from "react";
-import styled from "styled-components";
+
 import { ApplicationContext } from "./club_application";
 import FormTemplate from "../atoms/form_template";
-import Select from "../atoms/form_select";
-import Label from "../atoms/form_label";
-import RadioContainer from "../atoms/radio_container";
-import Input from "../atoms/input";
-import FormRow from "../atoms/form_row";
+
 import PrimaryButton from "../atoms/primary_button";
-import RadioSquare from "../molecules/form_radio";
+
 import Paragraph from "../atoms/paragraph";
 import AddFilesWrapper from "./add_files_wrapper";
-import OutlineButton from "../atoms/outline_button";
+
 import FormStatement from "../molecules/form_statement";
 import Fieldset from "../atoms/fieldset";
 import ErrorMessage from "../atoms/error_message";

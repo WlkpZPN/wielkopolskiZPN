@@ -16,7 +16,7 @@ const NavigatePrevious = styled(NavigateNext)`
 
 const PageNumber = styled.span`
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   margin: 0 4px;
   width: 25px;
   height: 25px;
@@ -69,10 +69,7 @@ const TablePagination = ({ pages, setPage, currentPage }) => {
     <Wrapper>
       <NavigatePrevious onClick={handlePreviousPage} />
       {generatePages()}
-      {/* <PageNumber onClick={() => setPage(pages)} active={currentPage === pages}>
-        {pages}
-      </PageNumber> */}
-      <NavigateNext onClick={handleNextPage} />
+      <NavigateNext onClick={handleNextPage} />( {pages} stron)
     </Wrapper>
   );
 };
