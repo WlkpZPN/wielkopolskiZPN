@@ -40,7 +40,9 @@ const Application = ({ clubData, authData, settings }) => {
   //     </AdminLayout>
   //   );
   // }
-  const handleFileDelete = () => {};
+  const refreshState = () => {
+    router.replace(router.asPath);
+  };
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {
       case 6:
@@ -90,6 +92,7 @@ const Application = ({ clubData, authData, settings }) => {
                 reason=""
                 description="Wydano licencje standardową"
                 internalID={clubData.applications[0].internal_id}
+                refreshState={refreshState}
               />
               <LicenseDecision
                 authData={authData}
@@ -100,6 +103,7 @@ const Application = ({ clubData, authData, settings }) => {
                 reason=""
                 description="Wydano licencje z nadzorem"
                 internalID={clubData.applications[0].internal_id}
+                refreshState={refreshState}
               />
               <LicenseDecision
                 authData={authData}
@@ -110,6 +114,7 @@ const Application = ({ clubData, authData, settings }) => {
                 reason=""
                 description="Odmowa wydania licencji"
                 internalID={clubData.applications[0].internal_id}
+                refreshState={refreshState}
               />
             </div>
           </>
@@ -127,6 +132,7 @@ const Application = ({ clubData, authData, settings }) => {
               reason=""
               description="Licencja niewydana"
               internalID={clubData.applications[0].internal_id}
+              refreshState={refreshState}
             />{" "}
           </>
         );

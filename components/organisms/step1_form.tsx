@@ -147,14 +147,16 @@ const StepOneForm = ({
                 ></Input>
               </Label>
             </FormRow>
-            {/* <Label>
-              Adres e-mail klubu
-              <Input
-                value={data.email}
-                onChange={(e) => handleChange(e.target.value, "email", 1)}
-                type="text"
-              ></Input>
-            </Label> */}
+            {!show_buttons && (
+              <Label>
+                Adres e-mail klubu
+                <Input
+                  value={data.email}
+                  onChange={(e) => handleChange(e.target.value, "email", 1)}
+                  type="text"
+                ></Input>
+              </Label>
+            )}
 
             <h2 style={{ marginTop: "24px" }}>Dane pełnomocnika</h2>
 

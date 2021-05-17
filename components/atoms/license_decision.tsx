@@ -39,6 +39,7 @@ const LicenseDecision = ({
   description,
   clubData,
   authData,
+  refreshState,
 }) => {
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
@@ -48,7 +49,7 @@ const LicenseDecision = ({
   const IssueLicense = async () => {
     setLoading(true);
     try {
-      axios.post("/api/licences/setLicense", {
+      await axios.post("/api/licences/setLicense", {
         applicationID,
         statusID,
         reason: reason || "",
@@ -57,20 +58,18 @@ const LicenseDecision = ({
       });
       if (statusID === 8 || statusID === 10) {
         //3. send email and generate license as attachment
-        axios.post("/api/mails/sendLicense", {
+        await axios.post("/api/mails/sendLicense", {
           clubData: clubData,
         });
       }
+      setLoading(false);
+      refreshState();
+      toast.success("Licencja wydana pomyślnie");
     } catch (err) {
       console.log(err);
       setLoading(false);
       toast.error("Coś poszło nie tak,proszę spróbować później");
     }
-
-    setLoading(false);
-    router.replace(router.asPath);
-
-    toast.success("Licencja wydana pomyślnie");
   };
 
   const renderIcon = () => {
