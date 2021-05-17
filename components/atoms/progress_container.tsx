@@ -52,8 +52,8 @@ const ProgressContainer = ({ status, style }) => {
     <Progress
       style={style}
       visible={data.percent > 0 ? true : false}
-      number={data.allApplications}
-      progress={data.percent}
+      number={Math.round(data.allApplications)}
+      progress={Math.round(data.percent)}
     />
   );
 };
