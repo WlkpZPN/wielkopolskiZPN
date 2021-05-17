@@ -32,7 +32,6 @@ export default (req, res) => {
       return resolve();
     }
 
-     TO DO: password check
     if (club.password.trim() !== password.trim()) {
       res.status(400);
       res.json({
