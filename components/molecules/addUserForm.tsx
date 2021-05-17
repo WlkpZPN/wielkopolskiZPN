@@ -22,7 +22,6 @@ const AddUserForm = ({
   setVisible,
   refreshData,
 }) => {
-  console.log(userData.name.trim().split(" ").filter(filterArr));
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState(

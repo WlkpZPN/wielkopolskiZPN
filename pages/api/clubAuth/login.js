@@ -32,15 +32,15 @@ export default (req, res) => {
       return resolve();
     }
 
-    //  TO DO: password check
-    // if (club.password.trim() !== password.trim()) {
-    //   res.status(400);
-    //   res.json({
-    //     status: "error",
-    //     message: "Błedne hasło,spróbuj ponownie",
-    //   });
-    //   return resolve();
-    // }
+     TO DO: password check
+    if (club.password.trim() !== password.trim()) {
+      res.status(400);
+      res.json({
+        status: "error",
+        message: "Błedne hasło,spróbuj ponownie",
+      });
+      return resolve();
+    }
 
     const payload = {
       id: club.id,
