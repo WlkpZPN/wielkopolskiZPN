@@ -81,7 +81,7 @@ export default async (req, res) => {
 
     res.json({
       percent,
-      allApplications,
+      allApplications: applications,
     });
     return resolve();
 
