@@ -8,7 +8,7 @@ const Row = styled.div`
   padding-bottom: 16px;
   display: grid;
   grid-gap: 12px;
-  grid-template-columns: ${({ cols }) => `repeat(${cols},260px)`};
+  grid-template-columns: ${({ cols }) => `repeat(4,260px)`};
   overflow-x: auto;
   max-width: 60vw;
 `;
