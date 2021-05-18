@@ -281,9 +281,7 @@ const Application = ({ clubData, authData, settings }) => {
     //TO DO: api route for generate paynament link
     const amount =
       clubData.applications[0].youth_groups_possession ===
-        "nie posiadamy zespołów" ||
-      clubData.applications[0].youth_groups_possession ===
-        "wystepujemy w rozgrywkach klasy A"
+      "nie posiadamy zespołów"
         ? renderMainAmount(
             clubData.leauge,
             settings,

@@ -342,8 +342,7 @@ export const renderMainAmount = (leauge, settings, seasons) => {
     default:
       amount = settings.young_application_fee;
   }
-  console.log("main amount", amount);
-  console.log(seasons);
+
   if (seasons === "1" || seasons.match(/\//g)?.length === 1) {
     return parseFloat(amount);
   } else if (seasons === "2" || seasons.match(/\//g)?.length === 2) {

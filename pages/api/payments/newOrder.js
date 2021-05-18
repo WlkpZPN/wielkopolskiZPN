@@ -85,9 +85,9 @@ export default (req, res) => {
       });
       return resolve();
     } catch (err) {
-      console.log("błąd", err?.response?.data);
+      console.log("błąd", err?.response);
       res.status(400);
-      res.send(err.data);
+      res.json(err.data);
       return resolve();
     }
   });
