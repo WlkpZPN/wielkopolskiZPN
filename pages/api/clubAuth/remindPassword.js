@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import prisma from "../../../middleware/prisma";
 import transporter from "../../../middleware/transporter";
+import generator from "generate-password";
 const saltRounds = 10;
 
 export default (req, res) => {
@@ -17,6 +18,21 @@ export default (req, res) => {
       if (!clubData) {
         res.status(400).send("Klub z podanym mailem nie istnieje");
         return resolve();
+      }
+
+      if (!clubData[0].password) {
+        const password = generator.generate({
+          length: 8,
+          numbers: true,
+        });
+        await prisma.clubs.updateMany({
+          where: {
+            email: clubEmail,
+          },
+          data: {
+            password: password,
+          },
+        });
       }
 
       await transporter.sendMail({
@@ -62,7 +78,9 @@ export default (req, res) => {
           Poniżej znajduje się twoje hasło do Platformy Licencyjnej Wielkopolskiego Związku Piłki Nożnej. 
           Aby się zalogować wprowadź swój adres e-mail,
            na który otrzymałeś tą wiadomość oraz wprowadź hasło znajdujące się poniżej:
-          <p><span style="font-weight: bold">hasło:</span> ${clubData[0].password}</p>
+          <p><span style="font-weight: bold">hasło:</span> ${
+            clubData[0].password || password
+          }</p>
         </td>
       </tr>
       <tr>

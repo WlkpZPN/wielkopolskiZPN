@@ -290,7 +290,7 @@ export const checkMimeType = (event) => {
   // list allow mime type
   const types = ["image/png", "image/jpeg", "application/pdf"];
   // loop access array
-  if (files[0].size > 625000) {
+  if (files[0].size > 5000000) {
     return {
       valid: false,
       error:

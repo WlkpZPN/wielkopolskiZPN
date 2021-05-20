@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 export default async (req, res) => {
   return new Promise(async (resolve) => {
+    let promises = [];
     const clubs = await prisma.clubs.findMany({
       where: {
         password: {
@@ -13,34 +14,25 @@ export default async (req, res) => {
     });
 
     clubs.forEach(async (club, index) => {
-      await prisma.clubs.update({
-        where: {
-          id: club.id,
-        },
-        data: {
-          password: generator.generate({
-            length: 8,
-            numbers: true,
-          }),
-        },
-      });
-
-      // bcrypt
-      //   .hash(generator.generate({ length: 8, number: true }), saltRounds)
-      //   .then(async (hash) => {
-      //     securedPassword = hash;
-      //     await prisma.clubs.update({
-      //       where: {
-      //         id: club.id,
-      //       },
-      //       data: {
-      //         password: securedPassword,
-      //       },
-      //     });
-      //   });
+      promises.push(
+        prisma.clubs.update({
+          where: {
+            id: club.id,
+          },
+          data: {
+            password: generator.generate({
+              length: 8,
+              numbers: true,
+            }),
+          },
+        })
+      );
     });
 
-    res.send(clubs);
+    Promise.all(promises).then((res) => {
+      res.send(clubs);
+    });
+
     // res.send("passwords's generated");
     return resolve();
   });
