@@ -83,19 +83,17 @@ export const checkStepThree = (formData, leauge) => {
       if (!formData.numberOfYouthGroups || !formData.shareOfYouthGroups) {
         return {
           valid: false,
-          text:
-            "Proszę podać liczbę zespołów młodzieżowych oraz udział zawodników",
+          text: "Proszę podać liczbę zespołów młodzieżowych oraz udział zawodników",
         };
       } else if (
         isNaN(formData.numberOfYouthGroups) ||
         isNaN(formData.shareOfYouthGroups) ||
-        parseInt(formData.shareOfYouthGroups) === 0 ||
-        parseInt(formData.numberOfYouthGroups) === 0
+        parseInt(formData.shareOfYouthGroups) < 0 ||
+        parseInt(formData.numberOfYouthGroups) < 0
       ) {
         return {
           valid: false,
-          text:
-            "Proszę podać liczbę zespołów młodzieżowym oraz udział uczestników",
+          text: "Proszę podać liczbę zespołów młodzieżowym oraz udział uczestników",
         };
       }
 
@@ -210,8 +208,7 @@ export const validateObject = (data, leauge) => {
     return {
       valid: false,
       step: 1,
-      text:
-        "Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu",
+      text: "Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu",
     };
   }
   if (!data.I02_1 || !data.I02_2 || !data.I02_3 || !data.I02_4) {
@@ -251,8 +248,7 @@ export const validateObject = (data, leauge) => {
     return {
       valid: false,
       step: 6,
-      text:
-        "Proszę określić rodzaj i stan nawierzchni oraz zaznaczyć wszystkie pola",
+      text: "Proszę określić rodzaj i stan nawierzchni oraz zaznaczyć wszystkie pola",
     };
   }
   if (data.I06_type === "sztuczna" && (!data.I06_2 || !data.I06_3)) {
