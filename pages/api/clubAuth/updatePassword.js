@@ -25,6 +25,9 @@ export default (req, res) => {
             password: newPassword,
           },
         });
+
+        res.send("Password updated!");
+        return resolve();
       } else {
         // password is not ok, return message
 

@@ -13,6 +13,7 @@ import PrimaryButton from "../components/atoms/primary_button";
 import Input from "../components/atoms/input";
 import Label from "../components/atoms/form_label";
 import ErrorMessage from "../components/atoms/error_message";
+import Loader from "../components/atoms/loader";
 const Footer = styled.div`
   margin: 64px 0 32px 0;
 
@@ -63,6 +64,7 @@ const Pomoc = ({ authData, faq }) => {
   return (
     <ClientLayout clubData={authData} view="">
       <h1 style={{ margin: "32px 0" }}>Zmień hasło</h1>
+      {loading && <Loader />}
       <form
         onChange={() => setError("")}
         onSubmit={changePassword}
