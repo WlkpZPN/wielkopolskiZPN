@@ -146,6 +146,7 @@ const Home = ({ clubData, authData, settings }) => {
                 readOnly={false}
                 clubData={clubData}
                 settings={settings}
+                fileEdit={true}
               />
             </>
           );

@@ -24,6 +24,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     show_buttons,
     sendApplication,
     clubData,
+    fileEdit,
     setStep,
     completedSteps,
   } = context;
@@ -51,7 +52,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
       onChange={() => clearErrors("stepTwo")}
       onSubmit={handleSubmit}
     >
-      <Fieldset disabled={readOnly}>
+      <Fieldset disabled={!fileEdit}>
         <Paragraph>
           Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty
           potwierdzony za zgodność ze stanem faktycznym na dzień składania

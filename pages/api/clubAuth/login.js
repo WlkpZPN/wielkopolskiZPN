@@ -20,8 +20,8 @@ export default (req, res) => {
       },
     });
     const clubs = await prisma.clubs.findMany();
-    console.log("klub", club);
-    console.log("kluby", clubs);
+    // console.log("klub", club);
+    // console.log("kluby", clubs);
 
     if (!club) {
       res.status(400);

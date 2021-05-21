@@ -34,32 +34,10 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
   const context = useContext(ApplicationContext);
   const data = context.formData.stepFour.sport_facilities[objectIndex];
 
-  const {
-    handleObjectFileChange,
-    handleObjectFileDelete,
-    deleteFacility,
-  } = context;
-  // console.log(context);
-  //const objectFiles = useState(data.id ? data.applications_attachments : []);
+  const { handleObjectFileChange, handleObjectFileDelete, deleteFacility } =
+    context;
+
   const fileData = data.applications_attachments;
-  //console.log("fileData", context.formData.stepFour.sport_facilities);
-  //console.log(objectIndex);
-  // console.log(objectFiles);
-
-  // const getCategoryFiles = (category) => {
-  //   return objectFiles?.filter((file) => file.category === category);
-  // };
-
-  // const setFiles = (id, file, category) => {
-  //   handleObjectFileChange(id, file, file.name, category, objectIndex);
-  //   setState(!state);
-  // };
-
-  // const handleDelete = (index, id, category) => {
-  //   handleObjectFileDelete(index, id, category);
-  //   setState(!state);
-  // };
-  //console.log(data);
 
   useEffect(() => {
     setExtraField({
@@ -78,8 +56,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           ) {
             setExtraField({
               visible: true,
-              text:
-                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 100 m do 105 m, szerokość od 60 m do 68 m) ",
+              text: "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 100 m do 105 m, szerokość od 60 m do 68 m) ",
             });
           }
           break;
@@ -90,8 +67,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           ) {
             setExtraField({
               visible: true,
-              text:
-                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 100 m do 105 m, szerokość od 55 m do 68 m)",
+              text: "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 100 m do 105 m, szerokość od 55 m do 68 m)",
             });
           }
           break;
@@ -102,8 +78,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           ) {
             setExtraField({
               visible: true,
-              text:
-                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 95 m do 105 m, szerokość od 55m do 68 m)",
+              text: "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 95 m do 105 m, szerokość od 55m do 68 m)",
             });
           }
           break;
@@ -115,8 +90,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
           ) {
             setExtraField({
               visible: true,
-              text:
-                "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 90 m do 105 m, szerokość od 55m do 68 m)",
+              text: "Wymiary obiektu są niestandardowe i nie spełniają wymaganych kryterów (Wymagane kryteria to: długość od 90 m do 105 m, szerokość od 55m do 68 m)",
             });
           }
           break;
@@ -204,8 +178,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     if (extraField.visible && !data.is_invalid_field) {
       setError({
         step: 6,
-        text:
-          "Proszę potwierdzić posiadanie obiektu o wymiarach niespełniających wymagań",
+        text: "Proszę potwierdzić posiadanie obiektu o wymiarach niespełniających wymagań",
       });
       window.scrollTo(0, 2100);
       return;

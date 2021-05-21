@@ -31,13 +31,15 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     fileEdit,
   } = context;
   const [regulations, setRegulations] = useState(show_buttons ? false : true);
-  const stepTwoFiles = context.clubData.applications[0].applications_attachments.filter(
-    (file) => file.category === "krs_documents"
-  );
-  const stepThreeFiles = context.clubData.applications[0].applications_attachments.filter(
-    (file) => file.category === "agreement_documents"
-  );
-
+  const stepTwoFiles =
+    context.clubData.applications[0].applications_attachments.filter(
+      (file) => file.category === "krs_documents"
+    );
+  const stepThreeFiles =
+    context.clubData.applications[0].applications_attachments.filter(
+      (file) => file.category === "agreement_documents"
+    );
+  console.log("file edit", fileEdit);
   const isSuperVision = () => {
     if (stepTwoFiles.length === 0) {
       return true;
@@ -79,12 +81,15 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     const objects = formData.stepFour.sport_facilities;
 
     return objects.map((facility, index) => {
-      if (facility.I01_1 || facility.I17_1) {
+      if (!facility.I01_1 || facility.I17_1) {
         return (
           <ObjectName
             style={{ marginLeft: "-10px" }}
-            onClick={() => setCurrentObject(index)}
-            key={index}
+            onClick={() => {
+              console.log("click happend");
+              setCurrentObject(index);
+            }}
+            key={facility.id}
             saved={true}
             active={index === currentObject}
           >
@@ -179,10 +184,10 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           </>
         ) : null}
         {formData.stepFour.sport_facilities.length === 0 ? null : (
-          <Fieldset disabled={!fileEdit}>
+          <>
             {renderFacilityNames()}
-            {renderFacilityFiles()}
-          </Fieldset>
+            <Fieldset disabled={!fileEdit}>{renderFacilityFiles()}</Fieldset>
+          </>
         )}
         {isSuperVision() ? (
           <ErrorMessage>

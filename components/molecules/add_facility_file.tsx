@@ -150,7 +150,7 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  console.log(error);
+  //console.log(error);
   const handleChange = async (e) => {
     e.preventDefault();
     const result = checkMimeType(e);

@@ -87,7 +87,7 @@ const ClubApplication = ({
     stepSeven: improvements.seven ? error_message : "",
   });
 
-  console.log("sezony", clubData.applications[0].seasons);
+  //console.log("sezony", clubData.applications[0].seasons);
 
   const [formData, setFormData] = useState({
     stepOne: {
@@ -263,25 +263,77 @@ const ClubApplication = ({
         address: "",
         post_code: "",
         city: "",
+        I01_1: false,
+        I01_2: false,
+        I02_1: false,
+        I02_2: false,
+        I02_3: false,
+        I02_4: false,
         I03_total_capacity: "0",
+        I03_1: false,
+        I03_2: false,
+        I04_1: false,
+        I04_2: false,
+        I04_3: false,
+        I04_4: false,
+        I04_5: false,
         I05_number_of_seats_for_guests: "0",
         I05_percentage_of_seats_for_guests: "0",
+        I05_1: false,
+        I05_2: false,
+        I05_3: false,
         I06_type: "naturalna",
         I06_condition: "dobry",
+        I06_1: false,
+        I06_2: false,
+        I06_3: false,
+        I06_4: false,
+        I06_5: false,
         I06_width: "",
         I06_length: "",
+        I07_1: false,
+        I07_2: false,
+        I07_3: false,
+        I07_4: false,
         I08_number_of_seats_on_the_bench: "0",
+        I08_1: false,
+        I08_2: false,
+        I08_3: false,
+        I08_4: false,
+        I09_1: false,
+        I09_2: false,
+        I10_1: false,
         I11_number_of_seats: "0",
         I11_number_of_hangers_or_lockers: "0",
         I11_number_of_showers: "0",
         I11_number_of_toilets: "0",
+        I11_1: false,
+        I11_2: false,
         I12_number_of_seats: "0",
         I12_number_of_hangers_or_lockers: "0",
         I12_number_of_showers: "0",
         I12_number_of_toilets: "0",
+        I12_1: false,
+        I12_2: false,
+        I13_1: false,
+        I13_2: false,
+        I13_3: false,
+        I13_4: false,
+        I13_5: false,
+        I14_1: false,
+        I14_2: false,
+        I14_3: false,
         I15_number_of_toilets_for_women: "0",
         I15_number_of_toilets_for_men: "0",
         I15_standard: "Odpowiedni",
+        I15_1: false,
+        I16_1: false,
+        I17_1: false,
+        I18_1: false,
+        I19_1: false,
+        I19_2: false,
+        I19_3: false,
+        I20_1: false,
         I21_3_1_gates: "",
         I21_3_15_gates: "",
         I21_3_2_gates: "",
@@ -335,15 +387,15 @@ const ClubApplication = ({
 
     switch (category) {
       case "krs_documents":
-        newFormData.stepTwo.krs_documents = newFormData.stepTwo.krs_documents.filter(
-          (file) => file.id !== id
-        );
+        newFormData.stepTwo.krs_documents =
+          newFormData.stepTwo.krs_documents.filter((file) => file.id !== id);
 
         break;
       case "agreement_documents":
-        newFormData.stepThree.agreement_documents = newFormData.stepThree.agreement_documents.filter(
-          (file) => file.id !== id
-        );
+        newFormData.stepThree.agreement_documents =
+          newFormData.stepThree.agreement_documents.filter(
+            (file) => file.id !== id
+          );
         break;
     }
 
@@ -368,11 +420,10 @@ const ClubApplication = ({
   const handleObjectFileDelete = (index, fileId, category) => {
     let newFileData = formData;
 
-    newFileData.stepFour.sport_facilities[
-      index
-    ].applications_attachments = newFileData.stepFour.sport_facilities[
-      index
-    ].applications_attachments.filter((file) => file.id !== fileId);
+    newFileData.stepFour.sport_facilities[index].applications_attachments =
+      newFileData.stepFour.sport_facilities[
+        index
+      ].applications_attachments.filter((file) => file.id !== fileId);
 
     setFormData(newFileData);
   };
