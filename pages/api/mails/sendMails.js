@@ -36,18 +36,20 @@ export default (req, res) => {
         // });
         clubs = await prisma.clubs.findMany({
           where: {
-            OR: [
-              {
-                applications: {
-                  none: {},
+            every: {
+              OR: [
+                {
+                  applications: {
+                    none: {},
+                  },
                 },
-              },
-              {
-                applications: {
-                  status_id: 1,
+                {
+                  applications: {
+                    status_id: 1,
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
         });
         break;
