@@ -27,11 +27,27 @@ export default (req, res) => {
         });
         break;
       case "nierozpoczęte":
+        // clubs = await prisma.clubs.findMany({
+        //   where: {
+        //     applications: {
+        //       none: {},
+        //     },
+        //   },
+        // });
         clubs = await prisma.clubs.findMany({
           where: {
-            applications: {
-              none: {},
-            },
+            OR: [
+              {
+                applications: {
+                  none: {},
+                },
+              },
+              {
+                applications: {
+                  id: 1,
+                },
+              },
+            ],
           },
         });
         break;
