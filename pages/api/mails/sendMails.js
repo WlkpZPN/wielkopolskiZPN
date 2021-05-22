@@ -44,7 +44,7 @@ export default (req, res) => {
               },
               {
                 applications: {
-                  id: 1,
+                  status_id: 1,
                 },
               },
             ],
@@ -58,10 +58,10 @@ export default (req, res) => {
               every: {
                 OR: [
                   {
-                    id: 2,
+                    status_id: 2,
                   },
                   {
-                    id: 3,
+                    status_id: 3,
                   },
                 ],
               },
