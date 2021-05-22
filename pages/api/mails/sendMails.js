@@ -36,23 +36,20 @@ export default (req, res) => {
         // });
         clubs = await prisma.clubs.findMany({
           where: {
-            every: {
-              OR: [
-                {
-                  applications: {
+            applications: {
+              every: {
+                OR: [
+                  {
                     none: {},
                   },
-                },
-                {
-                  applications: {
+                  {
                     status_id: 1,
                   },
-                },
-              ],
+                ],
+              },
             },
           },
         });
-        break;
       case "zatwierdzone":
         clubs = await prisma.clubs.findMany({
           where: {
