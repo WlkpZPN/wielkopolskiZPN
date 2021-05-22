@@ -37,7 +37,7 @@ const MainPage = ({ userData }) => {
     isApplicationsLoading,
     mutateApplications,
   } = getApplications();
-  const [filterType, setFilterType] = useState(0);
+  const [filterType, setFilterType] = useLocalStorage("filter_type", 0);
   const [query, setQuery] = useState("");
   const [list, setList] = useState(applications);
   const [dateOrder, setDateOrder] = useLocalStorage("date_order", null);
@@ -60,7 +60,6 @@ const MainPage = ({ userData }) => {
           (el) => el.status_id !== 2 && el.status_id !== 3
         ),
       ];
-      console.log("this not runs");
 
       if (filterType > 0) {
         helperArr = helperArr.filter((application) => {
@@ -76,7 +75,6 @@ const MainPage = ({ userData }) => {
         });
       }
       if (dateOrder) {
-        console.log("sorting");
         helperArr = helperArr.sort(sortByDate);
       }
 
