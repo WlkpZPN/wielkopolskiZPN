@@ -34,20 +34,24 @@ export default (req, res) => {
         //     },
         //   },
         // });
+
+        // TO DO: wnioski ze statusem roboczym(1) i kluby bez wniosków
         clubs = await prisma.clubs.findMany({
           where: {
-            applications: {
-              every: {
-                OR: [
-                  {
-                    none: {},
-                  },
-                  {
+            OR: [
+              {
+                applications: {
+                  none: {},
+                },
+              },
+              {
+                applications: {
+                  every: {
                     status_id: 1,
                   },
-                ],
+                },
               },
-            },
+            ],
           },
         });
       case "zatwierdzone":
@@ -72,6 +76,8 @@ export default (req, res) => {
         clubs = await prisma.clubs.findMany();
         break;
     }
+
+    console.log("clubs length", clubs.length);
 
     let recipientsEmails = [];
     let content = [];
@@ -121,36 +127,36 @@ export default (req, res) => {
       if (!recipientsEmails[i].email) {
         continue;
       }
-      promises.push(
-        axios({
-          url: "https://api.freshmail.com/v3/messaging/emails",
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          data: {
-            //recipients: tmpRecipients,
-            recipients: [recipientsEmails[i]],
-            from: {
-              name: "Wielkopolski ZPN",
-              email: "licklub@wielkopolskizpn.pl",
-            },
+      // promises.push(
+      //   axios({
+      //     url: "https://api.freshmail.com/v3/messaging/emails",
+      //     method: "POST",
+      //     headers: {
+      //       Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //     data: {
+      //       //recipients: tmpRecipients,
+      //       recipients: [recipientsEmails[i]],
+      //       from: {
+      //         name: "Wielkopolski ZPN",
+      //         email: "licklub@wielkopolskizpn.pl",
+      //       },
 
-            subject: title,
-            // contents: tmpContent,
-            contents: [content[i]],
-          },
-        })
+      //       subject: title,
+      //       // contents: tmpContent,
+      //       contents: [content[i]],
+      //     },
+      //   })
 
-        // transporter.sendMail({
-        //   from: "licklub@wielkopolskizpn.pl",
-        //   to: recipientsEmails[i].email,
-        //   subject: "WielkopolskiZPN - opłata za złożenie wniosku",
-        //   html: `<p>test</p>`,
+      //   // transporter.sendMail({
+      //   //   from: "licklub@wielkopolskizpn.pl",
+      //   //   to: recipientsEmails[i].email,
+      //   //   subject: "WielkopolskiZPN - opłata za złożenie wniosku",
+      //   //   html: `<p>test</p>`,
 
-        // })
-      );
+      //   // })
+      // );
       iterationCount++;
       //console.log("response", response.statusText);
     }
