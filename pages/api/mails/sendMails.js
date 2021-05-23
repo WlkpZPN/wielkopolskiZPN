@@ -127,36 +127,36 @@ export default (req, res) => {
       if (!recipientsEmails[i].email) {
         continue;
       }
-      // promises.push(
-      //   axios({
-      //     url: "https://api.freshmail.com/v3/messaging/emails",
-      //     method: "POST",
-      //     headers: {
-      //       Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-      //       "Content-Type": "application/json",
-      //     },
-      //     data: {
-      //       //recipients: tmpRecipients,
-      //       recipients: [recipientsEmails[i]],
-      //       from: {
-      //         name: "Wielkopolski ZPN",
-      //         email: "licklub@wielkopolskizpn.pl",
-      //       },
+      promises.push(
+        axios({
+          url: "https://api.freshmail.com/v3/messaging/emails",
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          data: {
+            //recipients: tmpRecipients,
+            recipients: [recipientsEmails[i]],
+            from: {
+              name: "Wielkopolski ZPN",
+              email: "licklub@wielkopolskizpn.pl",
+            },
 
-      //       subject: title,
-      //       // contents: tmpContent,
-      //       contents: [content[i]],
-      //     },
-      //   })
+            subject: title,
+            // contents: tmpContent,
+            contents: [content[i]],
+          },
+        })
 
-      //   // transporter.sendMail({
-      //   //   from: "licklub@wielkopolskizpn.pl",
-      //   //   to: recipientsEmails[i].email,
-      //   //   subject: "WielkopolskiZPN - opłata za złożenie wniosku",
-      //   //   html: `<p>test</p>`,
+        // transporter.sendMail({
+        //   from: "licklub@wielkopolskizpn.pl",
+        //   to: recipientsEmails[i].email,
+        //   subject: "WielkopolskiZPN - opłata za złożenie wniosku",
+        //   html: `<p>test</p>`,
 
-      //   // })
-      // );
+        // })
+      );
       iterationCount++;
       //console.log("response", response.statusText);
     }
