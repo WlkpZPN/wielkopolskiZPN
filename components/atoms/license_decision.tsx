@@ -99,9 +99,18 @@ const LicenseDecision = ({
               size="40px"
               status="licencja wydana z nadzorem"
             />
+            <GiveSupervisionModal
+              authData={authData}
+              internalID={internalID}
+              applicationID={applicationID}
+              visible={visible2}
+              setVisible={setVisible2}
+            />
             <Text> Wydaj licencję z nadzorem</Text>
             <PrimaryButton
-              onClick={() => setVisible2(true)}
+              onClick={() => {
+                setVisible2(true);
+              }}
               color="successDark"
               hoverColor="success"
             >
@@ -118,6 +127,7 @@ const LicenseDecision = ({
               internalID={internalID}
               applicationID={applicationID}
             />
+
             <ApplicationStatus size="40px" status="licencja niewydana" />
             <Text> Odmów wydania licencji</Text>
             <PrimaryButton
@@ -137,6 +147,13 @@ const LicenseDecision = ({
               setVisible={setVisible}
               internalID={internalID}
               applicationID={applicationID}
+            />
+            <GiveSupervisionModal
+              authData={authData}
+              internalID={internalID}
+              applicationID={applicationID}
+              visible={visible2}
+              setVisible={setVisible2}
             />
             <ApplicationStatus size="40px" status="licencja niewydana" />
             <Text> Licencja cofnięta</Text>
