@@ -21,7 +21,7 @@ export default async (req, res) => {
       console.log("application", allApplications[0]);
 
       allApplications.forEach(async (app) => {
-        if (app.seasons === "1" || app.seasons === "2") {
+        if (app.seasons == "1" || app.seasons == "2") {
           // 2
           await prisma.applications.update({
             where: {
