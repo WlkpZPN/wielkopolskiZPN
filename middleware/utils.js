@@ -241,10 +241,10 @@ export const renderAmount = (leauge, settings) => {
 export const createSeasons = (amount) => {
   amount = parseInt(amount);
   const currentYear = new Date().getFullYear();
-  if (amount === 1) {
+  if (amount === 1 || amount === "1") {
     return `${currentYear}/${currentYear + 1}`;
   }
-  if (amount === 2) {
+  if (amount === 2 || amount === "2") {
     return `${currentYear}/${currentYear + 1} i ${currentYear + 1}/${
       currentYear + 2
     }`;
@@ -320,8 +320,8 @@ export const checkMimeType = (event) => {
 
 export const renderMainAmount = (leauge, settings, seasons) => {
   let amount = 0;
-  console.log("liga", leauge);
-  console.log("sezony", seasons);
+  // console.log("liga", leauge);
+  // console.log("sezony", seasons);
   switch (leauge.toLowerCase()) {
     case "iv liga":
       amount = settings.iv_application_fee;

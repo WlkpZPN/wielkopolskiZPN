@@ -81,12 +81,24 @@ export default async (req, res) => {
       });
     } else if (clubData.applications[0]) {
       // we have an application | update
+
       await prisma.applications.update({
         where: {
           id: clubData.applications[0].id,
         },
         data: dataToInsert,
       });
+
+      if (statusId == 2 || statusId == 3) {
+        await prisma.applications.update({
+          where: {
+            id: clubData.applications[0].id,
+          },
+          data: {
+            seasons: createSeasons(clubData.applications[0].number_of_seasons),
+          },
+        });
+      }
     }
 
     //3. update sport_facilities

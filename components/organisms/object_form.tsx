@@ -1256,9 +1256,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   value={data.I17_intensity_level}
                   onChange={(e) =>
                     handleChange(
-                      data.I17_intensity_level,
+                      e.target.value,
                       objectIndex,
-                      "I17_intensity_level "
+                      "I17_intensity_level"
                     )
                   }
                   suffix="lx"

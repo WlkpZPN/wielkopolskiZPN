@@ -285,12 +285,12 @@ const Application = ({ clubData, authData, settings }) => {
         ? renderMainAmount(
             clubData.leauge,
             settings,
-            clubData.applications[0].seasons
+            clubData.applications[0].number_of_seasons
           ) + renderAmount(clubData.leauge, settings)
         : renderMainAmount(
             clubData.leauge,
             settings,
-            clubData.applications[0].seasons
+            clubData.applications[0].number_of_seasons
           );
     //console.log(clubData.applications[0].seasons);
     console.log("amount", amount);

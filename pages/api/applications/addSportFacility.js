@@ -27,6 +27,8 @@ export default async (req, res) => {
           ...sport_facility,
         },
       });
+
+      console.log("sport facility", sport_facility);
     } else if (!sport_facility?.id) {
       new_object = await prisma.sport_facilities.create({
         data: {

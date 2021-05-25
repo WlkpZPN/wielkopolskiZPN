@@ -37,6 +37,7 @@ const MainPage = ({ userData }) => {
     isApplicationsLoading,
     mutateApplications,
   } = getApplications();
+  //console.log(applications);
   const [filterType, setFilterType] = useLocalStorage("filter_type", 0);
   const [query, setQuery] = useState("");
   const [list, setList] = useState(applications);
