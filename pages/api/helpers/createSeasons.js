@@ -42,7 +42,7 @@ export default async (req, res) => {
               number_of_seasons: seasons.match(/\//g)?.length === 1 ? "2" : "1",
             },
           });
-        } else if (app.status_id == 1 && app.seasons.length === 1) {
+        } else if (app.status_id == 1 && app?.seasons?.length === 1) {
           // 3
           await prisma.applications.update({
             where: {
