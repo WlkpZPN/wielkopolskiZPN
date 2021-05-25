@@ -15,17 +15,17 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const application = clubData.applications[0];
   let leauge = "";
   switch (clubData.leauge) {
-    case "IV liga":
+    case "iv liga":
       leauge = "IV ligii";
       break;
-    case "V liga":
+    case "v liga":
       leauge = "V ligii";
       break;
-    case "Klasa okręgowa":
+    case "klasa okręgowa":
       leauge = "Klasy Okręgowej";
       break;
-    case "Klasa A":
-    case "Klasa B":
+    case "klasa a":
+    case "klasa b":
       leauge = "Klasy A/B";
       break;
     case "młodzież":
