@@ -270,14 +270,14 @@ const Home = ({ clubData, authData, settings }) => {
                     {renderMainAmount(
                       clubData.leauge,
                       settings,
-                      clubData.applications[0].seasons
+                      clubData.applications[0].number_of_seasons
                     ) + renderAmount(clubData.leauge, settings)}
                   </p>
                 ) : (
                   renderMainAmount(
                     clubData.leauge,
                     settings,
-                    clubData.applications[0].seasons
+                    clubData.applications[0].number_of_seasons
                   )
                 )}
                 &nbsp;PLN
@@ -303,7 +303,7 @@ const Home = ({ clubData, authData, settings }) => {
                   {renderMainAmount(
                     clubData.leauge,
                     settings,
-                    clubData.applications[0].seasons
+                    clubData.applications[0].number_of_seasons
                   )}{" "}
                   PLN
                 </span>
