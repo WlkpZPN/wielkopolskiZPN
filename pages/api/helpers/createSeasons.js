@@ -19,7 +19,7 @@ export default async (req, res) => {
         },
       });
       console.log("application", allApplications[0]);
-
+      const promises = [];
       allApplications.forEach(async (app) => {
         if (app.seasons == "1" || app.seasons == "2") {
           // 2
@@ -34,7 +34,7 @@ export default async (req, res) => {
           });
           return;
         } else if (
-          app.seasons?.length > 0 &&
+          app.seasons?.length > 1 &&
           (app.number_of_seasons !== "1" || app.number_of_seasons !== "2")
         ) {
           // 1
