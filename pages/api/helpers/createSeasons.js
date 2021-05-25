@@ -12,18 +12,18 @@ import { createSeasons } from "../../../middleware/utils";
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    try {
-      const allApplications = await prisma.applications.findMany({
-        include: {
-          clubs: true,
-        },
-      });
-      console.log("application", allApplications[0]);
-      const promises = [];
-      allApplications.forEach(async (app) => {
-        if (app.seasons == "1" || app.seasons == "2") {
-          // 2
-          await prisma.applications.update({
+    const allApplications = await prisma.applications.findMany({
+      include: {
+        clubs: true,
+      },
+    });
+    console.log("application", allApplications[0]);
+    const promises = [];
+    allApplications.forEach(async (app) => {
+      if (app.seasons == "1" || app.seasons == "2") {
+        // 2
+        promises.push(
+          prisma.applications.update({
             where: {
               id: parseInt(app.id),
             },
@@ -31,37 +31,43 @@ export default async (req, res) => {
               seasons: createSeasons(app.seasons),
               number_of_seasons: app.seasons,
             },
-          });
-          return;
-        } else if (
-          app.seasons?.length > 1 &&
-          (app.number_of_seasons !== "1" || app.number_of_seasons !== "2")
-        ) {
-          // 1
-          await prisma.applications.update({
+          })
+        );
+        return;
+      } else if (
+        app.seasons?.length > 1 &&
+        (app.number_of_seasons !== "1" || app.number_of_seasons !== "2")
+      ) {
+        // 1
+        promises.push(
+          prisma.applications.update({
             where: {
               id: parseInt(app.id),
             },
             data: {
               number_of_seasons:
-                app.seasons.match(/\//g)?.length === 1 ? "2" : "1",
+                app.seasons.match(/\//g)?.length === 1 ? "1" : "2",
             },
-          });
-          return;
-        } else if (app.status_id == 1 && app?.seasons?.length === 1) {
-          // 3
-          await prisma.applications.update({
+          })
+        );
+        return;
+      } else if (app.status_id == 1 && app?.seasons?.length === 1) {
+        // 3
+        promises.push(
+          prisma.applications.update({
             where: {
               id: parseInt(app.id),
             },
             data: {
               number_of_seasons: app.seasons,
             },
-          });
-          return;
-        } else if (app.status > 1 && (!app.seasons || !app.number_of_seasons)) {
-          // 4
-          await prisma.applications.update({
+          })
+        );
+        return;
+      } else if (app.status > 1 && (!app.seasons || !app.number_of_seasons)) {
+        // 4
+        promises.push(
+          prisma.applications.update({
             where: {
               id: parseInt(app.id),
             },
@@ -69,20 +75,24 @@ export default async (req, res) => {
               number_of_seasons: "1",
               seasons: createSeasons(1),
             },
-          });
-          return;
-        }
-      });
+          })
+        );
+        return;
+      }
+    });
 
-      //console.log("length", allApplications.length);
-      res.send(`seasons updated`);
-    } catch (error) {
-      res.status(400);
-      res.json({
-        error: true,
-        error: error,
+    Promise.all(promises)
+      .then((res) => {
+        res.send(`seasons updated`);
+        return resolve();
+      })
+      .catch((error) => {
+        res.status(400);
+        res.json({
+          error: true,
+          error: error,
+        });
+        return resolve();
       });
-      return resolve();
-    }
   });
 };
