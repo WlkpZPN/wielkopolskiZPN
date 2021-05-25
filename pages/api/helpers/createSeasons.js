@@ -32,14 +32,18 @@ export default async (req, res) => {
               number_of_seasons: app.seasons,
             },
           });
-        } else if (app.seasons?.length > 0) {
+        } else if (
+          app.seasons?.length > 0 &&
+          (app.number_of_seasons !== "1" || app.number_of_seasons !== "2")
+        ) {
           // 1
           await prisma.applications.update({
             where: {
               id: parseInt(app.id),
             },
             data: {
-              number_of_seasons: seasons.match(/\//g)?.length === 1 ? "2" : "1",
+              number_of_seasons:
+                app.seasons.match(/\//g)?.length === 1 ? "2" : "1",
             },
           });
         } else if (app.status_id == 1 && app?.seasons?.length === 1) {
