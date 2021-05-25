@@ -32,6 +32,7 @@ export default async (req, res) => {
               number_of_seasons: app.seasons,
             },
           });
+          return;
         } else if (
           app.seasons?.length > 0 &&
           (app.number_of_seasons !== "1" || app.number_of_seasons !== "2")
@@ -46,6 +47,7 @@ export default async (req, res) => {
                 app.seasons.match(/\//g)?.length === 1 ? "2" : "1",
             },
           });
+          return;
         } else if (app.status_id == 1 && app?.seasons?.length === 1) {
           // 3
           await prisma.applications.update({
@@ -56,6 +58,7 @@ export default async (req, res) => {
               number_of_seasons: app.seasons,
             },
           });
+          return;
         } else if (app.status > 1 && (!app.seasons || !app.number_of_seasons)) {
           // 4
           await prisma.applications.update({
@@ -67,6 +70,7 @@ export default async (req, res) => {
               seasons: createSeasons(1),
             },
           });
+          return;
         }
       });
 
