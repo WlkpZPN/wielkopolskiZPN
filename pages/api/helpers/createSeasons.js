@@ -17,7 +17,7 @@ export default async (req, res) => {
         clubs: true,
       },
     });
-    console.log("application", allApplications[0]);
+    // console.log("application", allApplications[0]);
     const promises = [];
     allApplications.forEach(async (app) => {
       if (app.seasons == "1" || app.seasons == "2") {
@@ -82,14 +82,15 @@ export default async (req, res) => {
     });
 
     Promise.all(promises)
-      .then((res) => {
+      .then(() => {
         res.send(`seasons updated`);
         return resolve();
       })
       .catch((error) => {
+        console.log(error);
         res.status(400);
         res.json({
-          error: true,
+          isError: true,
           error: error,
         });
         return resolve();
