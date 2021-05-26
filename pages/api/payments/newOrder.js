@@ -48,7 +48,7 @@ export default (req, res) => {
           currencyCode: "PLN",
           description: description,
           merchantPosId: process.env.PAYU_POS_ID,
-          validityTime: "86400",
+          validityTime: "8035200",
           extOrderId: newID,
           customerIp: ip,
           totalAmount: amount * 100,

@@ -252,6 +252,13 @@ const Application = ({ clubData, authData, settings }) => {
         return (
           <div>
             <PrimaryButton
+              color="warningDark"
+              hoverColor="warning"
+              onClick={resendLink}
+            >
+              Wyślij ponownie link do płatności
+            </PrimaryButton>
+            <PrimaryButton
               color="successDark"
               hoverColor="success"
               style={{ margin: "0 6px" }}
@@ -273,6 +280,53 @@ const Application = ({ clubData, authData, settings }) => {
 
       default:
         return;
+    }
+  };
+
+  const resendLink = async () => {
+    const amount =
+      clubData.applications[0].youth_groups_possession ===
+      "nie posiadamy zespołów"
+        ? renderMainAmount(
+            clubData.leauge,
+            settings,
+            clubData.applications[0].number_of_seasons
+          ) + renderAmount(clubData.leauge, settings)
+        : renderMainAmount(
+            clubData.leauge,
+            settings,
+            clubData.applications[0].number_of_seasons
+          );
+
+    try {
+      const newOrder = await axios.post("/api/payments/newOrder", {
+        description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
+        email: clubData.email,
+        amount: amount,
+        applicationID: clubData.applications[0].id,
+        firstName: clubData.name,
+        phone: clubData.phone,
+      });
+
+      await axios.post("/api/mails/sendPayuLink", {
+        link: newOrder.data.link,
+        email: clubData.email,
+      });
+
+      await axios.post("/api/applications/acceptApplication", {
+        applicationID: clubData.applications[0].id,
+        // link: newOrder.data.link,
+        userID: authData.id,
+        amount: amount,
+      });
+      router.replace(router.asPath);
+
+      setLoading(false);
+      toast.success("Link do płatnosci ponownie wyslany");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error("Nie udało się wysłać linku,prosimy spróbuj ponownie");
     }
   };
   const acceptApplication = async () => {
