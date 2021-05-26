@@ -262,9 +262,7 @@ const Home = ({ clubData, authData, settings }) => {
                 }}
               >
                 {clubData.applications[0].youth_groups_possession ===
-                  "nie posiadamy zespołów" ||
-                clubData.applications[0].youth_groups_possession ===
-                  "wystepujemy w rozgrywkach klasy A" ? (
+                "nie posiadamy zespołów" ? (
                   <p>
                     {" "}
                     {renderMainAmount(
