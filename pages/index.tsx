@@ -310,6 +310,46 @@ const Home = ({ clubData, authData, settings }) => {
                 href={clubData.applications[0].payment_link}
                 target="_blank"
               ></PaymentLink>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <p>
+                  Jeśli chcec opłacić wniosek tradycyjnym przelewem prosimy o
+                  przelew na poniższe dane:
+                </p>
+                <span>Wielkopolski Związek Piłki Nożnej</span>
+                <span>Numer konta: 95 1020 4027 0000 1202 0031 4260 </span>
+                <span>
+                  Tytuł przelewu: {clubData.applications[0].internal_id}{" "}
+                </span>
+                <span>
+                  Kwota{" "}
+                  {clubData.applications[0].youth_groups_possession ===
+                  "nie posiadamy zespołów" ? (
+                    <p>
+                      {" "}
+                      {renderMainAmount(
+                        clubData.leauge,
+                        settings,
+                        clubData.applications[0].number_of_seasons
+                      ) + renderAmount(clubData.leauge, settings)}
+                    </p>
+                  ) : (
+                    renderMainAmount(
+                      clubData.leauge,
+                      settings,
+                      clubData.applications[0].number_of_seasons
+                    )
+                  )}{" "}
+                  &nbsp;PLN
+                </span>
+                  {clubData.invoice_url ? 
+                  <>
+                    <h2>Faktura</h2>
+                     <AddInvoice admin={false} clubData={clubData} />
+                    
+                  </> : null}
+               
+              </div>
+
               <ClubSteps status="zaakceptowany nieopłacony" />
               <ClubApplication
                 show_buttons={false}
