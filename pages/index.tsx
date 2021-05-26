@@ -311,7 +311,7 @@ const Home = ({ clubData, authData, settings }) => {
                 target="_blank"
               ></PaymentLink>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <p>
+                <p style={{ marginBottom: "12px" }}>
                   Jeśli chcec opłacić wniosek tradycyjnym przelewem prosimy o
                   przelew na poniższe dane:
                 </p>
@@ -341,13 +341,14 @@ const Home = ({ clubData, authData, settings }) => {
                   )}{" "}
                   &nbsp;PLN
                 </span>
-                  {clubData.invoice_url ? 
+                {clubData.invoice_url ? (
                   <>
-                    <h2>Faktura</h2>
-                     <AddInvoice admin={false} clubData={clubData} />
-                    
-                  </> : null}
-               
+                    <h2 style={{ marginTop: "16px", marginBottom: "8px" }}>
+                      Faktura
+                    </h2>
+                    <AddInvoice admin={false} clubData={clubData} />
+                  </>
+                ) : null}
               </div>
 
               <ClubSteps status="zaakceptowany nieopłacony" />
