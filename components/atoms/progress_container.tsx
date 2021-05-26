@@ -12,14 +12,11 @@ const Progress = styled.div`
   &:before {
     padding: 0px 4px;
     text-align: end;
-
     position: absolute;
     font-size: 13px;
     /* display: ${({ visible }) => (visible ? "block" : "none")}; */
     display: block;
-
     color: rgba(255, 255, 255, 0.8);
-
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -30,13 +27,23 @@ const Progress = styled.div`
     left: 0;
     bottom: 0;
     height: 100%;
-
     width: ${({ progress, visible }) =>
       visible ? `${progress}%` : "max-content"};
-
     border-radius: 5px;
     content: "${({ progress, number, visible }) =>
       visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}";
+  }
+
+  &:hover {
+    &:before {
+      width: 100%;
+      background: transparent;
+
+      font-weight: bold;
+      color: ${({ theme }) => theme.primary};
+      content: "${({ progress, number, visible }) =>
+        visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}";
+    }
   }
 `;
 
