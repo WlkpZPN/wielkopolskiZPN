@@ -90,7 +90,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   });
 
   page.drawText(
-    "Decyzja Komisji ds. Licencji Klubowych \n Wielkopolskiego Związku Piłki Nożej",
+    "Decyzja Komisji ds. Licencji Klubowych \n Wielkopolskiego Związku Piłki Nożnej",
     {
       //x: 170,
       x: 180,
