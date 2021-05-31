@@ -298,21 +298,21 @@ export const checkMimeType = (event) => {
     };
   }
   // compare file type find doesn't matach
-  if (types.every((type) => files[0].type !== type)) {
-    // create error message and assign to container
-    err =
-      "Wybrany plik zawiera niedozwolone rozszerzenie, prześlij plik w formacie PNG,JPG lub PDF";
-  }
+  // if (types.every((type) => files[0].type !== type)) {
+  //   // create error message and assign to container
+  //   err =
+  //     "Wybrany plik zawiera niedozwolone rozszerzenie, prześlij plik w formacie PNG,JPG lub PDF";
+  // }
 
-  if (err !== "") {
-    // if message not same old that mean has error
-    event.target.value = null; // discard selected file
-    // console.log(err);
-    return {
-      valid: false,
-      error: err,
-    };
-  }
+  // if (err !== "") {
+  //   // if message not same old that mean has error
+  //   event.target.value = null; // discard selected file
+  //   // console.log(err);
+  //   return {
+  //     valid: false,
+  //     error: err,
+  //   };
+  // }
   return {
     valid: true,
   };
