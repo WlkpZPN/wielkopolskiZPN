@@ -22,6 +22,15 @@ import QuestionsList from "../../../../components/organisms/questions_list";
 import LicenseDecision from "../../../../components/atoms/license_decision";
 import RichTextEditor from "../../../../components/organisms/rich_text_editor";
 
+const TextArea = styled.textarea`
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  height: 200px;
+  margin-top: 4px;
+  font-family: inherit;
+  padding: 4px;
+`;
+
 const Application = ({ authData, allQuestions, settings, question }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -130,7 +139,7 @@ const Application = ({ authData, allQuestions, settings, question }) => {
         </Select>
         <Label>
           Pytanie
-          <Input
+          <TextArea
             type="text"
             value={questionText}
             placeholder="pytanie"
