@@ -209,6 +209,10 @@ const Home = ({ clubData, authData, settings }) => {
                 wprowadzenie poprawek do wniosku
               </Paragraph>
               <ClubSteps status="do poprawy" />
+              <p style={{ margin: "0 12px" }}>
+                <span style={{ fontWeight: "bold" }}>UWAGA: </span> prosimy o
+                załączanie brakujących plików tylko w kroku 7
+              </p>
               <ClubApplication
                 show_buttons={true}
                 error_message={clubData.applications[0].error_message}

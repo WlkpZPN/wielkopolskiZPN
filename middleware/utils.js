@@ -288,9 +288,9 @@ export const checkMimeType = (event) => {
   //define message container
   let err = "";
   // list allow mime type
-  const types = ["image/png", "image/jpeg", "application/pdf"];
+  const types = ["image/png", "image/jpeg", "application/pdf", "image/jpg"];
   // loop access array
-  if (files[0].size > 5000000) {
+  if (files[0].size > 15000000) {
     return {
       valid: false,
       error:
