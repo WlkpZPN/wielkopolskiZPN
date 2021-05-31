@@ -209,7 +209,7 @@ const Home = ({ clubData, authData, settings }) => {
                 wprowadzenie poprawek do wniosku
               </Paragraph>
               <ClubSteps status="do poprawy" />
-              <p style={{ margin: "0 12px" }}>
+              <p style={{ marginBottom: "16px", fontSize: "16px" }}>
                 <span style={{ fontWeight: "bold" }}>UWAGA: </span> prosimy o
                 załączanie brakujących plików tylko w kroku 7
               </p>
