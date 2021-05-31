@@ -256,7 +256,7 @@ const Application = ({ clubData, authData, settings }) => {
               hoverColor="warning"
               onClick={resendLink}
             >
-              Wyślij ponownie link do płatności
+              Wygeneruj ponownie link do przelewu
             </PrimaryButton>
             <PrimaryButton
               color="successDark"
