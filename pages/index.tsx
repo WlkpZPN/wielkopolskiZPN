@@ -220,6 +220,7 @@ const Home = ({ clubData, authData, settings }) => {
                 errors={clubData.applications[0].error_step}
                 readOnly={false}
                 clubData={clubData}
+                fileEdit={true}
                 settings={settings}
               />
             </>
