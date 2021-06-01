@@ -172,27 +172,6 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   textField.setAlignment(TextAlignment.Center);
   textField.updateAppearances(bold);
 
-  // textField2.setText(`Na podstawie uchwały Nr V/2020 z dnia 30 kwietnia 2021 r. w sprawie ustalenia szczegółowych kryteriów
-  // licencyjnych dla klubów IV ligi i klas niższych Wielkopolskiego ZPN na sezon ${clubData.applications[0].seasons} i następnie po
-  // rozpatrzeniu wniosku wraz z załącznikami i uzupełnieniami Komisja ds. Licencji Klubowych postanowiła:`);
-
-  // textField2.addToPage(page, {
-  //   x: 50,
-  //   y: 380,
-  //   font: regular,
-  //   textColor: rgb(0, 0, 0),
-  //   borderColor: rgb(1, 1, 1),
-  //   height: 60,
-  //   width: 500,
-  // });
-
-  // textField2.enableMultiline();
-  // textField2.enableReadOnly();
-  // textField2.setFontSize(10);
-  // textField2.defaultUpdateAppearances(regular);
-  // textField2.setAlignment(TextAlignment.Left);
-  // textField2.updateAppearances(regular);
-
   page.drawText("Na podstawie uchwały", {
     x: 50,
     y: 440,
@@ -343,20 +322,39 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   });
 
   if (application.status_id === 10) {
-    page.drawText("Uzasadnienie: ", {
+    // page.drawText("Uzasadnienie: ", {
+    //   x: 50,
+    //   y: 280,
+    //   font: bold,
+    //   size: 10,
+    //   color: rgb(0, 0, 0),
+    // });
+    //tutaj nadzór
+    // page.drawText(`${application.reject_reason}`, {
+    //   x: 50,
+    //   y: 265,
+    //   font: regular,
+    //   size: 10,
+    //   color: rgb(0, 0, 0),
+    // });
+    textField2.setText(`Uzasadnienie: \n${application.reject_reason}`);
+
+    textField2.addToPage(page, {
       x: 50,
-      y: 280,
-      font: bold,
-      size: 10,
-      color: rgb(0, 0, 0),
-    });
-    page.drawText(`${application.reject_reason}`, {
-      x: 50,
-      y: 265,
+      y: 200,
       font: regular,
-      size: 10,
-      color: rgb(0, 0, 0),
+      textColor: rgb(0, 0, 0),
+      borderColor: rgb(1, 1, 1),
+      height: 100,
+      width: 500,
     });
+
+    textField2.enableMultiline();
+    textField2.enableReadOnly();
+    textField2.setFontSize(10);
+    textField2.defaultUpdateAppearances(regular);
+    textField2.setAlignment(TextAlignment.Left);
+    textField2.updateAppearances(regular);
   } else {
     page.drawText(
       "Ad.1. W związku ze spełnieniem wymogów wyżej wymienionych przepisów licencyjnych PZPN",
