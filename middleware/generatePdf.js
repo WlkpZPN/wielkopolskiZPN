@@ -337,6 +337,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     //   size: 10,
     //   color: rgb(0, 0, 0),
     // });
+
     textField2.setText(`Uzasadnienie: \n${application.reject_reason}`);
 
     textField2.addToPage(page, {
@@ -345,7 +346,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       font: regular,
       textColor: rgb(0, 0, 0),
       borderColor: rgb(1, 1, 1),
-      height: 100,
+      height: 140,
       width: 500,
     });
 
@@ -380,7 +381,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Otrzymują:", {
     x: 50,
-    y: 115,
+    y: 85,
     font: bold,
     size: 10,
     color: rgb(0, 0, 0),
@@ -388,7 +389,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Wnioskodawca", {
     x: 50,
-    y: 100,
+    y: 70,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -396,7 +397,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Wydział Gier i Ewidencji", {
     x: 50,
-    y: 85,
+    y: 55,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -404,7 +405,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawText("Wielkopolskiego ZPN", {
     x: 50,
-    y: 70,
+    y: 40,
     font: regular,
     size: 10,
     color: rgb(0, 0, 0),
@@ -433,56 +434,56 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   page.drawImage(stampPng, {
     x: 100,
-    y: 120,
+    y: 90,
     width: 80,
     height: 80,
   });
 
   page.drawImage(signPng, {
     x: 200,
-    y: 130,
+    y: 100,
     width: scaledSign.width - 20,
     height: scaledSign.height,
   });
 
   page.drawImage(sign2Png, {
     x: 380,
-    y: 130,
+    y: 100,
     width: scaledSign2.width - 20,
     height: scaledSign2.height,
   });
 
   page.drawText(
-    "Sekretarz \n Komisji ds.Licencji Klubowych \n Krzysztof Olędrowicz",
+    "Sekretarz \nKomisji ds.Licencji Klubowych \nKrzysztof Olędrowicz",
     {
       x: 200,
       font: regular,
       size: 10,
-      y: 100,
+      y: 70,
       lineHeight: 15,
     }
   );
 
   page.drawText(
-    "Przewodniczący \n Komisji ds.Licencji Klubowych \n Grzegorz Grocki",
+    "Przewodniczący \nKomisji ds.Licencji Klubowych \nGrzegorz Grocki",
     {
       x: 380,
       font: regular,
       size: 10,
-      y: 100,
+      y: 70,
       lineHeight: 15,
     }
   );
   page.drawLine({
-    start: { x: 200, y: 120 },
-    end: { x: 335, y: 120 },
+    start: { x: 200, y: 90 },
+    end: { x: 335, y: 90 },
     thickness: 1,
     color: rgb(0.07, 0.4, 0.7),
   });
 
   page.drawLine({
-    start: { x: 380, y: 120 },
-    end: { x: 515, y: 120 },
+    start: { x: 380, y: 90 },
+    end: { x: 515, y: 90 },
     thickness: 1,
     color: rgb(0.07, 0.4, 0.7),
   });

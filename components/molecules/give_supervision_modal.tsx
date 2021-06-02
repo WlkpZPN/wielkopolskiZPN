@@ -53,6 +53,7 @@ const Content = styled.div`
   overflow: auto;
   max-height: 90vh;
   overflow: auto;
+  z-index: 10000;
 `;
 
 const TextArea = styled.textarea`

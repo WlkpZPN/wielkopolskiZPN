@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   align-items: stretch;
   justify-content: center;
   position: relative;
-  z-index: 10;
+
   width: 260px;
 
   text-align: center;
@@ -57,7 +57,7 @@ const Wrapper = styled.div`
 const Info = styled.div`
   & svg {
     width: 30px;
-    z-index: 100;
+    /* z-index: 10; */
     position: absolute;
     top: 16px;
     left: 16px;
@@ -67,6 +67,7 @@ const Info = styled.div`
 
   color: ${({ theme }) => theme.primaryLight};
   &:hover {
+    z-index: 1000;
     color: white;
     &::after {
       display: block;
