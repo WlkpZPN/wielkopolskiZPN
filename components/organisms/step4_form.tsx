@@ -75,21 +75,21 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   };
   return (
     <div>
-      <Fieldset disabled={readOnly}>
-        <div style={{ display: "flex", marginTop: "32px" }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              marginRight: "16px",
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-            }}
-          >
-            {renderObjects()}
-          </div>
-          <ErrorMessage>{error.stepFour}</ErrorMessage>
-          {sport_facilities.length === 0 ? null : (
+      <div style={{ display: "flex", marginTop: "32px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginRight: "16px",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+          }}
+        >
+          {renderObjects()}
+        </div>
+        <ErrorMessage>{error.stepFour}</ErrorMessage>
+        {sport_facilities.length === 0 ? null : (
+          <Fieldset disabled={readOnly}>
             <OutlineButton
               type="button"
               style={{ padding: "6px 16px" }}
@@ -100,10 +100,10 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
             >
               + Dodaj kolejny obiekt
             </OutlineButton>
-          )}
-        </div>
-        {error ? <ErrorMessage>{internalError}</ErrorMessage> : null}
-      </Fieldset>
+          </Fieldset>
+        )}
+      </div>
+      {error ? <ErrorMessage>{internalError}</ErrorMessage> : null}
 
       {sport_facilities.length === 0 ? (
         <NoObjects>
