@@ -146,7 +146,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const form = pdfDoc.getForm();
   const textField = form.createTextField("club.info");
   const textField2 = form.createTextField("license.info");
-  const textFIeld3 = form.createTextField("facilities.names")
+  const textFiseld3 = form.createTextField("facilities.names");
   textField.setText(
     `${clubData.name.replace(/\n/g, " ")} ${clubData.address.replace(
       /\n/g,
@@ -307,14 +307,13 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   //   }
   // );
 
-
   let objectsNames = [];
   application.sport_facilities.forEach((object, index, arr) => {
-    if ( object.name) {
+    if (object.name) {
       objectsNames.push(`${object.name} ${object.address || ""}`);
     }
   });
- 
+
   // page.drawText(`${objectsNames.join(", ")}`, {
   //   x: 50,
   //   y: 295,
@@ -323,24 +322,28 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   //   color: rgb(0, 0, 0),
   // });
 
-  textField3.setText(`2. Mecze w roli gospodarza rozgrywane będą na obiektach: ${objectsNames.join(", ")}`);
+  textField3.setText(
+    `2. Mecze w roli gospodarza rozgrywane będą na obiektach: ${objectsNames.join(
+      ", "
+    )}`
+  );
 
-    textField3.addToPage(page, {
-      x: 50,
-      y: 310,
-      font: regular,
-      textColor: rgb(0, 0, 0),
-      borderColor: rgb(1, 1, 1),
-      height: 100,
-      width: 500,
-    });
+  textField3.addToPage(page, {
+    x: 50,
+    y: 310,
+    font: regular,
+    textColor: rgb(0, 0, 0),
+    borderColor: rgb(1, 1, 1),
+    height: 100,
+    width: 500,
+  });
 
-    textField3.enableMultiline();
-    textField3.enableReadOnly();
-    textField3.setFontSize(10);
-    textField3.defaultUpdateAppearances(regular);
-    textField3.setAlignment(TextAlignment.Left);
-    textField3.updateAppearances(regular);
+  textField3.enableMultiline();
+  textField3.enableReadOnly();
+  textField3.setFontSize(10);
+  textField3.defaultUpdateAppearances(regular);
+  textField3.setAlignment(TextAlignment.Left);
+  textField3.updateAppearances(regular);
 
   if (application.status_id === 10) {
     // page.drawText("Uzasadnienie: ", {
