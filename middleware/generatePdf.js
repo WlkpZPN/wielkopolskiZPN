@@ -330,11 +330,11 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
   textField3.addToPage(page, {
     x: 50,
-    y: 280,
+    y: 260,
     font: regular,
     textColor: rgb(0, 0, 0),
     borderColor: rgb(1, 1, 1),
-    height: 40,
+    height: 60,
     width: 500,
   });
 
