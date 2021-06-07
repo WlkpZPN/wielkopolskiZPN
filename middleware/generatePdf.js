@@ -146,7 +146,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const form = pdfDoc.getForm();
   const textField = form.createTextField("club.info");
   const textField2 = form.createTextField("license.info");
-  const textFiseld3 = form.createTextField("facilities.names");
+  const textField3 = form.createTextField("facilities.names");
   textField.setText(
     `${clubData.name.replace(/\n/g, " ")} ${clubData.address.replace(
       /\n/g,
