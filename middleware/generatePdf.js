@@ -225,7 +225,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   );
 
   page.drawText(` sezon ${clubData.applications[0].seasons} `, {
-    x: 364,
+    x: 362,
     y: 425,
     font: regular,
     size: 10,
