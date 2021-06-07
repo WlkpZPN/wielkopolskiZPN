@@ -334,7 +334,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     font: regular,
     textColor: rgb(0, 0, 0),
     borderColor: rgb(1, 1, 1),
-    height: 60,
+    height: 40,
     width: 500,
   });
 
