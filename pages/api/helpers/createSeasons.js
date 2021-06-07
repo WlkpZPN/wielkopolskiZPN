@@ -8,7 +8,7 @@ import { createSeasons } from "../../../middleware/utils";
 // 1. klub w zmiennej seasons przechowuje tekst - dodajemy 1/2 do zmiennej "number_of_seasons"
 // 2. klub w zmiennej seasons przechowuje 1/2 - zmieniamy na tekst i dodajemy do "number_of_seasons" 1/2
 // 3. klub ma status status roboczy i nie ustawił sezonu - ustawiamy na 1 domyślnie
-// 4. klub  ma pusty sezon i number_of_seasons ale wysłał wniosek - ustawiamy number_of_seasons na 1 i season 1
+// 4. klub  ma pusty sezon lub number_of_seasons ale wysłał wniosek - ustawiamy number_of_seasons na 1 i season 1
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
@@ -64,7 +64,10 @@ export default async (req, res) => {
           })
         );
         return;
-      } else if (app.status > 1 && (!app.seasons || !app.number_of_seasons)) {
+      } else if (
+        app.status > 1 &&
+        (app.seasons == null || app.number_of_seasons == null)
+      ) {
         // 4
         promises.push(
           prisma.applications.update({
@@ -72,8 +75,8 @@ export default async (req, res) => {
               id: parseInt(app.id),
             },
             data: {
-              number_of_seasons: "1",
-              seasons: createSeasons(1),
+              number_of_seasons: app.seasons == null ? 1 : app.seasons,
+              seasons: createSeasons(app.seasons == null ? 1 : app.seasons),
             },
           })
         );
