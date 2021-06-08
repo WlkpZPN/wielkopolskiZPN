@@ -76,8 +76,8 @@ export default async (req, res) => {
               id: parseInt(app.id),
             },
             data: {
-              number_of_seasons: app.seasons == null ? 1 : app.seasons,
-              seasons: createSeasons(app.seasons == null ? 1 : app.seasons),
+              number_of_seasons: app.seasons == null ? "1" : app.seasons,
+              seasons: createSeasons(app.seasons == null ? "1" : app.seasons),
             },
           })
         );
