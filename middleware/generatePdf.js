@@ -385,7 +385,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       "Ad.1. W związku ze spełnieniem wymogów wyżej wymienionych przepisów licencyjnych PZPN",
       {
         x: 50,
-        y: 280,
+        y: 250,
         font: regular,
         size: 10,
         color: rgb(0, 0, 0),
@@ -395,7 +395,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały.`,
       {
         x: 50,
-        y: 265,
+        y: 235,
         font: regular,
         size: 10,
         color: rgb(0, 0, 0),
