@@ -65,6 +65,10 @@ const TablePagination = ({ pages, setPage, currentPage }) => {
     ];
   };
 
+  if (pages === 1) {
+    return null;
+  }
+
   return (
     <Wrapper>
       <NavigatePrevious onClick={handlePreviousPage} />
