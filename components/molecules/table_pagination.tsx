@@ -45,7 +45,7 @@ const TablePagination = ({ pages, setPage, currentPage }) => {
   };
   const generatePages = () => {
     let helperArr = [];
-    for (let i = 0; i < pages - 1; i++) {
+    for (let i = 1; i <= pages; i++) {
       helperArr.push(
         <PageNumber
           key={i}
