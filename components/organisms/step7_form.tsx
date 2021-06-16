@@ -39,7 +39,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     context.clubData.applications[0].applications_attachments.filter(
       (file) => file.category === "agreement_documents"
     );
-  console.log("file edit", fileEdit);
+
   const isSuperVision = () => {
     if (stepTwoFiles.length === 0) {
       return true;
@@ -241,7 +241,9 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           <PrimaryButton
             type="button"
             style={{ marginRight: "16px" }}
-            onClick={() => handleStepChange("previous")}
+            onClick={() =>
+              show_buttons ? handleStepChange("previous") : setStep(6)
+            }
           >
             Cofnij
           </PrimaryButton>

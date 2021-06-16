@@ -430,35 +430,51 @@ const ClubApplication = ({
 
   const sendApplication = async () => {
     // validate  all steps
-
-    const checkSupervision = () => {
-      if (formData.stepTwo.krs_documents.length === 0) {
-        return true;
-      }
-      if (
-        formData.stepThree.youthGroupsPossession === "nie posiadamy zespołów" &&
-        formData.stepThree.agreement_documents.length === 0
-      ) {
-        return true;
-      }
-      if (
-        formData.stepFour.sport_facilities.I01_1 === "false"
-        // &&
-        // agreementDocuments.length === 0
-      ) {
+    const stepTwoFiles =
+      clubData.applications[0].applications_attachments.filter(
+        (file) => file.category === "krs_documents"
+      );
+    const stepThreeFiles =
+      clubData.applications[0].applications_attachments.filter(
+        (file) => file.category === "agreement_documents"
+      );
+    const checkSuperVision = () => {
+      if (stepTwoFiles.length === 0) {
         return true;
       }
 
       if (
-        formData.stepFour.sport_facilities.I17_1
-        // && intensityDocuments.length === 0
+        stepThreeFiles.length === 0 &&
+        formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
       ) {
         return true;
       }
+      if (
+        stepThreeFiles.length === 0 &&
+        formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
+      ) {
+        return true;
+      }
+
+      formData.stepFour.sport_facilities.forEach((facility) => {
+        const files1 = facility.applications_attachments.filter(
+          (el) => el.category === "I01_agreement"
+        );
+
+        const files2 = facility.applications_attachments.filter(
+          (el) => el.category === "I17_intensity_level"
+        );
+        if (facility.I01_1 === false && files1.length === 0) {
+          return true;
+        }
+        if (facility.I17_1 === true && files2.length === 0) {
+          return true;
+        }
+      });
 
       return false;
     };
-    const isSuperVision = checkSupervision();
+    const isSuperVision = checkSuperVision();
 
     let result;
     // step one
