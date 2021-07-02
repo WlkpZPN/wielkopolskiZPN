@@ -27,15 +27,6 @@ export default (req, res) => {
         });
         break;
       case "nierozpoczęte":
-        // clubs = await prisma.clubs.findMany({
-        //   where: {
-        //     applications: {
-        //       none: {},
-        //     },
-        //   },
-        // });
-
-        // TO DO: wnioski ze statusem roboczym(1) i kluby bez wniosków
         clubs = await prisma.clubs.findMany({
           where: {
             OR: [
