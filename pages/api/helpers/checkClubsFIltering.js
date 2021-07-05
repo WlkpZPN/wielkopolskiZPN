@@ -28,6 +28,14 @@ export default (req, res) => {
         break;
       case "nierozpoczęte":
         clubs = await prisma.clubs.findMany({
+          select: {
+            applications: {
+              status_id: true,
+            },
+          },
+          include: {
+            applications: true,
+          },
           where: {
             OR: [
               {
@@ -74,6 +82,5 @@ export default (req, res) => {
     });
 
     return resolve();
-    await prisma.$disconnect();
   });
 };
