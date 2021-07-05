@@ -45,6 +45,7 @@ export default (req, res) => {
             ],
           },
         });
+        break;
       case "zatwierdzone":
         clubs = await prisma.clubs.findMany({
           where: {

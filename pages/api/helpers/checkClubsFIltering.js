@@ -10,70 +10,75 @@ export default (req, res) => {
     //1. check the rule for clubs
     //2. get all clubs that met conditions
     // console.log("message", message);
-
-    switch (recipients) {
-      case "aktywne":
-        clubs = await prisma.clubs.findMany({
-          where: {
-            active: true,
-          },
-        });
-        break;
-      case "niekatywne":
-        clubs = await prisma.clubs.findMany({
-          where: {
-            active: false,
-          },
-        });
-        break;
-      case "nierozpoczęte":
-        clubs = await prisma.clubs.findMany({
-          select: {
-            internal_id: true,
-            name: true,
-            applications: {
-              status_id: true,
+    try {
+      switch (recipients) {
+        case "aktywne":
+          clubs = await prisma.clubs.findMany({
+            where: {
+              active: true,
             },
-          },
-
-          where: {
-            OR: [
-              {
-                applications: {
-                  none: {},
-                },
-              },
-              {
-                applications: {
-                  every: {
-                    status_id: 1,
+          });
+          break;
+        case "niekatywne":
+          clubs = await prisma.clubs.findMany({
+            where: {
+              active: false,
+            },
+          });
+          break;
+        case "nierozpoczęte":
+          clubs = await prisma.clubs.findMany({
+            where: {
+              OR: [
+                {
+                  applications: {
+                    none: {},
                   },
                 },
-              },
-            ],
-          },
-        });
-      case "zatwierdzone":
-        clubs = await prisma.clubs.findMany({
-          where: {
-            applications: {
-              every: {
-                OR: [
-                  {
-                    status_id: 2,
+                {
+                  applications: {
+                    every: {
+                      status_id: 1,
+                    },
                   },
-                  {
-                    status_id: 3,
-                  },
-                ],
+                },
+              ],
+            },
+            select: {
+              leauge: true,
+              email: true,
+              name: true,
+              applications: true,
+            },
+          });
+          break;
+        case "zatwierdzone":
+          clubs = await prisma.clubs.findMany({
+            where: {
+              applications: {
+                every: {
+                  OR: [
+                    {
+                      status_id: 2,
+                    },
+                    {
+                      status_id: 3,
+                    },
+                  ],
+                },
               },
             },
-          },
-        });
-        break;
-      case "wszystkie":
-        clubs = await prisma.clubs.findMany();
-        break;
+          });
+          break;
+        case "wszystkie":
+          clubs = await prisma.clubs.findMany();
+          break;
+      }
+    } catch (err) {
+      res.send(err);
+      console.log(err);
+      res.send(400);
+      return resolve();
     }
 
     res.json({
