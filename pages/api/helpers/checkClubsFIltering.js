@@ -35,13 +35,7 @@ export default (req, res) => {
               status_id: true,
             },
           },
-          include: {
-            applications: {
-              select: {
-                status_id: true,
-              },
-            },
-          },
+
           where: {
             OR: [
               {
