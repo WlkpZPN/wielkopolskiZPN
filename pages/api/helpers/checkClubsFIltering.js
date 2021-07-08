@@ -43,10 +43,12 @@ export default (req, res) => {
                   },
                 },
               ],
+              NOT: [{ leauge: null }],
+              active: true,
             },
             select: {
               leauge: true,
-              email: true,
+              active: true,
               name: true,
               applications: true,
             },

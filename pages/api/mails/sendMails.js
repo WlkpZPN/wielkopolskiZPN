@@ -43,6 +43,8 @@ export default (req, res) => {
                 },
               },
             ],
+            NOT: [{ leauge: null }],
+            active: true,
           },
         });
         break;
@@ -59,7 +61,6 @@ export default (req, res) => {
                     status_id: 3,
                   },
                 ],
-                NOT: [{ leauge: null }],
               },
             },
           },

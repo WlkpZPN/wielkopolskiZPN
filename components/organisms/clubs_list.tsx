@@ -36,7 +36,6 @@ const ClubsList = () => {
   // console.log("current page", page);
 
   useEffect(() => {
-    console.log("effect worked");
     if (totalPages <= page) {
       setPage(0);
     }
