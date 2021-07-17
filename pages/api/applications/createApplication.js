@@ -8,9 +8,9 @@ const s3 = new aws.S3({
   secretAccessKey: process.env.DB_SPACES_SECRET,
 });
 export default (req, res) => {
+  console.log(req.data);
   return new Promise(async (resolve) => {
-    const { clubID, applicationID, clubData } = req.data;
-
+    const { clubID, applicationID, clubData } = req.body;
     const sport_facilities = clubData.applications[0].sport_facilities;
 
     try {
