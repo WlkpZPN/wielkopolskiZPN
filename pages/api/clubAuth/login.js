@@ -5,6 +5,16 @@ const KEY = process.env.AUTH_KEY;
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { email, password } = req.body;
+
+    if (!req.body) {
+      res.status(400);
+      res.json({
+        status: "error",
+        message:
+          "logowanie nie powiodło się, spróbuj skorzystać z innej przeglądarki lub odśwież stronę",
+      });
+    }
+
     if (!email || !password) {
       res.status(400);
       res.json({

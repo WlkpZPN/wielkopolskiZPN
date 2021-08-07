@@ -247,7 +247,6 @@ const Home = ({ clubData, authData, settings }) => {
               )}
             </>
           );
-
         case 6:
           return (
             <>

@@ -98,6 +98,12 @@ const LoginPage = ({ userData }) => {
 
     const { valid, message } = validateEmail(email);
 
+    if (password == null || password == "") {
+      setError("Proszę podać hasło");
+      setLoading(false);
+      return;
+    }
+
     if (valid) {
       setError("");
       setLoading(true);
@@ -110,7 +116,6 @@ const LoginPage = ({ userData }) => {
         .then((res) => {
           setLoading(false);
 
-          //console.log(res);
           const { success, token } = res.data;
 
           router.push("/");
