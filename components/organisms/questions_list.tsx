@@ -19,6 +19,18 @@ const Info = styled(InfoCircle)`
   color: ${({ theme }) => theme.primary};
   margin: 0 auto;
   align-self: center;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background: tomato;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -31,7 +43,7 @@ const TableHeader = styled.span`
 
 const StyledRow = styled(TableRow)`
   grid-template-columns:
-    30px 80px minmax(100px, 150px) minmax(150px, 250px)
+    30px 40px minmax(100px, 150px) minmax(150px, 250px)
     minmax(200px, 350px) auto;
 
   max-height: 50px;
@@ -97,7 +109,6 @@ const QuestionsList = ({ userData, questions }) => {
         </StyledRow>
       );
     });
-
     return questionsArr;
   };
   return (
@@ -105,7 +116,7 @@ const QuestionsList = ({ userData, questions }) => {
       <NewQUestionModal visible={visible} setVisible={setVisible} />
       <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
         <span></span>
-        <TableHeader>ID pytania</TableHeader>
+        <TableHeader>ID </TableHeader>
         <TableHeader>Data dodania pytania</TableHeader>
         <TableHeader>Grupa pytań</TableHeader>
         <TableHeader>Pytanie</TableHeader>

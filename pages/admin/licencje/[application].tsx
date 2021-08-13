@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, createContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { getClubData } from "../../../middleware/swr";
+
 import { toast } from "react-toastify";
 import prisma from "../../../middleware/prisma";
 import { renderAmount, renderMainAmount } from "../../../middleware/utils";
@@ -11,7 +11,7 @@ import AdminLayout from "../../../components/organisms/admin_layout";
 import ClubApplication from "../../../components/organisms/club_application";
 import ApplicationStatus from "../../../components/atoms/application_status";
 import IconButton from "../../../components/atoms/IconButton";
-import { makeid } from "../../../middleware/utils";
+
 import { ControllerFastBackward } from "@styled-icons/entypo/ControllerFastBackward";
 import PrimaryButton from "../../../components/atoms/primary_button";
 import Link from "next/link";
@@ -19,7 +19,7 @@ import Loader from "../../../components/atoms/loader";
 import CorrectModal from "../../../components/molecules/correct_modal";
 import RejectModal from "../../../components/molecules/reject_modal";
 import Paragraph from "../../../components/atoms/paragraph";
-
+import AddInvoiceWrapper from "../../../components/organisms/add_invoice_wrapper";
 import ErrorMessage from "../../../components/atoms/error_message";
 import LicenseDecision from "../../../components/atoms/license_decision";
 import LicenseButton from "../../../components/molecules/license_button";
@@ -52,13 +52,14 @@ const Application = ({ clubData, authData, settings }) => {
         return (
           <>
             {" "}
-            <Paragraph>Dodaj fakturę</Paragraph>{" "}
+            {/* <Paragraph>Dodaj fakturę</Paragraph>{" "}
             <AddInvoice
               admin={true}
               clubData={clubData}
               file={invoiceFiles}
               addFile={setInvoiceFiles}
-            />
+            /> */}
+            <AddInvoiceWrapper clubData={clubData} admin={true} />
             <ErrorMessage>
               {clubData.applications[0].invoice_required &&
               !clubData.invoice_url
@@ -75,13 +76,14 @@ const Application = ({ clubData, authData, settings }) => {
           <>
             <div style={{ display: "flex", alignItems: "flex-end" }}>
               <p>
-                <Paragraph>Wystaw licencję</Paragraph>
+                {/* <Paragraph>Wystaw licencję</Paragraph>
                 <AddInvoice
                   admin={true}
                   clubData={clubData}
                   file={invoiceFiles}
                   addFile={setInvoiceFiles}
-                />
+                /> */}
+                <AddInvoiceWrapper clubData={clubData} admin={true} />
               </p>
               <LicenseDecision
                 authData={authData}
@@ -149,13 +151,14 @@ const Application = ({ clubData, authData, settings }) => {
             </div>
             {authData.role !== "nadzór finansów" && (
               <div>
-                <Paragraph>Faktura</Paragraph>
+                {/* <Paragraph>Faktura</Paragraph>
                 <AddInvoice
                   admin={true}
                   clubData={clubData}
                   file={invoiceFiles}
                   addFile={setInvoiceFiles}
-                />
+                /> */}
+                <AddInvoiceWrapper clubData={clubData} admin={true} />
               </div>
             )}
           </div>
@@ -173,13 +176,14 @@ const Application = ({ clubData, authData, settings }) => {
               />
             </div>
             <div>
-              <Paragraph>Faktura</Paragraph>
+              {/* <Paragraph>Faktura</Paragraph>
               <AddInvoice
                 admin={true}
                 clubData={clubData}
                 file={invoiceFiles}
                 addFile={setInvoiceFiles}
-              />
+              /> */}
+              <AddInvoiceWrapper clubData={clubData} admin={true} />
             </div>
           </div>
         );
@@ -195,13 +199,14 @@ const Application = ({ clubData, authData, settings }) => {
               />
             </div>
             <div>
-              <Paragraph>Faktura</Paragraph>
+              {/* <Paragraph>Faktura</Paragraph>
               <AddInvoice
                 admin={true}
                 clubData={clubData}
                 file={invoiceFiles}
                 addFile={setInvoiceFiles}
-              />
+              /> */}
+              <AddInvoiceWrapper clubData={clubData} admin={true} />
             </div>
           </div>
         );

@@ -92,7 +92,11 @@ const Pomoc = ({ authData }) => {
             </StyledLink>
           </div>
         </Footer>
-        <AskQuestionModal visible={visible} setVisible={setVisible} />
+        <AskQuestionModal
+          authData={authData}
+          visible={visible}
+          setVisible={setVisible}
+        />
       </ClientLayout>
     );
   }

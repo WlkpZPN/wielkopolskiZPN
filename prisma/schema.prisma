@@ -47,6 +47,8 @@ model applications {
   supervision_type                                               String?                     @db.VarChar(100)
   seasons                                                        String?                     @db.VarChar(200)
   payment_id                                                     String?                     @unique
+  invoice_url                                                    String?
+  invoice_url_2                                                  String?
   clubs                                                          clubs?                      @relation(fields: [club_id], references: [id])
   statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
   annotations                                                    annotations[]
@@ -154,6 +156,7 @@ model frequently_asked_questions {
   created_at String? @db.VarChar(300)
   updated_at String? @db.VarChar(300)
   category   String? @db.VarChar(200)
+  club_name  String? @db.VarChar(300)
 }
 
 model histories {

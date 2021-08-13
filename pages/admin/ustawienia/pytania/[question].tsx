@@ -137,6 +137,14 @@ const Application = ({ authData, allQuestions, settings, question }) => {
           </option>
           <option value="Inne">Inne</option>
         </Select>
+        {question.club_name != "" ? (
+          <Label>
+            Klub
+            <span style={{ fontWeight: "normal" }}>
+              {question.club_name || ""}
+            </span>
+          </Label>
+        ) : null}
         <Label>
           Pytanie
           <TextArea

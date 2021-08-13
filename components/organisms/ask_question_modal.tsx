@@ -54,7 +54,7 @@ const Bold = styled.span`
   font-weight: bold;
 `;
 
-const AskQuestionModal = ({ visible, setVisible }) => {
+const AskQuestionModal = ({ visible, setVisible, authData }) => {
   const router = useRouter();
   const [category, setCategory] = useState("Proces składania wniosku");
   const [loading, setLoading] = useState(false);
@@ -77,6 +77,7 @@ const AskQuestionModal = ({ visible, setVisible }) => {
     setLoading(true);
     axios
       .post("/api/settings/askQuestion", {
+        clubName: authData.name,
         question,
         category,
       })

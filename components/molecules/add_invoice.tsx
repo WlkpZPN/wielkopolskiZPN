@@ -149,18 +149,25 @@ const DeleteButton = styled.span`
   }
 `;
 
-const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
+const AddInvoice = ({
+  admin,
+  clubData,
+  file = null,
+  addFile = null,
+  deleteFile = null,
+  invoiceUrl,
+}) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const router = useRouter();
-
+  console.log(file);
   const handleChange = (e) => {
     e.preventDefault();
     addFile(e.target.files[0]);
   };
 
   const handleDelete = () => {
-    addFile(null);
+    deleteFile();
   };
 
   const uploadFile = async () => {
@@ -212,7 +219,7 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
       toast.error("Faktura usunięta", {
         autoClose: 2000,
       });
-      addFile(null);
+      deleteFile();
       router.replace(router.asPath);
     } catch (error) {
       console.log(error);
@@ -262,7 +269,7 @@ const AddInvoice = ({ admin, clubData, file = null, addFile = null }) => {
       return <Loader style={{ alignSelf: "center" }} />;
     }
 
-    if (clubData.invoice_url) {
+    if (clubData.applications[0].invoice_url) {
       const addressArr = clubData.invoice_url.split("/");
       const key = addressArr[addressArr.length - 1];
       return (
