@@ -39,12 +39,12 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
   return (
     <Row>
       <Column>
-        <Paragraph>Dodaj fakturę</Paragraph>
+        <Paragraph>Dodaj fakturę (dev) </Paragraph>
         <AddInvoice
           admin={admin}
           clubData={clubData}
           addFile={(file) => addFile("first", file)}
-          file={invoiceFiles.first}
+          file={invoiceFiles}
           deleteFile={() => deleteFile("first")}
           invoiceUrl={clubData.applications[0].invoice_url}
         />
@@ -56,7 +56,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
             admin={admin}
             clubData={clubData}
             addFile={(file) => addFile("second", file)}
-            file={invoiceFiles.second}
+            file={invoiceFiles}
             deleteFile={() => deleteFile("second")}
             invoiceUrl={clubData.applications[0].invoice_url_2}
           />
