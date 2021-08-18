@@ -155,7 +155,7 @@ const AddInvoice = ({
   file = null,
   addFile = null,
   deleteFile = null,
-  invoiceUrl,
+  uploadFile = null,
 }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -166,83 +166,24 @@ const AddInvoice = ({
     addFile(e.target.files[0]);
   };
 
-  const handleDelete = () => {
-    deleteFile();
+  const handleDelete = (key = null) => {
+    deleteFile(key);
   };
 
-  const uploadFile = async () => {
-    const formData = new FormData();
-    formData.append("invoice", file);
-
-    const config = {
-      headers: { "Content-type": "multipart/form-data" },
-      onUploadProgress: (event) => {
-        console.log(
-          `Current progress:`,
-          Math.round((event.loaded * 100) / event.total)
-        );
-      },
-    };
-    try {
-      setLoading(true);
-      await axios.post("/api/applications/uploadInvoice", formData, config);
-      await axios.post("/api/clubs/updateData", {
-        clubId: clubData.id,
-        data: {
-          invoice_url: `https://pdf.fra1.digitaloceanspaces.com/faktury/${file.name}`,
-        },
-      });
-
-      setLoading(false);
-      toast.success("Pomyślnie dodano fakturę", {
-        autoClose: 2000,
-      });
-      router.replace(router.asPath);
-    } catch (error) {
-      console.log(error);
-      toast.error("Dodanie faktury się nie powiodło,sprobój ponownie", {
-        autoClose: 2000,
-      });
-      setLoading(false);
-      return;
-    }
-  };
-
-  const deleteInvoice = async (key) => {
-    setLoading(true);
-    try {
-      axios.post("/api/applications/deleteInvoice", {
-        key: key,
-        clubId: clubData.id,
-      });
-      setLoading(false);
-      toast.error("Faktura usunięta", {
-        autoClose: 2000,
-      });
-      deleteFile();
-      router.replace(router.asPath);
-    } catch (error) {
-      console.log(error);
-      toast.error("Usuwanie faktury się nie powiodło,spróbuj ponownie", {
-        autoClose: 2000,
-      });
-      setLoading(false);
-    }
-  };
+  //* null if no invoice added
+  //* object ( not string ) if file is in the browser
+  //* url string if file is on the server
 
   const generateContent = () => {
-    if (!admin) {
-      if (clubData.invoice_url) {
-        const addressArr = clubData.invoice_url.split("/");
+    if (admin == false) {
+      //TODO handle object case
+      if (typeof file == "string") {
+        const addressArr = file.split("/");
         const key = addressArr[addressArr.length - 1];
         return (
           <>
             {" "}
-            <a
-              target="_blank"
-              style={{ marginBottom: "16px" }}
-              href={clubData.invoice_url}
-            >
+            <a target="_blank" style={{ marginBottom: "16px" }} href={file}>
               <OutlineButton>Pobierz fakturę</OutlineButton>
             </a>
             <PrimaryButton
@@ -269,23 +210,19 @@ const AddInvoice = ({
       return <Loader style={{ alignSelf: "center" }} />;
     }
 
-    if (clubData.applications[0].invoice_url) {
-      const addressArr = clubData.invoice_url.split("/");
+    if (typeof file == "string") {
+      const addressArr = file.split("/");
       const key = addressArr[addressArr.length - 1];
       return (
         <>
           {" "}
-          <a
-            target="_blank"
-            style={{ marginBottom: "16px" }}
-            href={clubData.invoice_url}
-          >
+          <a target="_blank" style={{ marginBottom: "16px" }} href={file}>
             <OutlineButton>Pobierz fakturę</OutlineButton>
           </a>
           <PrimaryButton
             color="danger"
             hoverColor="dangerDark"
-            onClick={() => deleteInvoice(key)}
+            onClick={() => deleteFile(key)}
           >
             Usuń
           </PrimaryButton>
@@ -293,7 +230,7 @@ const AddInvoice = ({
       );
     }
 
-    if (file) {
+    if (typeof file != "string" && file) {
       return (
         <>
           <PrimaryButton
@@ -319,7 +256,7 @@ const AddInvoice = ({
       );
     }
 
-    if (!clubData.invoice_url && !file) {
+    if (file == null) {
       return (
         <Label>
           <AddButton>+ Dodaj dokument</AddButton>
@@ -336,9 +273,9 @@ const AddInvoice = ({
   };
 
   const renderTitle = () => {
-    if (!admin) {
-      if (clubData.invoice_url) {
-        const addressArr = clubData.invoice_url.split("/");
+    if (admin == false) {
+      if (file) {
+        const addressArr = file.split("/");
         return (
           <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
             {addressArr[addressArr.length - 1]}
@@ -353,14 +290,14 @@ const AddInvoice = ({
       }
     }
 
-    if (clubData.invoice_url) {
-      const addressArr = clubData.invoice_url.split("/");
+    if (typeof file === "string") {
+      const addressArr = file.split("/");
       return (
         <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
           {addressArr[addressArr.length - 1]}
         </span>
       );
-    } else if (file) {
+    } else if (typeof file == "object" && file != null) {
       return (
         <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
           {file.name}

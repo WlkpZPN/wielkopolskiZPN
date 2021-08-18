@@ -14,24 +14,58 @@ const s3 = new aws.S3({
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { key, clubId } = req.body;
-    console.log(req.body);
+    const { key, applicationID, index } = req.body;
+
     const params = {
       Bucket: "pdf/faktury",
       Key: key,
     };
+    try {
+    } catch (e) {
+      res.status(400);
+      console.log(e);
+      res.json({
+        status: "error",
+        message: e,
+      });
+    }
     s3.deleteObject(params, function (err, data) {
       if (err) console.log(err, err.stack);
-      else console.log(data);
+      else {
+        console.log(data);
+      }
     });
 
-    await prisma.clubs.update({
-      where: {
-        id: parseInt(clubId),
-      },
-      data: {
-        invoice_url: null,
-      },
-    });
+    if (index == "second") {
+      await prisma.applications.update({
+        where: {
+          id: parseInt(applicationID),
+        },
+        data: {
+          invoice_url_2: null,
+        },
+      });
+      res.status(200);
+      res.send("faktura usunieta");
+      return resolve();
+    }
+
+    if (index == "first") {
+      await prisma.applications.update({
+        where: {
+          id: parseInt(applicationID),
+        },
+        data: {
+          invoice_url: null,
+        },
+      });
+
+      res.status(200);
+      res.send("faktura usunieta");
+      return resolve();
+    }
+    res.status(400);
+    res.send("nieznany index");
+    return resolve();
   });
 };

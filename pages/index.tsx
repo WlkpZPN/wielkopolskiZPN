@@ -26,6 +26,7 @@ import ClubSteps from "../components/organisms/club_steps";
 import LicenseButton from "../components/molecules/license_button";
 import AddInvoice from "../components/molecules/add_invoice";
 import Header from "../components/atoms/header";
+import AddInvoiceWrapper from "../components/organisms/add_invoice_wrapper";
 
 const PaymentLink = styled.a`
   background: url("http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png");
@@ -345,12 +346,10 @@ const Home = ({ clubData, authData, settings }) => {
                   )}{" "}
                   &nbsp;PLN
                 </span>
-                {clubData.invoice_url ? (
+                {clubData.applications[0].invoice_url ||
+                clubData.applications[0].invoice_url_2 ? (
                   <>
-                    <h2 style={{ marginTop: "16px", marginBottom: "8px" }}>
-                      Faktura
-                    </h2>
-                    <AddInvoice admin={false} clubData={clubData} />
+                    <AddInvoiceWrapper admin={false} clubData={clubData} />
                   </>
                 ) : null}
               </div>
@@ -379,7 +378,7 @@ const Home = ({ clubData, authData, settings }) => {
                 płatność.
               </Paragraph>
               <div>
-                <AddInvoice admin={false} clubData={clubData} />
+                <AddInvoiceWrapper admin={false} clubData={clubData} />
               </div>
               <ClubSteps status="zaakceptowany opłacony" />
               <ClubApplication
@@ -407,7 +406,7 @@ const Home = ({ clubData, authData, settings }) => {
                 licencję na sezon 2021 do IV Ligi
               </Paragraph>
               <div style={{ margin: "70px 0", display: "flex" }}>
-                <AddInvoice admin={false} clubData={clubData} />
+                <AddInvoiceWrapper admin={false} clubData={clubData} />
                 <LicenseButton isAdmin={false} clubData={clubData} />
               </div>
               <ClubSteps status="licencja wydana" />

@@ -17,7 +17,7 @@ const upload = multer({
     bucket: "pdf/faktury",
     acl: "public-read",
     key: function (req, file, cb) {
-      console.log(file);
+      // console.log(file);
       cb(null, file.originalname);
     },
   }),
@@ -42,8 +42,9 @@ apiRoute.post((req, res) => {
       console.log(error);
       res.status(400).send(error);
     } else {
-      console.log("data", req.file);
-      res.send("");
+      res.status(200);
+
+      res.send("invoice added");
     }
   });
 });
