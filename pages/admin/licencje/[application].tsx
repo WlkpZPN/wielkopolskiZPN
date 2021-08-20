@@ -412,6 +412,7 @@ const Application = ({ clubData, authData, settings }) => {
           clubData.applications[0] ? clubData.applications[0].internal_id : ""
         }
         id={clubData.applications[0] ? clubData.applications[0].id : ""}
+        email={clubData.email}
         visible={visible}
         setVisibile={setVisible}
       />

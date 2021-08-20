@@ -69,7 +69,14 @@ const TextArea = styled.textarea`
   min-height: 150px;
 `;
 
-const CorrectModal = ({ internalId, id, visible, setVisibile, userID }) => {
+const CorrectModal = ({
+  internalId,
+  id,
+  visible,
+  setVisibile,
+  userID,
+  email,
+}) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
@@ -101,11 +108,17 @@ const CorrectModal = ({ internalId, id, visible, setVisibile, userID }) => {
     const steps = JSON.stringify(data);
     setLoading(true);
     //console.log(JSON.parse(step));
-    await await axios.post("/api/applications/addCorrections", {
+
+    await axios.post("/api/applications/addCorrections", {
       steps: steps,
       description: description,
       applicationID: id,
       userID: userID,
+    });
+
+    await axios.post("/api/applications/sendCorrectionMail", {
+      email,
+      description,
     });
 
     setLoading(false);
