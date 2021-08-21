@@ -107,26 +107,34 @@ const CorrectModal = ({
     e.preventDefault();
     const steps = JSON.stringify(data);
     setLoading(true);
+
+    try {
+      await axios.post("/api/applications/addCorrections", {
+        steps: steps,
+        description: description,
+        applicationID: id,
+        userID: userID,
+      });
+      await axios.post("/api/mails/sendCorrectionMail", {
+        email,
+        description,
+      });
+
+      setLoading(false);
+      toast.warn("Wniosek oznaczony jako do poprawy", {
+        autoClose: 1500,
+      });
+      setVisibile(false);
+      router.replace("/admin");
+    } catch (e) {
+      setVisibile(false);
+      setLoading(false);
+      console.log(e.message);
+      toast.error("Nie udało się wysłać wniosku do poprawy", {
+        autoClose: 1500,
+      });
+    }
     //console.log(JSON.parse(step));
-
-    await axios.post("/api/applications/addCorrections", {
-      steps: steps,
-      description: description,
-      applicationID: id,
-      userID: userID,
-    });
-
-    await axios.post("/api/applications/sendCorrectionMail", {
-      email,
-      description,
-    });
-
-    setLoading(false);
-    toast.warn("Wniosek oznaczony jako do poprawy", {
-      autoClose: 1500,
-    });
-    setVisibile(false);
-    router.replace("/admin");
   };
   return (
     <Background onClick={handleClose} visible={visible}>

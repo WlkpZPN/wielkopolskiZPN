@@ -11,7 +11,7 @@ import transporter from "../../../middleware/transporter";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { description, applicationID } = req.body;
+    const { description, email } = req.body;
 
     transporter.sendMail({
       from: "licklub@wielkopolskizpn.pl",
@@ -38,7 +38,7 @@ export default (req, res) => {
       </tr>
       <tr style="padding: 0">
         <td style="margin: 0; padding: 16px 48px; background-color: #0156a6">
-          <h1 style="font-weight:bold; margin: 0; padding: 0; color: white"Twój wniosek został skierowany do poprawy</h1>
+          <h1 style="font-weight:bold; margin: 0; padding: 0; color: white">Twój wniosek został skierowany do poprawy</h1>
         </td>
       </tr>
       <tr>
