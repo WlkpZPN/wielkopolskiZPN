@@ -69,7 +69,14 @@ const TextArea = styled.textarea`
   min-height: 150px;
 `;
 
-const CorrectModal = ({ internalId, id, visible, setVisibile, userID }) => {
+const CorrectModal = ({
+  internalId,
+  id,
+  visible,
+  setVisibile,
+  userID,
+  email,
+}) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
@@ -100,20 +107,34 @@ const CorrectModal = ({ internalId, id, visible, setVisibile, userID }) => {
     e.preventDefault();
     const steps = JSON.stringify(data);
     setLoading(true);
-    //console.log(JSON.parse(step));
-    await await axios.post("/api/applications/addCorrections", {
-      steps: steps,
-      description: description,
-      applicationID: id,
-      userID: userID,
-    });
 
-    setLoading(false);
-    toast.warn("Wniosek oznaczony jako do poprawy", {
-      autoClose: 1500,
-    });
-    setVisibile(false);
-    router.replace("/admin");
+    try {
+      await axios.post("/api/applications/addCorrections", {
+        steps: steps,
+        description: description,
+        applicationID: id,
+        userID: userID,
+      });
+      await axios.post("/api/mails/sendCorrectionMail", {
+        email,
+        description,
+      });
+
+      setLoading(false);
+      toast.warn("Wniosek oznaczony jako do poprawy", {
+        autoClose: 1500,
+      });
+      setVisibile(false);
+      router.replace("/admin");
+    } catch (e) {
+      setVisibile(false);
+      setLoading(false);
+      console.log(e.message);
+      toast.error("Nie udało się wysłać wniosku do poprawy", {
+        autoClose: 1500,
+      });
+    }
+    //console.log(JSON.parse(step));
   };
   return (
     <Background onClick={handleClose} visible={visible}>
