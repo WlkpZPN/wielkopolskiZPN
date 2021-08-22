@@ -353,3 +353,40 @@ export const renderMainAmount = (leauge, settings, seasons) => {
 export const filterArr = (el) => {
   return el != "" && el != " ";
 };
+
+export const convertStepsToString = (steps) => {
+  let allStepsArr = Object.entries(steps);
+
+  let filteredSteps = allStepsArr.filter((step) => step[1]);
+
+  let result = [];
+
+  filteredSteps.forEach((step) => {
+    console.log(step[0]);
+    switch (step[0]) {
+      case "one":
+        result.push("1");
+        break;
+      case "two":
+        result.push("2");
+        break;
+      case "three":
+        result.push("3");
+        break;
+      case "four":
+        result.push("4");
+        break;
+      case "five":
+        result.push("5");
+        break;
+      case "six":
+        result.push("6");
+        break;
+      case "seven":
+        result.push("7");
+        break;
+    }
+  });
+
+  return result.join(",");
+};

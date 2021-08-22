@@ -1,9 +1,12 @@
 import prisma from "../../../middleware/prisma";
-import { getCurrentDate } from "../../../middleware/utils";
+import {
+  getCurrentDate,
+  convertStepsToString,
+} from "../../../middleware/utils";
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    const { applicationID, description, steps, userID } = req.body;
+    const { applicationID, description, steps, userID, data } = req.body;
     try {
       await prisma.applications.update({
         where: {
@@ -19,7 +22,9 @@ export default async (req, res) => {
       await prisma.histories.create({
         data: {
           application_id: applicationID,
-          description: "Odrzucenie wniosku licencyjnego jako do poprawy",
+          description: `Skierowanie do poprawy, powód: ${description}. \n Kroki do poprawy: ${convertStepsToString(
+            data
+          )}`,
           status_id: 4,
           created_at: getCurrentDate(),
           user_id: parseInt(userID),

@@ -91,29 +91,8 @@ export default (req, res) => {
     </table>
   </main>
 </body>`,
-      // template: "mail",
-      // context: {
-      //   content: "testowa wiadomosc",
-      // },
     });
     res.send("email send");
     return resolve();
   });
 };
-
-//  <tr>
-//    <td style="padding: 24px 48px">
-//      <a
-//        style="
-
-//               text-decoration: none;
-//               color: #1296D8;
-//               font-weight: bold;
-
-//             "
-//        href="wielkopolski-zpn-wielkopolskizpn.vercel.app"
-//      >
-//        Platforma Licencyjna
-//      </a>
-//    </td>
-//  </tr>;

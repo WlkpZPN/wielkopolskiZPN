@@ -9,6 +9,7 @@ import Label from "../atoms/form_label";
 import Loader from "../atoms/loader";
 import RadioSquare from "../molecules/form_radio";
 import ApplicationStatus from "../atoms/application_status";
+import { convertStepsToString } from "../../middleware/utils";
 const Close = styled(CloseOutline)`
   width: 32px;
   color: black;
@@ -99,7 +100,7 @@ const CorrectModal = ({
   const handleChange = (field, value) => {
     let newData = data;
     newData[field] = value;
-    console.log(newData);
+
     setData(Object.assign({ [field]: value }, data));
   };
 
@@ -111,6 +112,7 @@ const CorrectModal = ({
     try {
       await axios.post("/api/applications/addCorrections", {
         steps: steps,
+        data: data,
         description: description,
         applicationID: id,
         userID: userID,
@@ -134,7 +136,6 @@ const CorrectModal = ({
         autoClose: 1500,
       });
     }
-    //console.log(JSON.parse(step));
   };
   return (
     <Background onClick={handleClose} visible={visible}>

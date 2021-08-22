@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/admin/licencje"  ],
+, "pages/admin/licencje", "middleware/utils.js"  ],
   "exclude": [
     "node_modules"
   ]
