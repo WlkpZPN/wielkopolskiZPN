@@ -498,7 +498,7 @@ const Application = ({ clubData, authData, settings }) => {
           errors=""
           error_message=""
           clubData={clubData}
-          readOnly={true}
+          readOnly={false}
           settings={settings}
         />
       )}

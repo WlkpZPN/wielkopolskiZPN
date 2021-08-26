@@ -263,7 +263,9 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
                 hoverColor="success"
                 onClick={submitForm}
               >
-                Zatwierdź i wyślij do Wielkopolskiego ZPN
+                {clubData.applications[0].status_id == 4
+                  ? "WYsłij poprawiony wniosek"
+                  : "Zatwierdź i wyślij do Wielkopolskiego ZPN"}
               </PrimaryButton>{" "}
             </>
           ) : null}
