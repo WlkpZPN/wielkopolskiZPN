@@ -65,7 +65,7 @@ const Pomoc = ({ authData }) => {
       <ClientLayout clubData={clubData} view="Pomoc">
         <Header>Pomoc / FAQ</Header>
 
-        {/* <Paragraph style={{ color: "black" }}>O co chcesz zapytać ?</Paragraph>
+        <Paragraph style={{ color: "black" }}>O co chcesz zapytać ?</Paragraph>
         <div>
           <SearchBar
             value={query}
@@ -78,7 +78,7 @@ const Pomoc = ({ authData }) => {
           <QuestionClubList questions={list} />
         ) : (
           <p>Brak pytań do wyświetlenia</p>
-        )} */}
+        )}
 
         <Footer>
           <h2>Nie znalazłaś/eś odpowiedzi?</h2>
