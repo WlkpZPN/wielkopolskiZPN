@@ -86,22 +86,6 @@ const Home = ({ clubData, authData, settings }) => {
       );
     }
 
-    if (
-      new Date() > new Date(settings.end_date) &&
-      clubData.applications[0].status_id < 6 &&
-      settings.locked_sending
-    ) {
-      return (
-        <>
-          {" "}
-          <Header>Czas na składanie wniosków licencyjnych upłynął</Header>{" "}
-          <Paragraph>
-            Jeśli nie udało Ci się złożyć wniosku licencyjnego w terminie,
-            skontaktuj się z Wielkopolskim ZPN
-          </Paragraph>
-        </>
-      );
-    }
     if (clubData.applications.length === 0) {
       // 1. tworzymy nowy wniosek
 

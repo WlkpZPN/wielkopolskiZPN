@@ -173,16 +173,6 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
               placeholder="data"
             />
           </Label>
-          <Label style={{ width: "250px", fontSize: "14px" }}>
-            zakończenie wniosku licencyjnego{" "}
-            <Input
-              disabled={userData?.role !== "administrator"}
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              placeholder="data"
-            />
-          </Label>
         </div>
         {userData?.role === "administrator" && (
           <LockButton locked={settings.locked_sending} />

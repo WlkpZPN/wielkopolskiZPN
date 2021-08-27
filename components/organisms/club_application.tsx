@@ -8,6 +8,7 @@ import { extractAddressData } from "../../middleware/utils";
 import StepOneForm from "./step1_form";
 import StepTwoForm from "./step2_form";
 import StepThreeForm from "./step3_form";
+import ConfirmChangeModal from "../molecules/confirmChangeModal";
 import StepFourForm from "./step4_form";
 import StepFiveForm from "./step5_form";
 import StepSixForm from "./step6_form";
@@ -44,6 +45,7 @@ const ClubApplication = ({
   const improvements = errors ? JSON.parse(errors) : {};
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [newStatus, setNewStatus] = useState(
     clubData.applications[0].status_id
   );
@@ -843,7 +845,13 @@ const ClubApplication = ({
     router.replace(router.asPath);
   };
 
-  const changeApplicationData = async () => {
+  const changeApplicationData = async (skip = false) => {
+    //TODO potwierdzenie przy wniosku opłaconym
+    // if (clubData.applications[0].status_id == 7 && newStatus < 7 && !skip) {
+    //   //show modal
+    //   setVisible(true);
+    //   return;
+    // }
     setLoading(true);
 
     try {
@@ -910,7 +918,12 @@ const ClubApplication = ({
         >
           {isAdmin ? (
             <>
-              {" "}
+              <ConfirmChangeModal
+                updateApplicationFunction={changeApplicationData}
+                visible={visible}
+                setVisible={setVisible}
+                nextStatus={newStatus}
+              />{" "}
               <p> Zmień status wniosku </p> &nbsp;&nbsp;
               <Select
                 value={newStatus}
