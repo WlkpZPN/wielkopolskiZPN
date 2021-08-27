@@ -33,6 +33,7 @@ const StepOneForm = ({
     sendApplication,
     setStep,
     completedSteps,
+    changeApplicationData,
   } = useContext(ApplicationContext);
   // console.log(error);
 
@@ -220,7 +221,16 @@ const StepOneForm = ({
               >
                 Zapisz werjse roboczą
               </PrimaryButton>
-            ) : null}
+            ) : (
+              <PrimaryButton
+                type="button"
+                color="success"
+                hoverColor="successDark"
+                onClick={changeApplicationData}
+              >
+                Zaktualizuj wniosek
+              </PrimaryButton>
+            )}
 
             {completedSteps.stepOne === "error" ? (
               <PrimaryButton

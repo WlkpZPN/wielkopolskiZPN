@@ -29,6 +29,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     currentObject,
     clubData,
     fileEdit,
+    changeApplicationData,
   } = context;
   const [regulations, setRegulations] = useState(show_buttons ? false : true);
   const stepTwoFiles =
@@ -268,7 +269,16 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
                   : "Zatwierdź i wyślij do Wielkopolskiego ZPN"}
               </PrimaryButton>{" "}
             </>
-          ) : null}
+          ) : (
+            <PrimaryButton
+              type="button"
+              color="success"
+              hoverColor="successDark"
+              onClick={changeApplicationData}
+            >
+              Zaktualizuj wniosek
+            </PrimaryButton>
+          )}
         </div>
       </FormTemplate>
     </Fieldset>

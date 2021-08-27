@@ -43,7 +43,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   const { applications } = context.clubData;
   const show_buttons = context.show_buttons;
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
-  const { error, clearErrors, completedSteps } = context;
+  const { error, clearErrors, completedSteps, changeApplicationData } = context;
   const [internalError, setInternalError] = useState("");
   //console.log("current object", sport_facilities[currentObject]);
   const handleNewForm = () => {
@@ -157,8 +157,18 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
               </PrimaryButton>
             ) : null}
           </>
-        ) : null}
+        ) : (
+          <PrimaryButton
+            type="button"
+            color="success"
+            hoverColor="successDark"
+            onClick={changeApplicationData}
+          >
+            Zaktualizuj wniosek
+          </PrimaryButton>
+        )}
         <PrimaryButton
+          style={{ marginLeft: "16px" }}
           type="button"
           onClick={() => handleStepChange("jump", 5)}
         >

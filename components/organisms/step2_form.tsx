@@ -15,10 +15,6 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
   const {
-    fileData,
-    handleFileChange,
-    deleteFile,
-    handleStepFill,
     error,
     clearErrors,
     show_buttons,
@@ -27,6 +23,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     fileEdit,
     setStep,
     completedSteps,
+    changeApplicationData,
   } = context;
 
   const handleChange = context.handleFormChange;
@@ -129,8 +126,18 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
               </PrimaryButton>
             ) : null}
           </>
-        ) : null}
+        ) : (
+          <PrimaryButton
+            type="button"
+            color="success"
+            hoverColor="successDark"
+            onClick={changeApplicationData}
+          >
+            Zaktualizuj wniosek
+          </PrimaryButton>
+        )}
         <PrimaryButton
+          style={{ marginLeft: "16px" }}
           type="button"
           onClick={() => (show_buttons ? handleStepChange("next") : setStep(3))}
         >

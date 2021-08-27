@@ -142,7 +142,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
       </Column>
       {invoiceFiles.second != null || invoiceFiles.first != null ? (
         <Column>
-          <Paragraph>{admin ? "Dodaj koretkę faktury" : "Faktura 2"}</Paragraph>
+          <Paragraph>{admin ? "Dodaj korektę faktury" : "Faktura 2"}</Paragraph>
           <AddInvoice
             admin={admin}
             clubData={clubData}

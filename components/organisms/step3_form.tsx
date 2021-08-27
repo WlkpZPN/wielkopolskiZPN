@@ -35,35 +35,16 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     fileEdit,
     clubData,
     completedSteps,
+    changeApplicationData,
   } = context;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (!checkData()) {
-    //   return;
-    // }
     handleStepFill("stepThree", { completed: true, error: false });
     handleStepChange("next");
   };
-  //console.log(settings);
-  // const renderAmount = (leauge, settings) => {
-  //   console.log(leauge == "IV liga");
-  //   console.log(leauge);
-  //   let amount = "";
-  //   switch (leauge) {
-  //     case "IV liga":
-  //       amount = `${settings.iv_possession_fee}`;
-  //       break;
-  //     case "V liga":
-  //     case "Klasa okręgowa":
-  //       amount = `${settings.v_possession_fee}`;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   return amount;
-  // };
+
   const renderForm = () => {
     switch (formData.youthGroupsPossession) {
       case "posiadamy zespoły":
@@ -238,10 +219,19 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               </PrimaryButton>
             ) : null}
           </>
-        ) : null}
+        ) : (
+          <PrimaryButton
+            type="button"
+            color="success"
+            hoverColor="successDark"
+            onClick={changeApplicationData}
+          >
+            Zaktualizuj wniosek
+          </PrimaryButton>
+        )}
         <PrimaryButton
           type="button"
-          style={{ marginRight: "16px" }}
+          style={{ marginLeft: "16px" }}
           onClick={() => (show_buttons ? handleStepChange("next") : setStep(4))}
         >
           Kolejny krok

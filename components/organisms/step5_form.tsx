@@ -1,19 +1,9 @@
-import { useState, useContext } from "react";
-import styled from "styled-components";
+import { useContext } from "react";
 
 import FormTemplate from "../atoms/form_template";
-import Select from "../atoms/form_select";
-import Label from "../atoms/form_label";
-import RadioContainer from "../atoms/radio_container";
-import Input from "../atoms/input";
-import FormRow from "../atoms/form_row";
+
 import PrimaryButton from "../atoms/primary_button";
-import RadioSquare from "../molecules/form_radio";
-import Paragraph from "../atoms/paragraph";
-import AddFile from "../molecules/add_file";
-import OutlineButton from "../atoms/outline_button";
-import Info from "../atoms/Info";
-import ObjectName from "../atoms/object_name";
+
 import Fieldset from "../atoms/fieldset";
 import FormStatement from "../molecules/form_statement";
 import { ApplicationContext } from "./club_application";
@@ -23,7 +13,8 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
   const handleChange = context.handleFormChange;
   const formData = context.formData.stepFive;
   const show_buttons = context.show_buttons;
-  const { error, clearErrors, completedSteps, setStep } = context;
+  const { error, clearErrors, completedSteps, setStep, changeApplicationData } =
+    context;
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -105,8 +96,18 @@ Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Lice
               </PrimaryButton>
             ) : null}
           </>
-        ) : null}
+        ) : (
+          <PrimaryButton
+            type="button"
+            color="success"
+            hoverColor="successDark"
+            onClick={changeApplicationData}
+          >
+            Zaktualizuj wniosek
+          </PrimaryButton>
+        )}
         <PrimaryButton
+          style={{ marginLeft: "16px" }}
           onClick={() => (show_buttons ? handleStepChange("next") : setStep(6))}
         >
           Kolejny krok

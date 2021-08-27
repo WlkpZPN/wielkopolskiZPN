@@ -1,15 +1,10 @@
 import styled from "styled-components";
 import axios from "axios";
 import { toast } from "react-toastify";
-import uniqid from "uniqid";
 import { useRouter } from "next/router";
 import { useState, createContext, useEffect } from "react";
-import { useLocalStorage } from "../../middleware/hooks";
-import {
-  extractAddressData,
-  convertAddressData,
-  convertToFormData,
-} from "../../middleware/utils";
+import Select from "../atoms/form_select";
+import { extractAddressData } from "../../middleware/utils";
 import StepOneForm from "./step1_form";
 import StepTwoForm from "./step2_form";
 import StepThreeForm from "./step3_form";
@@ -44,10 +39,14 @@ const ClubApplication = ({
   show_buttons,
   settings,
   fileEdit = false,
+  isAdmin = false,
 }) => {
   const improvements = errors ? JSON.parse(errors) : {};
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [newStatus, setNewStatus] = useState(
+    clubData.applications[0].status_id
+  );
   const [step, setStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState({
     stepOne: completed ? "completed" : "default",
@@ -581,26 +580,26 @@ const ClubApplication = ({
     // update data and status of application
   };
 
-  const editApplication = async () => {
-    try {
-    } catch (e) {
-      console.log(e);
-      toast.error(
-        "Aktualizacja aplikacji nie powiodła się,spróbuj ponownie później",
-        {
-          autoClose: 2000,
-        }
-      );
-    }
-    setLoading(true);
-    await axios.post("/api/applications/addHistory", {
-      description: "Złożenie wniosku licencyjnego w terminie.",
-      applicationID: clubData.applications[0].id,
-      statusID: clubData.applications[0].status_id,
-    });
+  // const editApplication = async () => {
+  //   try {
+  //   } catch (e) {
+  //     console.log(e);
+  //     toast.error(
+  //       "Aktualizacja aplikacji nie powiodła się,spróbuj ponownie później",
+  //       {
+  //         autoClose: 2000,
+  //       }
+  //     );
+  //   }
+  //   setLoading(true);
+  //   await axios.post("/api/applications/addHistory", {
+  //     description: "Złożenie wniosku licencyjnego w terminie.",
+  //     applicationID: clubData.applications[0].id,
+  //     statusID: clubData.applications[0].status_id,
+  //   });
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   const saveForm = () => {
     // save data in the application table
@@ -608,6 +607,7 @@ const ClubApplication = ({
 
     setLoading(true);
     if (true) {
+      //TODO wtf is this shit
       addSportFacility();
     }
     axios
@@ -843,6 +843,30 @@ const ClubApplication = ({
     router.replace(router.asPath);
   };
 
+  const changeApplicationData = async () => {
+    setLoading(true);
+
+    try {
+      await axios.post("/api/applications/admin/editApplication", {
+        formData,
+        clubData,
+        newStatus,
+      });
+
+      toast.success("Wniosek zaktualizowany", {
+        autoClose: 2000,
+      });
+      router.replace(router.asPath);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+      toast.error("Nie udało się edytować wniosku,spróbuj ponownie", {
+        autoClose: 2000,
+      });
+    }
+  };
+
   return (
     <ApplicationContext.Provider
       value={{
@@ -870,12 +894,40 @@ const ClubApplication = ({
         setFormData,
         deleteFacilityFile,
         fileEdit,
+        isAdmin,
         completedSteps,
         setStep,
+        changeApplicationData,
       }}
     >
       <div>
-        {" "}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "12px",
+          }}
+        >
+          {isAdmin ? (
+            <>
+              {" "}
+              <p> Zmień status wniosku </p> &nbsp;&nbsp;
+              <Select
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+                style={{ maxWidth: "300px", marginTop: 0 }}
+              >
+                <option value={1}>roboczy</option>
+                <option value={2}>wnioskowany</option>
+                <option value={3}>zatwierdzony</option>
+                <option value={4}>do poprawy</option>
+                <option value={5}>odrzucony</option>
+                <option value={6}>zaakceptowany nieopłacony</option>
+                <option value={7}>zaakceptowany opłacony</option>
+              </Select>{" "}
+            </>
+          ) : null}
+        </div>
         <StepsContainer>
           <StepBox
             improvements={improvements.one || ""}

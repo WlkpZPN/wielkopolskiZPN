@@ -31,6 +31,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
     sendApplication,
     completedSteps,
     setStep,
+    changeApplicationData,
   } = context;
   const submitForm = (e) => {
     e.preventDefault();
@@ -106,8 +107,18 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
               </PrimaryButton>
             ) : null}
           </>
-        ) : null}
+        ) : (
+          <PrimaryButton
+            type="button"
+            color="success"
+            hoverColor="successDark"
+            onClick={changeApplicationData}
+          >
+            Zaktualizuj wniosek
+          </PrimaryButton>
+        )}
         <PrimaryButton
+          style={{ marginLeft: "16px" }}
           type="button"
           onClick={() => (show_buttons ? handleStepChange("next") : setStep(7))}
         >

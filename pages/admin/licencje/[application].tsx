@@ -498,8 +498,10 @@ const Application = ({ clubData, authData, settings }) => {
           errors=""
           error_message=""
           clubData={clubData}
+          isAdmin={true}
           readOnly={false}
           settings={settings}
+          fileEdit={true}
         />
       )}
     </AdminLayout>
