@@ -1,7 +1,6 @@
 import { validateEmail } from "./validation";
 
 export const checkStepOne = (data) => {
-  console.log("leauge", data.leauge);
   if (!data.leauge || data.leauge === "brak") {
     return {
       valid: false,
@@ -183,9 +182,7 @@ export const checkStepSix = (formData) => {
   };
 };
 
-export const validateObject = (data, leauge) => {
-  console.log(data);
-  // // check all required fields
+export const validateObject = (data) => {
   if (!data.name || !data.address || !data.post_code || !data.city) {
     window.scrollTo(0, 0);
     return {

@@ -582,27 +582,6 @@ const ClubApplication = ({
     // update data and status of application
   };
 
-  // const editApplication = async () => {
-  //   try {
-  //   } catch (e) {
-  //     console.log(e);
-  //     toast.error(
-  //       "Aktualizacja aplikacji nie powiodła się,spróbuj ponownie później",
-  //       {
-  //         autoClose: 2000,
-  //       }
-  //     );
-  //   }
-  //   setLoading(true);
-  //   await axios.post("/api/applications/addHistory", {
-  //     description: "Złożenie wniosku licencyjnego w terminie.",
-  //     applicationID: clubData.applications[0].id,
-  //     statusID: clubData.applications[0].status_id,
-  //   });
-
-  //   setLoading(false);
-  // };
-
   const saveForm = () => {
     // save data in the application table
     // save data in the club table
@@ -762,6 +741,8 @@ const ClubApplication = ({
           handleStepFill("stepSix", "completed");
         }
         break;
+      default:
+        break;
     }
 
     // if step has empty required fields mark as uncompleted
@@ -774,6 +755,7 @@ const ClubApplication = ({
         break;
       case "previous":
         if (step > 1) {
+          console.log("chuj");
           setStep(step - 1);
         }
         break;
@@ -792,7 +774,7 @@ const ClubApplication = ({
             data={formData.stepOne}
             handleChange={handleFormChange}
             handleStepChange={handleStepChange}
-            clubData={clubData}
+            settings={settings}
             readOnly={readOnly}
           />
         );

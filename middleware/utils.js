@@ -276,6 +276,13 @@ export const convertLeauge = (leauge) => {
     case "młodzież":
       formatedLeauge = "Ligi młodzieżowe";
       break;
+    case "futsal":
+      formatedLeauge = "Futsal";
+      break;
+    case "ligi kobiece":
+      formatedLeauge = "Ligi Kobiece";
+      break;
+
     default:
       formatedLeauge = null;
   }

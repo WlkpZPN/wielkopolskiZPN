@@ -20,7 +20,7 @@ import RadioButton from "../atoms/radio_button";
 const StepOneForm = ({
   data,
   handleChange,
-  clubData,
+  settings,
   readOnly,
   handleStepChange,
 }) => {
@@ -38,6 +38,7 @@ const StepOneForm = ({
   // console.log(error);
 
   const [loading, setLoading] = useState(false);
+  const [infoText, setInfoText] = useState("");
   useEffect(() => {
     switch (data.leauge) {
       case "iv liga":
@@ -58,11 +59,39 @@ const StepOneForm = ({
       case "młodzież":
         handleChange("młodzież", "leauge", 1);
         return;
+      case "futsal":
+        handleChange("futsal", "leauge", 1);
+        return;
+      case "ligi kobiece":
+        handleChange("ligi kobiece", "leauge", 1);
+        return;
       default:
         handleChange(null, "leauge", 1);
         return;
     }
   }, []);
+
+  useEffect(() => {
+    const now = new Date();
+    const futsalStartDate = new Date(settings.futsal_start_date);
+    const startDate = new Date(settings.start_date);
+    if (data.leauge == "futsal") {
+      if (futsalStartDate > now) {
+        setInfoText(
+          "UWAGA, proces licencyjny dla ligii futsal jeszcze nie rozpoczął, nie będze możliwe wysłanie oraz zapisanie wniosku"
+        );
+        return;
+      }
+    } else {
+      if (settings.start_date > now) {
+        setInfoText(
+          "UWAGA, proces licencyjny dla lig trawiastych jeszcze nie rozpoczął, nie będze możliwe wysłanie oraz zapisanie wniosku"
+        );
+        return;
+      }
+    }
+    setInfoText("");
+  }, [data.leauge]);
   return (
     <>
       {loading ? (
@@ -83,11 +112,15 @@ const StepOneForm = ({
                 <option value="klasa a">Klasa A</option>
                 <option value="klasa b">Klasa B</option>
                 <option value="młodzież">Ligi młodzieżowe</option>
+                <option value="futsal">Futsal</option>
+                <option value="ligi kobiece">Ligi kobiece</option>
               </Select>
               <Info
                 text={`Kluby IV ligi mogą ubiegać się tylko o licencję na jeden sezon. Kluby z pozostałych klas rozgrywkowych mogą wnioskować o licencje na dwa sezony jeśli: \n -posiadają prawo do użytkowania obiektu sportowego na minimum dwa sezony \n- będą wnioskowały o licencję na dwa sezony \n- wniosą opłatę za dwa sezony`}
               />
             </div>
+            {infoText == "" ? null : <ErrorMessage>{infoText}</ErrorMessage>}
+
             <RadioContainer>
               <p>Zaznacz,na ile sezonów ubiegasz się o licencje</p>
               <Label direction="row" htmlFor="1">

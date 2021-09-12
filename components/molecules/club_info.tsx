@@ -55,9 +55,6 @@ const ClubInfo = ({ clubData }) => {
         {clubData.applications[0].statuses.id > 7 ? (
           <>
             <Bold>Licencja ważna na sezon/y:</Bold>{" "}
-            {/* {clubData.applications[0].seasons.match(/\//g)?.length > 0
-              ? createSeasons(clubData.applications[0].seasons)
-              : clubData.applications[0].seasons}{" "} */}
             {clubData.applications[0].seasons}
           </>
         ) : null}

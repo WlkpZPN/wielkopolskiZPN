@@ -618,6 +618,8 @@ const EditClubData = ({ clubData, isAdmin = false }) => {
           <option value="Klasa A">Klasa A</option>
           <option value="Klasa B">Klasa B</option>
           <option value="młodzież">Ligi młodzieżowe</option>
+          <option value="futsal">Futsal</option>
+          <option value="ligi kobiece">Ligi kobiece</option>
         </Select>
       </Label>
       <FormRow cols={4}>

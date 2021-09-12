@@ -130,8 +130,9 @@ const Kluby = ({ userData }) => {
               <option value="V liga">V liga</option>
               <option value="Klasa okręgowa">Klasa okręgowa</option>
               <option value="Klasa A / B">Klasa A / B</option>
-
               <option value="młodzież">Ligi młodzieżowe</option>
+              <option value="futsal">Futsal</option>
+              <option value="futsal">Ligi kobiece</option>
             </Select>
 
             <SearchBar

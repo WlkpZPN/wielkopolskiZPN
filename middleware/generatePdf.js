@@ -31,8 +31,14 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     case "młodzież":
       leauge = "ligii młodzieżowej";
       break;
+    case "futsal":
+      leauge = "futsalu";
+      break;
+    case "ligi kobiece":
+      leauge = "ligii kobiecej";
+      break;
   }
-  console.log(application.histories);
+
   const issueDate =
     date ||
     application.histories

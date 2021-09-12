@@ -2,7 +2,7 @@ import prisma from "../../../middleware/prisma";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { startDate, endDate } = req.body;
+    const { startDate, futsalStartDate } = req.body;
 
     try {
       await prisma.settings.upsert({
@@ -11,16 +11,16 @@ export default (req, res) => {
         },
         update: {
           start_date: startDate,
-          end_date: endDate,
+          futsal_start_date: futsalStartDate,
         },
         create: {
           start_date: startDate,
-          end_date: endDate,
+          futsal_start_date: futsalStartDate,
         },
       });
       res.send("dates updated");
     } catch (error) {
-      conosle.log(error);
+      console.log(error);
       res.status(400);
       res.send(error);
     } finally {

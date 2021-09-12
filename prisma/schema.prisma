@@ -211,6 +211,7 @@ model settings {
   v_application_fee     Float?
   ab_application_fee    Float?
   young_application_fee Float?
+  futsal_start_date     String?  @db.VarChar(200)
 }
 
 model sport_facilities {

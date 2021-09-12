@@ -170,7 +170,7 @@ const MainPage = ({ userData }) => {
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  const { req, res } = context;
+  const { res } = context;
 
   if (!data) {
     res.statusCode = 302;

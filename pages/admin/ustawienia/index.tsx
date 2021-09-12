@@ -36,7 +36,9 @@ const AmountRow = styled.div`
 const Ustawienia = ({ userData, settings, questions, messages }) => {
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
-  const [endDate, setEndDate] = useState(settings.end_date || new Date());
+  const [futsalStartDate, setFutsalStartDate] = useState(
+    settings.futsal_start_date || new Date()
+  );
   const [primaryAmount, setPrimaryAmount] = useState(
     parseFloat(settings.iv_application_fee).toFixed(2) || 0
   );
@@ -114,20 +116,21 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
   const setDates = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    if (start > end) {
-      setError("Data rozpoczęcia nie może być mniejsza od daty zakończenia");
-      return;
+    try {
+      await axios.post("/api/settings/setDates", {
+        startDate,
+        futsalStartDate,
+      });
+
+      setLoading(false);
+      toast.success(
+        "Pomyślnie zaktualizowano czas trwania procesu licencyjnego"
+      );
+    } catch (e) {
+      console.log(`error setting dates: ${e}`);
+      setLoading(false);
+      toast.error("Błąd podczas aktualizacji dart,spróbuj ponownie później");
     }
-
-    await axios.post("/api/settings/setDates", {
-      startDate,
-      endDate,
-    });
-
-    setLoading(false);
-    toast.success("Pomyślnie zaktualizowano czas trwania procesu licencyjnego");
   };
 
   const formatPrimaryValue = (e) => {
@@ -162,13 +165,25 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       >
         <div style={{ display: "flex" }}>
           <Label
-            style={{ width: "250px", marginRight: "16px", fontSize: "14px" }}
+            style={{ width: "350px", marginRight: "16px", fontSize: "14px" }}
           >
-            Rozpoczęcie wniosku licencyjnego{" "}
+            Rozpoczęcie procedury licencyjnej (trawiaste)
             <Input
               disabled={userData?.role !== "administrator"}
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
+              type="date"
+              placeholder="data"
+            />
+          </Label>
+          <Label
+            style={{ width: "350px", marginRight: "16px", fontSize: "14px" }}
+          >
+            Rozpoczęcie procedury licencyjnej dla futsalu
+            <Input
+              disabled={userData?.role !== "administrator"}
+              value={futsalStartDate}
+              onChange={(e) => setFutsalStartDate(e.target.value)}
               type="date"
               placeholder="data"
             />
