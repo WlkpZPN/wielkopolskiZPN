@@ -223,7 +223,6 @@ export const renderAmount = (leauge, settings) => {
   switch (leauge) {
     case "iv liga":
     case "IV Liga":
-      console.log("opłata", settings.iv_possession_fee);
       amount = `${settings.iv_possession_fee} PLN`;
       break;
     case "v liga":
@@ -231,7 +230,9 @@ export const renderAmount = (leauge, settings) => {
     case "klasa okręgowa":
       amount = `${settings.v_possession_fee} PLN`;
       break;
+
     default:
+      amount = `brak opłaty dla danej ligii`;
       break;
   }
   console.log("extra amount", amount);
@@ -304,22 +305,7 @@ export const checkMimeType = (event) => {
         "Plik jest zbyt duży,upewnij się że przesyłasz odpowiedni plik, możesz przesłać także kilka mniejszych plików",
     };
   }
-  // compare file type find doesn't matach
-  // if (types.every((type) => files[0].type !== type)) {
-  //   // create error message and assign to container
-  //   err =
-  //     "Wybrany plik zawiera niedozwolone rozszerzenie, prześlij plik w formacie PNG,JPG lub PDF";
-  // }
 
-  // if (err !== "") {
-  //   // if message not same old that mean has error
-  //   event.target.value = null; // discard selected file
-  //   // console.log(err);
-  //   return {
-  //     valid: false,
-  //     error: err,
-  //   };
-  // }
   return {
     valid: true,
   };
@@ -327,8 +313,7 @@ export const checkMimeType = (event) => {
 
 export const renderMainAmount = (leauge, settings, seasons) => {
   let amount = 0;
-  // console.log("liga", leauge);
-  // console.log("sezony", seasons);
+
   switch (leauge.toLowerCase()) {
     case "iv liga":
       amount = settings.iv_application_fee;

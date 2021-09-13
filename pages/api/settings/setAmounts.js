@@ -9,6 +9,8 @@ export default (req, res) => {
       vFee,
       abFee,
       youngFee,
+      futsalFee,
+      womenFee,
     } = req.body;
 
     try {
@@ -23,6 +25,8 @@ export default (req, res) => {
           ab_application_fee: Number(abFee),
           iv_possession_fee: Number(extraAmount),
           v_possession_fee: Number(extraAmount2),
+          futsal_application_fee: Number(futsalFee),
+          women_application_fee: Number(womenFee),
         },
         create: {
           iv_application_fee: Number(primaryAmount),
@@ -31,6 +35,8 @@ export default (req, res) => {
           ab_application_fee: Number(abFee),
           iv_possession_fee: Number(extraAmount),
           v_possession_fee: Number(extraAmount2),
+          futsal_application_fee: Number(futsalFee),
+          women_application_fee: Number(womenFee),
         },
       });
       res.send("amount updated");

@@ -76,14 +76,14 @@ const StepOneForm = ({
     const futsalStartDate = new Date(settings.futsal_start_date);
     const startDate = new Date(settings.start_date);
     if (data.leauge == "futsal") {
-      if (futsalStartDate > now) {
+      if (futsalStartDate > now && settings.locked_sending) {
         setInfoText(
           "UWAGA, proces licencyjny dla ligii futsal jeszcze nie rozpoczął, nie będze możliwe wysłanie oraz zapisanie wniosku"
         );
         return;
       }
     } else {
-      if (settings.start_date > now) {
+      if (settings.start_date > now && settings.locked_sending) {
         setInfoText(
           "UWAGA, proces licencyjny dla lig trawiastych jeszcze nie rozpoczął, nie będze możliwe wysłanie oraz zapisanie wniosku"
         );

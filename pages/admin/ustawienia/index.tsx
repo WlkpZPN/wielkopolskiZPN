@@ -46,6 +46,10 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
   const [vFee, setVFee] = useState(settings.v_application_fee || 0);
   const [abFee, setAbFee] = useState(settings.ab_application_fee || 0);
   const [youngFee, setYoungFee] = useState(settings.young_application_fee || 0);
+  const [futsalFee, setFutsalFee] = useState(
+    settings.futsal_application_fee || 0
+  );
+  const [womenFee, setWomenFee] = useState(settings.women_application_fee || 0);
   const [extraAmount, setExtraAmount] = useState(
     parseFloat(settings.iv_possession_fee).toFixed(2) || 0
   );
@@ -98,6 +102,20 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       );
       return;
     }
+
+    if (!validateNumber(futsalFee).valid) {
+      setError(
+        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
+      );
+      return;
+    }
+
+    if (!validateNumber(womenFee).valid) {
+      setError(
+        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
+      );
+      return;
+    }
     setLoading(true);
     await axios.post("/api/settings/setAmounts", {
       primaryAmount,
@@ -106,6 +124,8 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       abFee,
       youngFee,
       vFee,
+      futsalFee,
+      womenFee,
     });
     setLoading(false);
     toast.success("Pomyślnie zaaktualizowano opłaty licencyjne", {
@@ -270,6 +290,35 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
                   }
                   value={youngFee}
                   onChange={(e) => setYoungFee(e.target.value)}
+                />
+              </Label>
+              <Label style={{ maxWidth: "400px" }}>
+                <span>
+                  Wysokość opłaty za złożenie wniosku licencyjnego w futsalu
+                </span>
+                <AmountInput
+                  style={{ paddingRight: "24px" }}
+                  placeholder="0"
+                  onBlur={(e) =>
+                    setFutsalFee(parseFloat(e.target.value).toFixed(2))
+                  }
+                  value={futsalFee}
+                  onChange={(e) => setFutsalFee(e.target.value)}
+                />
+              </Label>
+              <Label style={{ maxWidth: "400px" }}>
+                <span>
+                  Wysokość opłaty za złożenie wniosku licencyjnego w lidze
+                  kobiecej
+                </span>
+                <AmountInput
+                  style={{ paddingRight: "24px" }}
+                  placeholder="0"
+                  onBlur={(e) =>
+                    setWomenFee(parseFloat(e.target.value).toFixed(2))
+                  }
+                  value={womenFee}
+                  onChange={(e) => setWomenFee(e.target.value)}
                 />
               </Label>
             </div>
