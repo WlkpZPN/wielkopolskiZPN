@@ -130,7 +130,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
   return (
     <Row>
       <Column>
-        <Paragraph>{admin ? "Dodaj fakturę" : "Faktura 1"} </Paragraph>
+        <Paragraph>{admin ? "Dodaj fakturę" : "Faktura "} </Paragraph>
         <AddInvoice
           admin={admin}
           clubData={clubData}

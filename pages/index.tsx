@@ -44,7 +44,7 @@ export const ClubContext = createContext(null);
 const Home = ({ clubData, authData, settings }) => {
   const [loading, setLoading] = useState(false);
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
-
+  console.log("club data", clubData);
   const router = useRouter();
 
   const newApplication = async () => {
@@ -310,7 +310,7 @@ const Home = ({ clubData, authData, settings }) => {
                   Tytuł przelewu: {clubData.applications[0].internal_id}{" "}
                 </span>
                 <span>
-                  Kwota{" "}
+                  Kwota:{" "}
                   {clubData.applications[0].youth_groups_possession ===
                   "nie posiadamy zespołów" ? (
                     <p>
@@ -389,7 +389,13 @@ const Home = ({ clubData, authData, settings }) => {
                 Komisja Licencyjna Wielkopolskiego ZPN przyznała Twojemu klubowi
                 licencję na sezon 2021 do IV Ligi
               </Paragraph>
-              <div style={{ margin: "70px 0", display: "flex" }}>
+              <div
+                style={{
+                  margin: "70px 0",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <AddInvoiceWrapper admin={false} clubData={clubData} />
                 <LicenseButton isAdmin={false} clubData={clubData} />
               </div>

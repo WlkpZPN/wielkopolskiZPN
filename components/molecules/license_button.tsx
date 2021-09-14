@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   word-break: break-all;
   padding: 32px;
   margin-right: 16px;
+  margin-top: 50px;
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
   height: 340px;

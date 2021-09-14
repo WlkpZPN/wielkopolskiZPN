@@ -331,6 +331,12 @@ export const renderMainAmount = (leauge, settings, seasons) => {
     case "młodzież":
       amount = settings.young_application_fee;
       break;
+    case "futsal":
+      amount = settings.futsal_application_fee;
+      break;
+    case "ligi kobiece":
+      amount = settings.women_application_fee;
+      break;
     default:
       amount = settings.young_application_fee;
   }
