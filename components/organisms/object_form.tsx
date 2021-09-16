@@ -162,10 +162,7 @@ const ObjectForm = ({ readOnly, objectIndex }) => {
     e.preventDefault();
     // call function form step falidation here
     // save object to form state
-    const { valid, step, text } = validateObject(
-      data,
-      context.formData.stepOne.leauge
-    );
+    const { valid, step, text } = validateObject(data);
 
     if (!valid) {
       setError({
