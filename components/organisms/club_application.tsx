@@ -518,14 +518,18 @@ const ClubApplication = ({
       return;
     }
     //step three
-    result = checkStepThree(formData.stepThree);
-    if (result.valid === false) {
-      handleStepFill("stepThree", "error");
-      setError((state) => ({ ...state, stepThree: result.text }));
-      window.scrollTo(0, 0);
-      toast.error("Prosimy wypełnić wszystkie etapy");
-      return;
+
+    if (formData.stepOne.leauge !== "futsal") {
+      result = checkStepThree(formData.stepThree);
+      if (result.valid === false) {
+        handleStepFill("stepThree", "error");
+        setError((state) => ({ ...state, stepThree: result.text }));
+        window.scrollTo(0, 0);
+        toast.error("Prosimy wypełnić wszystkie etapy");
+        return;
+      }
     }
+
     // step four
     result = checkStepFour(formData.stepFour);
     if (result.valid === false) {
@@ -945,15 +949,18 @@ const ClubApplication = ({
             text="Podstawowe dane"
             helperText="Wybór klasy rozgrywkowej"
           />
-          <StepBox
-            improvements={improvements.two || ""}
-            handleStepChange={handleStepChange}
-            state={completedSteps.stepTwo}
-            number={2}
-            active={step === 2}
-            text="Prawo"
-            helperText="Kryteria prawne"
-          />
+          {formData.stepOne.leauge === "futsal" ? null : (
+            <StepBox
+              improvements={improvements.two || ""}
+              handleStepChange={handleStepChange}
+              state={completedSteps.stepTwo}
+              number={2}
+              active={step === 2}
+              text="Prawo"
+              helperText="Kryteria prawne"
+            />
+          )}
+
           <StepBox
             improvements={improvements.three || ""}
             handleStepChange={handleStepChange}
