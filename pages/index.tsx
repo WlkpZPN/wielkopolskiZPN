@@ -194,9 +194,51 @@ const Home = ({ clubData, authData, settings }) => {
                 wprowadzenie poprawek do wniosku
               </Paragraph>
               <ClubSteps status="do poprawy" />
-              <p style={{ marginBottom: "16px", fontSize: "16px" }}>
-                <span style={{ fontWeight: "bold" }}>UWAGA: </span> prosimy o
-                załączanie brakujących plików tylko w kroku 7
+              {clubData.applications[0].error_message && (
+                <>
+                  <p
+                    style={{
+                      fontSize: "16px",
+                      color: "rgb(206,75,75)",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    UZASADNIENIE:
+                  </p>
+                  <p
+                    style={{
+                      fontSize: "16px",
+                      color: "rgb(206,75,75)",
+                      fontWeight: "bold",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    {clubData.applications[0].error_message}
+                  </p>
+                </>
+              )}
+
+              <p
+                style={{
+                  marginBottom: "16px",
+                  fontSize: "16px",
+                  color: "rgb(206,75,75)",
+                  fontWeight: "bold",
+                }}
+              >
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                  }}
+                >
+                  UWAGA!
+                </span>
+                <br />
+                Prosimy o załączanie brakujących plików tylko w ostatnim kroku o
+                nazwie "Załączniki". Po wprowadzeniu poprawek wyślij wniosek
+                ponownie używając zielonego przycisku "Wyślij poprawiony
+                wniosek".
               </p>
               <ClubApplication
                 show_buttons={true}
