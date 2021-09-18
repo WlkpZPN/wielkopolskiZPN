@@ -248,37 +248,40 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
           >
             Cofnij
           </PrimaryButton>
-          {show_buttons ? (
-            <>
-              {" "}
-              <PrimaryButton
-                style={{ marginRight: "16px" }}
-                color="dark"
-                hoverColor="darkLight"
-                onClick={context.saveForm}
-              >
-                Zapisz wersję roboczą
-              </PrimaryButton>
-              <PrimaryButton
-                color="successDark"
-                hoverColor="success"
-                onClick={submitForm}
-              >
-                {clubData.applications[0].status_id == 4
-                  ? "WYsłij poprawiony wniosek"
-                  : "Zatwierdź i wyślij do Wielkopolskiego ZPN"}
-              </PrimaryButton>{" "}
-            </>
-          ) : (
-            <PrimaryButton
-              type="button"
-              color="success"
-              hoverColor="successDark"
-              onClick={changeApplicationData}
-            >
-              Zaktualizuj wniosek
-            </PrimaryButton>
-          )}
+          {
+            show_buttons ? (
+              <>
+                {" "}
+                <PrimaryButton
+                  style={{ marginRight: "16px" }}
+                  color="dark"
+                  hoverColor="darkLight"
+                  onClick={context.saveForm}
+                >
+                  Zapisz wersję roboczą
+                </PrimaryButton>
+                <PrimaryButton
+                  color="successDark"
+                  hoverColor="success"
+                  onClick={submitForm}
+                >
+                  {clubData.applications[0].status_id == 4
+                    ? "Wyślij poprawiony wniosek"
+                    : "Zatwierdź i wyślij do Wielkopolskiego ZPN"}
+                </PrimaryButton>
+              </>
+            ) : null
+            // (
+            //   <PrimaryButton
+            //     type="button"
+            //     color="success"
+            //     hoverColor="successDark"
+            //     onClick={changeApplicationData}
+            //   >
+            //     Zaktualizuj wniosek
+            //   </PrimaryButton>
+            // )
+          }
         </div>
       </FormTemplate>
     </Fieldset>

@@ -32,14 +32,6 @@ const Application = ({ clubData, authData, settings }) => {
   const [visibleReject, setvisibleReject] = useState(false);
   const [invoiceFiles, setInvoiceFiles] = useState();
 
-  // if (isLoading) {
-  //   console.log(clubData);
-  //   return (
-  //     <AdminLayout view="wnioski" userData={authData}>
-  //       <Loader />
-  //     </AdminLayout>
-  //   );
-  // }
   const refreshState = () => {
     router.replace(router.asPath);
   };
@@ -51,14 +43,6 @@ const Application = ({ clubData, authData, settings }) => {
         }
         return (
           <>
-            {" "}
-            {/* <Paragraph>Dodaj fakturę</Paragraph>{" "}
-            <AddInvoice
-              admin={true}
-              clubData={clubData}
-              file={invoiceFiles}
-              addFile={setInvoiceFiles}
-            /> */}
             <AddInvoiceWrapper clubData={clubData} admin={true} />
             <ErrorMessage>
               {clubData.applications[0].invoice_required &&
@@ -502,6 +486,7 @@ const Application = ({ clubData, authData, settings }) => {
           readOnly={false}
           settings={settings}
           fileEdit={true}
+          authData={authData}
         />
       )}
     </AdminLayout>

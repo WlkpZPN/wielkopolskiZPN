@@ -20,7 +20,7 @@ import {
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     console.log("test");
-    const { formData, clubData, newStatus } = req.body;
+    const { formData, clubData, newStatus, userID } = req.body;
     const {
       stepOne,
       stepTwo,
@@ -86,9 +86,15 @@ export default async (req, res) => {
       data: dataToInsert,
     });
 
-    //3. update sport_facilities
-
-    //4 update application_attachments
+    await prisma.histories.create({
+      data: {
+        application_id: clubData.applications[0].id,
+        created_at: getCurrentDate(),
+        description: `Zmiana statusu z ${clubData.applications[0].status_id} na ${newStatus}`,
+        status_id: parseInt(newStatus),
+        user_id: parseInt(userID),
+      },
+    });
 
     //5 add record to history table
 

@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   word-break: break-all;
   padding: 32px;
   margin-right: 16px;
-  margin-top: 50px;
+  margin-top: ${({ isAdmin }) => isAdmin || "50px"};
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
   height: 340px;
@@ -200,7 +200,7 @@ const LicenseButton = ({ clubData, isAdmin, authData = null }) => {
     }
   };
   return (
-    <Wrapper>
+    <Wrapper isAdmin={isAdmin}>
       <UndoLicense
         authData={authData}
         applicationID={application.id}

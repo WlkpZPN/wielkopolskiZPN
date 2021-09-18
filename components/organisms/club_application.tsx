@@ -15,6 +15,7 @@ import StepSixForm from "./step6_form";
 import StepSevenForm from "./step7_form";
 import StepBox from "../atoms/step_box";
 import Loader from "../atoms/loader";
+import PrimaryButton from "../atoms/primary_button";
 import {
   checkStepOne,
   checkStepTwo,
@@ -39,6 +40,7 @@ const ClubApplication = ({
   error_message,
   show_buttons,
   settings,
+  authData = null,
   fileEdit = false,
   isAdmin = false,
 }) => {
@@ -59,7 +61,7 @@ const ClubApplication = ({
     stepSix: completed ? "completed" : "default",
     stepSeven: completed ? "completed" : "default",
   });
-
+  console.log(authData);
   useEffect(() => {
     let newStepData = { ...completedSteps };
     newStepData.stepFour = "";
@@ -841,6 +843,7 @@ const ClubApplication = ({
         formData,
         clubData,
         newStatus,
+        userID: authData.id,
       });
 
       toast.success("Wniosek zaktualizowany", {
@@ -898,7 +901,7 @@ const ClubApplication = ({
             marginBottom: "12px",
           }}
         >
-          {isAdmin ? (
+          {isAdmin && clubData.applications[0].status_id < 8 ? (
             <>
               <ConfirmChangeModal
                 updateApplicationFunction={changeApplicationData}
@@ -919,7 +922,16 @@ const ClubApplication = ({
                 <option value={5}>odrzucony</option>
                 <option value={6}>zaakceptowany nieopłacony</option>
                 <option value={7}>zaakceptowany opłacony</option>
-              </Select>{" "}
+              </Select>
+              <PrimaryButton
+                style={{ marginLeft: "16px" }}
+                type="button"
+                color="success"
+                hoverColor="successDark"
+                onClick={changeApplicationData}
+              >
+                Zaktualizuj wniosek
+              </PrimaryButton>
             </>
           ) : null}
         </div>
