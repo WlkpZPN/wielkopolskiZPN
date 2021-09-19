@@ -949,7 +949,7 @@ const ClubApplication = ({
             text="Podstawowe dane"
             helperText="Wybór klasy rozgrywkowej"
           />
-          {formData.stepOne.leauge === "futsal" ? null : (
+         
             <StepBox
               improvements={improvements.two || ""}
               handleStepChange={handleStepChange}
@@ -959,7 +959,7 @@ const ClubApplication = ({
               text="Prawo"
               helperText="Kryteria prawne"
             />
-          )}
+          
 
           <StepBox
             improvements={improvements.three || ""}

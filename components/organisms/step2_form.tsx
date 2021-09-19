@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { ApplicationContext } from "./club_application";
 import FormTemplate from "../atoms/form_template";
-
+import DisabledStepInfo from "../molecules/disabled_step_info";
 import PrimaryButton from "../atoms/primary_button";
 
 import Paragraph from "../atoms/paragraph";
@@ -20,6 +20,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     show_buttons,
     sendApplication,
     clubData,
+    formData,
     fileEdit,
     setStep,
     completedSteps,
@@ -27,16 +28,11 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
   } = context;
 
   const handleChange = context.handleFormChange;
-  const data = context.formData.stepTwo;
+  const data = formData.stepTwo;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // handleStepFill("stepTwo", {
-    //   completed: true,
-    //   error: false,
-    // });
-    // handleStepChange("next");
     if (show_buttons) {
       handleStepChange("next");
       return;

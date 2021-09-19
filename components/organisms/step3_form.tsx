@@ -5,14 +5,11 @@ import { ClubContext } from "../../pages/index";
 import FormTemplate from "../atoms/form_template";
 import Select from "../atoms/form_select";
 import Label from "../atoms/form_label";
-import RadioContainer from "../atoms/radio_container";
 import Input from "../atoms/input";
-import FormRow from "../atoms/form_row";
+import DisabledStepInfo from "../molecules/disabled_step_info";
 import PrimaryButton from "../atoms/primary_button";
-import RadioSquare from "../molecules/form_radio";
 import Paragraph from "../atoms/paragraph";
 import ErrorMessage from "../atoms/error_message";
-import OutlineButton from "../atoms/outline_button";
 import Info from "../atoms/Info";
 import Fieldset from "../atoms/fieldset";
 import FormStatement from "../molecules/form_statement";
@@ -20,11 +17,11 @@ import AddFilesWrapper from "./add_files_wrapper";
 import NumericInput from "../atoms/numeric_input";
 import { renderAmount } from "../../middleware/utils";
 const StepThreeForm = ({ handleStepChange, readOnly }) => {
-  const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
   const settings = context.settings;
   const formData = context.formData.stepThree;
   const handleChange = context.handleFormChange;
+
   const {
     handleStepFill,
     error,
@@ -149,6 +146,9 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
 
   return (
     <FormTemplate onChange={() => clearErrors("stepThree")} width="80%">
+      {context.formData.stepOne.leauge == "futsal" ? (
+        <DisabledStepInfo setStep={setStep} />
+      ) : null}
       <Fieldset disabled={!fileEdit}>
         <Label>
           Zespoły młodzieżowe
