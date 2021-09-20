@@ -232,7 +232,8 @@ export const renderAmount = (leauge, settings) => {
       break;
 
     default:
-      amount = `brak opłaty dla danej ligii`;
+      amount = 0;
+
       break;
   }
   console.log("extra amount", amount);

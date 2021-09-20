@@ -43,7 +43,13 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   const { applications } = context.clubData;
   const show_buttons = context.show_buttons;
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
-  const { error, clearErrors, completedSteps, changeApplicationData } = context;
+  const {
+    error,
+    clearErrors,
+    completedSteps,
+    changeApplicationData,
+    deleteFacility,
+  } = context;
   const [internalError, setInternalError] = useState("");
   //console.log("current object", sport_facilities[currentObject]);
   const handleNewForm = () => {
@@ -60,14 +66,24 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     let helperArr = [];
     sport_facilities.map((facility, index) => {
       helperArr.push(
-        <ObjectName
-          saved={true}
-          active={index === currentObject}
-          key={facility.id}
-          onClick={() => setCurrentobject(index)}
-        >
-          {facility.name || "Obiekt 1"}
-        </ObjectName>
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
+          <PrimaryButton
+            color="danger"
+            hoverColor="dangerDark"
+            style={{ marginRight: "12px" }}
+            onClick={() => deleteFacility(facility)}
+          >
+            Usuń
+          </PrimaryButton>
+          <ObjectName
+            saved={true}
+            active={index === currentObject}
+            key={facility.id}
+            onClick={() => setCurrentobject(index)}
+          >
+            {facility.name || "Obiekt 1"}
+          </ObjectName>
+        </div>
       );
     });
     return helperArr;
@@ -89,10 +105,9 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
         </div>
         <ErrorMessage>{error.stepFour}</ErrorMessage>
         {sport_facilities.length === 0 ? null : (
-          <Fieldset disabled={readOnly}>
+          <Fieldset style={{ padding: 0 }} disabled={readOnly}>
             <OutlineButton
               type="button"
-              style={{ padding: "6px 16px" }}
               onClick={(e) => {
                 readOnly ? null : handleNewForm();
               }}

@@ -1,23 +1,15 @@
 import transporter from "../../../middleware/transporter";
 
-// transporter.use(
-//   "compile",
-//   hbs({
-//     viewEngine: "express-handlebars",
-//     // viewPath: fs.readFileSync(path.join(__dirname, "mail.hbs"), "utf8"),
-//     viewPath: "./pages/api/mails/views",
-//   })
-// );
-
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { description, email } = req.body;
 
-    transporter.sendMail({
-      from: "licklub@wielkopolskizpn.pl",
-      to: email,
-      subject: "WielkopolskiZPN - popraw swój wniosek licencyjny",
-      html: `<head>
+    try {
+      transporter.sendMail({
+        from: "licklub@wielkopolskizpn.pl",
+        to: email,
+        subject: "WielkopolskiZPN - popraw swój wniosek licencyjny",
+        html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 </head>
@@ -91,8 +83,14 @@ export default (req, res) => {
     </table>
   </main>
 </body>`,
-    });
-    res.send("email send");
-    return resolve();
+      });
+      console.log(description, email);
+      res.send("email send");
+      return resolve();
+    } catch (e) {
+      res.status(400);
+      console.log(e);
+      res.send("Email sending error");
+    }
   });
 };

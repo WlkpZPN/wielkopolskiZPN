@@ -131,7 +131,8 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             </p>{" "}
             <h1 style={{ fontSize: "40px" }}>
               {context.formData.stepOne.leauge
-                ? renderAmount(context.formData.stepOne.leauge, settings)
+                ? renderAmount(context.formData.stepOne.leauge, settings) ==
+                    0 ?? "brak opłaty dla danej ligii"
                 : "Wybierz klase rozgrywkową aby zobaczyć kwotę"}
             </h1>
             <p style={{ fontWeight: "bold", margin: "24px 0 48px 0" }}>
