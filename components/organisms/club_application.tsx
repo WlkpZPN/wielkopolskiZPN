@@ -582,6 +582,12 @@ const ClubApplication = ({
         console.log(err);
         setLoading(false);
       });
+
+    await axios.post("/api/mails/applicationSendedMail",{
+      email:clubData.email,
+      description:'Pomyślnie złożono wniosek licencyjny'
+
+    })
     router.replace(router.asPath);
     // console.log("application sent");
 
@@ -834,7 +840,7 @@ const ClubApplication = ({
   };
 
   const changeApplicationData = async (skip = false) => {
-    //TODO potwierdzenie przy wniosku opłaconym
+    //TODO: potwierdzenie przy wniosku opłaconym
     // if (clubData.applications[0].status_id == 7 && newStatus < 7 && !skip) {
     //   //show modal
     //   setVisible(true);

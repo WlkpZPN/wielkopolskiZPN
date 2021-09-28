@@ -86,11 +86,23 @@ export default async (req, res) => {
       data: dataToInsert,
     });
 
+
+    const {name} = await prisma.statuses.findUnique({
+      where: {
+      id:parseInt(newStatus),
+      },
+      select: {
+       name:true,
+      } ,
+    });
+
+    console.log('new status',name);
+
     await prisma.histories.create({
       data: {
         application_id: clubData.applications[0].id,
         created_at: getCurrentDate(),
-        description: `Zmiana statusu z ${clubData.applications[0].status_id} na ${newStatus}`,
+        description: `Zmiana statusu z ${clubData.applications[0].statuses.name} na ${name}`,
         status_id: parseInt(newStatus),
         user_id: parseInt(userID),
       },

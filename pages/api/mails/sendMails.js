@@ -101,23 +101,7 @@ export default (req, res) => {
     let iterationCount = 0;
     //for (i = 0; i < recipientsEmails.length; i += chunk) {
     for (i = 0; i < clubs.length; i++) {
-      // tmpRecipients = recipientsEmails.slice(i, i + chunk);
-      //tmpContent = content.slice(i, i + chunk);
-      // console.log(tmpRecipients.length);
-      // console.log(tmpContent.length);
-
-      // tmpRecipients = tmpRecipients.filter((content) => {
-      //   if (!content.email) {
-      //     return false;
-      //   }
-      //   return true;
-      // });
-
-      // tmpRecipients = tmpRecipients.forEach((content) => {
-      //   if (!content.email || !content.name) {
-      //     console.log(content);
-      //   }
-      // });
+      
       if (!recipientsEmails[i].email) {
         continue;
       }
@@ -143,13 +127,7 @@ export default (req, res) => {
           },
         })
 
-        // transporter.sendMail({
-        //   from: "licklub@wielkopolskizpn.pl",
-        //   to: recipientsEmails[i].email,
-        //   subject: "WielkopolskiZPN - opłata za złożenie wniosku",
-        //   html: `<p>test</p>`,
-
-        // })
+      
       );
       iterationCount++;
       //console.log("response", response.statusText);
