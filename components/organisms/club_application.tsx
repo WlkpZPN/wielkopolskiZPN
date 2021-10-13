@@ -141,6 +141,7 @@ const ClubApplication = ({
     },
     stepFour: {
       sport_facilities: clubData.applications[0].sport_facilities,
+      futsal_facilities: clubData.applications[0].futsal_facilities,
     },
     stepFive: {
       NoObligationsTowardsEmployees:
@@ -164,7 +165,7 @@ const ClubApplication = ({
       invoice_required: clubData.applications[0].invoice_required,
     },
   });
-  //console.log("files", clubData.applications[0].applications_attachments);
+  console.log("facilities", formData.stepFour);
 
   const [currentObject, setCurrentObject] = useState(0);
 
@@ -247,6 +248,100 @@ const ClubApplication = ({
     let newFields = { ...formData };
     newFields.stepFour.sport_facilities[index][field] = value;
     setFormData(newFields);
+  };
+
+  const handleFutsalChange = (value, index, field) => {
+    let newFields = { ...formData };
+    newFields.stepFour.futsal_facilities[index][field] = value;
+    setFormData(newFields);
+  };
+
+  const createNewFutsalFacilityForm = () => {
+    if (formData.stepFour.futsal_facilities.length < 5) {
+      const facilitiesArray = formData.stepFour.futsal_facilities;
+      if (
+        facilitiesArray.length > 0 &&
+        !facilitiesArray[facilitiesArray.length - 1].id
+      ) {
+        return "Zapisz aktualny obiekt aby utworzyć kolejny";
+      }
+
+      const newForm = {
+        object_name: "Obiekt 1",
+        address: "",
+        postal_code: "",
+        city: "",
+        I01_1: false,
+        I01_2: false,
+        I02_audience_capacity: null,
+        I02_audience_entrance: null,
+        I03_lighting: null,
+        I04_length: null,
+        I04_width: null,
+        I04_1: false,
+        I04_2: false,
+        I04_3: false,
+        I05_primary_color: "",
+        I05_secondary_color: "",
+        I05_material: "",
+        I05_lines: null,
+        I05_dyscyplines: "",
+        I06_material: "",
+        I06_color: "",
+        I06_base: "",
+        I07_first_half_capacity: null,
+        I07_second_half_capacity: null,
+        I07_table: false,
+        I07_clock: "analogowy",
+        I08_scoreboards: null,
+        I08_sound: "stałe",
+        I09_length: null,
+        I09_width: null,
+        I09_guest_length: null,
+        I09_quest_width: null,
+        I09_quest_hygine: null,
+        I09_quest_showers: null,
+        I09_hygiene: null,
+        I09_showers: null,
+        I09_exit: false,
+        I10_width: null,
+        I10_length: null,
+        I10_hygiene: null,
+        I10_showers: null,
+        I11_heating: "brak",
+        I11_air_conditioning: false,
+        I12_stretcher: false,
+        I12_medical_service: false,
+        I13_capacity: null,
+        I13_internet_access: false,
+        I13_separate_press: false,
+        I13_separate_media: "",
+        I14_moving: false,
+        I14_moving_quantity: null,
+        I14_moving_length: null,
+        I14_moving_width: null,
+        I14_electric: false,
+        I14_electric_quantity: null,
+        I14_electric_length: null,
+        I14_electric_width: null,
+        I14_fixed: false,
+        I14_fixed_quantity: null,
+        I14_fixed_length: null,
+        I14_fixed_width: null,
+        I15_parking_sports: null,
+        I15_special_spots: null,
+        I16_service: null,
+        application_attachments: [],
+      };
+
+      let newFormData = formData;
+      newFormData.stepFour.futsal_facilities.push(newForm);
+      setFormData(newFormData);
+      setCurrentObject(newFormData.stepFour.futsal_facilities.length - 1);
+      router.replace(router.asPath);
+      return true;
+    }
+    return "Osiągnięto maksymalną liczbe obiektów sportowych (5)";
   };
 
   const createNewSportFacilityForm = () => {
@@ -583,11 +678,11 @@ const ClubApplication = ({
         setLoading(false);
       });
 
-    await axios.post("/api/mails/applicationSendedMail",{
-      email:clubData.email,
-      description:'Pomyślnie złożono wniosek licencyjny'
-
-    })
+    await axios.post("/api/mails/applicationSendedMail", {
+      email: clubData.email,
+      description:
+        "Potwierdzamy złożenie wniosku na Platformie Licencyjnej Wielkopolskiego Związku Piłki Nożnej. Nasz zespół rozpatrzy wniosek tak szybko jak to możliwe. Prosimy o cierpliwość.",
+    });
     router.replace(router.asPath);
     // console.log("application sent");
 
@@ -683,6 +778,50 @@ const ClubApplication = ({
       console.log(err);
       setLoading(false);
       toast.error("Nie udało się zapisać obiektu,spróbuj ponownie");
+    }
+  };
+
+  const addFutsalFacility = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post("/api/applications/addSportFacility", {
+        sport_facility: formData.stepFour.sport_facilities[currentObject],
+        clubData,
+      });
+
+      //files upload
+      const attachments = formData.stepFour.sport_facilities[
+        currentObject
+      ].applications_attachments.filter((el) => (el.id ? false : true));
+
+      const filesToUpload = new FormData();
+      attachments.forEach((attachment) => {
+        filesToUpload.append("files", attachment.fileData);
+      });
+
+      const config = {
+        headers: { "Content-type": "multipart/form-data" },
+        onUploadProgress: (event) => {
+          console.log(
+            `Current progress:`,
+            Math.round((event.loaded * 100) / event.total)
+          );
+        },
+      };
+
+      await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
+
+      //attach files
+
+      const res2 = await axios.post("/api/applications/addFutsalUrl", {
+        facilityFilesUrls: attachments,
+        facilityID: res.data.facility.id,
+        applicationID: clubData.applications[0].id,
+      });
+    } catch (e) {
+      console.log("error when adding futsal facility:", e);
+      setLoading(false);
+      toast.error("Nie udało się zapisać obiektu, spróbuj ponownie");
     }
   };
 
@@ -901,6 +1040,8 @@ const ClubApplication = ({
         completedSteps,
         setStep,
         changeApplicationData,
+        handleFutsalChange,
+        createNewFutsalFacilityForm,
       }}
     >
       <div>
@@ -955,17 +1096,16 @@ const ClubApplication = ({
             text="Podstawowe dane"
             helperText="Wybór klasy rozgrywkowej"
           />
-         
-            <StepBox
-              improvements={improvements.two || ""}
-              handleStepChange={handleStepChange}
-              state={completedSteps.stepTwo}
-              number={2}
-              active={step === 2}
-              text="Prawo"
-              helperText="Kryteria prawne"
-            />
-          
+
+          <StepBox
+            improvements={improvements.two || ""}
+            handleStepChange={handleStepChange}
+            state={completedSteps.stepTwo}
+            number={2}
+            active={step === 2}
+            text="Prawo"
+            helperText="Kryteria prawne"
+          />
 
           <StepBox
             improvements={improvements.three || ""}

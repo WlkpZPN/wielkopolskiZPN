@@ -530,6 +530,11 @@ export const getServerSideProps = protectedClientRoute(
                 applications_attachments: true,
               },
             },
+            futsal_facilities: {
+              include: {
+                applications_attachments: true,
+              },
+            },
           },
         },
       },
@@ -578,6 +583,11 @@ export const getServerSideProps = protectedClientRoute(
               applications_attachments: true,
               histories: true,
               sport_facilities: {
+                include: {
+                  applications_attachments: true,
+                },
+              },
+              futsal_facilities: {
                 include: {
                   applications_attachments: true,
                 },

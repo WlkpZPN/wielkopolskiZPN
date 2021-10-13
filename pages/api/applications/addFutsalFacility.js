@@ -5,20 +5,13 @@ export default async (req, res) => {
     const { sport_facility, clubData } = req.body;
     //console.log(sport_facility, clubData);
     let new_object = {};
-    // check if klub's facilities has facility with given name
-    // const clubFacilities = await prisma.sport_facilities.findMany({
-    //     where:{
-    //         application_id:
-    //     }
-    // })
-    // add sport facility
-    // console.log("id", sport_facility.id);
+
     if (sport_facility) {
       delete sport_facility.applications_attachments;
     }
 
     if (sport_facility?.id) {
-      new_object = await prisma.sport_facilities.update({
+      new_object = await prisma.futsal_facilities.update({
         where: {
           id: sport_facility.id,
         },
@@ -27,8 +20,10 @@ export default async (req, res) => {
           ...sport_facility,
         },
       });
+
+      console.log("futsal facility", sport_facility);
     } else if (!sport_facility?.id) {
-      new_object = await prisma.sport_facilities.create({
+      new_object = await prisma.futsal_facilities.create({
         data: {
           application_id: clubData.applications[0].id,
           ...sport_facility,

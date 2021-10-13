@@ -182,6 +182,12 @@ export const checkStepSix = (formData) => {
   };
 };
 
+export const validateFutsalObject = (data) => {
+  return {
+    valid: true,
+  };
+};
+
 export const validateObject = (data) => {
   if (!data.name || !data.address || !data.post_code || !data.city) {
     window.scrollTo(0, 0);

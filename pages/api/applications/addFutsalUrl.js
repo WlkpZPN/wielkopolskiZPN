@@ -7,7 +7,7 @@ export default (req, res) => {
     try {
       const dataToInsert = facilityFilesUrls.map((file) => {
         return {
-          sport_facilities_id: parseInt(facilityID),
+          futsal_facilities_id: parseInt(facilityID),
           filepath: file.filepath,
           category: file.category,
           name: file.name,
@@ -18,7 +18,7 @@ export default (req, res) => {
         data: dataToInsert,
       });
 
-      const all_facilities = await prisma.sport_facilities.findMany({
+      const all_facilities = await prisma.futsal_facilities.findMany({
         where: {
           application_id: parseInt(applicationID),
         },

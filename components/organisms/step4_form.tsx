@@ -12,6 +12,7 @@ import ObjectName from "../atoms/object_name";
 import Fieldset from "../atoms/fieldset";
 import ErrorMessage from "../atoms/error_message";
 import ObjectForm from "./object_form";
+import FutsalForm from "./futsal_object_form";
 
 const NoObjects = styled.div`
   margin: 24px 0;
@@ -37,23 +38,31 @@ const NoObjects = styled.div`
 `;
 const StepFourForm = ({ handleStepChange, readOnly }) => {
   const context = useContext(ApplicationContext);
-  const { sport_facilities } = context.formData.stepFour;
+  const { sport_facilities, futsal_facilities } = context.formData.stepFour;
   const currentObject = context.currentObject;
   const setCurrentobject = context.setCurrentObject;
   const { applications } = context.clubData;
   const show_buttons = context.show_buttons;
   const createNewSportFacilityForm = context.createNewSportFacilityForm;
+  const createNewFutsalFacilityForm = context.createNewFutsalFacilityForm;
   const {
     error,
     clearErrors,
     completedSteps,
     changeApplicationData,
     deleteFacility,
+    formData,
   } = context;
   const [internalError, setInternalError] = useState("");
-  //console.log("current object", sport_facilities[currentObject]);
+  console.log("futsal facility", futsal_facilities);
+  console.log("sport facility", sport_facilities);
+  const isFutsal: boolean = formData.stepOne.leauge === "futsal";
+  const app_facilities = isFutsal ? futsal_facilities : sport_facilities;
   const handleNewForm = () => {
-    const result = createNewSportFacilityForm();
+    const result =
+      formData.stepOne.leauge === "futsal"
+        ? createNewFutsalFacilityForm()
+        : createNewSportFacilityForm();
 
     if (result === true) {
       setInternalError("");
@@ -64,7 +73,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
 
   const renderObjects = () => {
     let helperArr = [];
-    sport_facilities.map((facility, index) => {
+    app_facilities.map((facility, index) => {
       helperArr.push(
         <div style={{ display: "flex", alignItems: "flex-start" }}>
           <PrimaryButton
@@ -89,6 +98,13 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     return helperArr;
     // map sport facilities and return row of objects
   };
+
+  const renderForms = () =>
+    isFutsal ? (
+      <FutsalForm objectIndex={currentObject} readOnly={readOnly} />
+    ) : (
+      <ObjectForm objectIndex={currentObject} readOnly={readOnly} />
+    );
   return (
     <div>
       <div style={{ display: "flex", marginTop: "32px" }}>
@@ -104,7 +120,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           {renderObjects()}
         </div>
         <ErrorMessage>{error.stepFour}</ErrorMessage>
-        {sport_facilities.length === 0 ? null : (
+        {app_facilities.length === 0 ? null : (
           <Fieldset style={{ padding: 0 }} disabled={readOnly}>
             <OutlineButton
               type="button"
@@ -119,8 +135,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
         )}
       </div>
       {error ? <ErrorMessage>{internalError}</ErrorMessage> : null}
-
-      {sport_facilities.length === 0 ? (
+      {app_facilities.length === 0 ? (
         <NoObjects>
           Nie posiadasz żadnych obiektów sportowych. Dodaj je, klikając przycisk
           poniżej Wymagane jest wprowadzenie min. 1 obiektu. Pamiętaj aby
@@ -139,8 +154,9 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
           </OutlineButton>
         </NoObjects>
       ) : (
-        <ObjectForm objectIndex={currentObject} readOnly={readOnly} />
+        renderForms()
       )}
+
       <div style={{ margin: "40px 0" }}>
         <PrimaryButton
           type="button"
