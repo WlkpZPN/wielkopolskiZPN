@@ -271,15 +271,15 @@ const ClubApplication = ({
         postal_code: "",
         city: "",
         I01_1: false,
-        I01_2: false,
+        I02_2: false,
         I02_audience_capacity: null,
         I02_audience_entrance: null,
         I03_lighting: null,
         I04_length: null,
         I04_width: null,
-        I04_1: false,
-        I04_2: false,
-        I04_3: false,
+        I04_1: null,
+        I04_2: null,
+        I04_3: null,
         I05_primary_color: "",
         I05_secondary_color: "",
         I05_material: "",
@@ -784,29 +784,29 @@ const ClubApplication = ({
     setLoading(true);
     try {
       const res = await axios.post("/api/applications/addFutsalFacility", {
-        sport_facility: formData.stepFour.sport_facilities[currentObject],
+        sport_facility: formData.stepFour.futsal_facilities[currentObject],
         clubData,
       });
 
       //files upload
-      const attachments = formData.stepFour.sport_facilities[
-        currentObject
-      ].applications_attachments.filter((el) => (el.id ? false : true));
+      // const attachments = formData.stepFour.futsal_facilities[
+      //   currentObject
+      // ].applications_attachments.filter((el) => (el.id ? false : true));
 
-      const filesToUpload = new FormData();
-      attachments.forEach((attachment) => {
-        filesToUpload.append("files", attachment.fileData);
-      });
+      // const filesToUpload = new FormData();
+      // attachments.forEach((attachment) => {
+      //   filesToUpload.append("files", attachment.fileData);
+      // });
 
-      const config = {
-        headers: { "Content-type": "multipart/form-data" },
-        onUploadProgress: (event) => {
-          console.log(
-            `Current progress:`,
-            Math.round((event.loaded * 100) / event.total)
-          );
-        },
-      };
+      // const config = {
+      //   headers: { "Content-type": "multipart/form-data" },
+      //   onUploadProgress: (event) => {
+      //     console.log(
+      //       `Current progress:`,
+      //       Math.round((event.loaded * 100) / event.total)
+      //     );
+      //   },
+      // };
 
       //await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
 

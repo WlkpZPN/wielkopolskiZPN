@@ -135,6 +135,23 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
 "
             />
           </Label>
+          <Label width="max-content" direction="row" htmlFor="1">
+            <RadioButton
+              checked={data.I01_1 === true}
+              onChange={(e) => handleChange(false, objectIndex, "I01_1")}
+              id="1"
+              name="seasons"
+              value={1}
+            >
+              Posiadamy pisemną umowę z właścicielem stadionu
+            </RadioButton>
+            <Info
+              text="Oświadczamy, że nasz klub posiada powyższy obiekt sportowy/obiekty sportowe umożliwiający/e rozgrywanie meczów w ramach rozgrywek klubowych, który/e spełnia/ją wszystkie minimalne wymagania określone w niniejszych.
+
+Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dotyczącą obiektu sportowego.
+"
+            />
+          </Label>
 
           {data.I01_1 === false ? (
             <>
