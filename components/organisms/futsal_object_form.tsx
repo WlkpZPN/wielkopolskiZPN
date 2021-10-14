@@ -14,7 +14,7 @@ import RadioSquare from "../molecules/form_radio";
 import Paragraph from "../atoms/paragraph";
 
 import Info from "../atoms/Info";
-import { validateObject } from "../../middleware/stepValidation";
+import { validateFutsalObject } from "../../middleware/stepValidation";
 import ObjectInfo from "../molecules/object_info";
 import FormHeader from "../atoms/form_header";
 import Fieldset from "../atoms/fieldset";
@@ -40,9 +40,8 @@ const FutsalForm = ({ readOnly, objectIndex }) => {
   const handleChange = context.handleFutsalChange;
   const handleObjectSave = (e) => {
     e.preventDefault();
-    // call function form step falidation here
-    // save object to form state
-    const { valid, step, text } = validateObject(data);
+
+    const { valid, step, text } = validateFutsalObject(data);
 
     if (!valid) {
       setError({
@@ -52,7 +51,7 @@ const FutsalForm = ({ readOnly, objectIndex }) => {
       return;
     }
 
-    context.addSportFacility();
+    context.addFutsalFacility();
   };
 
   return (
@@ -122,7 +121,7 @@ const FutsalForm = ({ readOnly, objectIndex }) => {
           <Label width="max-content" direction="row" htmlFor="1">
             <RadioButton
               checked={data.I01_1 === true}
-              onChange={(e) => handleChange(true, "I01_1")}
+              onChange={(e) => handleChange(true, objectIndex, "I01_1")}
               id="1"
               name="seasons"
               value={1}
@@ -143,15 +142,17 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <Paragraph>
                 Umowa gwarantująca prawo do korzystania z obiektu sportowego
               </Paragraph>
-              <AddFacilityFilesWrapper
+              {/* <AddFacilityFilesWrapper
                 files={fileData}
                 category="I01_agreement"
                 text={null}
-              />
+              /> */}
               <Label pointer margin="16px 0" direction="row">
                 <RadioSquare
                   value={data.I01_2}
-                  handleChange={() => handleChange(!data.I01_2, "I01_2")}
+                  handleChange={() =>
+                    handleChange(!data.I01_2, objectIndex, "I01_2")
+                  }
                 />
                 Umowa gwarantuje prawo do korzystania z obiektu przez cały
                 sezon,w którym ubiegamy się o licencję
@@ -169,7 +170,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             <span>
               <RadioSquare
                 value={data.I02_2}
-                handleChange={() => handleChange(!data.I02_1, "I02_2")}
+                handleChange={() =>
+                  handleChange(!data.I02_1, objectIndex, "I02_2")
+                }
               />
               Wewnętrzne regulaminy obiektu, w formacie nie mniejszym niż B1
               (70cm x 100cm) rozmieszczone są przez każdym wejściem w taki
@@ -192,7 +195,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               onChange={(e) =>
                 handleChange(
                   e.target.value,
-
+                  objectIndex,
                   "I02_audience_capacity"
                 )
               }
@@ -207,7 +210,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               onChange={(e) =>
                 handleChange(
                   e.target.value,
-
+                  objectIndex,
                   "I02_audicence_entrance"
                 )
               }
@@ -226,7 +229,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             <span>Oświetlenie boiskaw LUX</span>
             <NumericInput
               value={data.I03_lighting}
-              onChange={(e) => handleChange(e.target.value, "I03_lighting")}
+              onChange={(e) =>
+                handleChange(e.target.value, objectIndex, "I03_lighting")
+              }
               suffix="lx"
               placeholder="0"
             />
@@ -494,7 +499,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <h3> Szatnie dla zawodników gospodarzy</h3>
           <Label>
             Wymiary
-            <span>
+            <span style={{ display: "flex", alignItems: "center" }}>
               <NumericInput
                 value={data.I09_length}
                 onChange={(e) =>
@@ -503,7 +508,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 placeholder={null}
                 suffix={null}
               />
-              x
+              <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
                 value={data.I09_width}
                 onChange={(e) =>
@@ -539,7 +544,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <h3>Szatnie dla zawodników gości </h3>
           <Label>
             Wymiary
-            <span>
+            <span style={{ display: "flex", alignItems: "center" }}>
               <NumericInput
                 value={data.I09_quest_length}
                 onChange={(e) =>
@@ -548,7 +553,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 placeholder={null}
                 suffix={null}
               />
-              x
+              <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
                 value={data.I09_quest_width}
                 onChange={(e) =>
@@ -601,7 +606,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           ) : null}
           <Label>
             Wymiary
-            <span>
+            <span style={{ display: "flex", alignItems: "center" }}>
               <NumericInput
                 value={data.I10_width}
                 onChange={(e) =>
@@ -610,7 +615,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 placeholder={null}
                 suffix={null}
               />
-              x
+              <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
                 value={data.I10_length}
                 onChange={(e) =>
@@ -766,12 +771,14 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
           <Label>
-            <Info
-              text={
-                "np. na trybunie widowni, na balkonie, na piętrze oddzielone od widowni"
-              }
-            />
-            Oddzielne miejsce dla fotografów i telewizji (jeśli jest - wskaż)
+            <span>
+              Oddzielne miejsce dla fotografów i telewizji (jeśli jest - wskaż)
+              <Info
+                text={
+                  "np. na trybunie widowni, na balkonie, na piętrze oddzielone od widowni"
+                }
+              />
+            </span>
             <Input
               type="text"
               value={data.I13_separate_media}
@@ -787,12 +794,13 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
             </>
           ) : null}
-
-          <h3>
-            Jaki system reklamy używany jest na hali sportowej podczas zawodów
-            sportowych?
-          </h3>
-          <Info text={"Wpisz ilość oraz zbliżone wymiary w metrach"} />
+          <span style={{ display: "flex" }}>
+            <h3>
+              Jaki system reklamy używany jest na hali sportowej podczas zawodów
+              sportowych?
+            </h3>
+            <Info text={"Wpisz ilość oraz zbliżone wymiary w metrach"} />
+          </span>
           <Label pointer>
             <span>
               <RadioSquare
@@ -817,24 +825,27 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           </Label>
           <Label>
             Wymiary
-            <NumericInput
-              value={data.I14_fixed_length}
-              onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I14_fixed_length")
-              }
-              placeholder={null}
-              suffix={null}
-            />
-            x
-            <NumericInput
-              value={data.I14_fixed_width}
-              onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I14_fixed_width")
-              }
-              placeholder={null}
-              suffix={null}
-            />
+            <span style={{ display: "flex", alignItems: "center" }}>
+              <NumericInput
+                value={data.I14_fixed_length}
+                onChange={(e) =>
+                  handleChange(e.target.value, objectIndex, "I14_fixed_length")
+                }
+                placeholder={null}
+                suffix={"m"}
+              />
+              <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
+              <NumericInput
+                value={data.I14_fixed_width}
+                onChange={(e) =>
+                  handleChange(e.target.value, objectIndex, "I14_fixed_width")
+                }
+                placeholder={null}
+                suffix={"m"}
+              />
+            </span>
           </Label>
+
           <Label pointer>
             <span>
               <RadioSquare
@@ -859,24 +870,27 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           </Label>
           <Label>
             Wymiary
-            <NumericInput
-              value={data.I14_moving_width}
-              onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I14_moving_width")
-              }
-              placeholder={null}
-              suffix={null}
-            />
-            x
-            <NumericInput
-              value={data.I14_moving_length}
-              onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I14_moving_length")
-              }
-              placeholder={null}
-              suffix={null}
-            />
+            <span style={{ display: "flex", alignItems: "center" }}>
+              <NumericInput
+                value={data.I14_moving_width}
+                onChange={(e) =>
+                  handleChange(e.target.value, objectIndex, "I14_moving_width")
+                }
+                placeholder={null}
+                suffix={null}
+              />
+              <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
+              <NumericInput
+                value={data.I14_moving_length}
+                onChange={(e) =>
+                  handleChange(e.target.value, objectIndex, "I14_moving_length")
+                }
+                placeholder={null}
+                suffix={null}
+              />
+            </span>
           </Label>
+
           <Label pointer>
             <span>
               <RadioSquare
@@ -905,23 +919,33 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           </Label>
           <Label>
             Wymiary
-            <NumericInput
-              value={data.I14_electric_width}
-              onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I14_electric_width")
-              }
-              placeholder={null}
-              suffix={null}
-            />
-            x
-            <NumericInput
-              value={data.I14_electric_length}
-              onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I14_electric_length")
-              }
-              placeholder={null}
-              suffix={null}
-            />
+            <span style={{ display: "flex", alignItems: "center" }}>
+              <NumericInput
+                value={data.I14_electric_width}
+                onChange={(e) =>
+                  handleChange(
+                    e.target.value,
+                    objectIndex,
+                    "I14_electric_width"
+                  )
+                }
+                placeholder={null}
+                suffix={null}
+              />
+              <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
+              <NumericInput
+                value={data.I14_electric_length}
+                onChange={(e) =>
+                  handleChange(
+                    e.target.value,
+                    objectIndex,
+                    "I14_electric_length"
+                  )
+                }
+                placeholder={null}
+                suffix={null}
+              />
+            </span>
           </Label>
 
           <FormHeader>
@@ -963,7 +987,10 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           ) : null}
 
           <Label width="50%">
-            Ilość osób służ porządkowych w czasie zawodów
+            <span>
+              Ilość osób służ porządkowych w czasie zawodów
+              <Info text={"Osoby upoważnionie, odpowiednio oznaczone"} />
+            </span>
             <NumericInput
               value={data.I16_service}
               onChange={(e) =>
@@ -972,7 +999,6 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               suffix=""
               placeholder="0"
             />
-            <Info text={"Osoby upoważnionie, odpowiednio oznaczone"} />
           </Label>
 
           <div

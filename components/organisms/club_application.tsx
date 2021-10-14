@@ -165,7 +165,6 @@ const ClubApplication = ({
       invoice_required: clubData.applications[0].invoice_required,
     },
   });
-  console.log("facilities", formData.stepFour);
 
   const [currentObject, setCurrentObject] = useState(0);
 
@@ -809,15 +808,15 @@ const ClubApplication = ({
         },
       };
 
-      await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
+      //await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
 
       //attach files
 
-      const res2 = await axios.post("/api/applications/addFutsalUrl", {
-        facilityFilesUrls: attachments,
-        facilityID: res.data.facility.id,
-        applicationID: clubData.applications[0].id,
-      });
+      // const res2 = await axios.post("/api/applications/addFutsalUrl", {
+      //   facilityFilesUrls: attachments,
+      //   facilityID: res.data.facility.id,
+      //   applicationID: clubData.applications[0].id,
+      // });
     } catch (e) {
       console.log("error when adding futsal facility:", e);
       setLoading(false);
@@ -1042,6 +1041,7 @@ const ClubApplication = ({
         changeApplicationData,
         handleFutsalChange,
         createNewFutsalFacilityForm,
+        addFutsalFacility,
       }}
     >
       <div>
