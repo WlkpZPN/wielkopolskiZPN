@@ -3,7 +3,7 @@ import prisma from "../../../middleware/prisma";
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { sport_facility, clubData } = req.body;
-    //console.log(sport_facility, clubData);
+    console.log(sport_facility, clubData);
     let new_object = {};
 
     if (sport_facility) {

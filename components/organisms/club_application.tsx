@@ -61,7 +61,7 @@ const ClubApplication = ({
     stepSix: completed ? "completed" : "default",
     stepSeven: completed ? "completed" : "default",
   });
-  console.log(authData);
+
   useEffect(() => {
     let newStepData = { ...completedSteps };
     newStepData.stepFour = "";
