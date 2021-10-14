@@ -73,6 +73,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
 
   const renderObjects = () => {
     let helperArr = [];
+    console.log("app facilities", app_facilities);
     app_facilities.map((facility, index) => {
       helperArr.push(
         <div style={{ display: "flex", alignItems: "flex-start" }}>

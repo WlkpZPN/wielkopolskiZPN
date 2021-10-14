@@ -783,7 +783,7 @@ const ClubApplication = ({
   const addFutsalFacility = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("/api/applications/addSportFacility", {
+      const res = await axios.post("/api/applications/addFutsalFacility", {
         sport_facility: formData.stepFour.sport_facilities[currentObject],
         clubData,
       });
