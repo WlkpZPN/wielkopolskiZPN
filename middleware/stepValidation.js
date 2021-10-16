@@ -183,6 +183,98 @@ export const checkStepSix = (formData) => {
 };
 
 export const validateFutsalObject = (data) => {
+  if (!data.name || !data.address || !data.postal_code || !data.city) {
+    window.scrollTo(0, 0);
+    return {
+      valid: false,
+      step: 0,
+      text: "Proszę podac nazwę obiektu, ulicę, kod pocztowy oraz miasto",
+    };
+  }
+
+  if (data.I01_1 === null) {
+    window.scrollTo(0, 400);
+    return {
+      valid: false,
+      step: 1,
+      text: "Proszę wybrać jedną z poniższych opcji",
+    };
+  }
+
+  if (data.I01_1 === false && data.I01_2 !== true) {
+    window.scrollTo(0, 400);
+    return {
+      valid: false,
+      step: 1,
+      text: "Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu",
+    };
+  }
+
+  if (!data.I02_2) {
+    window.scrollTo(0, 800);
+    return {
+      valid: false,
+      step: 2,
+      text: "Proszę zaznaczyć wszystkie pola formularza",
+    };
+  }
+
+  if (
+    !data.I04_width ||
+    !data.I04_length ||
+    !data.I04_1 ||
+    !data.I04_2 ||
+    !data.I04_3
+  ) {
+    window.scrollTo(0, 1400);
+    return {
+      valid: false,
+      step: 4,
+      text: 'Proszę wypełnić wszystkie pola w sekcji "Wymiary boiska"',
+    };
+  }
+
+  if (
+    !data.I09_length ||
+    !data.I09_width ||
+    !data.I09_guest_length ||
+    !data.I09_guest_width ||
+    !data.I09_hygiene ||
+    !data.I09_showers ||
+    !data.I09_guest_hygiene ||
+    !data.I09_guest_showers
+  ) {
+    window.scrollTo(0, 3300);
+    return {
+      valid: false,
+      step: 9,
+      text: 'Proszę wypełnić wszystkie pola w sekcji "Szatnie"',
+    };
+  }
+
+  if (
+    !data.I10_width ||
+    !data.I10_length ||
+    !data.I10_hygiene ||
+    !data.I10_showers
+  ) {
+    window.scrollTo(0, 4000);
+    return {
+      valid: false,
+      step: 10,
+      text: 'Proszę wypełnić wszystkie pola w sekcji "Szatnie dla sędziów"',
+    };
+  }
+
+  if (!data.I16_service) {
+    window.scrollTo(0, 100000);
+    return {
+      valid: false,
+      step: 16,
+      text: "Proszę podać ilość osób porządkowych w czasie zawodów",
+    };
+  }
+
   return {
     valid: true,
   };

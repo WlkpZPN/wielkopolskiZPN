@@ -354,14 +354,14 @@ model futsal_facilities {
   application_id           Int
   I01_1                    Boolean?
   I02_2                    Boolean?
-  I02_audience_capacity    Int?
-  I02_audience_entrance    Int?
-  I03_lighting             Int?
-  I04_length               Decimal?                   @db.Decimal
-  I04_width                Decimal?                   @db.Decimal
-  I04_1                    Decimal?                   @db.Decimal
-  I04_2                    Decimal?                   @db.Decimal
-  I04_3                    Decimal?                   @db.Decimal
+  I02_audience_capacity    String?                    @db.VarChar(10)
+  I02_audience_entrance    String?                    @db.VarChar(10)
+  I03_lighting             String?                    @db.VarChar(10)
+  I04_length               String?                    @db.VarChar(30)
+  I04_width                String?                    @db.VarChar(30)
+  I04_1                    String?                    @db.VarChar(30)
+  I04_2                    String?                    @db.VarChar(30)
+  I04_3                    String?                    @db.VarChar(30)
   I05_primary_color        String?                    @db.VarChar(200)
   I05_secondary_color      String?                    @db.VarChar(200)
   I05_material             String?                    @db.VarChar(200)
@@ -370,48 +370,48 @@ model futsal_facilities {
   I06_material             String?                    @db.VarChar(200)
   I06_color                String?                    @db.VarChar(200)
   I06_base                 String?                    @db.VarChar(200)
-  I07_first_half_capacity  Int?
-  I07_second_half_capacity Int?
+  I07_first_half_capacity  String?                    @db.VarChar(10)
+  I07_second_half_capacity String?                    @db.VarChar(10)
   I07_table                Boolean?
   I08_clock                String?                    @db.VarChar(30)
-  I08_scoreboards          Int?
+  I08_scoreboards          String?                    @db.VarChar(10)
   I08_sound                String?                    @db.VarChar(30)
-  I09_length               Decimal?                   @db.Decimal
-  I09_width                Decimal?                   @db.Decimal
-  I09_guest_length         Decimal?                   @db.Decimal
-  I09_quest_width          Decimal?                   @db.Decimal
-  I09_quest_hygine         Int?
-  I09_quest_showers        Int?
-  I09_hygiene              Int?
-  I09_showers              Int?
+  I09_length               String?                    @db.VarChar(30)
+  I09_width                String?                    @db.VarChar(30)
+  I09_guest_length         String?                    @db.VarChar(30)
+  I09_guest_width          String?                    @db.VarChar(30)
+  I09_guest_hygiene        String?                    @db.VarChar(10)
+  I09_guest_showers        String?                    @db.VarChar(10)
+  I09_hygiene              String?                    @db.VarChar(10)
+  I09_showers              String?                    @db.VarChar(10)
   I09_exit                 Boolean?
-  I10_width                Decimal?                   @db.Decimal
-  I10_length               Decimal?                   @db.Decimal
-  I10_hygiene              Int?
-  I10_showers              Int?
+  I10_width                String?                    @db.VarChar(30)
+  I10_length               String?                    @db.VarChar(30)
+  I10_hygiene              String?                    @db.VarChar(10)
+  I10_showers              String?                    @db.VarChar(10)
   I11_heating              String?                    @db.VarChar(230)
   I11_air_conditioning     Boolean?
   I12_stretcher            Boolean?
   I12_medical_service      Boolean?
-  I13_capacity             Int?
+  I13_capacity             String?                    @db.VarChar(10)
   I13_internet_access      Boolean?
   I13_separate_press       Boolean?
   I13_separate_media       String?
   I14_fixed                Boolean?
-  I14_fixed_quantity       Int?
-  I14_fixed_length         Int?
-  I14_fixed_width          Int?
+  I14_fixed_quantity       String?                    @db.VarChar(10)
+  I14_fixed_length         String?                    @db.VarChar(10)
+  I14_fixed_width          String?                    @db.VarChar(10)
   I14_moving               Boolean?
-  I14_moving_quantity      Int?
-  I14_moving_length        Int?
-  I14_moving_width         Int?
+  I14_moving_quantity      String?                    @db.VarChar(10)
+  I14_moving_length        String?                    @db.VarChar(10)
+  I14_moving_width         String?                    @db.VarChar(10)
   I14_electric             Boolean?
-  I14_electric_quantity    Int?
-  I14_electric_width       Int?
-  I14_electric_length      Int?
-  I15_parking_sports       Int?
-  I15_special_spots        Int?
-  I16_service              Int?
+  I14_electric_quantity    String?                    @db.VarChar(10)
+  I14_electric_width       String?                    @db.VarChar(10)
+  I14_electric_length      String?                    @db.VarChar(10)
+  I15_parking_sports       String?                    @db.VarChar(10)
+  I15_special_spots        String?                    @db.VarChar(10)
+  I16_service              String?                    @db.VarChar(10)
   applications             applications               @relation(fields: [application_id], references: [id])
   applications_attachments applications_attachments[]
 }

@@ -137,7 +137,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           </Label>
           <Label width="max-content" direction="row" htmlFor="1">
             <RadioButton
-              checked={data.I01_1 === true}
+              checked={data.I01_1 === false}
               onChange={(e) => handleChange(false, objectIndex, "I01_1")}
               id="1"
               name="seasons"
@@ -187,9 +187,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             <span>
               <RadioSquare
                 value={data.I02_2}
-                handleChange={() =>
-                  handleChange(!data.I02_1, objectIndex, "I02_2")
-                }
+                handleChange={() => {
+                  handleChange(!data.I02_2, objectIndex, "I02_2");
+                }}
               />
               Wewnętrzne regulaminy obiektu, w formacie nie mniejszym niż B1
               (70cm x 100cm) rozmieszczone są przez każdym wejściem w taki
@@ -223,12 +223,12 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <Label width="max-content">
             <span>ilość wejść/wyjść na widownię</span>
             <NumericInput
-              value={data.I02_audicence_entrance}
+              value={data.I02_audience_entrance}
               onChange={(e) =>
                 handleChange(
                   e.target.value,
                   objectIndex,
-                  "I02_audicence_entrance"
+                  "I02_audience_entrance"
                 )
               }
               suffix={null}
@@ -403,7 +403,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             />
           </Label>
 
-          <Label margin="24px 0" direction="row">
+          <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
                 value={data.base}
@@ -506,7 +506,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <option value="przenośne">przenośne</option>
             </Select>
           </Label>
-          <FormHeader>Kryterium I.09 - Szatnie</FormHeader>
+          <FormHeader>Kryterium I.09 Szatnie - wymagane</FormHeader>
           {error.step === 9 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
@@ -522,8 +522,8 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I09_length")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
               <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
@@ -531,19 +531,19 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I09_width")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
             </span>
           </Label>
           <Label>
             Ilość sanitariatów
             <NumericInput
-              value={data.I09_hygine}
+              value={data.I09_hygiene}
               onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I09_hygine")
+                handleChange(e.target.value, objectIndex, "I09_hygiene")
               }
-              placeholder={null}
+              placeholder={"0"}
               suffix={null}
             />
           </Label>
@@ -554,7 +554,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               onChange={(e) =>
                 handleChange(e.target.value, objectIndex, "I09_showers")
               }
-              placeholder={null}
+              placeholder={"0"}
               suffix={null}
             />
           </Label>
@@ -563,43 +563,43 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             Wymiary
             <span style={{ display: "flex", alignItems: "center" }}>
               <NumericInput
-                value={data.I09_quest_length}
+                value={data.I09_guest_length}
                 onChange={(e) =>
-                  handleChange(e.target.value, objectIndex, "I09_quest_length")
+                  handleChange(e.target.value, objectIndex, "I09_guest_length")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
               <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
-                value={data.I09_quest_width}
+                value={data.I09_guest_width}
                 onChange={(e) =>
-                  handleChange(e.target.value, objectIndex, "I09_quest_width")
+                  handleChange(e.target.value, objectIndex, "I09_guest_width")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
             </span>
           </Label>
           <Label>
             Ilość sanitariatów
             <NumericInput
-              value={data.I09_quest_hygine}
+              value={data.I09_guest_hygiene}
               onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I09_quest_hygine")
+                handleChange(e.target.value, objectIndex, "I09_guest_hygiene")
               }
-              placeholder={null}
+              placeholder={"0"}
               suffix={null}
             />
           </Label>
           <Label>
             Ilość pryszniców
             <NumericInput
-              value={data.I09_quest_showers}
+              value={data.I09_guest_showers}
               onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I09_quest_showers")
+                handleChange(e.target.value, objectIndex, "I09_guest_showers")
               }
-              placeholder={null}
+              placeholder={"0"}
               suffix={null}
             />
           </Label>
@@ -615,7 +615,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </span>
           </Label>
 
-          <FormHeader>Kryterium I.10 - Szatnie dla sędziów</FormHeader>
+          <FormHeader>
+            Kryterium I.10 - Szatnie dla sędziów - wymagane
+          </FormHeader>
           {error.step === 10 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
@@ -629,8 +631,8 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I10_width")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
               <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
@@ -638,19 +640,19 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I10_length")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
             </span>
           </Label>
           <Label>
             Ilość sanitariatów
             <NumericInput
-              value={data.I10_hygine}
+              value={data.I10_hygiene}
               onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I10_hygine")
+                handleChange(e.target.value, objectIndex, "I10_hygiene")
               }
-              placeholder={null}
+              placeholder={"0"}
               suffix={null}
             />
           </Label>
@@ -661,7 +663,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               onChange={(e) =>
                 handleChange(e.target.value, objectIndex, "I10_showers")
               }
-              placeholder={null}
+              placeholder={"0"}
               suffix={null}
             />
           </Label>
@@ -799,7 +801,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             <Input
               type="text"
               value={data.I13_separate_media}
-              handleChange={(e) =>
+              onChange={(e) =>
                 handleChange(e.target.value, objectIndex, "I13_separate_media")
               }
             />
@@ -848,7 +850,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I14_fixed_length")
                 }
-                placeholder={null}
+                placeholder={"0"}
                 suffix={"m"}
               />
               <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
@@ -857,7 +859,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I14_fixed_width")
                 }
-                placeholder={null}
+                placeholder={"0"}
                 suffix={"m"}
               />
             </span>
@@ -893,8 +895,8 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I14_moving_width")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
               <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
@@ -902,8 +904,8 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 onChange={(e) =>
                   handleChange(e.target.value, objectIndex, "I14_moving_length")
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
             </span>
           </Label>
@@ -946,8 +948,8 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                     "I14_electric_width"
                   )
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
               <span style={{ margin: "0 8px", marginBottom: "-8px" }}>x</span>
               <NumericInput
@@ -959,8 +961,8 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                     "I14_electric_length"
                   )
                 }
-                placeholder={null}
-                suffix={null}
+                placeholder={"0"}
+                suffix={"m"}
               />
             </span>
           </Label>
@@ -976,9 +978,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <Label width="50%">
             Ilość miejc parkingowych wokół hali sportowej
             <NumericInput
-              value={data.I15_parking_spots}
+              value={data.I15_parking_sports}
               onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "I15_parking_spots")
+                handleChange(e.target.value, objectIndex, "I15_parking_sports")
               }
               suffix=""
               placeholder="0"
@@ -996,7 +998,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             />
           </Label>
 
-          <FormHeader>Kryterium I.16 - Służby porządkowe</FormHeader>
+          <FormHeader>Kryterium I.16 - Służby porządkowe - wymagane</FormHeader>
           {error.step === 16 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
