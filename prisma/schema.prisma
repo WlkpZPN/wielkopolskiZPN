@@ -347,7 +347,7 @@ model youth_groups {
 
 model futsal_facilities {
   id                       Int                        @id @default(autoincrement())
-  object_name              String?                    @db.VarChar(250)
+  name                     String?                    @db.VarChar(250)
   city                     String?                    @db.VarChar(200)
   postal_code              String?                    @db.VarChar(6)
   address                  String?

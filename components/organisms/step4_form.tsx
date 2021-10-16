@@ -56,7 +56,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
   const [internalError, setInternalError] = useState("");
   console.log("futsal facility", futsal_facilities);
   console.log("sport facility", sport_facilities);
-  const isFutsal: boolean = formData.stepOne.leauge === "futsal";
+  const isFutsal: boolean = formData.stepOne.leauge == "futsal";
   const app_facilities = isFutsal ? futsal_facilities : sport_facilities;
   const handleNewForm = () => {
     const result =

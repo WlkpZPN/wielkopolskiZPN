@@ -266,7 +266,7 @@ const ClubApplication = ({
       }
 
       const newForm = {
-        object_name: "Obiekt 1",
+        name: "Obiekt 1",
         address: "",
         postal_code: "",
         city: "",
@@ -291,7 +291,7 @@ const ClubApplication = ({
         I07_first_half_capacity: null,
         I07_second_half_capacity: null,
         I07_table: false,
-        I07_clock: "analogowy",
+        I08_clock: "analogowy",
         I08_scoreboards: null,
         I08_sound: "stałe",
         I09_length: null,
@@ -330,7 +330,7 @@ const ClubApplication = ({
         I15_parking_sports: null,
         I15_special_spots: null,
         I16_service: null,
-        application_attachments: [],
+        applications_attachments: [],
       };
 
       let newFormData = formData;
@@ -817,6 +817,9 @@ const ClubApplication = ({
       //   facilityID: res.data.facility.id,
       //   applicationID: clubData.applications[0].id,
       // });
+
+      setLoading(false);
+      toast.success("Zapisano nowy obiekt");
     } catch (e) {
       console.log("error when adding futsal facility:", e);
       setLoading(false);

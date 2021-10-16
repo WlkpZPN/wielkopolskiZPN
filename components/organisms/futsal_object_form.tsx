@@ -70,9 +70,9 @@ const FutsalForm = ({ readOnly, objectIndex }) => {
           <Label>
             Nazwa obiektu sportowego
             <Input
-              value={data.object_name}
+              value={data.name}
               onChange={(e) =>
-                handleChange(e.target.value, objectIndex, "object_name")
+                handleChange(e.target.value, objectIndex, "name")
               }
               type="text"
             />
