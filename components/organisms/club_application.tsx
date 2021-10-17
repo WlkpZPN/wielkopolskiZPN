@@ -97,6 +97,7 @@ const ClubApplication = ({
       leauge: clubData.leauge?.toLowerCase() || "brak",
       seasons: clubData.applications[0].number_of_seasons || "1",
       clubName: clubData.name || "",
+      futsal_subtype: clubData.futsal_subtype || "II",
       clubCity: city || "",
       clubZipCode: zipCode || "",
       clubStreet: street || "",

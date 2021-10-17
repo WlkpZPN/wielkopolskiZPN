@@ -56,6 +56,7 @@ const EditClubData = ({ clubData, isAdmin = false }) => {
   const [chairmanEmail, setChairmanEmail] = useState(
     clubData.chairman_email || ""
   );
+  const [subtype, setSubtype] = useState("");
   const [agentName, setAgentName] = useState(
     clubData.agent_name ? clubData.agent_name.split(" ")[0] : ""
   );
@@ -622,6 +623,12 @@ const EditClubData = ({ clubData, isAdmin = false }) => {
           <option value="ligi kobiece">Ligi kobiece</option>
         </Select>
       </Label>
+      {leauge === "futsal" ? (
+        <Select value={subtype} onChange={(e) => setSubtype(e.target.value)}>
+          <option value="II">II Liga Futsalu Kobiet</option>
+          <option value="III">III Liga Futsalu Mężczyzn</option>
+        </Select>
+      ) : null}
       <FormRow cols={4}>
         <Label style={{ gridColumn: "1 / span 2" }}>
           Adres klubu (ulica)

@@ -119,6 +119,17 @@ const StepOneForm = ({
                 text={`Kluby IV ligi mogą ubiegać się tylko o licencję na jeden sezon. Kluby z pozostałych klas rozgrywkowych mogą wnioskować o licencje na dwa sezony jeśli: \n -posiadają prawo do użytkowania obiektu sportowego na minimum dwa sezony \n- będą wnioskowały o licencję na dwa sezony \n- wniosą opłatę za dwa sezony`}
               />
             </div>
+            {data.leauge === "futsal" ? (
+              <Select
+                value={data.futsal_subtype}
+                onChange={(e) =>
+                  handleChange(e.target.value, "futsal_subtype", 1)
+                }
+              >
+                <option value="II">II Liga Futsalu Kobiet</option>
+                <option value="III">III Liga Futsalu Mężczyzn</option>
+              </Select>
+            ) : null}
             {infoText == "" ? null : <ErrorMessage>{infoText}</ErrorMessage>}
 
             <RadioContainer>

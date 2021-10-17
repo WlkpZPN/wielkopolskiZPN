@@ -148,6 +148,7 @@ model clubs {
   debt           Boolean?       @default(false)
   chairman_email String?        @db.VarChar(300)
   invoice_url    String?
+  futsal_subtype String?        @db.VarChar(30)
   applications   applications[]
   users          users[]
 }

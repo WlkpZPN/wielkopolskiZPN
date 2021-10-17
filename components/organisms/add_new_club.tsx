@@ -60,6 +60,8 @@ const AddNewClub = () => {
     text: "",
   });
 
+  const [subtype, setSubtype] = useState("");
+
   const [phoneCount, setPhoneCount] = useState(
     [].concat(phone, phone2, phone3).filter((e) => e != "").length
   );
@@ -557,6 +559,12 @@ const AddNewClub = () => {
           <option value="ligi kobiece">Ligi kobiece</option>
         </Select>
       </Label>
+      {leauge === "futsal" ? (
+        <Select value={subtype} onChange={(e) => setSubtype(e.target.value)}>
+          <option value="II">II Liga Futsalu Kobiet</option>
+          <option value="III">III Liga Futsalu Mężczyzn</option>
+        </Select>
+      ) : null}
       <FormRow cols={4}>
         <Label style={{ gridColumn: "1 / span 2" }}>
           Adres klubu (ulica)
