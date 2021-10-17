@@ -17,11 +17,11 @@ export default (req, res) => {
       // GET ACCESS TOKEN
       const tokenData = await axios({
         method: "POST",
-        url: `${process.env.PAYU_URL}/pl/standard/user/oauth/authorize`,
+        url: `${process.env.SND_PAYU_URL}/pl/standard/user/oauth/authorize`,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        data: `grant_type=client_credentials&client_id=${process.env.PAYU_CLIENT_ID}&client_secret=${process.env.PAYU_CLIENT_SECRET}`,
+        data: `grant_type=client_credentials&client_id=${process.env.SND_PAYU_CLIENT_ID}&client_secret=${process.env.SND_PAYU_CLIENT_SECRET}`,
       });
       // GET IP
       let ip = "";
@@ -31,11 +31,11 @@ export default (req, res) => {
         ip = req.connection.remoteAddress;
       }
       // CREATE NEW ORDER
-      console.log("amount", amount * 100);
+      console.log("token", tokenData.data.access_token);
       const newOrder = await axios({
         maxRedirects: 0,
         method: "POST",
-        url: `${process.env.PAYU_URL}/api/v2_1/orders`,
+        url: `${process.env.SND_PAYU_URL}/api/v2_1/orders`,
         validateStatus: function (status) {
           return status < 303;
         },
@@ -47,7 +47,7 @@ export default (req, res) => {
           notifyUrl: `https://wielkopolski-zpn-three.vercel.app/api/payments/notifyPayment`,
           currencyCode: "PLN",
           description: description,
-          merchantPosId: process.env.PAYU_POS_ID,
+          merchantPosId: process.env.SND_PAYU_POS_ID,
           validityTime: "8035200",
           extOrderId: newID,
           customerIp: ip,
