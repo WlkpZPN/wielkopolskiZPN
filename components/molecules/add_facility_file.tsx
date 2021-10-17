@@ -137,7 +137,13 @@ const DeleteButton = styled.span`
   }
 `;
 
-const AddFacilityFile = ({ file, category, text, upload }) => {
+const AddFacilityFile = ({
+  file,
+  category,
+  text,
+  upload,
+  isFutsal = false,
+}) => {
   const {
     formData,
     clubData,
@@ -146,8 +152,11 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
     deleteFacilityFile,
     setFormData,
   } = useContext(ApplicationContext);
-  const facilityID = formData.stepFour.sport_facilities[currentObject]?.id;
-  const router = useRouter();
+  const app_facility = isFutsal
+    ? formData.stepFour.futsal_facilities[currentObject]
+    : formData.stepFour.sport_facilities[currentObject];
+  const facilityID = app_facility?.id;
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   //console.log(error);
@@ -189,7 +198,7 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
         await axios.post("/api/files/addFilesUrl", {
           category,
           fileName,
-          facilityID: formData.stepFour.sport_facilities[currentObject].id,
+          facilityID: app_facility.id,
         });
         toast.info("Dodano plik", {
           autoClose: 2000,
@@ -198,14 +207,25 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
       }
 
       let newData = formData;
-      newData.stepFour.sport_facilities[
-        currentObject
-      ].applications_attachments.push({
-        filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
-        category,
-        name: fileName,
-        fileData: newFile,
-      });
+      if (isFutsal) {
+        newData.stepFour.futsal_facilities[
+          currentObject
+        ].applications_attachments.push({
+          filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
+          category,
+          name: fileName,
+          fileData: newFile,
+        });
+      } else {
+        newData.stepFour.sport_facilities[
+          currentObject
+        ].applications_attachments.push({
+          filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
+          category,
+          name: fileName,
+          fileData: newFile,
+        });
+      }
       setFormData(newData);
       setLoading(false);
       // toast.success("Dodano plik na serwer", {
@@ -237,12 +257,22 @@ const AddFacilityFile = ({ file, category, text, upload }) => {
         toast.info("Plik usunięty", {
           autoClose: 2000,
         });
-        const newFormData = formData;
-        newFormData.stepFour.sport_facilities[
-          currentObject
-        ].applications_attachments = response.data.attachments;
 
-        setFormData(newFormData);
+        if (isFutsal) {
+          const newFormData = formData;
+          newFormData.stepFour.futsal_facilities[
+            currentObject
+          ].applications_attachments = response.data.attachments;
+
+          setFormData(newFormData);
+        } else {
+          const newFormData = formData;
+          newFormData.stepFour.sport_facilities[
+            currentObject
+          ].applications_attachments = response.data.attachments;
+
+          setFormData(newFormData);
+        }
         refreshData();
       } catch (error) {
         setLoading(false);

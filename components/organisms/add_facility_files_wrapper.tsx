@@ -17,6 +17,7 @@ const Row = styled.div`
 const AddFacilityFilesWrapper = ({
   text = null,
   category,
+  isFutsal = false,
   files,
   upload = false,
 }) => {
@@ -24,9 +25,11 @@ const AddFacilityFilesWrapper = ({
   const context = useContext(ApplicationContext);
   const { currentObject, clubData, formData } = context;
   const fileData = files?.filter((file) => file.category === category);
-
+  const app_facility = isFutsal
+    ? formData.stepFour.futsal_facilities[currentObject]
+    : formData.stepFour.sport_facilities[currentObject];
   // check if this sport facility is saved
-  if (formData.stepFour.sport_facilities[currentObject]?.id) {
+  if (app_facility?.id) {
     // sport facility is saved
   }
   const generateBoxes = () => {
@@ -34,6 +37,7 @@ const AddFacilityFilesWrapper = ({
     for (let i = 0; i < fileData.length + 1; i++) {
       arr.push(
         <AddFacilityFile
+          isFutsal={isFutsal}
           upload={upload}
           category={category}
           text={text}

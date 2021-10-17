@@ -171,6 +171,17 @@ const ClubApplication = ({
   const deleteFacilityFile = (filename) => {
     let newFormData = formData;
 
+    if (formData.stepOne.leauge == "futsal") {
+      newFormData.stepFour.futsal_facilities[
+        currentObject
+      ].applications_attachments = newFormData.stepFour.futsal_facilities[
+        currentObject
+      ].applications_attachments.filter((el) => el.name !== filename);
+      setFormData(newFormData);
+      router.replace(router.asPath);
+      return;
+    }
+
     newFormData.stepFour.sport_facilities[
       currentObject
     ].applications_attachments = newFormData.stepFour.sport_facilities[
@@ -271,6 +282,7 @@ const ClubApplication = ({
         postal_code: "",
         city: "",
         I01_1: false,
+        I01_2: false,
         I02_2: false,
         I02_audience_capacity: null,
         I02_audience_entrance: null,
@@ -287,7 +299,7 @@ const ClubApplication = ({
         I05_dyscyplines: "",
         I06_material: "",
         I06_color: "",
-        I06_base: "",
+        I06_base: false,
         I07_first_half_capacity: null,
         I07_second_half_capacity: null,
         I07_table: false,
@@ -789,34 +801,34 @@ const ClubApplication = ({
       });
 
       //files upload
-      // const attachments = formData.stepFour.futsal_facilities[
-      //   currentObject
-      // ].applications_attachments.filter((el) => (el.id ? false : true));
+      const attachments = formData.stepFour.futsal_facilities[
+        currentObject
+      ].applications_attachments.filter((el) => (el.id ? false : true));
 
-      // const filesToUpload = new FormData();
-      // attachments.forEach((attachment) => {
-      //   filesToUpload.append("files", attachment.fileData);
-      // });
+      const filesToUpload = new FormData();
+      attachments.forEach((attachment) => {
+        filesToUpload.append("files", attachment.fileData);
+      });
 
-      // const config = {
-      //   headers: { "Content-type": "multipart/form-data" },
-      //   onUploadProgress: (event) => {
-      //     console.log(
-      //       `Current progress:`,
-      //       Math.round((event.loaded * 100) / event.total)
-      //     );
-      //   },
-      // };
+      const config = {
+        headers: { "Content-type": "multipart/form-data" },
+        onUploadProgress: (event) => {
+          console.log(
+            `Current progress:`,
+            Math.round((event.loaded * 100) / event.total)
+          );
+        },
+      };
 
-      //await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
+      await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
 
       //attach files
 
-      // const res2 = await axios.post("/api/applications/addFutsalUrl", {
-      //   facilityFilesUrls: attachments,
-      //   facilityID: res.data.facility.id,
-      //   applicationID: clubData.applications[0].id,
-      // });
+      const res2 = await axios.post("/api/applications/addFutsalUrl", {
+        facilityFilesUrls: attachments,
+        facilityID: res.data.facility.id,
+        applicationID: clubData.applications[0].id,
+      });
 
       setLoading(false);
       toast.success("Zapisano nowy obiekt");

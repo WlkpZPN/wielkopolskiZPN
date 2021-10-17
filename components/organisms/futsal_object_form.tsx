@@ -35,7 +35,7 @@ const FutsalForm = ({ readOnly, objectIndex }) => {
 
   const { deleteFacility } = context;
 
-  const fileData = data.application_attachments;
+  const fileData = data.applications_attachments;
   console.log("futsal form", data);
   const handleChange = context.handleFutsalChange;
   const handleObjectSave = (e) => {
@@ -159,11 +159,12 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <Paragraph>
                 Umowa gwarantująca prawo do korzystania z obiektu sportowego
               </Paragraph>
-              {/* <AddFacilityFilesWrapper
+              <AddFacilityFilesWrapper
+                isFutsal={true}
                 files={fileData}
                 category="I01_agreement"
                 text={null}
-              /> */}
+              />
               <Label pointer margin="16px 0" direction="row">
                 <RadioSquare
                   value={data.I01_2}

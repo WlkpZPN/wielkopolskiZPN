@@ -353,6 +353,7 @@ model futsal_facilities {
   address                  String?
   application_id           Int
   I01_1                    Boolean?
+  I01_2                    Boolean?
   I02_2                    Boolean?
   I02_audience_capacity    String?                    @db.VarChar(10)
   I02_audience_entrance    String?                    @db.VarChar(10)
