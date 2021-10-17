@@ -369,7 +369,7 @@ model futsal_facilities {
   I05_dyscyplines          String?
   I06_material             String?                    @db.VarChar(200)
   I06_color                String?                    @db.VarChar(200)
-  I06_base                 String?                    @db.VarChar(200)
+  I06_base                 Boolean?
   I07_first_half_capacity  String?                    @db.VarChar(10)
   I07_second_half_capacity String?                    @db.VarChar(10)
   I07_table                Boolean?

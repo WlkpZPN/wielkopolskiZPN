@@ -406,9 +406,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           <Label pointer margin="24px 0" direction="row">
             <span>
               <RadioSquare
-                value={data.base}
+                value={data.I06_base}
                 handleChange={(e) =>
-                  handleChange(!data.base, objectIndex, "is_invalid_field")
+                  handleChange(!data.base, objectIndex, "I06_base")
                 }
               />
               Bramki są przytwierdzone do podłoża
