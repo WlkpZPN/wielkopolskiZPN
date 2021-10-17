@@ -26,6 +26,11 @@ import ZipCodeInput from "../atoms/zip_code_input";
 import NumericInput from "../atoms/numeric_input";
 import RadioButton from "../atoms/radio_button";
 
+const Required = styled.span`
+  color: red;
+  font-weight: bold;
+`;
+
 const FutsalForm = ({ readOnly, objectIndex }) => {
   const [error, setError] = useState({ step: null, text: "" });
 
@@ -67,6 +72,9 @@ const FutsalForm = ({ readOnly, objectIndex }) => {
               <ErrorMessage>{error.text}</ErrorMessage>
             </>
           ) : null}
+          <span>
+            <Required>*</Required>pole obowiązkowe
+          </span>
           <Label>
             Nazwa obiektu sportowego
             <Input
@@ -112,7 +120,9 @@ const FutsalForm = ({ readOnly, objectIndex }) => {
       </Fieldset>
       <ObjectInfo>
         <Fieldset disabled={readOnly}>
-          <FormHeader>Kryterium I.01 - Hala sportowa - dostępność</FormHeader>
+          <FormHeader>
+            Kryterium I.01 - Hala sportowa - dostępność<Required>*</Required>
+          </FormHeader>
           {error.step === 1 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
@@ -178,7 +188,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             </>
           ) : null}
 
-          <FormHeader>Kryterium I.02 Regulaminy</FormHeader>
+          <FormHeader>
+            Kryterium I.02 Regulaminy<Required>*</Required>
+          </FormHeader>
           {error.step === 2 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
@@ -255,7 +267,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             />
           </Label>
 
-          <FormHeader>Kryterium I.04 - Wymiary boiska</FormHeader>
+          <FormHeader>
+            Kryterium I.04 - Wymiary boiska<Required>*</Required>
+          </FormHeader>
           {error.step === 4 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
@@ -507,7 +521,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
               <option value="przenośne">przenośne</option>
             </Select>
           </Label>
-          <FormHeader>Kryterium I.09 Szatnie - wymagane</FormHeader>
+          <FormHeader>
+            Kryterium I.09 Szatnie<Required>*</Required>
+          </FormHeader>
           {error.step === 9 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
@@ -617,7 +633,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
           </Label>
 
           <FormHeader>
-            Kryterium I.10 - Szatnie dla sędziów - wymagane
+            Kryterium I.10 - Szatnie dla sędziów<Required>*</Required>
           </FormHeader>
           {error.step === 10 ? (
             <>
@@ -999,7 +1015,9 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
             />
           </Label>
 
-          <FormHeader>Kryterium I.16 - Służby porządkowe - wymagane</FormHeader>
+          <FormHeader>
+            Kryterium I.16 - Służby porządkowe<Required>*</Required>
+          </FormHeader>
           {error.step === 16 ? (
             <>
               <ErrorMessage>{error.text}</ErrorMessage>{" "}
