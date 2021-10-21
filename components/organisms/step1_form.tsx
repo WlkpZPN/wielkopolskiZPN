@@ -137,10 +137,10 @@ const StepOneForm = ({
               <Label direction="row" htmlFor="1">
                 <RadioButton
                   id="1"
-                  name="seasons"
-                  checked={data.seasons === "1"}
+                  name="number_of_seasons"
+                  checked={data.number_of_seasons === "1"}
                   value={"1"}
-                  onChange={(e) => handleChange("1", "seasons", 1)}
+                  onChange={(e) => handleChange("1", "number_of_seasons", 1)}
                 >
                   1 sezon
                 </RadioButton>
@@ -148,10 +148,10 @@ const StepOneForm = ({
               <Label direction="row" htmlFor="2">
                 <RadioButton
                   value={"2"}
-                  name="seasons"
+                  name="number_of_seasons"
                   id="2"
-                  checked={data.seasons === "2"}
-                  onChange={(e) => handleChange("2", "seasons", 1)}
+                  checked={data.number_of_seasons === "2"}
+                  onChange={(e) => handleChange("2", "number_of_seasons", 1)}
                 >
                   2 sezony
                 </RadioButton>
