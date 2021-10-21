@@ -8,7 +8,7 @@ export const checkStepOne = (data) => {
     };
   }
 
-  if (!data.seasons) {
+  if (!data.number_of_seasons) {
     return {
       valid: false,
       text: "Proszę zaznaczyć liczbę sezonów",
