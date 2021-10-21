@@ -31,7 +31,6 @@ const PageNumber = styled.span`
   cursor: pointer;
 `;
 const TablePagination = ({ pages, setPage, currentPage }) => {
-  console.log(pages);
   const handleNextPage = () => {
     if (currentPage < pages - 1) {
       setPage(currentPage + 1);

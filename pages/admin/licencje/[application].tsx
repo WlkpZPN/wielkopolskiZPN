@@ -509,6 +509,11 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
               applications_attachments: true,
             },
           },
+          futsal_facilities: {
+            include: {
+              applications_attachments: true,
+            },
+          },
         },
       },
     },

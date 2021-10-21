@@ -179,90 +179,143 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   textField.setAlignment(TextAlignment.Center);
   textField.updateAppearances(bold);
 
-  page.drawText("Na podstawie uchwały", {
-    x: 50,
-    y: 440,
-    font: regular,
-    size: 10,
-    color: rgb(0, 0, 0),
-  });
-
-  page.drawText("Nr V/2020", {
-    x: 155,
-    y: 440,
-    font: regular,
-    size: 10,
-    color: rgb(0.07, 0.4, 0.7),
-  });
-
-  page.drawText("z dnia", {
-    x: 205,
-    y: 440,
-    font: regular,
-    size: 10,
-    color: rgb(0, 0, 0),
-  });
-
-  page.drawText(" 30 kwietnia 2021 r.", {
-    x: 232,
-    y: 440,
-    font: regular,
-    size: 10,
-    color: rgb(0.07, 0.4, 0.7),
-  });
-
-  page.drawText(" w sprawie ustalenia szczegółowych kryteriów ", {
-    x: 320,
-    y: 440,
-    font: regular,
-    size: 10,
-    color: rgb(0, 0, 0),
-  });
-
-  page.drawText(
-    "licencyjnych dla klubów IV ligi i klas niższych Wielkopolskiego ZPN na",
-    {
+  if (clubData.leauge != "futsal") {
+    page.drawText("Na podstawie uchwały", {
       x: 50,
-      y: 425,
+      y: 440,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
-    }
-  );
+    });
 
-  page.drawText(` sezon ${clubData.applications[0].seasons} `, {
-    x: 362,
-    y: 425,
-    font: regular,
-    size: 10,
-    color: rgb(0.07, 0.4, 0.7),
-  });
+    page.drawText("Nr V/2020", {
+      x: 155,
+      y: 440,
+      font: regular,
+      size: 10,
+      color: rgb(0.07, 0.4, 0.7),
+    });
 
-  page.drawText(`następnie po`, {
-    x: 50,
-    y: 410,
-    font: regular,
-    size: 10,
-    color: rgb(0, 0, 0),
-  });
+    page.drawText("z dnia", {
+      x: 205,
+      y: 440,
+      font: regular,
+      size: 10,
+      color: rgb(0, 0, 0),
+    });
 
-  page.drawText(
-    "rozpatrzeniu wniosku wraz z załącznikami i uzupełnieniami  Komisja ds. Licencji Klubowych",
-    {
-      x: 110,
+    page.drawText(" 30 kwietnia 2021 r.", {
+      x: 232,
+      y: 440,
+      font: regular,
+      size: 10,
+      color: rgb(0.07, 0.4, 0.7),
+    });
+
+    page.drawText(" w sprawie ustalenia szczegółowych kryteriów ", {
+      x: 320,
+      y: 440,
+      font: regular,
+      size: 10,
+      color: rgb(0, 0, 0),
+    });
+
+    page.drawText(
+      "licencyjnych dla klubów IV ligi i klas niższych Wielkopolskiego ZPN na",
+      {
+        x: 50,
+        y: 425,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
+
+    page.drawText(` sezon ${clubData.applications[0].seasons} `, {
+      x: 362,
+      y: 425,
+      font: regular,
+      size: 10,
+      color: rgb(0.07, 0.4, 0.7),
+    });
+
+    page.drawText(`następnie po`, {
+      x: 50,
       y: 410,
       font: regular,
       size: 10,
       color: rgb(0, 0, 0),
-    }
-  );
-  page.drawText("postanowiła:", {
-    x: 50,
-    y: 395,
-    font: regular,
-    size: 10,
-    color: rgb(0, 0, 0),
-  });
+    });
+
+    page.drawText(
+      "rozpatrzeniu wniosku wraz z załącznikami i uzupełnieniami  Komisja ds. Licencji Klubowych",
+      {
+        x: 110,
+        y: 410,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
+    page.drawText("postanowiła:", {
+      x: 50,
+      y: 395,
+      font: regular,
+      size: 10,
+      color: rgb(0, 0, 0),
+    });
+  } else {
+    page.drawText(
+      "Na podstawie uchwały Komisji ds. Nagłych Wielkopolskiego ZPN Nr 57/2021 z dnia 20 października",
+      {
+        x: 50,
+        y: 440,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
+
+    page.drawText(
+      `2021 r. w sprawie ustalenia szczegółowych kryteriów licencyjnych dla klubów III ligi futsalu mężczyzn`,
+      {
+        x: 50,
+        y: 425,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
+
+    page.drawText(
+      `oraz II ligi futsalu kobiet Wielkopolskiego ZPN na sezon 2021/2022 i następne po rozpatrzeniu`,
+      {
+        x: 50,
+        y: 410,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
+
+    page.drawText(
+      "wniosku wraz z załącznikami i uzupełnieniami Komisja ds. Licencji Klubowych",
+      {
+        x: 50,
+        y: 395,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+    );
+    page.drawText("postanowiła:", {
+      x: 50,
+      y: 380,
+      font: regular,
+      size: 10,
+      color: rgb(0, 0, 0),
+    });
+  }
 
   page.drawText(
     `1. Przyznać licencję upoważniającą Klub do udziału w rozgrywkach o mistrzostwo ${leauge}`,
@@ -314,11 +367,19 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   // );
 
   let objectsNames = [];
-  application.sport_facilities.forEach((object, index, arr) => {
-    if (object.name) {
-      objectsNames.push(`${object.name} ${object.address || ""}`);
-    }
-  });
+  if (clubData.leauge == "futsal") {
+    application.futsal_facilities.forEach((object, index, arr) => {
+      if (object.name) {
+        objectsNames.push(`${object.name} ${object.address || ""}`);
+      }
+    });
+  } else {
+    application.sport_facilities.forEach((object, index, arr) => {
+      if (object.name) {
+        objectsNames.push(`${object.name} ${object.address || ""}`);
+      }
+    });
+  }
 
   // page.drawText(`${objectsNames.join(", ")}`, {
   //   x: 50,
@@ -352,22 +413,6 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   textField3.updateAppearances(regular);
 
   if (application.status_id === 10) {
-    // page.drawText("Uzasadnienie: ", {
-    //   x: 50,
-    //   y: 280,
-    //   font: bold,
-    //   size: 10,
-    //   color: rgb(0, 0, 0),
-    // });
-    //tutaj nadzór
-    // page.drawText(`${application.reject_reason}`, {
-    //   x: 50,
-    //   y: 265,
-    //   font: regular,
-    //   size: 10,
-    //   color: rgb(0, 0, 0),
-    // });
-
     textField2.setText(`Uzasadnienie: \n${application.reject_reason}`);
 
     textField2.addToPage(page, {

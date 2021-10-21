@@ -41,7 +41,7 @@ export default async (req, res) => {
     const dataToInsert = {
       club_id: clubData.id,
       status_id: parseInt(statusId),
-      number_of_seasons: stepOne.seasons,
+      number_of_seasons: stepOne.number_of_seasons,
 
       declaration_on_the_subject_of_participation_in_the_competition:
         stepTwo.participateInCompetitions,
@@ -95,7 +95,7 @@ export default async (req, res) => {
             id: clubData.applications[0].id,
           },
           data: {
-            seasons: createSeasons(clubData.applications[0].number_of_seasons),
+            seasons: createSeasons(stepOne.number_of_seasons),
           },
         });
       }

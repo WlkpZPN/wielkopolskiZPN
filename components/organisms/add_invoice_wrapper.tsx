@@ -29,7 +29,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
   const [invoiceFiles, setInvoiceFiles] = useState(initialData);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  console.log(invoiceFiles);
+
   const addFile = (index, file) => {
     if (invoiceFiles[index] == null) {
       let newFiles = { ...invoiceFiles };
@@ -104,7 +104,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
       );
 
       setLoading(false);
-      console.log("result", uploadResult, updateResult);
+
       toast.success("Pomyślnie dodano fakturę", {
         autoClose: 2000,
       });
