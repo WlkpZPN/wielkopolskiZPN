@@ -376,7 +376,9 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   } else {
     application.sport_facilities.forEach((object, index, arr) => {
       if (object.name) {
-        objectsNames.push(`${object.name} ${object.address || ""}`);
+        objectsNames.push(
+          `${object.name}\n ${object.address || ""}, ${object.city} \n`
+        );
       }
     });
   }
@@ -390,7 +392,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   // });
 
   textField3.setText(
-    `2. Mecze w roli gospodarza rozgrywane będą na obiektach: ${objectsNames.join(
+    `2. Mecze w roli gospodarza rozgrywane będą na obiektach: \n ${objectsNames.join(
       ", "
     )}`
   );
