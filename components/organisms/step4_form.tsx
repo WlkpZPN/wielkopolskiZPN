@@ -51,6 +51,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     completedSteps,
     changeApplicationData,
     deleteFacility,
+    deleteFutsalFacility,
     formData,
   } = context;
   const [internalError, setInternalError] = useState("");
@@ -82,7 +83,11 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
             color="danger"
             hoverColor="dangerDark"
             style={{ marginRight: "12px" }}
-            onClick={() => deleteFacility(facility)}
+            onClick={() =>
+              formData.stepOne.leauge == "futsal"
+                ? deleteFutsalFacility(facility)
+                : deleteFacility(facility)
+            }
           >
             Usuń
           </PrimaryButton>

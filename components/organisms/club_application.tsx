@@ -217,6 +217,38 @@ const ClubApplication = ({
     setCurrentObject(0);
   };
 
+  const deleteFutsalFacility = (data) => {
+    console.log("deleting futsal");
+    try {
+      if (data.id) {
+        axios
+          .post("/api/applications/deleteFutsalFacility", {
+            facilityId: data.id,
+          })
+          .then((res) => {
+            // console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      const newFormData = formData;
+      newFormData.stepFour.futsal_facilities.splice(
+        newFormData.stepFour.futsal_facilities.findIndex(
+          (e) => e.id === data.id
+        ),
+        1
+      );
+      router.replace(router.asPath);
+
+      setFormData(newFormData);
+      setCurrentObject(0);
+    } catch (e) {
+      console.log("futsal removing error", e);
+      toast.error("Nie udało się usunąć obiektu,spróbuj ponownie");
+    }
+  };
+
   const handleStepFill = (step, state) => {
     let newStepData = completedSteps;
 
@@ -285,14 +317,14 @@ const ClubApplication = ({
         I01_1: false,
         I01_2: false,
         I02_2: false,
-        I02_audience_capacity: null,
-        I02_audience_entrance: null,
-        I03_lighting: null,
-        I04_length: null,
-        I04_width: null,
-        I04_1: null,
-        I04_2: null,
-        I04_3: null,
+        I02_audience_capacity: "0",
+        I02_audience_entrance: "0",
+        I03_lighting: "0",
+        I04_length: "0",
+        I04_width: "0",
+        I04_1: "0",
+        I04_2: "0",
+        I04_3: "0",
         I05_primary_color: "",
         I05_secondary_color: "",
         I05_material: "",
@@ -301,48 +333,48 @@ const ClubApplication = ({
         I06_material: "",
         I06_color: "",
         I06_base: false,
-        I07_first_half_capacity: null,
-        I07_second_half_capacity: null,
+        I07_first_half_capacity: "0",
+        I07_second_half_capacity: "0",
         I07_table: false,
         I08_clock: "analogowy",
-        I08_scoreboards: null,
+        I08_scoreboards: "0",
         I08_sound: "stałe",
-        I09_length: null,
-        I09_width: null,
-        I09_guest_length: null,
-        I09_guest_width: null,
-        I09_guest_hygiene: null,
-        I09_guest_showers: null,
-        I09_hygiene: null,
-        I09_showers: null,
+        I09_length: "0",
+        I09_width: "0",
+        I09_guest_length: "0",
+        I09_guest_width: "0",
+        I09_guest_hygiene: "0",
+        I09_guest_showers: "0",
+        I09_hygiene: "0",
+        I09_showers: "0",
         I09_exit: false,
-        I10_width: null,
-        I10_length: null,
-        I10_hygiene: null,
-        I10_showers: null,
+        I10_width: "0",
+        I10_length: "0",
+        I10_hygiene: "0",
+        I10_showers: "0",
         I11_heating: "brak",
         I11_air_conditioning: false,
         I12_stretcher: false,
         I12_medical_service: false,
-        I13_capacity: null,
+        I13_capacity: "0",
         I13_internet_access: false,
         I13_separate_press: false,
         I13_separate_media: "",
         I14_moving: false,
-        I14_moving_quantity: null,
-        I14_moving_length: null,
-        I14_moving_width: null,
+        I14_moving_quantity: "0",
+        I14_moving_length: "0",
+        I14_moving_width: "0",
         I14_electric: false,
-        I14_electric_quantity: null,
-        I14_electric_length: null,
-        I14_electric_width: null,
+        I14_electric_quantity: "0",
+        I14_electric_length: "0",
+        I14_electric_width: "0",
         I14_fixed: false,
-        I14_fixed_quantity: null,
-        I14_fixed_length: null,
-        I14_fixed_width: null,
-        I15_parking_sports: null,
-        I15_special_spots: null,
-        I16_service: null,
+        I14_fixed_quantity: "0",
+        I14_fixed_length: "0",
+        I14_fixed_width: "0",
+        I15_parking_sports: "0",
+        I15_special_spots: "0",
+        I16_service: "0",
         applications_attachments: [],
       };
 
@@ -357,7 +389,6 @@ const ClubApplication = ({
   };
 
   const createNewSportFacilityForm = () => {
-    // dodaj kolejny obiekt jesli klub posiada mniej niz 5 obiektów
     if (formData.stepFour.sport_facilities.length < 5) {
       // dodaj obiekt tylko jesli ich liczba w clubData i formData jest taka sama
       //console.log("adding new facility", formData.stepFour.sport_facilities);
@@ -1058,6 +1089,7 @@ const ClubApplication = ({
         handleFutsalChange,
         createNewFutsalFacilityForm,
         addFutsalFacility,
+        deleteFutsalFacility,
       }}
     >
       <div>

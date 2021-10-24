@@ -11,7 +11,7 @@ export default async (req, res) => {
           sport_facilities_id: parseInt(facilityId),
         },
       });
-      await prisma.sport_facilities.delete({
+      await prisma.futsal_facilities.delete({
         where: {
           id: parseInt(facilityId),
         },

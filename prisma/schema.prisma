@@ -352,7 +352,7 @@ model futsal_facilities {
   city                     String?                    @db.VarChar(200)
   postal_code              String?                    @db.VarChar(6)
   address                  String?
-  application_id           Int
+  application_id           Int?
   I01_1                    Boolean?
   I01_2                    Boolean?
   I02_2                    Boolean?
@@ -414,6 +414,6 @@ model futsal_facilities {
   I15_parking_sports       String?                    @db.VarChar(10)
   I15_special_spots        String?                    @db.VarChar(10)
   I16_service              String?                    @db.VarChar(10)
-  applications             applications               @relation(fields: [application_id], references: [id])
+  applications             applications?              @relation(fields: [application_id], references: [id])
   applications_attachments applications_attachments[]
 }

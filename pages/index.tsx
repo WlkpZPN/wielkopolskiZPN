@@ -429,7 +429,7 @@ const Home = ({ clubData, authData, settings }) => {
               </Header>
               <Paragraph>
                 Komisja Licencyjna Wielkopolskiego ZPN przyznała Twojemu klubowi
-                licencję na sezon 2021 do IV Ligi
+                licencję.
               </Paragraph>
               <div
                 style={{

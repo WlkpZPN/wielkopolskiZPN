@@ -9,20 +9,28 @@ export default async (req, res) => {
     if (sport_facility) {
       delete sport_facility.applications_attachments;
     }
-
-    new_object = await prisma.futsal_facilities.upsert({
-      where: {
-        id: sport_facility.id,
-      },
-      update: {
-        application_id: clubData.applications[0].id,
-        ...sport_facility,
-      },
-      create: {
-        application_id: clubData.applications[0].id,
-        ...sport_facility,
-      },
-    });
+    if (sport_facility.id) {
+      new_object = await prisma.futsal_facilities.upsert({
+        where: {
+          id: sport_facility.id,
+        },
+        update: {
+          application_id: clubData.applications[0].id,
+          ...sport_facility,
+        },
+        create: {
+          application_id: clubData.applications[0].id,
+          ...sport_facility,
+        },
+      });
+    } else {
+      new_object = await prisma.futsal_facilities.create({
+        data: {
+          application_id: clubData.applications[0].id,
+          ...sport_facility,
+        },
+      });
+    }
 
     console.log("futsal facility", sport_facility);
 

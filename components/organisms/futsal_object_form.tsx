@@ -380,7 +380,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   handleChange(!data.I05_lines, objectIndex, "I05_lines")
                 }
               />
-              Linie do inncyh dyscyplin
+              Linie do innych dyscyplin
             </span>
           </Label>
           <Label width="50%">
