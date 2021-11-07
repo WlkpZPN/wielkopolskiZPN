@@ -25,6 +25,7 @@ export default async (req, res) => {
         name: stepOne.name,
 
         leauge: stepOne.leauge,
+        futsal_subtype: stepOne.futsal_subtype,
         address: convertAddressData(
           stepOne.clubCity,
           stepOne.clubStreet,
