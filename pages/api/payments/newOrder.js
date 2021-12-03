@@ -35,7 +35,7 @@ export default (req, res) => {
       const newOrder = await axios({
         maxRedirects: 0,
         method: "POST",
-        url: `${process.env.SND_PAYU_URL}/api/v2_1/orders`,
+        url: `${process.env.PAYU_URL}/api/v2_1/orders`,
         validateStatus: function (status) {
           return status < 303;
         },
@@ -47,7 +47,7 @@ export default (req, res) => {
           notifyUrl: `https://wielkopolski-zpn-three.vercel.app/api/payments/notifyPayment`,
           currencyCode: "PLN",
           description: description,
-          merchantPosId: process.env.SND_PAYU_POS_ID,
+          merchantPosId: process.env.PAYU_POS_ID,
           validityTime: "8035200",
           extOrderId: newID,
           customerIp: ip,
