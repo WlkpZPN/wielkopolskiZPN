@@ -17,6 +17,7 @@ import NumericInput from "../../../components/atoms/numeric_input";
 import Fieldset from "../../../components/atoms/fieldset";
 import AmountInput from "../../../components/atoms/amount_input";
 import LockButton from "../../../components/molecules/lock_sending_button";
+import StartNewSeason from "../../../components/organisms/start_new_season";
 const Header = styled.h3`
   margin-top: 32px;
 `;
@@ -176,6 +177,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           {loading && <Loader />}
         </>
       </div>
+      <StartNewSeason />
       <ErrorMessage>{error}</ErrorMessage>
       <Header>Czas trwania procesu licencyjnego</Header>
       <form

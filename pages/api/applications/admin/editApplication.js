@@ -19,7 +19,6 @@ import {
 } from "../../../../middleware/utils";
 export default async (req, res) => {
   return new Promise(async (resolve) => {
-    console.log("test");
     const { formData, clubData, newStatus, userID } = req.body;
     const {
       stepOne,
@@ -86,17 +85,16 @@ export default async (req, res) => {
       data: dataToInsert,
     });
 
-
-    const {name} = await prisma.statuses.findUnique({
+    const { name } = await prisma.statuses.findUnique({
       where: {
-      id:parseInt(newStatus),
+        id: parseInt(newStatus),
       },
       select: {
-       name:true,
-      } ,
+        name: true,
+      },
     });
 
-    console.log('new status',name);
+    console.log("new status", name);
 
     await prisma.histories.create({
       data: {

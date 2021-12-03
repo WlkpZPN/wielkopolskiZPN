@@ -17,11 +17,11 @@ export default (req, res) => {
       // GET ACCESS TOKEN
       const tokenData = await axios({
         method: "POST",
-        url: `${process.env.SND_PAYU_URL}/pl/standard/user/oauth/authorize`,
+        url: `${process.env.PAYU_URL}/pl/standard/user/oauth/authorize`,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        data: `grant_type=client_credentials&client_id=${process.env.SND_PAYU_CLIENT_ID}&client_secret=${process.env.SND_PAYU_CLIENT_SECRET}`,
+        data: `grant_type=client_credentials&client_id=${process.env.PAYU_CLIENT_ID}&client_secret=${process.env.PAYU_CLIENT_SECRET}`,
       });
       // GET IP
       let ip = "";
