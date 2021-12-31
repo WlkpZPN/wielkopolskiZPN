@@ -34,7 +34,7 @@ export default (req, res) => {
     }
 
     Promise.all(promises)
-      .then((res) => {
+      .then((respose) => {
         res.status(200);
         res.send("subsribers added");
       })
