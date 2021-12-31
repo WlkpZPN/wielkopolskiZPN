@@ -7,27 +7,37 @@ export default (req, res) => {
 
         const clubs = await prisma.clubs.findMany();
         let clubsUrl = []
-        let promisies = [];
-        clubs.forEach((club) => clubsUrl.push({ url: club.invoice_url, clubId: club.id }));
+        let promises = [];
+        clubs.forEach((club) => {
+          clubsUrl.push({ url: club.invoice_url, clubId: club.id });
+        });
 
         clubsUrl.forEach((club) =>{
+          
+          if(club.url && club.clubId) {
+              console.log(club);
             promises.push(
                 prisma.applications.updateMany({
                     where: {
-                        club_id:parseInt(club.id),
+                        club_id:parseInt(club.clubId),
                     },
-                    invoice_url:club.url,
+                    data: {
+                      invoice_url:club.url,
+                    }
                 })
             )
+          }
         } );
 
+
+        
         Promise.all(promises)
-      .then((res) => {
+      .then((ressponse) => {
         res.status(200);
-        res.send("invoices changed");
+        res.send(`invoices changed, count: ${promises.length} `);
       })
       .catch((error) => {
-        console.log(error.response?.data);
+        console.log(error);
 
         res.status(400).send(error);
       });
