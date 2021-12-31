@@ -2,7 +2,7 @@ import nextConnect from "next-connect";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import aws from "aws-sdk";
-import prisma from "../../../middleware/prisma";
+
 
 const spacesEndpoint = new aws.Endpoint(process.env.DB_SPACES_ENDPOINT);
 const s3 = new aws.S3({
