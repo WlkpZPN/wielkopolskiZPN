@@ -15,7 +15,7 @@ export default (req, res) => {
         clubsUrl.forEach((club) =>{
           
           if(club.url && club.clubId) {
-              console.log(club);
+              
             promises.push(
                 prisma.applications.updateMany({
                     where: {
@@ -29,7 +29,7 @@ export default (req, res) => {
           }
         } );
 
-
+        console.log(clubsUrl.length);
         
         Promise.all(promises)
       .then((ressponse) => {
