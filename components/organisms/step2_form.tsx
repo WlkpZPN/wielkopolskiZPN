@@ -22,6 +22,7 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     clubData,
     formData,
     fileEdit,
+    isAdmin,
     setStep,
     completedSteps,
     changeApplicationData,
@@ -122,7 +123,7 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
               </PrimaryButton>
             ) : null}
           </>
-        ) : (
+        ) : isAdmin && (
           <PrimaryButton
             type="button"
             color="success"

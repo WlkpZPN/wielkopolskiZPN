@@ -32,6 +32,7 @@ const StepOneForm = ({
     show_buttons,
     sendApplication,
     setStep,
+    isAdmin,
     completedSteps,
     changeApplicationData,
   } = useContext(ApplicationContext);
@@ -256,7 +257,7 @@ const StepOneForm = ({
             </FormRow>
           </Fieldset>
           <FormRow margin="48px 0" cols={3}>
-            {show_buttons ? (
+            {show_buttons && (
               <PrimaryButton
                 type="button"
                 color="dark"
@@ -265,7 +266,8 @@ const StepOneForm = ({
               >
                 Zapisz werjse roboczą
               </PrimaryButton>
-            ) : (
+            )}
+            {isAdmin && (
               <PrimaryButton
                 type="button"
                 color="success"
@@ -275,6 +277,7 @@ const StepOneForm = ({
                 Zaktualizuj wniosek
               </PrimaryButton>
             )}
+
 
             {completedSteps.stepOne === "error" ? (
               <PrimaryButton

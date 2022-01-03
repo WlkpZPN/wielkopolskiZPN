@@ -106,6 +106,7 @@ const Home = ({ clubData, authData, settings }) => {
     }
 
     if (clubData.applications.length > 0) {
+      console.log(clubData.applications[0].status_id);
       switch (clubData.applications[0].status_id) {
         case 1:
           return (
@@ -465,6 +466,25 @@ const Home = ({ clubData, authData, settings }) => {
             <>
               {" "}
               <Header>Licencja cofnięta</Header>{" "}
+            </>
+          );
+        case 12:
+          return (
+            <>
+              <Header>Złóż wniosek licencyjny na kolejny sezon</Header>
+              <Paragraph>Ruszył proces licenyjny na kolejny sezon</Paragraph>
+              <Paragraph style={{maxWidth:'700px'}}>Możesz teraz z łatwością ubiegać się ponownie o licencję używając wniosku częściowo uzupełnionego poprzednimi danymi. Sprawdź wszystkie pola,uzupełnij te brakujące i wyślij wniosek licencyjny do WielkopolskiegoZPN </Paragraph>
+              <PrimaryButton onClick={() => newApplication()}>Złóż ponownie wniosek licencyjny</PrimaryButton>
+              <Header>Twoja poprzednia licencja</Header>
+              <ClubApplication
+                show_buttons={false}
+                error_message=""
+                errors=""
+                completed={true}
+                readOnly={true}
+                clubData={clubData}
+                settings={settings}
+              />
             </>
           );
       }

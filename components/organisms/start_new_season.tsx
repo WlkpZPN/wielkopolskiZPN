@@ -47,14 +47,19 @@ const StartNewSeason = () => {
   const createNewSeason = async (setForAll = true) => {
     setLoading(true);
 
-    toast.success("Pomyślnie rozpoczęto proces licencyjny", {
-      autoClose: 2000,
-    });
+    try {
+      await axios.post("/api/applications/admin/startNewSeason", {
+        leauge: leauge,
+        setForAll: setForAll,
+      });
+      toast.success("Pomyślnie rozpoczęto proces licencyjny", {
+        autoClose: 2000,
+      });
+    } catch(e) {
+      toast.error('Nie udało się rozpocząc procesu licencyjnego,spróbuj ponownie później lub skontaktuj się z administratorem.')
+    }
 
-    await axios.post("api/startNewSeason", {
-      leauge: leauge,
-      setForAll: setForAll,
-    });
+   
     setLoading(false);
   };
 

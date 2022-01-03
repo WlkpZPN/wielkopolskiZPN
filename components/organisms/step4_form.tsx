@@ -49,6 +49,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     error,
     clearErrors,
     completedSteps,
+    isAdmin,
     changeApplicationData,
     deleteFacility,
     deleteFutsalFacility,
@@ -195,7 +196,7 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
               </PrimaryButton>
             ) : null}
           </>
-        ) : (
+        ) : isAdmin && (
           <PrimaryButton
             type="button"
             color="success"

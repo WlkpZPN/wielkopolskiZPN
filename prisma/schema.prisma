@@ -49,7 +49,7 @@ model applications {
   payment_id                                                     String?                     @unique
   invoice_url                                                    String?
   invoice_url_2                                                  String?
-  clubs                                                          clubs?                      @relation(fields: [club_id], references: [id])
+  clubs                                                          clubs?                      @relation(fields: [club_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applications_fk0")
   statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
   annotations                                                    annotations[]
   applications_attachments                                       applications_attachments[]
@@ -74,8 +74,8 @@ model applications_attachments {
   futsal_facilities_id Int?
   applications         applications?      @relation(fields: [application_id], references: [id])
   attachments          attachments?       @relation(fields: [attachment_id], references: [id])
-  futsal_facilities    futsal_facilities? @relation(fields: [futsal_facilities_id], references: [id])
-  sport_facilities     sport_facilities?  @relation(fields: [sport_facilities_id], references: [id])
+  futsal_facilities    futsal_facilities? @relation(fields: [futsal_facilities_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_futsal_facilities")
+  sport_facilities     sport_facilities?  @relation(fields: [sport_facilities_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applications_attachments_fk2")
 }
 
 model applications_leagues {
@@ -206,7 +206,7 @@ model roles {
 model settings {
   start_date             String?  @db.VarChar(200)
   end_date               String?  @db.VarChar(200)
-  id                     Int      @id @default(autoincrement())
+  id                     Int      @id(map: "submission_duration_pkey") @default(autoincrement())
   application_fee        Float?
   iv_possession_fee      Float?
   v_possession_fee       Float?
@@ -352,7 +352,7 @@ model futsal_facilities {
   city                     String?                    @db.VarChar(200)
   postal_code              String?                    @db.VarChar(6)
   address                  String?
-  application_id           Int?
+  application_id           Int
   I01_1                    Boolean?
   I01_2                    Boolean?
   I02_2                    Boolean?
@@ -414,6 +414,6 @@ model futsal_facilities {
   I15_parking_sports       String?                    @db.VarChar(10)
   I15_special_spots        String?                    @db.VarChar(10)
   I16_service              String?                    @db.VarChar(10)
-  applications             applications?              @relation(fields: [application_id], references: [id])
+  applications             applications               @relation(fields: [application_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   applications_attachments applications_attachments[]
 }

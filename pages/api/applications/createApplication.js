@@ -35,6 +35,7 @@ export default (req, res) => {
         },
       });
       // 4.delete files TO DO LATER
+      //TODO: delete files from bucket
 
       // delete all files from server
       sport_facilities.forEach((facility) => {

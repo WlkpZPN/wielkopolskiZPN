@@ -30,6 +30,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
     sendApplication,
     setStep,
     fileEdit,
+    isAdmin,
     clubData,
     completedSteps,
     changeApplicationData,
@@ -220,7 +221,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
               </PrimaryButton>
             ) : null}
           </>
-        ) : (
+        ) : isAdmin && (
           <PrimaryButton
             type="button"
             color="success"

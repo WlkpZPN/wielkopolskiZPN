@@ -31,6 +31,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
     sendApplication,
     completedSteps,
     setStep,
+    isAdmin,
     changeApplicationData,
   } = context;
   const submitForm = (e) => {
@@ -107,7 +108,7 @@ const StepSixForm = ({ handleStepChange, readOnly }) => {
               </PrimaryButton>
             ) : null}
           </>
-        ) : (
+        ) : isAdmin && (
           <PrimaryButton
             type="button"
             color="success"

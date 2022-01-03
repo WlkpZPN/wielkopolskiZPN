@@ -13,7 +13,7 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
   const handleChange = context.handleFormChange;
   const formData = context.formData.stepFive;
   const show_buttons = context.show_buttons;
-  const { error, clearErrors, completedSteps, setStep, changeApplicationData } =
+  const { error, clearErrors, completedSteps, setStep, changeApplicationData,isAdmin } =
     context;
 
   const submitForm = (e) => {
@@ -96,7 +96,7 @@ Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Lice
               </PrimaryButton>
             ) : null}
           </>
-        ) : (
+        ) : isAdmin && (
           <PrimaryButton
             type="button"
             color="success"
