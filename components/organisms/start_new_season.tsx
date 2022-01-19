@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../atoms/loader";
 import Select from "../atoms/form_select";
 import PrimaryButton from "../atoms/primary_button";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import Header from "../atoms/header";
+import { getCurrentDate } from "../../middleware/utils";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,23 +45,43 @@ const StartNewSeason = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [leauge, setLeauge] = useState("");
-  console.log(leauge);
+  const [lastSingleUpdate, setLastSingleUpdate] = useState("");
+  const [lastUpdate, setLastUpdate] = useState("");
+
+  useEffect(() => {
+    getLastUpdate();
+  }, [leauge]);
+
+  const getLastUpdate = async () => {
+    const lastUpdate = await axios.post(
+      "/api/applications/admin/getLeaugesLastUpdate"
+    );
+    const data = lastUpdate.data;
+    setLastSingleUpdate(data.find((el) => el.name === leauge)?.updated_at);
+
+    setLastUpdate(data.find((el) => el.name === "brak")?.updated_at);
+
+    console.log(lastUpdate);
+  };
   const createNewSeason = async (setForAll = true) => {
     setLoading(true);
-
     try {
       await axios.post("/api/applications/admin/startNewSeason", {
         leauge: leauge,
         setForAll: setForAll,
       });
+
+      await getLastUpdate();
       toast.success("Pomyślnie rozpoczęto proces licencyjny", {
         autoClose: 2000,
       });
-    } catch(e) {
-      toast.error('Nie udało się rozpocząc procesu licencyjnego,spróbuj ponownie później lub skontaktuj się z administratorem.')
+    } catch (e) {
+      console.log(e);
+      toast.error(
+        "Nie udało się rozpocząc procesu licencyjnego,spróbuj ponownie później lub skontaktuj się z administratorem."
+      );
     }
 
-   
     setLoading(false);
   };
 
@@ -70,18 +92,16 @@ const StartNewSeason = () => {
       });
       return;
     }
-    createNewSeason(true);
+    createNewSeason(false);
   };
 
   return (
     <Wrapper>
-      <h1>Wznawianie procesu licencyjnego</h1>
-      <p>Tekst wyjaśniający co się stanie</p>
+      <Header>Wznawianie procesu licencyjnego</Header>
       {loading ? (
         <Loader />
       ) : (
         <>
-          {" "}
           <div style={{ maxWidth: "500px", width: "100%" }}>
             <Select value={leauge} onChange={(e) => setLeauge(e.target.value)}>
               <option value="brak">Wybierz ligę rozgrywkową</option>
@@ -95,12 +115,14 @@ const StartNewSeason = () => {
               <option value="ligi kobiece">Ligi kobiece</option>
             </Select>
           </div>
+          <p>Wznowiono {lastSingleUpdate}</p>
           <PrimaryButton onClick={() => startNewSeasonForLeauge()}>
             Wznów proces dla tej klasy
           </PrimaryButton>
           <PrimaryButton onClick={() => createNewSeason()}>
             Wznów proces dla wszystkich
           </PrimaryButton>
+          <p>Wznowiono {lastUpdate}</p>
         </>
       )}
 

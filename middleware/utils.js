@@ -85,7 +85,7 @@ export const getCurrentDate = () => {
       minimumIntegerDigits: 2,
       useGrouping: false,
     }
-  )}/${newDate.getFullYear()}, ${newDate.getHours() + 2}:${newDate
+  )}/${newDate.getFullYear()}, ${newDate.getHours()}:${newDate
     .getMinutes()
     .toLocaleString("en-US", {
       minimumIntegerDigits: 2,
@@ -249,9 +249,8 @@ export const createSeasons = (amount) => {
     return `${currentYear}/${currentYear + 1}`;
   }
   if (amount === 2 || amount === "2") {
-    return `${currentYear}/${currentYear + 1} i ${currentYear + 1}/${
-      currentYear + 2
-    }`;
+    return `${currentYear}/${currentYear + 1} i ${currentYear + 1}/${currentYear + 2
+      }`;
   }
 };
 

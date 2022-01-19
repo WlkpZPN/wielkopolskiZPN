@@ -1,4 +1,5 @@
 import prisma from "../../../../middleware/prisma";
+import { getCurrentDate } from "../../../../middleware/utils";
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
@@ -7,34 +8,64 @@ export default async (req, res) => {
     if (setForAll) {
 
       try {
+        //1. ustawic we wszysktich aplikacjach status zakonczony
+        await prisma.applications.updateMany({
+          data: {
+            status_id: 12,
+          }
+        });
 
-       //1. ustawic we wszysktich aplikacjach sttus zakonczony
-       await prisma.applications.updateMany({
-         data: {
-           status_id:12,
-         }
-       });
-      res.status(200);
-      res.send('new season started');
+        await prisma.leagues.updateMany({
+          where: {
+            name: 'brak'
+          },
+          data: {
+            updated_at: getCurrentDate()
+          },
 
-      } catch(e) {
+
+        });
+        res.status(200);
+        res.send('new season started');
+
+      } catch (e) {
         res.status(400);
         res.send(e);
         console.log(e);
         return resolve();
       }
     } else {
-
-      await prisma.applications.updateMany({
-          where:{
-            leauge:leauge,
+      try {
+        await prisma.applications.updateMany({
+          where: {
+            clubs: {
+              leauge: leauge,
+            }
           },
           data: {
-            status_id:12,
-          }
-      });
-      res.status(200);
-      res.send('new season started');
+            status_id: 12,
+          },
+        });
+
+        await prisma.leagues.updateMany({
+          where: {
+            name: leauge,
+          },
+          data: {
+            updated_at: getCurrentDate()
+          },
+
+        });
+
+        res.status(200);
+        res.send('new season started');
+      } catch (e) {
+        res.status(400);
+        res.send(e);
+        console.log(e);
+        return resolve();
+      }
+
     }
     return resolve();
   });

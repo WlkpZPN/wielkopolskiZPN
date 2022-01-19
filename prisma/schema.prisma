@@ -180,8 +180,8 @@ model leagues {
   id                   Int                    @id @default(autoincrement())
   name                 String?                @db.VarChar(60)
   description          String?
-  created_at           DateTime?              @db.Timestamp(6)
-  updated_at           DateTime?              @db.Timestamp(6)
+  created_at           String?                @db.VarChar(100)
+  updated_at           String?                @db.VarChar(100)
   applications_leagues applications_leagues[]
 }
 
