@@ -37,6 +37,7 @@ export default (req, res) => {
         method: "POST",
         url: `${process.env.PAYU_URL}/api/v2_1/orders`,
         validateStatus: function (status) {
+          console.log('status', status);
           return status < 303;
         },
         headers: {
