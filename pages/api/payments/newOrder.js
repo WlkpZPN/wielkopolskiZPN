@@ -87,7 +87,7 @@ export default (req, res) => {
     } catch (err) {
       console.log("błąd", err?.response);
       res.status(400);
-      res.json(err.data);
+      res.send(err);
       return resolve();
     }
   });
