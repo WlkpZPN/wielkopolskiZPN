@@ -177,7 +177,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
           {loading && <Loader />}
         </>
       </div>
-      <StartNewSeason />
+      {/* <StartNewSeason /> */}
       <ErrorMessage>{error}</ErrorMessage>
       <Header>Czas trwania procesu licencyjnego</Header>
       <form
