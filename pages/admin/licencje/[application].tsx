@@ -297,6 +297,8 @@ const Application = ({ clubData, authData, settings }) => {
         phone: clubData.phone,
       });
 
+      console.log("new order result", newOrder);
+
       await axios.post("/api/mails/sendPayuLink", {
         link: newOrder.data.link,
         email: clubData.email,
@@ -313,7 +315,7 @@ const Application = ({ clubData, authData, settings }) => {
       setLoading(false);
       toast.success("Link do płatnosci ponownie wyslany");
     } catch (err) {
-      console.log(err);
+      console.log("error creating new order", err);
       setLoading(false);
       toast.error("Nie udało się wysłać linku,prosimy spróbuj ponownie");
     }
