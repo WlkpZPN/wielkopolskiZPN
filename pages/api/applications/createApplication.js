@@ -22,17 +22,23 @@ export default (req, res) => {
       });
 
       // 2. delete sport facilities
-      await prisma.sport_facilities.deleteMany({
-        where: {
-          application_id: parseInt(applicationID),
-        },
-      });
+
+
+      // await prisma.sport_facilities.deleteMany({
+      //   where: {
+      //     application_id: parseInt(applicationID),
+      //   },
+      // });
       // 3. delete application
 
-      await prisma.applications.delete({
+      await prisma.applications.update({
         where: {
           id: parseInt(applicationID),
+
         },
+        data: {
+          status_id: 1,
+        }
       });
       // 4.delete files TO DO LATER
       //TODO: delete files from bucket
