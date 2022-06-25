@@ -38,6 +38,7 @@ export default (req, res) => {
         },
         data: {
           status_id: 1,
+          is_new_season: false,
         }
       });
       // 4.delete files TO DO LATER

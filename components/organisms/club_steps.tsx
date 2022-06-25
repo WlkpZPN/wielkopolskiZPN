@@ -227,7 +227,7 @@ const ClubSteps = ({ status }) => {
                 <br />
                 {
                   history.find((el) => el.status_id === 2 || el.status_id === 3)
-                    .created_at
+                    ?.created_at
                 }
               </span>
             </Row>
@@ -237,21 +237,21 @@ const ClubSteps = ({ status }) => {
                 Weryfikacja wniosku licencyjnego przez Wielkopolski ZPN <br />{" "}
                 oraz link do płatności za wniosek licencyjny przesłany na maila
                 klubu
-                <br /> {history.find((el) => el.status_id === 6).created_at}
+                <br /> {history.find((el) => el.status_id === 6)?.created_at}
               </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={3} />
               <span>
                 Dokonanie płatności przez klub <br />
-                {history.find((el) => el.status_id === 7).created_at}
+                {history.find((el) => el.status_id === 7)?.created_at}
               </span>
             </Row>
             <Row>
               <HistoryIcon hidden={false} state="completed" number={4} />
               <span>
                 Weryfikacja płatności przez Wielkopolski ZPN <br />{" "}
-                {history.find((el) => el.status_id === 7).created_at}
+                {history.find((el) => el.status_id === 7)?.created_at}
               </span>
             </Row>
             <Row>

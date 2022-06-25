@@ -61,7 +61,13 @@ const StatusContainer = styled.div`
 
 const ref = createRef();
 
-const LicenseButton = ({ clubData, isAdmin, authData = null }) => {
+const LicenseButton = ({
+  clubData,
+  isAdmin,
+  authData = null,
+  statusID = null,
+  statusName = null,
+}) => {
   const application = clubData.applications[0];
   const router = useRouter();
   const [visible, setVisible] = useState(false);
@@ -114,7 +120,7 @@ const LicenseButton = ({ clubData, isAdmin, authData = null }) => {
   };
 
   const renderButtons = () => {
-    switch (application.statuses.id) {
+    switch (statusID || application.statuses.id) {
       case 7:
       case 8:
       case 10:
@@ -219,7 +225,7 @@ const LicenseButton = ({ clubData, isAdmin, authData = null }) => {
       <StatusContainer isAdmin={isAdmin}>
         <ApplicationStatus
           size={isAdmin ? "40px" : "60px"}
-          status={application.statuses.name}
+          status={statusName || application.statuses.name}
         />
       </StatusContainer>
       {isAdmin ? null : <FileIcon />}

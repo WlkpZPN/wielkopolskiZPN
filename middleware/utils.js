@@ -390,3 +390,49 @@ export const convertStepsToString = (steps) => {
 
   return result.join(",");
 };
+
+
+export const checkSupervision = (application) => {
+  const stepTwoFiles =
+    application.applications_attachments?.filter(
+      (file) => file.category === "krs_documents"
+    );
+  const stepThreeFiles =
+    application.applications_attachments?.filter(
+      (file) => file.category === "agreement_documents"
+    );
+  if (stepTwoFiles?.length === 0 || !stepTwoFiles) {
+    return true;
+  }
+
+  if (
+    stepThreeFiles?.length === 0 &&
+    application.youthGroupsPossession === "porozumienie na szkolenie"
+  ) {
+    return true;
+  }
+  if (
+    stepThreeFiles.length === 0 &&
+    application.youthGroupsPossession === "porozumienie na szkolenie"
+  ) {
+    return true;
+  }
+
+  application.sport_facilities.forEach((facility) => {
+    const files1 = facility.applications_attachments.filter(
+      (el) => el.category === "I01_agreement"
+    );
+
+    const files2 = facility.applications_attachments.filter(
+      (el) => el.category === "I17_intensity_level"
+    );
+    if (facility.I01_1 === false && files1.length === 0) {
+      return true;
+    }
+    if (facility.I17_1 === true && files2.length === 0) {
+      return true;
+    }
+  });
+
+  return false;
+}

@@ -338,7 +338,6 @@ const Application = ({ clubData, authData, settings }) => {
             clubData.applications[0].number_of_seasons
           );
     //console.log(clubData.applications[0].seasons);
-    console.log("amount", amount);
 
     try {
       const newOrder = await axios.post("/api/payments/newOrder", {
@@ -460,6 +459,7 @@ const Application = ({ clubData, authData, settings }) => {
         </div>
         <div style={{ display: "flex" }}>
           {authData.role !== "pomoc administracyjna" && renderButtons()}
+
           <PrimaryButton
             onClick={() =>
               router.push(

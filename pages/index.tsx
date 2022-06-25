@@ -10,6 +10,7 @@ import { protectedClientRoute } from "../middleware/protectedClient";
 
 //components
 import {
+  checkSupervision,
   getCurrentDate,
   renderAmount,
   renderMainAmount,
@@ -46,7 +47,7 @@ const Home = ({ clubData, authData, settings }) => {
   // const [clubData, setClubData] = useLocalStorage("clubData", club);
 
   const router = useRouter();
-
+  console.log(clubData);
   const newApplication = async () => {
     setLoading(true);
     try {
@@ -472,19 +473,6 @@ const Home = ({ clubData, authData, settings }) => {
           return (
             <>
               <Header>Złóż wniosek licencyjny na kolejny sezon</Header>
-              <Paragraph>Ruszył proces licenyjny na kolejny sezon</Paragraph>
-              <Paragraph style={{maxWidth:'700px'}}>Możesz teraz z łatwością ubiegać się ponownie o licencję używając wniosku częściowo uzupełnionego poprzednimi danymi. Sprawdź wszystkie pola,uzupełnij te brakujące i wyślij wniosek licencyjny do WielkopolskiegoZPN </Paragraph>
-              <PrimaryButton onClick={() => newApplication()}>Złóż ponownie wniosek licencyjny</PrimaryButton>
-              <Header>Twoja poprzednia licencja</Header>
-              <ClubApplication
-                show_buttons={false}
-                error_message=""
-                errors=""
-                completed={true}
-                readOnly={true}
-                clubData={clubData}
-                settings={settings}
-              />
             </>
           );
       }
@@ -510,7 +498,53 @@ const Home = ({ clubData, authData, settings }) => {
       }}
     >
       <ClientLayout clubData={clubData} view="Wniosek licencyjny">
-        {renderView()}
+        {clubData.applications[0].is_new_season ? (
+          <>
+            <Header>Złóż wniosek licencyjny na kolejny sezon</Header>
+            <Paragraph>Ruszył proces licenyjny na kolejny sezon</Paragraph>
+            <Paragraph style={{ maxWidth: "700px" }}>
+              Możesz teraz z łatwością ubiegać się ponownie o licencję używając
+              wniosku częściowo uzupełnionego poprzednimi danymi. Sprawdź
+              wszystkie pola,uzupełnij te brakujące i wyślij wniosek licencyjny
+              do WielkopolskiegoZPN{" "}
+            </Paragraph>
+            <PrimaryButton onClick={() => newApplication()}>
+              Złóż ponownie wniosek licencyjny
+            </PrimaryButton>
+            {clubData.applications[0].status_id == 8 ||
+            clubData.applications[0].status_id == 10 ? (
+              <>
+                {" "}
+                <Header>Twoja poprzednia licencja</Header>
+                <div
+                  style={{
+                    margin: "70px 0",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <AddInvoiceWrapper admin={false} clubData={clubData} />
+                  <LicenseButton isAdmin={false} clubData={clubData} />
+                </div>{" "}
+              </>
+            ) : (
+              <Header>Poprzednie dane</Header>
+            )}
+
+            <ClubApplication
+              show_buttons={false}
+              error_message=""
+              errors=""
+              completed={true}
+              readOnly={true}
+              clubData={clubData}
+              settings={settings}
+            />
+          </>
+        ) : (
+          renderView()
+        )}
+        {/* {renderView()} */}
       </ClientLayout>
     </ClubContext.Provider>
   );

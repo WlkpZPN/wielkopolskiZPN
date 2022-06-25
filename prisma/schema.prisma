@@ -49,6 +49,7 @@ model applications {
   payment_id                                                     String?                     @unique
   invoice_url                                                    String?
   invoice_url_2                                                  String?
+  is_new_season                                                  Boolean?                    @default(false)
   clubs                                                          clubs?                      @relation(fields: [club_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "applications_fk0")
   statuses                                                       statuses?                   @relation(fields: [status_id], references: [id])
   annotations                                                    annotations[]
@@ -178,7 +179,7 @@ model histories {
 
 model leagues {
   id                   Int                    @id @default(autoincrement())
-  name                 String?                @db.VarChar(60)
+  name                 String?                @unique(map: "leaguesunique") @db.VarChar(60)
   description          String?
   created_at           String?                @db.VarChar(100)
   updated_at           String?                @db.VarChar(100)

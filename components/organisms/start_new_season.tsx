@@ -115,7 +115,11 @@ const StartNewSeason = () => {
               <option value="ligi kobiece">Ligi kobiece</option>
             </Select>
           </div>
-          <p>Wznowiono {lastSingleUpdate}</p>
+          <p>
+            Wznowiono:{" "}
+            {lastSingleUpdate ||
+              "brak daty (proces licencyjny dla tej ligii nie został wznowiony)"}
+          </p>
           <PrimaryButton onClick={() => startNewSeasonForLeauge()}>
             Wznów proces dla tej klasy
           </PrimaryButton>
