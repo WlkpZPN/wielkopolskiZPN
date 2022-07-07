@@ -29,13 +29,14 @@ export default async (req, res) => {
       stepSix,
       stepSeven,
     } = formData;
-
+    console.log('STEP ONE', stepOne);
     await prisma.clubs.update({
       where: {
         id: clubData.id,
       },
       data: {
         name: stepOne.name,
+        futsal_subtype: stepOne.futsal_subtype,
         leauge: stepOne.leauge,
         address: convertAddressData(
           stepOne.clubCity,
@@ -53,7 +54,8 @@ export default async (req, res) => {
     const dataToInsert = {
       club_id: clubData.id,
       status_id: parseInt(newStatus),
-      number_of_seasons: stepOne.seasons,
+      number_of_seasons: stepOne.number_of_seasons,
+
       declaration_on_the_subject_of_participation_in_the_competition:
         stepTwo.participateInCompetitions,
       declaration_on_the_use_of_personal_data_documentation:

@@ -10,21 +10,11 @@ export default (req, res) => {
     return new Promise(async (resolve) => {
         let promises = [];
 
-        const applications = await prisma.applications.findMany(
-            {
-                where: {
-                    status_id: 12,
-                },
-                include: {
-                    histories: true,
-                }
-            }
-
-        );
+        const applications = await prisma.applications.findMany();
 
         applications.forEach((application) => {
 
-            const statusID = application.histories.find(history => history.status_id == 10 || history.status_id == 8)?.status_id;
+
             promises.push(prisma.applications.update({
                 where: {
                     id: application.id,
