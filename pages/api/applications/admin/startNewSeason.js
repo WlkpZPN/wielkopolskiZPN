@@ -92,7 +92,7 @@ export default async (req, res) => {
 
     }
 
-    Promise.all(promises)
+    await Promise.all(promises)
       .then(async (response) => {
         res.send("new season started");
       })

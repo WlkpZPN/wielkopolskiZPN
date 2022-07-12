@@ -18,7 +18,7 @@ export default async (req, res) => {
         clubs: true,
       },
     });
-    // console.log("application", allApplications[0]);
+
     const promises = [];
     allApplications.forEach(async (app) => {
       if (app.seasons == "1" || app.seasons == "2") {
