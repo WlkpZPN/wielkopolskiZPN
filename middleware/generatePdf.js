@@ -377,7 +377,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     application.sport_facilities.forEach((object, index, arr) => {
       if (object.name) {
         objectsNames.push(
-          `${object.name}\n ${object.address || ""}, ${object.city} \n`
+          `${object.name} ${object.address || ""}, ${object.city} \n`
         );
       }
     });
@@ -419,7 +419,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
     textField2.addToPage(page, {
       x: 50,
-      y: 190,
+      y: 180,
       font: regular,
       textColor: rgb(0, 0, 0),
       borderColor: rgb(1, 1, 1),
