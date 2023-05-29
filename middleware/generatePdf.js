@@ -496,7 +496,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const scaledStamp = pngLogo.scale(0.4);
 
   const signBytes = await fetch(
-    "https://pdf.fra1.digitaloceanspaces.com/Podpis.png"
+    "https://pdf.fra1.digitaloceanspaces.com/podpis_marek.png"
   ).then((res) => res.arrayBuffer());
 
   const signPng = await pdfDoc.embedPng(signBytes);
@@ -531,7 +531,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   });
 
   page.drawText(
-    "Sekretarz \nKomisji ds.Licencji Klubowych \nKrzysztof Olędrowicz",
+    "Sekretarz \nKomisji ds.Licencji Klubowych \nMarek Grochowski",
     {
       x: 200,
       font: regular,
