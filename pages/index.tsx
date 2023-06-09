@@ -467,6 +467,10 @@ const Home = ({ clubData, authData, settings }) => {
             <>
               {" "}
               <Header>Licencja cofnięta</Header>{" "}
+              <Paragraph>Kliknij przycisk poniżej aby ubiegać się o nowa licencję</Paragraph>
+              <PrimaryButton onClick={() => newApplication()}>
+              Złóż ponownie wniosek licencyjny
+            </PrimaryButton>
             </>
           );
         case 12:
