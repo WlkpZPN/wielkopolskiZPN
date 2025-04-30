@@ -1,15 +1,15 @@
-import { createContext, useState, useEffect } from "react";
-import styled from "styled-components";
-import { useRouter } from "next/router";
-import AdminLayout from "../../../components/organisms/admin_layout";
-import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
-import prisma from "../../../middleware/prisma";
-import PrimaryButton from "../../../components/atoms/primary_button";
-import { getClubs } from "../../../middleware/swr";
+import { createContext, useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import AdminLayout from '../../../components/organisms/admin_layout';
+import { protectedAdminRoute } from '../../../middleware/protectedAdmin';
+import prisma from '../../../middleware/prisma';
+import PrimaryButton from '../../../components/atoms/primary_button';
+import { getClubs } from '../../../middleware/swr';
 //componens
-import Loader from "../../../components/atoms/loader";
-import ClubsList from "../../../components/organisms/clubs_list";
-import Select from "../../../components/atoms/form_select";
+import Loader from '../../../components/atoms/loader';
+import ClubsList from '../../../components/organisms/clubs_list';
+import Select from '../../../components/atoms/form_select';
 
 const SearchBar = styled.input`
   padding: 6px 12px;
@@ -20,7 +20,7 @@ const SearchBar = styled.input`
   min-width: 200px;
   max-width: 350px;
   width: 100%;
-  background-image: url("/loupe.png");
+  background-image: url('/loupe.png');
   background-repeat: no-repeat;
   background-position: 95% 50%;
   padding-right: 16px;
@@ -32,23 +32,23 @@ const Kluby = ({ userData }) => {
   const router = useRouter();
   const { clubs, isClubsError, isClubsLoading } = getClubs();
   const [list, setList] = useState(clubs);
-  const [leauge, setLeauge] = useState("wszystkie");
-  const [status, setStatus] = useState("wszystkie");
-  const [query, setQuery] = useState("");
+  const [leauge, setLeauge] = useState('wszystkie');
+  const [status, setStatus] = useState('wszystkie');
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     let helperArr = clubs;
 
-    if (status !== "wszystkie") {
+    if (status !== 'wszystkie') {
       helperArr = helperArr.filter((club) => club.active == parseInt(status));
     }
 
-    if (leauge !== "wszystkie") {
-      if (leauge === "Klasa A / B") {
+    if (leauge !== 'wszystkie') {
+      if (leauge === 'Klasa A / B') {
         helperArr = helperArr.filter((club) => {
           return (
-            club?.leauge?.toLowerCase() === "klasa a" ||
-            club?.leauge?.toLowerCase() === "klasa b"
+            club?.leauge?.toLowerCase() === 'klasa a' ||
+            club?.leauge?.toLowerCase() === 'klasa b'
           );
         });
       } else {
@@ -58,7 +58,7 @@ const Kluby = ({ userData }) => {
       }
     }
 
-    if (query !== "") {
+    if (query !== '') {
       helperArr = helperArr.filter((club) => {
         return JSON.stringify(club).toLowerCase().indexOf(query.toLowerCase()) >
           -1
@@ -73,7 +73,7 @@ const Kluby = ({ userData }) => {
   if (isClubsLoading) {
     return (
       <AdminLayout userData={userData} view="kluby">
-        {" "}
+        {' '}
         <Loader />
       </AdminLayout>
     );
@@ -84,29 +84,29 @@ const Kluby = ({ userData }) => {
       <AdminLayout userData={userData} view="kluby">
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            margin: "32px 0",
-            width: "100%",
-            alignItems: "flex-end",
+            display: 'flex',
+            justifyContent: 'space-between',
+            margin: '32px 0',
+            width: '100%',
+            alignItems: 'flex-end',
           }}
         >
           <h1>Kluby</h1>
 
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              width: "80%",
-              justifyContent: "space-around",
+              display: 'flex',
+              alignItems: 'center',
+              width: '80%',
+              justifyContent: 'space-around',
             }}
           >
             <Select
               style={{
                 marginTop: 0,
-                minWidth: "150px",
-                maxWidth: "200px",
-                fontSize: "13px",
+                minWidth: '150px',
+                maxWidth: '200px',
+                fontSize: '13px',
               }}
               onChange={(e) => setStatus(e.target.value)}
               value={status}
@@ -118,9 +118,9 @@ const Kluby = ({ userData }) => {
             <Select
               style={{
                 marginTop: 0,
-                minWidth: "150px",
-                maxWidth: "200px",
-                fontSize: "13px",
+                minWidth: '150px',
+                maxWidth: '200px',
+                fontSize: '13px',
               }}
               value={leauge}
               onChange={(e) => setLeauge(e.target.value)}
@@ -143,9 +143,9 @@ const Kluby = ({ userData }) => {
             <PrimaryButton
               onClick={() => router.push(`/admin/kluby/nowy`)}
               style={{
-                fontWeight: "bold",
-                width: "200px",
-                whiteSpace: "nowrap",
+                fontWeight: 'bold',
+                width: '200px',
+                whiteSpace: 'nowrap',
               }}
             >
               + Dodaj klub

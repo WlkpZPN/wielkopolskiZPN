@@ -1,29 +1,29 @@
-import styled from "styled-components";
-import { useState, createContext } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
+import styled from 'styled-components';
+import { useState, createContext } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
-import { toast } from "react-toastify";
-import prisma from "../../../middleware/prisma";
-import { renderAmount, renderMainAmount } from "../../../middleware/utils";
-import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
-import AdminLayout from "../../../components/organisms/admin_layout";
-import ClubApplication from "../../../components/organisms/club_application";
-import ApplicationStatus from "../../../components/atoms/application_status";
-import IconButton from "../../../components/atoms/IconButton";
+import { toast } from 'react-toastify';
+import prisma from '../../../middleware/prisma';
+import { renderAmount, renderMainAmount } from '../../../middleware/utils';
+import { protectedAdminRoute } from '../../../middleware/protectedAdmin';
+import AdminLayout from '../../../components/organisms/admin_layout';
+import ClubApplication from '../../../components/organisms/club_application';
+import ApplicationStatus from '../../../components/atoms/application_status';
+import IconButton from '../../../components/atoms/IconButton';
 
-import { ControllerFastBackward } from "@styled-icons/entypo/ControllerFastBackward";
-import PrimaryButton from "../../../components/atoms/primary_button";
-import Link from "next/link";
-import Loader from "../../../components/atoms/loader";
-import CorrectModal from "../../../components/molecules/correct_modal";
-import RejectModal from "../../../components/molecules/reject_modal";
-import Paragraph from "../../../components/atoms/paragraph";
-import AddInvoiceWrapper from "../../../components/organisms/add_invoice_wrapper";
-import ErrorMessage from "../../../components/atoms/error_message";
-import LicenseDecision from "../../../components/atoms/license_decision";
-import LicenseButton from "../../../components/molecules/license_button";
-import AddInvoice from "../../../components/molecules/add_invoice";
+import { ControllerFastBackward } from '@styled-icons/entypo/ControllerFastBackward';
+import PrimaryButton from '../../../components/atoms/primary_button';
+import Link from 'next/link';
+import Loader from '../../../components/atoms/loader';
+import CorrectModal from '../../../components/molecules/correct_modal';
+import RejectModal from '../../../components/molecules/reject_modal';
+import Paragraph from '../../../components/atoms/paragraph';
+import AddInvoiceWrapper from '../../../components/organisms/add_invoice_wrapper';
+import ErrorMessage from '../../../components/atoms/error_message';
+import LicenseDecision from '../../../components/atoms/license_decision';
+import LicenseButton from '../../../components/molecules/license_button';
+import AddInvoice from '../../../components/molecules/add_invoice';
 const Application = ({ clubData, authData, settings }) => {
   const router = useRouter();
   // const { clubData, isError, isLoading } = getClubData(authData.id);
@@ -38,7 +38,7 @@ const Application = ({ clubData, authData, settings }) => {
   const renderTopPanel = () => {
     switch (clubData.applications[0].statuses.id) {
       case 6:
-        if (authData.role === "nadzór finansów") {
+        if (authData.role === 'nadzór finansów') {
           return null;
         }
         return (
@@ -47,18 +47,18 @@ const Application = ({ clubData, authData, settings }) => {
             <ErrorMessage>
               {clubData.applications[0].invoice_required &&
               !clubData.invoice_url
-                ? "UWAGA! Klub prosi o fakturę przed dokonaniem płatności"
+                ? 'UWAGA! Klub prosi o fakturę przed dokonaniem płatności'
                 : null}
-            </ErrorMessage>{" "}
+            </ErrorMessage>{' '}
           </>
         );
       case 7:
-        if (authData.role === "nadzór finansów") {
+        if (authData.role === 'nadzór finansów') {
           return null;
         }
         return (
           <>
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
+            <div style={{ display: 'flex', alignItems: 'flex-end' }}>
               <p>
                 {/* <Paragraph>Wystaw licencję</Paragraph>
                 <AddInvoice
@@ -108,7 +108,7 @@ const Application = ({ clubData, authData, settings }) => {
       case 9:
         return (
           <>
-            {" "}
+            {' '}
             <LicenseDecision
               authData={authData}
               clubData={null}
@@ -119,12 +119,12 @@ const Application = ({ clubData, authData, settings }) => {
               description="Licencja niewydana"
               internalID={clubData.applications[0].internal_id}
               refreshState={refreshState}
-            />{" "}
+            />{' '}
           </>
         );
       case 8:
         return (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: 'flex' }}>
             <div>
               <Paragraph>Licencja</Paragraph>
               <LicenseButton
@@ -133,7 +133,7 @@ const Application = ({ clubData, authData, settings }) => {
                 clubData={clubData}
               />
             </div>
-            {authData.role !== "nadzór finansów" && (
+            {authData.role !== 'nadzór finansów' && (
               <div>
                 {/* <Paragraph>Faktura</Paragraph>
                 <AddInvoice
@@ -149,8 +149,8 @@ const Application = ({ clubData, authData, settings }) => {
         );
       case 10:
         return (
-          <div style={{ display: "flex" }}>
-            {" "}
+          <div style={{ display: 'flex' }}>
+            {' '}
             <div>
               <Paragraph>Licencja</Paragraph>
               <LicenseButton
@@ -173,7 +173,7 @@ const Application = ({ clubData, authData, settings }) => {
         );
       case 11:
         return (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: 'flex' }}>
             <div>
               <Paragraph>Licencja</Paragraph>
               <LicenseButton
@@ -202,7 +202,7 @@ const Application = ({ clubData, authData, settings }) => {
       case 2:
       case 3:
       case 4:
-        if (authData.role === "nadzór finansów") {
+        if (authData.role === 'nadzór finansów') {
           return null;
         }
         return (
@@ -210,7 +210,7 @@ const Application = ({ clubData, authData, settings }) => {
             <PrimaryButton
               color="successDark"
               hoverColor="success"
-              style={{ margin: "0 6px" }}
+              style={{ margin: '0 6px' }}
               onClick={acceptApplication}
             >
               Zaakceptuj
@@ -218,7 +218,7 @@ const Application = ({ clubData, authData, settings }) => {
             <PrimaryButton
               color="warningDark"
               hoverColor="warning"
-              style={{ margin: "0 6px" }}
+              style={{ margin: '0 6px' }}
               onClick={() => setVisible(true)}
             >
               Do poprawy
@@ -226,7 +226,7 @@ const Application = ({ clubData, authData, settings }) => {
             <PrimaryButton
               color="dangerDark"
               hoverColor="danger"
-              style={{ margin: "0 6px" }}
+              style={{ margin: '0 6px' }}
               onClick={() => setvisibleReject(true)}
             >
               Odrzuć
@@ -235,7 +235,7 @@ const Application = ({ clubData, authData, settings }) => {
         );
 
       case 6:
-        if (authData.role === "nadzór finansów") {
+        if (authData.role === 'nadzór finansów') {
           return null;
         }
         return (
@@ -250,7 +250,7 @@ const Application = ({ clubData, authData, settings }) => {
             <PrimaryButton
               color="successDark"
               hoverColor="success"
-              style={{ margin: "0 6px" }}
+              style={{ margin: '0 6px' }}
               onClick={markAsPaid}
             >
               Oznacz jako opłacony
@@ -259,7 +259,7 @@ const Application = ({ clubData, authData, settings }) => {
             <PrimaryButton
               color="dangerDark"
               hoverColor="danger"
-              style={{ margin: "0 6px" }}
+              style={{ margin: '0 6px' }}
               onClick={() => setvisibleReject(true)}
             >
               Odrzuć
@@ -275,7 +275,7 @@ const Application = ({ clubData, authData, settings }) => {
   const resendLink = async () => {
     const amount =
       clubData.applications[0].youth_groups_possession ===
-      "nie posiadamy zespołów"
+      'nie posiadamy zespołów'
         ? renderMainAmount(
             clubData.leauge,
             settings,
@@ -288,7 +288,7 @@ const Application = ({ clubData, authData, settings }) => {
           );
 
     try {
-      const newOrder = await axios.post("/api/payments/newOrder", {
+      const newOrder = await axios.post('/api/payments/newOrder', {
         description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
         email: clubData.email,
         amount: amount,
@@ -297,14 +297,14 @@ const Application = ({ clubData, authData, settings }) => {
         phone: clubData.phone,
       });
 
-      console.log("new order result", newOrder);
+      console.log('new order result', newOrder);
 
-      await axios.post("/api/mails/sendPayuLink", {
+      await axios.post('/api/mails/sendPayuLink', {
         link: newOrder.data.link,
         email: clubData.email,
       });
 
-      await axios.post("/api/applications/acceptApplication", {
+      await axios.post('/api/applications/acceptApplication', {
         applicationID: clubData.applications[0].id,
         // link: newOrder.data.link,
         userID: authData.id,
@@ -313,11 +313,11 @@ const Application = ({ clubData, authData, settings }) => {
       router.replace(router.asPath);
 
       setLoading(false);
-      toast.success("Link do płatnosci ponownie wyslany");
+      toast.success('Link do płatnosci ponownie wyslany');
     } catch (err) {
-      console.log("error creating new order", err);
+      console.log('error creating new order', err);
       setLoading(false);
-      toast.error("Nie udało się wysłać linku,prosimy spróbuj ponownie");
+      toast.error('Nie udało się wysłać linku,prosimy spróbuj ponownie');
     }
   };
   const acceptApplication = async () => {
@@ -326,7 +326,7 @@ const Application = ({ clubData, authData, settings }) => {
     //TO DO: api route for generate paynament link
     const amount =
       clubData.applications[0].youth_groups_possession ===
-      "nie posiadamy zespołów"
+      'nie posiadamy zespołów'
         ? renderMainAmount(
             clubData.leauge,
             settings,
@@ -340,7 +340,7 @@ const Application = ({ clubData, authData, settings }) => {
     //console.log(clubData.applications[0].seasons);
 
     try {
-      const newOrder = await axios.post("/api/payments/newOrder", {
+      const newOrder = await axios.post('/api/payments/newOrder', {
         description: `Opłacenie wniosku licencyjnego ${clubData.applications[0].internal_id}`,
         email: clubData.email,
         amount: amount,
@@ -349,12 +349,12 @@ const Application = ({ clubData, authData, settings }) => {
         phone: clubData.phone,
       });
 
-      await axios.post("/api/mails/sendPayuLink", {
+      await axios.post('/api/mails/sendPayuLink', {
         link: newOrder.data.link,
         email: clubData.email,
       });
 
-      await axios.post("/api/applications/acceptApplication", {
+      await axios.post('/api/applications/acceptApplication', {
         applicationID: clubData.applications[0].id,
         // link: newOrder.data.link,
         userID: authData.id,
@@ -363,29 +363,29 @@ const Application = ({ clubData, authData, settings }) => {
       router.replace(router.asPath);
 
       setLoading(false);
-      toast.success("Wniosek zaakceptowany, wysłano link do płatności");
+      toast.success('Wniosek zaakceptowany, wysłano link do płatności');
     } catch (err) {
       console.log(err);
       setLoading(false);
-      toast.error("Nie udało się zaakceptować wniosku, spróbuj ponownie");
+      toast.error('Nie udało się zaakceptować wniosku, spróbuj ponownie');
     }
   };
 
   const markAsPaid = async () => {
     try {
       setLoading(true);
-      await axios.post("/api/applications/acceptPayment", {
+      await axios.post('/api/applications/acceptPayment', {
         applicationID: clubData.applications[0].id,
         userID: authData.id,
       });
 
       setLoading(false);
-      toast.success("Wniosek oznaczony jako opłacony");
+      toast.success('Wniosek oznaczony jako opłacony');
       router.replace(router.asPath);
     } catch (err) {
       console.log(err);
       setLoading(false);
-      toast.error("Nie udało się zaakceptować płatności,spróbuj ponownie");
+      toast.error('Nie udało się zaakceptować płatności,spróbuj ponownie');
     }
   };
 
@@ -394,9 +394,9 @@ const Application = ({ clubData, authData, settings }) => {
       <CorrectModal
         userID={authData.id}
         internalId={
-          clubData.applications[0] ? clubData.applications[0].internal_id : ""
+          clubData.applications[0] ? clubData.applications[0].internal_id : ''
         }
-        id={clubData.applications[0] ? clubData.applications[0].id : ""}
+        id={clubData.applications[0] ? clubData.applications[0].id : ''}
         email={clubData.email}
         visible={visible}
         setVisibile={setVisible}
@@ -405,10 +405,10 @@ const Application = ({ clubData, authData, settings }) => {
       <RejectModal
         userID={authData.id}
         internalID={
-          clubData.applications[0] ? clubData.applications[0].internal_id : ""
+          clubData.applications[0] ? clubData.applications[0].internal_id : ''
         }
         applicationID={
-          clubData.applications[0] ? clubData.applications[0].id : ""
+          clubData.applications[0] ? clubData.applications[0].id : ''
         }
         visible={visibleReject}
         setVisible={setvisibleReject}
@@ -416,19 +416,19 @@ const Application = ({ clubData, authData, settings }) => {
 
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          margin: "32px 0",
-          alignItems: "flex-start",
+          display: 'flex',
+          justifyContent: 'space-between',
+          margin: '32px 0',
+          alignItems: 'flex-start',
         }}
       >
-        <div style={{ display: "flex" }}>
+        <div style={{ display: 'flex' }}>
           <span>
             <h1
               style={{
-                marginRight: "32px",
-                marginTop: "-3px",
-                marginBottom: "20px",
+                marginRight: '32px',
+                marginTop: '-3px',
+                marginBottom: '20px',
               }}
             >
               Wniosek {clubData.applications[0].internal_id}
@@ -443,22 +443,22 @@ const Application = ({ clubData, authData, settings }) => {
 
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              height: "min-content",
+              display: 'flex',
+              alignItems: 'center',
+              height: 'min-content',
             }}
           >
             <ApplicationStatus
               size="32px"
               status={clubData.applications[0].statuses.name}
             />
-            <span style={{ marginLeft: "16px" }}>
+            <span style={{ marginLeft: '16px' }}>
               {clubData.applications[0].statuses.name}
             </span>
           </div>
         </div>
-        <div style={{ display: "flex" }}>
-          {authData.role !== "pomoc administracyjna" && renderButtons()}
+        <div style={{ display: 'flex' }}>
+          {authData.role !== 'pomoc administracyjna' && renderButtons()}
 
           <PrimaryButton
             onClick={() =>
@@ -466,14 +466,14 @@ const Application = ({ clubData, authData, settings }) => {
                 `/admin/licencje/historia/${clubData.applications[0].id}`
               )
             }
-            style={{ margin: "0 6px" }}
+            style={{ margin: '0 6px' }}
           >
             Historia zmian
           </PrimaryButton>
         </div>
       </div>
-      <div style={{ marginBottom: "32px" }}>
-        {authData.role !== "pomoc administracyjna" && renderTopPanel()}
+      <div style={{ marginBottom: '32px' }}>
+        {authData.role !== 'pomoc administracyjna' && renderTopPanel()}
       </div>
       {loading ? (
         <Loader />
