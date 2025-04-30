@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ClubContext } from "../../pages/index";
 import { convertLeauge, createSeasons } from "../../middleware/utils";
 const Wrapper = styled.div`
-  color: ${({ theme }) => theme.lightDark};
+  color: ${({ theme }) => theme.darkLight};
   display: flex;
   flex-direction: column;
   & div {

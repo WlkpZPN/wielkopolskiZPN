@@ -40,32 +40,39 @@ const User = ({ roles, userData, authData }) => {
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  const roles = await prisma.roles.findMany({
-    where: {
-      NOT: [
-        {
-          name: "klub",
-        },
-      ],
-    },
-  });
+  try {
+    const roles = await prisma.roles.findMany({
+      where: {
+        NOT: [
+          {
+            name: "klub",
+          },
+        ],
+      },
+    });
 
-  const user = await prisma.users.findFirst({
-    where: {
-      email: context.params.user,
-    },
-    include: {
-      roles: true,
-    },
-  });
+    const user = await prisma.users.findFirst({
+      where: {
+        email: context.params.user,
+      },
+      include: {
+        roles: true,
+      },
+    });
 
-  return {
-    props: {
-      authData: data,
-      userData: user,
-      roles: roles,
-    },
-  };
+    return {
+      props: {
+        authData: data,
+        userData: user,
+        roles: roles,
+      },
+    };
+  } catch (error) {
+    console.error('SSR error:', error);
+    return {
+      notFound: true, // albo redirect na stronę błędu
+    };
+  }
 });
 
 export default User;

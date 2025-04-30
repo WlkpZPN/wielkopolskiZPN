@@ -19,7 +19,7 @@ const Close = styled(CloseOutline)`
     color: ${({ theme }) => theme.danger};
   }
 `;
-const Background = styled.div`
+const Background = styled.div<{visible: boolean}>`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);

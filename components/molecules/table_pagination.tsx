@@ -14,7 +14,7 @@ const NavigatePrevious = styled(NavigateNext)`
   transform: rotate(180deg);
 `;
 
-const PageNumber = styled.span`
+const PageNumber = styled.span<{active?: boolean}>`
   font-weight: bold;
   font-size: 15px;
   margin: 0 4px;

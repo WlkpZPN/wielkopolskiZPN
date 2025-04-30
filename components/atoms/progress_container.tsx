@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { getStats } from "../../middleware/swr";
-const Progress = styled.div`
+const Progress = styled.div<{progress?: number, visible?: boolean, number?: number}>`
   background-color: #e6e6e6;
   width: 450px;
   height: 25px;
@@ -14,7 +14,7 @@ const Progress = styled.div`
     text-align: end;
     position: absolute;
     font-size: 13px;
-    /* display: ${({ visible }) => (visible ? "block" : "none")}; */
+    /* display: $ {({ visible }) => (visible ? "block" : "none")}; */
     display: block;
     color: rgba(255, 255, 255, 0.8);
     display: flex;

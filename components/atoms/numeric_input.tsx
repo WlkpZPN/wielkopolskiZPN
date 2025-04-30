@@ -29,11 +29,11 @@ const Wrapper = styled.div`
   display: inline-block;
   width: max-content;
   /* &::after {
-    content: "${({ suffix }) => suffix}";
+    content: "$ {({ suffix }) => suffix}";
 
     display: inline;
     position: absolute;
-    right: ${({ position }) => position || "3px"};
+    right: $ {({ position }) => position || "3px"};
     line-height: 33px;
     font-size: 18px;
     bottom: 0px;
@@ -44,11 +44,11 @@ const Wrapper = styled.div`
   } */
 `;
 
-const Suffix = styled.span`
+const Suffix = styled.span<{position?: string}>`
   position: absolute;
   bottom: 5px;
   right: ${({ position }) => position || "6px"};
-  /* display: ${({ position }) => (position === 0 ? "none" : "initial")}; */
+  /* display: $ {({ position }) => (position === 0 ? "none" : "initial")}; */
   display: none;
 `;
 
@@ -65,7 +65,7 @@ const NumericInput = ({
     numeral: true,
   };
   return (
-    <Wrapper position={position} suffix={suffix}>
+    <Wrapper >
       <StyledCleave
         style={style}
         className="form-field"

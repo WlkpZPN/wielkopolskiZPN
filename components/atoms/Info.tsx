@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
 
 const StyledCircle = styled(InfoCircle)``;
-const InfoContainer = styled.div`
+const InfoContainer = styled.div<{position?: string}>`
   z-index: 99;
   width: max-content;
   cursor: pointer;
@@ -47,7 +47,7 @@ const Parent = styled.div`
 const Info = ({ text, style = null }) => {
   return (
     <Parent>
-      <InfoContainer position={style?.position} style={style} text={text}>
+      <InfoContainer position={style?.position} style={style} >
         {text ? <StyledCircle /> : null}
         <Text>{text}</Text>
       </InfoContainer>

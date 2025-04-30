@@ -23,7 +23,7 @@ const StyledErrorMessage = styled(ErrorMessage)`
 `;
 
 const Wrapper = styled.div`
-  border-radius: 5px;
+  //border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-word;
   padding: 16px;
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-const Info = styled.div`
+const Info = styled.div<{text: string}>`
   & svg {
     width: 30px;
     z-index: 100;
@@ -347,7 +347,7 @@ const AddFacilityFile = ({
               />
             </Label>
             {file ? (
-              <DeleteButton type="button" onClick={deleteFile}>
+              <DeleteButton onClick={deleteFile}>
                 Usuń
               </DeleteButton>
             ) : null}{" "}

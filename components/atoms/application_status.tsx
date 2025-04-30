@@ -12,7 +12,7 @@ const User = styled(UserSecret)`
   color: ${({ theme }) => theme.primary};
 `;
 
-const SupervisiorLicense = styled.div`
+const SupervisiorLicense = styled.div<{size?: string}>`
   width: ${({ size }) => size || "21px"};
   height: ${({ size }) => size || "21px"};
   position: relative;
@@ -29,7 +29,7 @@ const SupervisiorLicense = styled.div`
   }
 `;
 
-const Application = styled.div`
+const Application = styled.div<{size?: string}>`
   width: ${({ size }) => size || "21px"};
   height: ${({ size }) => size || "21px"};
   background: ${({ color }) => color};

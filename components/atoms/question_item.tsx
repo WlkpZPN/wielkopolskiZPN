@@ -3,7 +3,7 @@ import { useState } from "react";
 import { DownArrow } from "@styled-icons/boxicons-solid/DownArrow";
 import Parser from "html-react-parser";
 
-const Arrow = styled(DownArrow)`
+const Arrow = styled(DownArrow)<{expanded?: boolean}>`
   width: 18px;
   transform: ${({ expanded }) => (expanded ? "rotate(180deg)" : "rotate(0)")};
   transition: all 0.2s;
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   padding: 12px 0;
 `;
 
-const TopText = styled.div`
+const TopText = styled.div<{expanded?: boolean}>`
   cursor: pointer;
   display: "flex";
   align-items: center;
@@ -24,7 +24,7 @@ const TopText = styled.div`
   padding-bottom: 12px;
 `;
 
-const Expandable = styled.div`
+const Expandable = styled.div<{expanded?: boolean}>`
   display: ${({ expanded }) => (expanded ? "block" : "none")};
   margin: 12px 0;
   overflow: hidden;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const OutlineButton = styled.button`
+const OutlineButton = styled.button<{align?: string}>`
   padding: 6px 12px;
   border: 2px solid ${({ theme }) => theme.primaryLight};
   transition: all 0.2s;
