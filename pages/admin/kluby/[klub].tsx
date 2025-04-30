@@ -1,37 +1,36 @@
-import { useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
-import { toast } from "react-toastify";
-import prisma from "../../../middleware/prisma";
-import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { ControllerFastBackward } from "@styled-icons/entypo/ControllerFastBackward";
+import { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import prisma from '../../../middleware/prisma';
+import { protectedAdminRoute } from '../../../middleware/protectedAdmin';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { ControllerFastBackward } from '@styled-icons/entypo/ControllerFastBackward';
 //components
-import AdminLayout from "../../../components/organisms/admin_layout";
-import IconButton from "../../../components/atoms/IconButton";
-import ClubStatus from "../../../components/atoms/club_status";
-import EditClubData from "../../../components/organisms/editClubData";
-import PrimaryButton from "../../../components/atoms/primary_button";
-import LastChange from "../../../components/molecules/last_change";
-import Spinner from "../../../components/atoms/loader";
+import AdminLayout from '../../../components/organisms/admin_layout';
+import IconButton from '../../../components/atoms/IconButton';
+import ClubStatus from '../../../components/atoms/club_status';
+import EditClubData from '../../../components/organisms/editClubData';
+import PrimaryButton from '../../../components/atoms/primary_button';
+import LastChange from '../../../components/molecules/last_change';
+import Spinner from '../../../components/atoms/loader';
 //functions
 
 const User = ({ clubData, authData }) => {
   const router = useRouter();
 
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState('');
   const markDebt = () => {
     const newDebt = !clubData.debt;
-    setLoading("debt");
+    setLoading('debt');
     axios
-      .post("/api/clubs/changeDebt", {
+      .post('/api/clubs/changeDebt', {
         clubId: clubData.id,
         debt: newDebt,
       })
       .then((res) => {
         console.log(res);
-        setLoading("");
+        setLoading('');
         if (newDebt) {
           toast.success(
             `Klub ${clubData.internal_id} został oznaczony jako zadłużony`
@@ -46,116 +45,116 @@ const User = ({ clubData, authData }) => {
       })
       .catch((err) => {
         console.log(err);
-        setLoading("");
+        setLoading('');
       });
   };
 
   const changeActive = () => {
     const newActive = !clubData.active;
-    setLoading("active");
+    setLoading('active');
     axios
-      .post("/api/clubs/changeActive", {
+      .post('/api/clubs/changeActive', {
         clubId: clubData.id,
         active: newActive,
       })
       .then((res) => {
-        setLoading("");
+        setLoading('');
         console.log(res);
         toast.success('Status zmieniony na "nieaktywny"');
         router.replace(router.asPath);
       })
       .catch((err) => {
-        setLoading("");
+        setLoading('');
         console.log(err);
       });
   };
 
   const deleteClub = async () => {
-    if (authData.role === "nadzór finansów") {
-      toast.error("Nie posiadasz uprawnień aby usunąc klub");
+    if (authData.role === 'nadzór finansów') {
+      toast.error('Nie posiadasz uprawnień aby usunąc klub');
       return;
     }
-    setLoading("deleting");
+    setLoading('deleting');
 
     try {
-      await axios.post("/api/clubs/deleteClub", {
+      await axios.post('/api/clubs/deleteClub', {
         clubID: clubData.id,
       });
-      setLoading("");
-      toast.warn("Klub usunięty");
-      router.replace("/admin/kluby");
+      setLoading('');
+      toast.warn('Klub usunięty');
+      router.replace('/admin/kluby');
     } catch (error) {
       console.log(error);
-      setLoading("");
-      toast.error("Usuwanie klubu nie powiodło się,spróbuj ponownie");
+      setLoading('');
+      toast.error('Usuwanie klubu nie powiodło się,spróbuj ponownie');
     }
   };
 
   return (
     <AdminLayout userData={authData} view="kluby">
-      {" "}
+      {' '}
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "32px",
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: '32px',
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <h1 style={{ marginRight: "32px" }}>Klub {clubData.internal_id}</h1>
-          <ClubStatus size="32px" active={clubData.active} />{" "}
-          <span style={{ marginLeft: "16px" }}>
-            {clubData.active ? "aktywny" : "nieaktywny"}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h1 style={{ marginRight: '32px' }}>Klub {clubData.internal_id}</h1>
+          <ClubStatus size="32px" active={clubData.active} />{' '}
+          <span style={{ marginLeft: '16px' }}>
+            {clubData.active ? 'aktywny' : 'nieaktywny'}
           </span>
         </div>
 
-        {authData.role !== "pomoc administracyjna" && (
+        {authData.role !== 'pomoc administracyjna' && (
           <div
             style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              marginBottom: "20px",
+              display: 'flex',
+              justifyContent: 'flex-start',
+              marginBottom: '20px',
             }}
           >
             <PrimaryButton
               onClick={deleteClub}
-              style={{ margin: "0 6px" }}
+              style={{ margin: '0 6px' }}
               color="danger"
               hoverColor="dangerDark"
             >
-              {loading === "deleting" ? (
-                <Spinner style={{ height: "16px", color: "white" }} />
+              {loading === 'deleting' ? (
+                <Spinner style={{ height: '16px', color: 'white' }} />
               ) : (
-                "Usuń"
+                'Usuń'
               )}
             </PrimaryButton>
             <PrimaryButton
-              style={{ margin: "0 6px" }}
-              color={clubData.active ? "danger" : "primary"}
-              hoverColor={clubData.active ? "danger" : "primaryLight"}
+              style={{ margin: '0 6px' }}
+              color={clubData.active ? 'danger' : 'primary'}
+              hoverColor={clubData.active ? 'danger' : 'primaryLight'}
               onClick={changeActive}
             >
-              {loading === "active" ? (
-                <Spinner style={{ height: "16px", color: "white" }} />
+              {loading === 'active' ? (
+                <Spinner style={{ height: '16px', color: 'white' }} />
               ) : clubData.active ? (
-                "Oznacz jako nieaktywny"
+                'Oznacz jako nieaktywny'
               ) : (
-                "Oznacz jako aktywny"
+                'Oznacz jako aktywny'
               )}
             </PrimaryButton>
 
             <PrimaryButton
-              style={{ margin: "0 6px" }}
-              color={clubData.debt ? "danger" : "primary"}
-              hoverColor={clubData.active ? "danger" : "primaryLight"}
+              style={{ margin: '0 6px' }}
+              color={clubData.debt ? 'danger' : 'primary'}
+              hoverColor={clubData.active ? 'danger' : 'primaryLight'}
               onClick={markDebt}
             >
-              {loading === "debt" ? (
-                <Spinner style={{ height: "16px", color: "white" }} />
+              {loading === 'debt' ? (
+                <Spinner style={{ height: '16px', color: 'white' }} />
               ) : clubData.debt ? (
-                "Usuń zadłużenie"
+                'Usuń zadłużenie'
               ) : (
-                "Oznacz jako zadłużony"
+                'Oznacz jako zadłużony'
               )}
             </PrimaryButton>
           </div>

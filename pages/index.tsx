@@ -1,12 +1,12 @@
-import { useState, createContext } from "react";
-import styled from "styled-components";
-import { useRouter } from "next/router";
-import axios from "axios";
-import prisma from "../middleware/prisma";
-import { toast } from "react-toastify";
+import { useState, createContext } from 'react';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import prisma from '../middleware/prisma';
+import { toast } from 'react-toastify';
 //utils
-import { getClubData } from "../middleware/swr";
-import { protectedClientRoute } from "../middleware/protectedClient";
+import { getClubData } from '../middleware/swr';
+import { protectedClientRoute } from '../middleware/protectedClient';
 
 //components
 import {
@@ -14,23 +14,23 @@ import {
   getCurrentDate,
   renderAmount,
   renderMainAmount,
-} from "../middleware/utils";
-import ClientLayout from "../components/organisms/client_layout";
+} from '../middleware/utils';
+import ClientLayout from '../components/organisms/client_layout';
 
-import ClubApplication from "../components/organisms/club_application";
-import LastChange from "../components/molecules/last_change";
-import Spinner from "../components/atoms/loader";
-import Paragraph from "../components/atoms/paragraph";
-import PrimaryButton from "../components/atoms/primary_button";
-import ErrorMessage from "../components/atoms/error_message";
-import ClubSteps from "../components/organisms/club_steps";
-import LicenseButton from "../components/molecules/license_button";
-import AddInvoice from "../components/molecules/add_invoice";
-import Header from "../components/atoms/header";
-import AddInvoiceWrapper from "../components/organisms/add_invoice_wrapper";
+import ClubApplication from '../components/organisms/club_application';
+import LastChange from '../components/molecules/last_change';
+import Spinner from '../components/atoms/loader';
+import Paragraph from '../components/atoms/paragraph';
+import PrimaryButton from '../components/atoms/primary_button';
+import ErrorMessage from '../components/atoms/error_message';
+import ClubSteps from '../components/organisms/club_steps';
+import LicenseButton from '../components/molecules/license_button';
+import AddInvoice from '../components/molecules/add_invoice';
+import Header from '../components/atoms/header';
+import AddInvoiceWrapper from '../components/organisms/add_invoice_wrapper';
 
 const PaymentLink = styled.a`
-  background: url("http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png");
+  background: url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');
   display: block;
   background-repeat: no-repeat;
   color: transparent;
@@ -51,17 +51,17 @@ const Home = ({ clubData, authData, settings }) => {
   const newApplication = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/applications/createApplication", {
+      await axios.post('/api/applications/createApplication', {
         clubID: clubData.id,
         applicationID: clubData.applications[0].id,
         clubData,
       });
       setLoading(false);
-      toast.info("Utworzono nowy wniosek");
+      toast.info('Utworzono nowy wniosek');
       router.replace(router.asPath);
     } catch (err) {
       console.log(err);
-      toast.error("Nie udało utworzyć się nowego wniosku, spróbuj ponownie");
+      toast.error('Nie udało utworzyć się nowego wniosku, spróbuj ponownie');
       setLoading(false);
     }
   };
@@ -77,10 +77,10 @@ const Home = ({ clubData, authData, settings }) => {
     ) {
       return (
         <>
-          {" "}
-          <Header>Proces licencyjny jeszcze sie nie rozpoaczął</Header>{" "}
+          {' '}
+          <Header>Proces licencyjny jeszcze sie nie rozpoaczął</Header>{' '}
           <Paragraph>
-            Wnisoki licencyjne będze można składać w okresie od{" "}
+            Wnisoki licencyjne będze można składać w okresie od{' '}
             {settings.start_date} do {settings.end_date}
           </Paragraph>
         </>
@@ -114,13 +114,13 @@ const Home = ({ clubData, authData, settings }) => {
             <>
               {clubData.applications[0].updated_at ? (
                 <>
-                  {" "}
+                  {' '}
                   <Header>Wersja robocza - wniosek liencyjny</Header>
                   <LastChange>{clubData.applications[0].updated_at}</LastChange>
                 </>
               ) : (
                 <>
-                  {" "}
+                  {' '}
                   <Header>Złóż wniosek licencyjny</Header>
                 </>
               )}
@@ -129,7 +129,7 @@ const Home = ({ clubData, authData, settings }) => {
                 show_buttons={true}
                 error_message=""
                 completed={false}
-                errors={""}
+                errors={''}
                 readOnly={false}
                 clubData={clubData}
                 settings={settings}
@@ -170,8 +170,8 @@ const Home = ({ clubData, authData, settings }) => {
               <Paragraph>
                 Dziękujemy za złożenie wniosku liencyjnego. <br /> Najpóźniej 20
                 kwietnia {new Date().getFullYear()} otrzymasz informację czy
-                wniosek został zaakceptowany przez Wielkopolski ZPN. <br />{" "}
-                Dalsze kroki procedury licencyjnej możesz zobaczyć poniżej{" "}
+                wniosek został zaakceptowany przez Wielkopolski ZPN. <br />{' '}
+                Dalsze kroki procedury licencyjnej możesz zobaczyć poniżej{' '}
               </Paragraph>
               <ClubSteps status="wnioskowany" />
               <ClubApplication
@@ -200,19 +200,19 @@ const Home = ({ clubData, authData, settings }) => {
                 <>
                   <p
                     style={{
-                      fontSize: "16px",
-                      color: "rgb(206,75,75)",
-                      fontWeight: "bold",
+                      fontSize: '16px',
+                      color: 'rgb(206,75,75)',
+                      fontWeight: 'bold',
                     }}
                   >
                     UZASADNIENIE:
                   </p>
                   <p
                     style={{
-                      fontSize: "16px",
-                      color: "rgb(206,75,75)",
-                      fontWeight: "bold",
-                      marginBottom: "16px",
+                      fontSize: '16px',
+                      color: 'rgb(206,75,75)',
+                      fontWeight: 'bold',
+                      marginBottom: '16px',
                     }}
                   >
                     {clubData.applications[0].error_message}
@@ -222,16 +222,16 @@ const Home = ({ clubData, authData, settings }) => {
 
               <p
                 style={{
-                  marginBottom: "16px",
-                  fontSize: "16px",
-                  color: "rgb(206,75,75)",
-                  fontWeight: "bold",
+                  marginBottom: '16px',
+                  fontSize: '16px',
+                  color: 'rgb(206,75,75)',
+                  fontWeight: 'bold',
                 }}
               >
                 <span
                   style={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
+                    fontWeight: 'bold',
+                    fontSize: '16px',
                   }}
                 >
                   UWAGA!
@@ -283,21 +283,21 @@ const Home = ({ clubData, authData, settings }) => {
                 Twój wniosek został zaakceptowany. Prosimy o dokonanie
                 płatności.
               </Header>
-              <Paragraph style={{ marginBottom: "15px" }}>
+              <Paragraph style={{ marginBottom: '15px' }}>
                 Wielkopolski ZPN zaakceptował Twój wniosek. <br />
                 Prosimy dokonaj płatności używając poniższego linka
               </Paragraph>
               <p
                 style={{
-                  fontSize: "48px",
-                  fontWeight: "bold",
-                  margin: "15px 0",
+                  fontSize: '48px',
+                  fontWeight: 'bold',
+                  margin: '15px 0',
                 }}
               >
                 {clubData.applications[0].youth_groups_possession ===
-                "nie posiadamy zespołów" ? (
+                'nie posiadamy zespołów' ? (
                   <p>
-                    {" "}
+                    {' '}
                     {renderMainAmount(
                       clubData.leauge,
                       settings,
@@ -314,28 +314,28 @@ const Home = ({ clubData, authData, settings }) => {
                 &nbsp;PLN
               </p>
               {clubData.applications[0].youth_groups_possession ===
-              "nie posiadamy zespołów" ? (
+              'nie posiadamy zespołów' ? (
                 <p>
-                  Opłata dodatkowa (klub nie posiada zespołów młodzieżowych):{" "}
-                  <span style={{ fontWeight: "bold" }}>
+                  Opłata dodatkowa (klub nie posiada zespołów młodzieżowych):{' '}
+                  <span style={{ fontWeight: 'bold' }}>
                     {renderAmount(clubData.leauge, settings)}
                   </span>
                 </p>
               ) : null}
               <p
                 style={{
-                  fontSize: "14px",
-                  marginBottom: "32px",
-                  marginTop: "15px",
+                  fontSize: '14px',
+                  marginBottom: '32px',
+                  marginTop: '15px',
                 }}
               >
-                Opłata licencyjna:{" "}
-                <span style={{ fontWeight: "bold" }}>
+                Opłata licencyjna:{' '}
+                <span style={{ fontWeight: 'bold' }}>
                   {renderMainAmount(
                     clubData.leauge,
                     settings,
                     clubData.applications[0].number_of_seasons
-                  )}{" "}
+                  )}{' '}
                   PLN
                 </span>
               </p>
@@ -343,22 +343,22 @@ const Home = ({ clubData, authData, settings }) => {
                 href={clubData.applications[0].payment_link}
                 target="_blank"
               ></PaymentLink>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <p style={{ marginBottom: "12px" }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ marginBottom: '12px' }}>
                   Jeśli chcec opłacić wniosek tradycyjnym przelewem prosimy o
                   przelew na poniższe dane:
                 </p>
                 <span>Wielkopolski Związek Piłki Nożnej</span>
                 <span>Numer konta: 95 1020 4027 0000 1202 0031 4260 </span>
                 <span>
-                  Tytuł przelewu: {clubData.applications[0].internal_id}{" "}
+                  Tytuł przelewu: {clubData.applications[0].internal_id}{' '}
                 </span>
                 <span>
-                  Kwota:{" "}
+                  Kwota:{' '}
                   {clubData.applications[0].youth_groups_possession ===
-                  "nie posiadamy zespołów" ? (
+                  'nie posiadamy zespołów' ? (
                     <p>
-                      {" "}
+                      {' '}
                       {renderMainAmount(
                         clubData.leauge,
                         settings,
@@ -371,7 +371,7 @@ const Home = ({ clubData, authData, settings }) => {
                       settings,
                       clubData.applications[0].number_of_seasons
                     )
-                  )}{" "}
+                  )}{' '}
                   &nbsp;PLN
                 </span>
                 {clubData.applications[0].invoice_url ||
@@ -397,10 +397,10 @@ const Home = ({ clubData, authData, settings }) => {
         case 7:
           return (
             <>
-              {" "}
+              {' '}
               <Header color="success">
                 Płatność za wniosek została wykonana
-              </Header>{" "}
+              </Header>{' '}
               <Paragraph>
                 Opłaciłeś swój wniosek. Poczekaj aż Wielkopolski ZPN zweryfikuje
                 płatność.
@@ -425,7 +425,7 @@ const Home = ({ clubData, authData, settings }) => {
         case 10:
           return (
             <>
-              {" "}
+              {' '}
               <Header color="success">
                 Gratulacje! Twój klub posiada licencję Wielkopolskiego ZPN
               </Header>
@@ -435,9 +435,9 @@ const Home = ({ clubData, authData, settings }) => {
               </Paragraph>
               <div
                 style={{
-                  margin: "70px 0",
-                  display: "flex",
-                  alignItems: "center",
+                  margin: '70px 0',
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
                 <AddInvoiceWrapper admin={false} clubData={clubData} />
@@ -449,8 +449,8 @@ const Home = ({ clubData, authData, settings }) => {
         case 9:
           return (
             <>
-              {" "}
-              <Header>Licencja niewydana</Header>{" "}
+              {' '}
+              <Header>Licencja niewydana</Header>{' '}
               <Paragraph>
                 Wielkopolski ZPN odrzucił Twoją licencję z następujących
                 przyczyn:
@@ -465,12 +465,14 @@ const Home = ({ clubData, authData, settings }) => {
         case 11:
           return (
             <>
-              {" "}
-              <Header>Licencja cofnięta</Header>{" "}
-              <Paragraph>Kliknij przycisk poniżej aby ubiegać się o nowa licencję</Paragraph>
+              {' '}
+              <Header>Licencja cofnięta</Header>{' '}
+              <Paragraph>
+                Kliknij przycisk poniżej aby ubiegać się o nowa licencję
+              </Paragraph>
               <PrimaryButton onClick={() => newApplication()}>
-              Złóż ponownie wniosek licencyjny
-            </PrimaryButton>
+                Złóż ponownie wniosek licencyjny
+              </PrimaryButton>
             </>
           );
         case 12:
@@ -506,11 +508,11 @@ const Home = ({ clubData, authData, settings }) => {
           <>
             <Header>Złóż wniosek licencyjny na kolejny sezon</Header>
             <Paragraph>Ruszył proces licenyjny na kolejny sezon</Paragraph>
-            <Paragraph style={{ maxWidth: "700px" }}>
+            <Paragraph style={{ maxWidth: '700px' }}>
               Możesz teraz z łatwością ubiegać się ponownie o licencję używając
               wniosku częściowo uzupełnionego poprzednimi danymi. Sprawdź
               wszystkie pola,uzupełnij te brakujące i wyślij wniosek licencyjny
-              do WielkopolskiegoZPN{" "}
+              do WielkopolskiegoZPN{' '}
             </Paragraph>
             <PrimaryButton onClick={() => newApplication()}>
               Złóż ponownie wniosek licencyjny
@@ -518,18 +520,18 @@ const Home = ({ clubData, authData, settings }) => {
             {clubData.applications[0].status_id == 8 ||
             clubData.applications[0].status_id == 10 ? (
               <>
-                {" "}
+                {' '}
                 <Header>Twoja poprzednia licencja</Header>
                 <div
                   style={{
-                    margin: "70px 0",
-                    display: "flex",
-                    alignItems: "center",
+                    margin: '70px 0',
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                 >
                   <AddInvoiceWrapper admin={false} clubData={clubData} />
                   <LicenseButton isAdmin={false} clubData={clubData} />
-                </div>{" "}
+                </div>{' '}
               </>
             ) : (
               <Header>Poprzednie dane</Header>
@@ -561,7 +563,7 @@ export const getServerSideProps = protectedClientRoute(
 
     if (!data) {
       res.statusCode = 302;
-      res.setHeader("Location", "/login");
+      res.setHeader('Location', '/login');
       return {
         props: {},
       };
@@ -622,7 +624,7 @@ export const getServerSideProps = protectedClientRoute(
         },
         data: {
           internal_id: `W/${new Date().getFullYear()}/${newApplication.id.toLocaleString(
-            "en-US",
+            'en-US',
             {
               minimumIntegerDigits: 3,
               useGrouping: false,
