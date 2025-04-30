@@ -174,18 +174,12 @@ const User = ({ clubData, authData }) => {
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-
   try {
     const clubData = await prisma.clubs.findUnique({
       where: {
         id: parseInt(context.params.klub),
       },
     });
-
-    if (!clubData) {
-      return { notFound: true };
-    }
-
     return {
       props: {
         authData: data,
@@ -198,7 +192,6 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
       notFound: true, // albo redirect na stronę błędu
     };
   }
-
 });
 
 export default User;

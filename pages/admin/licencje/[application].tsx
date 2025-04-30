@@ -496,7 +496,8 @@ const Application = ({ clubData, authData, settings }) => {
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  let clubData = await prisma.clubs.findUnique({
+    try {
+        let clubData = await prisma.clubs.findUnique({
     where: {
       id: parseInt(context.params.application),
     },
@@ -520,19 +521,24 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
       },
     },
   });
-
-  const settings = await prisma.settings.findUnique({
-    where: {
-      id: 1,
-    },
-  });
-  return {
-    props: {
-      authData: data,
-      clubData: clubData,
-      settings: settings,
-    },
-  };
+        const settings = await prisma.settings.findUnique({
+        where: {
+          id: 1,
+        },
+      });
+        return {
+        props: {
+          authData: data,
+          clubData: clubData,
+          settings: settings,
+        },
+      };
+    } catch (error) {
+        console.error('SSR error:', error);
+        return {
+            notFound: true, // albo redirect na stronę błędu
+        };
+    }
 });
 
 export default Application;
