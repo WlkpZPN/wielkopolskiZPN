@@ -17,7 +17,7 @@ const Parent = styled.div`
 `;
 
 const Wrapper = styled.div`
-  border-radius: 5px;
+  //border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-word;
   padding: 16px;
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-const Info = styled.div`
+const Info = styled.div<{text:string}>`
   & svg {
     width: 30px;
     z-index: 0;
@@ -270,7 +270,6 @@ const AddFile = ({ file, category, id, text }) => {
             </Label>
             {file ? (
               <DeleteButton
-                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   // handleDelete(file.id);

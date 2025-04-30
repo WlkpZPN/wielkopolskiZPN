@@ -4,7 +4,7 @@ import { useState } from "react";
 //components
 import PrimaryButton from "../atoms/primary_button";
 
-const Background = styled.div`
+const Background = styled.div<{isOpen?: boolean}>`
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -36,7 +36,7 @@ const Modal = ({ closeFunction, title, text, yesText, noText }) => {
   };
 
   return (
-    <Background isOpen={isOpen ? 1 : 0}>
+    <Background isOpen={isOpen}>
       <Content>
         <h3>{title}</h3>
         <p>{text}</p>

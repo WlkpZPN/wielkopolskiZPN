@@ -1,7 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
-import SunEditor, { buttonList } from "suneditor-react";
+// import SunEditor, { buttonList } from "suneditor-react";
+// import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
+
+import dynamic from "next/dynamic";
 import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
+import plugins from "suneditor/src/plugins";
+// ------------------- dynamically adding library or module -------------------
+const SunEditor = dynamic(() => import("suneditor-react"), { ssr: false });
 
 const Wrapper = styled.div`
   margin: 24px 0;

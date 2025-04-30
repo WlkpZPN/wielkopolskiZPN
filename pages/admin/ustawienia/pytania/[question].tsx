@@ -148,7 +148,6 @@ const Application = ({ authData, allQuestions, settings, question }) => {
         <Label>
           Pytanie
           <TextArea
-            type="text"
             value={questionText}
             placeholder="pytanie"
             onChange={(e) => setQuestionText(e.target.value)}

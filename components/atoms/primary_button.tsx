@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const PrimaryButton = styled.button`
+const PrimaryButton = styled.button<{hoverColor?: string, fontWeight?: string, width?: string}>`
   background-color: ${({ theme, color }) =>
     color ? theme[color] : theme.primary};
   border: none;

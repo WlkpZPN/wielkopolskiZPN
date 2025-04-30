@@ -23,7 +23,7 @@ const Close = styled(CloseOutline)`
   }
 `;
 
-const Background = styled.div`
+const Background = styled.div<{visible: boolean}>`
   position: fixed;
   top: 0;
   left: 0;

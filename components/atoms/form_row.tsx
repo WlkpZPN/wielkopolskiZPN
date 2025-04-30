@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FormRow = styled.div`
+const FormRow = styled.div<{margin?: string, cols?: number}>`
   margin: ${({ margin }) => (margin ? margin : 0)};
   display: grid;
   grid-template-columns: ${({ cols }) =>
