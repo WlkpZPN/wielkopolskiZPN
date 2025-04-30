@@ -174,17 +174,31 @@ const User = ({ clubData, authData }) => {
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  const clubData = await prisma.clubs.findUnique({
-    where: {
-      id: parseInt(context.params.klub),
-    },
-  });
-  return {
-    props: {
-      authData: data,
-      clubData: clubData,
-    },
-  };
+
+  try {
+    const clubData = await prisma.clubs.findUnique({
+      where: {
+        id: parseInt(context.params.klub),
+      },
+    });
+
+    if (!clubData) {
+      return { notFound: true };
+    }
+
+    return {
+      props: {
+        authData: data,
+        clubData: clubData,
+      },
+    };
+  } catch (error) {
+    console.error('SSR error:', error);
+    return {
+      notFound: true, // albo redirect na stronę błędu
+    };
+  }
+
 });
 
 export default User;
