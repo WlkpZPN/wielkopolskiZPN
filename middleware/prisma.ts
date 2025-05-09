@@ -1,31 +1,19 @@
 
 import { PrismaClient } from "@prisma/client";
 
+// Rozszerzenie globalThis o właściwość prisma
+const globalForPrisma = globalThis as typeof globalThis & {
+  prisma?: PrismaClient;
+};
 
-// add prisma to the NodeJS global type
+// Tworzymy nową instancję lub używamy istniejącej w czasie developmentu
+const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-interface CustomNodeJsGlobal extends NodeJS.Global {
-
-  prisma: PrismaClient;
-
+if (process.env.NODE_ENV === "development") {
+  globalForPrisma.prisma = prisma;
 }
 
-
-// Prevent multiple instances of Prisma Client in development
-
-declare const global: CustomNodeJsGlobal;
-
-
-const prisma = global.prisma || new PrismaClient();
-
-
-if (process.env.NODE_ENV === "development") global.prisma = prisma;
-
-
 export default prisma;
-
-
-
 
 
 // import { PrismaClient } from "@prisma/client"

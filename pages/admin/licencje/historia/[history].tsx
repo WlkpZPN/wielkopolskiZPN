@@ -121,32 +121,39 @@ const History = ({ authData, applicationData }) => {
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  const applicationData = await prisma.applications.findUnique({
-    where: {
-      id: parseInt(context.params.history),
-    },
-    include: {
-      histories: {
-        orderBy: {
-          id: "asc",
+  try {
+    const applicationData = await prisma.applications.findUnique({
+        where: {
+          id: parseInt(context.params.history),
         },
         include: {
-          users: {
+          histories: {
+            orderBy: {
+              id: "asc",
+            },
             include: {
-              roles: true,
+              users: {
+                include: {
+                  roles: true,
+                },
+              },
             },
           },
+          clubs: true,
         },
-      },
-      clubs: true,
-    },
-  });
-  return {
-    props: {
-      applicationData: applicationData,
-      authData: data,
-    },
-  };
+      });
+      return {
+        props: {
+          applicationData: applicationData,
+          authData: data,
+        },
+      };
+    } catch (error) {
+        console.error('SSR error:', error);
+        return {
+            notFound: true, // albo redirect na stronę błędu
+        };
+    }
 });
 
 export default History;

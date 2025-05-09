@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PrimaryButton from "../atoms/primary_button";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{visible: boolean}>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
@@ -59,6 +59,7 @@ const ConfirmChangeModal = ({
         status = "zaakceptowany opłacony";
         break;
     }
+    return status;
   };
   return (
     <Wrapper onClick={() => setVisible(false)} visible={visible}>

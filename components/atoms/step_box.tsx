@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Check } from "@styled-icons/boxicons-regular/Check";
 import { Close } from "@styled-icons/remix-line/Close";
-const Wrapper = styled.div`
+const Wrapper = styled.div<{active?: boolean}>`
   color: ${({ active }) => (active ? "white" : "black")};
 
   background: ${({ color }) => color};
@@ -49,7 +49,7 @@ const Number = styled.span`
   margin-right: 8px;
 `;
 
-const Header = styled.p`
+const Header = styled.p<{active?: boolean}>`
   font-weight: bold;
   font-size: 14px;
   color: ${({ color }) => color};

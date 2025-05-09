@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Label = styled.label`
+const Label = styled.label<{direction?: string, margin?: string, width?: string, pointer?: boolean }>`
   display: flex;
   flex-wrap: wrap;
   flex-direction: ${({ direction }) => (direction ? direction : "column")};

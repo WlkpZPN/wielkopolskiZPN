@@ -11,7 +11,7 @@ import Label from "../atoms/form_label";
 import Input from "../atoms/input";
 import RichTextEditor from "./rich_text_editor";
 import ErrorMessage from "../atoms/error_message";
-const Background = styled.div`
+const Background = styled.div<{visible: boolean}>`
   position: fixed;
   top: 0;
   left: 0;
