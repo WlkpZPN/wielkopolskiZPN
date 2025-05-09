@@ -1,47 +1,45 @@
 import prisma from "../../../middleware/prisma";
-import transporter from "../../../middleware/transporter";
-import axios from "axios";
 import emailTemplate from "../../../middleware/emailTemplate";
 import { getCurrentDate } from "../../../middleware/utils";
+import nodemailer from "nodemailer";
+import smtpConfig from "../../../smtpConfig"; // Import SMTP configuration
+
+// Create transporter using config values
+const transporter = nodemailer.createTransport({
+  host: smtpConfig.host,
+  port: smtpConfig.port,
+  secure: false, // If STARTTLS is enabled, this must be false
+  auth: {
+    user: smtpConfig.username,
+    pass: smtpConfig.password,
+  },
+  tls: {
+    rejectUnauthorized: true,
+  },
+});
+
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { message, recipients, title } = req.body;
-    let clubs = [];
-    //1. check the rule for clubs
-    //2. get all clubs that met conditions
-    // console.log("message", message);
 
+    let clubs = [];
     switch (recipients) {
       case "aktywne":
         clubs = await prisma.clubs.findMany({
-          where: {
-            active: true,
-          },
+          where: { active: true },
         });
         break;
       case "niekatywne":
         clubs = await prisma.clubs.findMany({
-          where: {
-            active: false,
-          },
+          where: { active: false },
         });
         break;
       case "nierozpoczęte":
         clubs = await prisma.clubs.findMany({
           where: {
             OR: [
-              {
-                applications: {
-                  none: {},
-                },
-              },
-              {
-                applications: {
-                  every: {
-                    status_id: 1,
-                  },
-                },
-              },
+              { applications: { none: {} } },
+              { applications: { every: { status_id: 1 } } },
             ],
             NOT: [{ leauge: null }],
             active: true,
@@ -53,14 +51,7 @@ export default (req, res) => {
           where: {
             applications: {
               every: {
-                OR: [
-                  {
-                    status_id: 2,
-                  },
-                  {
-                    status_id: 3,
-                  },
-                ],
+                OR: [{ status_id: 2 }, { status_id: 3 }],
               },
             },
           },
@@ -71,102 +62,49 @@ export default (req, res) => {
         break;
     }
 
-    console.log("clubs length", clubs.length);
+    console.log("Selected clubs count:", clubs.length);
 
-    let recipientsEmails = [];
-    let content = [];
-    console.log("clubs", clubs.length);
-    clubs.forEach((club, index) => {
-      let i = 0;
+    const promises = clubs.map(async (club) => {
+      if (!club.email) return Promise.resolve(); // Skip if email is missing
 
-      recipientsEmails.push({
-        email: club.email,
+      // Using nodemailer to send an email
+      const mailOptions = {
+        from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
+        to: club.email,
+        subject: title,
+        html: emailTemplate(title, message.message), // Use your email template
+      };
 
-        //name: club.name.replace(/\r?\n|\r/g, " ") || "",
-      });
-      content.push({
-        type: "text/html",
-        // body: "<p>Test</p>",
-        body: emailTemplate(title, message.message),
-      });
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log(`Email sent to: ${club.email}`);
+      } catch (error) {
+        console.error(`Failed to send email to: ${club.email}`, error);
+      }
     });
 
-    let i,
-      tmpRecipients,
-      response,
-      tmpContent,
-      chunk = 100;
-
-    let promises = [];
-    let iterationCount = 0;
-    //for (i = 0; i < recipientsEmails.length; i += chunk) {
-    for (i = 0; i < clubs.length; i++) {
-      
-      if (!recipientsEmails[i].email) {
-        continue;
-      }
-      promises.push(
-        axios({
-          url: "https://api.freshmail.com/v3/messaging/emails",
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.FRESHMAIL_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          data: {
-            //recipients: tmpRecipients,
-            recipients: [recipientsEmails[i]],
-            from: {
-              name: "Wielkopolski ZPN",
-              email: "licklub@wielkopolskizpn.pl",
-            },
-
-            subject: title,
-            // contents: tmpContent,
-            contents: [content[i]],
-          },
-        })
-
-      
-      );
-      iterationCount++;
-      //console.log("response", response.statusText);
-    }
-
+    // Execute all email-sending promises
     Promise.all(promises)
-      .then(async (response) => {
-        await prisma.messages.update({
-          where: {
-            id: parseInt(message.id),
-          },
-          data: {
-            send_date: getCurrentDate(),
-          },
+        .then(async () => {
+          await prisma.messages.update({
+            where: {
+              id: parseInt(message.id),
+            },
+            data: {
+              send_date: getCurrentDate(),
+            },
+          });
+
+          res.send("Emails sent successfully!");
+          resolve();
+        })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).json({
+            type: "error",
+            message: "Failed to send some emails. Check logs for details.",
+          });
+          resolve();
         });
-
-        //console.log("data", recipientsEmails);
-        res.send("email sended");
-      })
-      .catch((err) => {
-        console.log(err.response?.data || err);
-        res.status(400);
-        res.json({
-          type: "error",
-          message: err,
-        });
-      });
-
-    // console.log(err);
-
-    //aktywne
-    //nieaktywne
-    //nierozpoczęte
-    //zatwierdzone
-    //wszystkie
-    //res.send(clubs);
-
-    //res.send("test");
-    //3. send maild to all that clubs
-    await prisma.$disconnect();
   });
 };
