@@ -14,7 +14,7 @@ import UsersList from "../../../components/molecules/users_list";
 import PrimaryButton from "../../../components/atoms/primary_button";
 import AddUserModal from "../../../components/organisms/add_user_modal";
 import StyledSpinner from "../../../components/atoms/loader";
-const Table = styled.div`
+const Table = styled.div<{size: number}>`
   margin: 32px 0;
   display: grid;
   grid-template-rows: ${({ size }) => `repeat(${size},50px)`};

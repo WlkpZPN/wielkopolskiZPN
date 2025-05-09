@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ModalBackground = styled.div`
+const ModalBackground = styled.div<{visible: boolean}>`
   display: ${({ visible }) => (visible ? "block" : "none")};
   width: 100vw;
   height: 100vh;

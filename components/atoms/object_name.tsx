@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Save } from "@styled-icons/boxicons-regular/Save";
-const Wrapper = styled.div`
+const Wrapper = styled.div<{active?: boolean}>`
   width: 200px;
   padding: 3px 12px;
   border: ${({ active, theme }) =>

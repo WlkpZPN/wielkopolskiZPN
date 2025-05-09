@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Icon = styled.div`
+const Icon = styled.div<{locked?: boolean}>`
   width: 45px;
   height: 25px;
   background: #d6d6d6;

@@ -1055,6 +1055,11 @@ const ClubApplication = ({
     }
   };
 
+  const changeApplicationDataClickFromEvent = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    await changeApplicationData(false); // lub true, zależnie od logiki
+  };
+
   return (
     <ApplicationContext.Provider
       value={{
@@ -1127,7 +1132,7 @@ const ClubApplication = ({
                 type="button"
                 color="success"
                 hoverColor="successDark"
-                onClick={changeApplicationData}
+                onClick={changeApplicationDataClickFromEvent}
               >
                 Zaktualizuj wniosek
               </PrimaryButton>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import CloseIcon from "./close_icon";
 import PrimaryButton from "./primary_button";
-const Background = styled.div`
+const Background = styled.div<{visible: boolean}>`
   position: fixed;
   left: 0;
   top: 0;

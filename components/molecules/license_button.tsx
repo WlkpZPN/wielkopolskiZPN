@@ -18,7 +18,7 @@ const FileIcon = styled(FilePdf)`
   margin: 0 auto;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{isAdmin?: string}>`
   border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-all;
@@ -50,7 +50,7 @@ const Content = styled.span`
   flex-direction: column;
 `;
 
-const StatusContainer = styled.div`
+const StatusContainer = styled.div<{isAdmin?: boolean}>`
   position: ${({ isAdmin }) => (isAdmin ? "initial" : "absolute")};
   /* top:${({ isAdmin }) => (isAdmin ? "initial" : "absolute")}; */
   top: -20px;

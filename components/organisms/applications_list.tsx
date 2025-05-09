@@ -16,7 +16,7 @@ import ClubName from "../atoms/club_name";
 import PrimaryButton from "../atoms/primary_button";
 import { getInternalId } from "../../middleware/utils";
 
-const Arrow = styled(DownArrow)`
+const Arrow = styled(DownArrow)<{active?: boolean, rotate?: boolean}>`
   width: 15px;
   transform: ${({ rotate }) => (rotate ? "rotate(180deg)" : "rotate(0deg)")};
   color: ${({ theme, active }) => active && theme.primary};

@@ -8,12 +8,12 @@ const Wrapper = styled.div`
   border-bottom: 2px solid ${({ theme }) => theme.primaryLight};
 `;
 
-const MoreInfo = styled.div`
+const MoreInfo = styled.div<{expanded?: boolean}>`
   display: ${({ expanded }) => (expanded ? "block" : "none")};
   padding-left: 8px;
 `;
 
-const Paragraph = styled.p`
+const Paragraph = styled.p<{expanded?: boolean}>`
   color: white;
   font-weight: 600;
   padding: 12px;
@@ -39,7 +39,7 @@ const ObjectInfo = ({ children }) => {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <Wrapper expanded={expanded}>
+    <Wrapper >
       <Paragraph onClick={() => setExpanded(!expanded)} expanded={expanded}>
         <DownArrow />
         Informacje dot. powyższego obiektu sportowego

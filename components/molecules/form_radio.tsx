@@ -57,7 +57,7 @@ const RadioSquare = ({ setVisible = null, value, handleChange }) => {
         type="checkbox"
       />
       <CustomRadio />
-      <Label htmlFor="checkbox" tabindex="1" contenteditable="true"></Label>
+      <Label htmlFor="checkbox" tabIndex={1} contentEditable="true"></Label>
     </Paragraph>
   );
 };

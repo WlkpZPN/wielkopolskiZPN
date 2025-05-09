@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { ApplicationContext } from "./club_application";
 import AddFile from "../molecules/add_file";
 import AddFacilityFile from "../molecules/add_facility_file";
-const Row = styled.div`
+const Row = styled.div<{cols?: string}>`
   padding-bottom: 16px;
   display: grid;
   grid-gap: 12px;

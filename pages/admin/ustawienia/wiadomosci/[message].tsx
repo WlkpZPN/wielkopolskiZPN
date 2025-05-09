@@ -202,27 +202,34 @@ const Application = ({ authData, allMessages, settings, message }) => {
 };
 
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
-  const settings = await prisma.settings.findUnique({
-    where: {
-      id: 1,
-    },
-  });
+  try {
+    const settings = await prisma.settings.findUnique({
+      where: {
+        id: 1,
+      },
+    });
 
-  const messages = await prisma.messages.findMany();
-  const message = await prisma.messages.findUnique({
-    where: {
-      id: parseInt(context.params.message),
-    },
-  });
+    const messages = await prisma.messages.findMany();
+    const message = await prisma.messages.findUnique({
+      where: {
+        id: parseInt(context.params.message),
+      },
+    });
 
-  return {
-    props: {
-      authData: data,
-      allMessages: messages,
-      message: message,
-      settings: settings,
-    },
-  };
+    return {
+      props: {
+        authData: data,
+        allMessages: messages,
+        message: message,
+        settings: settings,
+      },
+    };
+  } catch (error) {
+    console.error('SSR error:', error);
+    return {
+      notFound: true, // albo redirect na stronę błędu
+    };
+  }
 });
 
 export default Application;
