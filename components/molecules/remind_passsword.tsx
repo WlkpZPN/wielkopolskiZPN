@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { useState } from "react";
-import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
-import axios from "axios";
-import Loader from "../atoms/loader";
-import { validateEmail } from "../../middleware/validation";
-import Input from "../atoms/input";
-import PrimaryButton from "../atoms/primary_button";
-import ErrorMessage from "../atoms/error_message";
-import { toast } from "react-toastify";
+import styled from 'styled-components';
+import { useState } from 'react';
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline';
+import axios from 'axios';
+import Loader from '../atoms/loader';
+import { validateEmail } from '../../middleware/validation';
+import Input from '../atoms/input';
+import PrimaryButton from '../atoms/primary_button';
+import ErrorMessage from '../atoms/error_message';
+import { toast } from 'react-toastify';
 const Close = styled(CloseOutline)`
   width: 32px;
   color: black;
@@ -20,7 +20,7 @@ const Close = styled(CloseOutline)`
     color: ${({ theme }) => theme.danger};
   }
 `;
-const Background = styled.div<{visible: boolean}>`
+const Background = styled.div<{ visible: boolean }>`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
@@ -28,7 +28,7 @@ const Background = styled.div<{visible: boolean}>`
   left: 0;
   position: fixed;
   z-index: 100;
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
 `;
 
 const Content = styled.div`
@@ -66,8 +66,8 @@ const Form = styled.form`
 `;
 
 const RemindPasswordModal = ({ visible, setVisible }) => {
-  const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
+  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const handleClose = (e) => {
     if (e.target === e.currentTarget) {
@@ -86,19 +86,19 @@ const RemindPasswordModal = ({ visible, setVisible }) => {
     }
     setLoading(true);
     try {
-      await axios.post("/api/clubAuth/remindPassword", {
+      await axios.post('/api/clubAuth/remindPassword', {
         clubEmail: email,
       });
       setLoading(false);
       toast.success(
-        "Email z hasłem został wysłany,sprawdź swoją skrzynke pocztową"
+        'Email z hasłem został wysłany,sprawdź swoją skrzynke pocztową'
       );
 
       setVisible(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
-      toast.error("Wysyłanie hasła nie powiodło się,spróbuj ponownie");
+      toast.error('Wysyłanie hasła nie powiodło się,spróbuj ponownie');
       return;
     }
   };
@@ -108,29 +108,25 @@ const RemindPasswordModal = ({ visible, setVisible }) => {
       <Content>
         <Close onClick={() => setVisible(false)} />
         <Header>Przypomnij hasło</Header>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            {" "}
-            <p>
-              Nie pamiętasz hasła ? <br /> Podaj email zarejestrowany w domenie
-              WielkopolskiegoZPN a my wyślemy Ci hasło mailem. <br />
-              Po zalogowaniu się możesz zmienić hasło w aplikacji.
-            </p>
-            <Form onChange={() => setError("")} onSubmit={handleSubmit}>
-              <ErrorMessage>{error}</ErrorMessage>
-              <Input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="klub@wielkopolskizpn.pl"
-              />
+        <>
+          {' '}
+          <p>
+            Nie pamiętasz hasła ? <br /> Podaj email zarejestrowany w domenie
+            WielkopolskiegoZPN a my wyślemy Ci hasło mailem. <br />
+            Po zalogowaniu się możesz zmienić hasło w aplikacji.
+          </p>
+          <Form onChange={() => setError('')} onSubmit={handleSubmit}>
+            <ErrorMessage>{error}</ErrorMessage>
+            <Input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="klub@wielkopolskizpn.pl"
+            />
 
-              <PrimaryButton type="submit">Wyślij</PrimaryButton>
-            </Form>{" "}
-          </>
-        )}
+            <PrimaryButton type="submit">Wyślij</PrimaryButton>
+          </Form>{' '}
+        </>
       </Content>
     </Background>
   );

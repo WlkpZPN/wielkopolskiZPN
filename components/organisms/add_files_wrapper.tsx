@@ -10,7 +10,6 @@ const Row = styled.div<{cols?: string}>`
   grid-gap: 12px;
   grid-template-columns: ${({ cols }) => `repeat(4,260px)`};
   overflow-x: auto;
-  max-width: 60vw;
 `;
 //TO DO SIDE SCROLLING WITH VISIBLE TOOL TIP
 

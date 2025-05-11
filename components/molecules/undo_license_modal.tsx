@@ -1,15 +1,15 @@
-import axios from "axios";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import styled from "styled-components";
-import ApplicationStatus from "../atoms/application_status";
-import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
-import Label from "../atoms/form_label";
-import RadioSquare from "../molecules/form_radio";
-import PrimaryButton from "../atoms/primary_button";
-import ErrorMessage from "../atoms/error_message";
-import Loader from "../atoms/loader";
+import axios from 'axios';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import styled from 'styled-components';
+import ApplicationStatus from '../atoms/application_status';
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline';
+import Label from '../atoms/form_label';
+import RadioSquare from '../molecules/form_radio';
+import PrimaryButton from '../atoms/primary_button';
+import ErrorMessage from '../atoms/error_message';
+import Loader from '../atoms/loader';
 const Close = styled(CloseOutline)`
   width: 32px;
   color: black;
@@ -22,7 +22,7 @@ const Close = styled(CloseOutline)`
     color: ${({ theme }) => theme.danger};
   }
 `;
-const Background = styled.div<{visible: boolean}>`
+const Background = styled.div<{ visible: boolean }>`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
@@ -30,7 +30,7 @@ const Background = styled.div<{visible: boolean}>`
   left: 0;
   position: fixed;
   z-index: 100;
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
 `;
 
 const Content = styled.div`
@@ -69,8 +69,8 @@ const UndoLicense = ({
   authData,
 }) => {
   const router = useRouter();
-  const [reason, setReason] = useState("");
-  const [error, setError] = useState("");
+  const [reason, setReason] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleClose = (e) => {
@@ -82,14 +82,14 @@ const UndoLicense = ({
     e.preventDefault();
 
     if (!reason) {
-      setError("Proszę podać powód cofnięcia licencji");
+      setError('Proszę podać powód cofnięcia licencji');
       return;
     }
 
     setLoading(true);
     await axios
-      .post("/api/licences/setLicense", {
-        description: "Cofnięto licencje",
+      .post('/api/licences/setLicense', {
+        description: 'Cofnięto licencje',
         statusID: 11,
         applicationID: applicationID,
         reason: reason,
@@ -112,59 +112,55 @@ const UndoLicense = ({
         <Close onClick={() => setVisible(false)} />
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-            alignItems: "center",
-            paddingRight: "16px",
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            alignItems: 'center',
+            paddingRight: '16px',
           }}
         >
           <h1>Cofnij wydanie licencji {internalID}</h1>
-          <ApplicationStatus size="32px" status={"licencja cofnięta"} />
+          <ApplicationStatus size="32px" status={'licencja cofnięta'} />
         </div>
-        {loading ? (
-          <Loader />
-        ) : (
-          <form style={{ width: "100%" }}>
-            <ErrorMessage>{error}</ErrorMessage>
+        <form style={{ width: '100%' }}>
+          <ErrorMessage>{error}</ErrorMessage>
 
-            <p
-              style={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "rgba(0,0,0,0.6)",
-                marginBottom: "6px",
-                marginTop: "32px",
-              }}
+          <p
+            style={{
+              fontSize: '16px',
+              fontWeight: 600,
+              color: 'rgba(0,0,0,0.6)',
+              marginBottom: '6px',
+              marginTop: '32px',
+            }}
+          >
+            Podaj treść uzasadnienia
+          </p>
+
+          <TextArea
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            placeholder="Uzasadnienie"
+          ></TextArea>
+
+          <div style={{ display: 'flex', marginTop: '32px' }}>
+            <PrimaryButton
+              hoverColor="dangerDark"
+              color="danger"
+              onClick={() => setVisible(false)}
+              style={{ marginRight: '16px' }}
             >
-              Podaj treść uzasadnienia
-            </p>
-
-            <TextArea
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              placeholder="Uzasadnienie"
-            ></TextArea>
-
-            <div style={{ display: "flex", marginTop: "32px" }}>
-              <PrimaryButton
-                hoverColor="dangerDark"
-                color="danger"
-                onClick={() => setVisible(false)}
-                style={{ marginRight: "16px" }}
-              >
-                Anuluj
-              </PrimaryButton>
-              <PrimaryButton
-                hoverColor="dangerDark"
-                color="danger"
-                onClick={rejectApplication}
-              >
-                Cofnij wydanie licencji
-              </PrimaryButton>
-            </div>
-          </form>
-        )}
+              Anuluj
+            </PrimaryButton>
+            <PrimaryButton
+              hoverColor="dangerDark"
+              color="danger"
+              onClick={rejectApplication}
+            >
+              Cofnij wydanie licencji
+            </PrimaryButton>
+          </div>
+        </form>
       </Content>
     </Background>
   );

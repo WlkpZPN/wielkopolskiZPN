@@ -1,19 +1,19 @@
-import { useContext } from "react";
-import styled from "styled-components";
-import axios from "axios";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import styled from 'styled-components';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
 //icons
-import { User } from "@styled-icons/fa-solid/User";
-import { LogOut } from "@styled-icons/entypo/LogOut";
+import { User } from '@styled-icons/fa-solid/User';
+import { LogOut } from '@styled-icons/entypo/LogOut';
 //utils
-import { logout } from "../../middleware/utils";
+import { logout } from '../../middleware/utils';
 
 //components
-import ClubInfo from "../molecules/club_info";
-import IconButton from "../atoms/IconButton";
-import Footer from "../atoms/footer";
-import NavItem from "../atoms/navItem";
+import ClubInfo from '../molecules/club_info';
+import IconButton from '../atoms/IconButton';
+import Footer from '../atoms/footer';
+import NavItem from '../atoms/navItem';
 //import { UserContext } from "../../pages/admin/index";
 
 const Wrapper = styled.main`
@@ -25,7 +25,7 @@ const Content = styled.div`
   max-width: 1360px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 16px;
 `;
 
 const TopBar = styled.div`
@@ -66,7 +66,9 @@ const List = styled.ul`
   display: flex;
   height: 100%;
   align-items: center;
+  justify-content: center;
   margin: auto 0;
+  padding: 0 16px;
   & li {
     margin-right: 48px;
   }
@@ -78,11 +80,9 @@ const ClientLayout = ({ view, children, clubData }) => {
   return (
     <Wrapper>
       <TopBar>
-        <LogoImage
-          src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
-          alt="wielkoposlki ZPN logo"
-          onClick={() => router.push("/")}
-        />
+        <Link href="/">
+          <Image src={'/wzpn_logo.png'} alt={'logo'} width={150} height={50} />
+        </Link>
         <ClubInfo clubData={clubData} />
         <ButtonWrapper>
           <Link href="/ustawienia">
@@ -91,7 +91,7 @@ const ClientLayout = ({ view, children, clubData }) => {
             </IconButton>
           </Link>
           <Link href="/login">
-            <IconButton onClick={() => logout("klub")}>
+            <IconButton onClick={() => logout('klub')}>
               <LogOut /> Wyloguj
             </IconButton>
           </Link>
@@ -101,15 +101,15 @@ const ClientLayout = ({ view, children, clubData }) => {
         <NavBarContent>
           <List>
             <Link href="/">
-              <NavItem active={view === "Wniosek licencyjny"}>
+              <NavItem active={view === 'Wniosek licencyjny'}>
                 Wniosek licencyjny
               </NavItem>
             </Link>
             <Link href="/dane">
-              <NavItem active={view === "Dane klubu"}>Dane klubu</NavItem>
+              <NavItem active={view === 'Dane klubu'}>Dane klubu</NavItem>
             </Link>
             <Link href="/pomoc">
-              <NavItem active={view === "Pomoc"}>Pomoc / FAQ</NavItem>
+              <NavItem active={view === 'Pomoc'}>Pomoc / FAQ</NavItem>
             </Link>
           </List>
         </NavBarContent>

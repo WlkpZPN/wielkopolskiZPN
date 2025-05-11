@@ -1,17 +1,17 @@
-import { useState, useContext } from "react";
-import uniqid from "uniqid";
-import axios from "axios";
-import { useRouter } from "next/router";
-import styled from "styled-components";
-import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
-import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
-import Loader from "../atoms/loader";
-import { toast } from "react-toastify";
-import { makeid, checkMimeType } from "../../middleware/utils";
-import { ApplicationContext } from "../../components/organisms/club_application";
-import ErrorMessage from "../atoms/error_message";
+import { useState, useContext } from 'react';
+import uniqid from 'uniqid';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
+import { FilePdf } from '@styled-icons/fa-regular/FilePdf';
+import Loader from '../atoms/loader';
+import { toast } from 'react-toastify';
+import { makeid, checkMimeType } from '../../middleware/utils';
+import { ApplicationContext } from '../../components/organisms/club_application';
+import ErrorMessage from '../atoms/error_message';
 //components
-import OutlineButton from "../atoms/outline_button";
+import OutlineButton from '../atoms/outline_button';
 
 const Parent = styled.div`
   position: relative;
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-const Info = styled.div<{text: string}>`
+const Info = styled.div<{ text: string }>`
   & svg {
     width: 30px;
     z-index: 100;
@@ -61,7 +61,7 @@ const Info = styled.div<{text: string}>`
     }
   }
   &::after {
-    content: "${({ text }) => `${text}`}";
+    content: '${({ text }) => `${text}`}';
     z-index: 100;
     padding: 32px;
     display: none;
@@ -166,7 +166,7 @@ const AddFacilityFile = ({
     if (!result.valid) {
       // setError(result.error);
 
-      console.log("error", result.error);
+      console.log('error', result.error);
       toast.error(result.error);
       return;
     }
@@ -180,7 +180,7 @@ const AddFacilityFile = ({
     // const blob = e.target.files[0];
     // const newFile = new File([blob], fileName, blob.type);
     const fileData = new FormData();
-    fileData.append("file", newFile);
+    fileData.append('file', newFile);
 
     const config = {
       // headers: { "Content-type": "multipart/form-data" },
@@ -194,13 +194,13 @@ const AddFacilityFile = ({
     try {
       setLoading(true);
       if (upload) {
-        await axios.post("/api/applications/uploadFiles", fileData, config);
-        await axios.post("/api/files/addFilesUrl", {
+        await axios.post('/api/applications/uploadFiles', fileData, config);
+        await axios.post('/api/files/addFilesUrl', {
           category,
           fileName,
           facilityID: app_facility.id,
         });
-        toast.info("Dodano plik", {
+        toast.info('Dodano plik', {
           autoClose: 2000,
         });
         refreshData();
@@ -235,7 +235,7 @@ const AddFacilityFile = ({
     } catch (err) {
       console.log(err);
       toast.error(
-        "Dodawanie pliku się nie powiodło, prosimy spróbować później"
+        'Dodawanie pliku się nie powiodło, prosimy spróbować później'
       );
       setLoading(false);
     }
@@ -249,12 +249,12 @@ const AddFacilityFile = ({
       // delete from server
 
       try {
-        const response = await axios.post("/api/files/deleteFacilityFile", {
+        const response = await axios.post('/api/files/deleteFacilityFile', {
           attachment: file,
           facilityID,
         });
         setLoading(false);
-        toast.info("Plik usunięty", {
+        toast.info('Plik usunięty', {
           autoClose: 2000,
         });
 
@@ -277,7 +277,7 @@ const AddFacilityFile = ({
       } catch (error) {
         setLoading(false);
         console.log(error);
-        toast.error("Nie udało się usunąć pliku,spróbuj ponownie", {
+        toast.error('Nie udało się usunąć pliku,spróbuj ponownie', {
           autoClose: 2500,
         });
         return;
@@ -293,67 +293,58 @@ const AddFacilityFile = ({
   return (
     <Parent>
       <Wrapper>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            {" "}
-            {text ? (
-              <Info text={text}>
-                <InfoCircle />
-              </Info>
-            ) : null}
-            <FileInfo>
-              <FilePdf />
-              {file ? (
-                file.id ? (
-                  <Link target="_blank" href={file.filepath}>
-                    {file.name}
-                  </Link>
-                ) : (
-                  <span>{file.name}</span>
-                )
-              ) : (
-                <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
-                  {"Brak załączonego dokumentu."}
-                </span>
-              )}
-            </FileInfo>
-            <Label>
-              {file ? null : (
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  {" "}
-                  <AddButton>+ Dodaj dokument</AddButton>
-                  <span
-                    style={{
-                      color: "#363636",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Dopuszczalne formaty to PDF oraz JPG, maksymalnie 5 Mb
-                  </span>{" "}
-                </div>
-              )}
-
-              <FileInput
-                id="file"
-                type="file"
-                name="file"
-                onChange={(e) => {
-                  // setError(null);
-                  handleChange(e);
-                }}
-              />
-            </Label>
+        <>
+          {' '}
+          {text ? (
+            <Info text={text}>
+              <InfoCircle />
+            </Info>
+          ) : null}
+          <FileInfo>
+            <FilePdf />
             {file ? (
-              <DeleteButton onClick={deleteFile}>
-                Usuń
-              </DeleteButton>
-            ) : null}{" "}
-          </>
-        )}
+              file.id ? (
+                <Link target="_blank" href={file.filepath}>
+                  {file.name}
+                </Link>
+              ) : (
+                <span>{file.name}</span>
+              )
+            ) : (
+              <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
+                {'Brak załączonego dokumentu.'}
+              </span>
+            )}
+          </FileInfo>
+          <Label>
+            {file ? null : (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {' '}
+                <AddButton>+ Dodaj dokument</AddButton>
+                <span
+                  style={{
+                    color: '#363636',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Dopuszczalne formaty to PDF oraz JPG, maksymalnie 5 Mb
+                </span>{' '}
+              </div>
+            )}
 
+            <FileInput
+              id="file"
+              type="file"
+              name="file"
+              onChange={(e) => {
+                // setError(null);
+                handleChange(e);
+              }}
+            />
+          </Label>
+          {file ? <DeleteButton onClick={deleteFile}>Usuń</DeleteButton> : null}{' '}
+        </>
         <ErrorMessage>{error}</ErrorMessage>
       </Wrapper>
     </Parent>
