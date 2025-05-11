@@ -183,7 +183,7 @@ const AddFacilityFile = ({
     fileData.append("file", newFile);
 
     const config = {
-      headers: { "Content-type": "multipart/form-data" },
+      // headers: { "Content-type": "multipart/form-data" },
       onUploadProgress: (event) => {
         console.log(
           `Current progress:`,
