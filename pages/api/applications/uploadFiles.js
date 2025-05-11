@@ -1,8 +1,20 @@
-import nextConnect from "next-connect";
-import multer from "multer";
-import multerS3 from "multer-s3";
-import aws from "aws-sdk";
-import prisma from "../../../middleware/prisma";
+// pages/api/applications/uploadFiles.ts
+
+import { IncomingForm } from 'formidable';
+import fs from 'fs';
+import aws from 'aws-sdk';
+import path from 'path';
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+// Upewnij się, że ENV są ustawione
+if (!process.env.DB_SPACES_ENDPOINT || !process.env.DB_SPACES_KEY || !process.env.DB_SPACES_SECRET) {
+  throw new Error("Missing required environment variables for S3/Spaces");
+}
 
 const spacesEndpoint = new aws.Endpoint(process.env.DB_SPACES_ENDPOINT);
 const s3 = new aws.S3({
@@ -11,113 +23,44 @@ const s3 = new aws.S3({
   secretAccessKey: process.env.DB_SPACES_SECRET,
 });
 
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: "pdf/wnioski",
-    acl: "public-read",
-    key: function (req, file, cb) {
-      console.log("req", req);
-      console.log("file", file);
-      cb(null, file.originalname);
-    },
-  }),
-}).single("file");
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+  }
 
-const apiRoute = nextConnect({
-  onError(error, req, res) {
-    res
-      .status(501)
-      .json({ error: `Sorry something Happened! ${error.message}` });
-  },
-  onNoMatch(req, res) {
-    res.statusCode(405).json({ error: `Method ${req.method} Not Allowed` });
-  },
-});
+  const form = new IncomingForm({ multiples: false, keepExtensions: true });
 
-//apiRoute.use(upload.single("invoice"));
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      console.error("Form parse error:", err);
+      return res.status(500).json({ error: 'Error parsing form data' });
+    }
 
-apiRoute.post((req, res) => {
-  upload(req, res, function (error) {
-    if (error) {
-      console.log(error);
-      res.status(400).send(error);
-    } else {
-      res.send("");
+    const file = files.file;
+    if (!file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Upewnij się że ścieżka i nazwa pliku są dostępne
+    const filePath = Array.isArray(file) ? file[0].filepath : file.filepath;
+    const fileName = Array.isArray(file) ? file[0].originalFilename : file.originalFilename;
+    const fileStream = fs.createReadStream(filePath);
+
+    try {
+      const uploadResult = await s3
+          .upload({
+            Bucket: 'pdf/wnioski',
+            Key: `pdf/wnioski/${fileName}`,
+            Body: fileStream,
+            ACL: 'public-read',
+            ContentType: file.mimetype || 'application/octet-stream',
+          })
+          .promise();
+
+      return res.status(200).json({ message: 'File uploaded', url: uploadResult.Location });
+    } catch (uploadErr) {
+      console.error("S3 upload error:", uploadErr);
+      return res.status(500).json({ error: 'Failed to upload to S3' });
     }
   });
-});
-
-export default apiRoute;
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-// import nextConnect from "next-connect";
-// import multer from "multer";
-// import multerS3 from "multer-s3";
-// import aws from "aws-sdk";
-
-// const spacesEndpoint = new aws.Endpoint(process.env.DB_SPACES_ENDPOINT);
-// const s3 = new aws.S3({
-//   endpoint: spacesEndpoint,
-//   accessKeyId: process.env.DB_SPACES_KEY,
-//   secretAccessKey: process.env.DB_SPACES_SECRET,
-// });
-
-// const upload = multer({
-//   storage: multerS3({
-//     s3: s3,
-//     bucket: "/pdf/wnioski",
-//     acl: "public-read",
-//     key: function (req, file, cb) {
-//       console.log("file", file);
-
-//       cb(null, file.originalname);
-//     },
-//   }),
-// }).any("files");
-
-// const apiRoute = nextConnect({
-//   onError(error, req, res) {
-//     res
-//       .status(501)
-//       .json({ error: `Sorry something Happened! ${error.message}` });
-//   },
-//   onNoMatch(req, res) {
-//     res.statusCode(405).json({ error: `Method ${req.method} Not Allowed` });
-//   },
-// });
-
-// //const uploadMiddleware = upload.array("files", 1);
-// //const uploadMiddleware = upload.any();
-
-// //apiRoute.use(uploadMiddleware);
-
-// apiRoute.post((req, res) => {
-//   upload(req, res, function (error) {
-//     if (error) {
-//       console.log(error);
-//       res.status(400).send(error);
-//     } else {
-//       console.log("data", req.file);
-//     }
-//   });
-// });
-
-// export default apiRoute;
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
-
-// // export default async (req, res) => {
-// //   return new Promise(async (resolve) => {
-// //     console.log("fileData", req.body);
-// //     res.send("ok");
-// //     return resolve();
-// //   });
-// // };
+}
