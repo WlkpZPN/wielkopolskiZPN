@@ -25,6 +25,7 @@
     "downloadjs": "^1.4.7",
     "draft-js": "^0.11.7",
     "file-server": "^2.2.1",
+    "formidable": "^3.5.4",
     "generate-password": "^1.7.1",
     "html-react-parser": "^5.1.10",
     "js-cookie": "^3.0.5",
