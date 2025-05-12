@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from 'next/link';
 
 const Wrapper = styled.div`
   display: grid;
@@ -63,10 +64,10 @@ const MaintanceScreen = () => {
   return (
     <Wrapper>
       <Left>
-        <Image
-          src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
-          alt="Wielkopolski ZPN logo"
-        />
+        <Link href="/">
+          <Image src={'/wzpn_logo.png'} alt={'logo'} width={150} height={50} />
+        </Link>
+
         <h2>Platforma licencyjna tymczasowo wyłączona!</h2>
         <p>
           Trwają prace mające na celu przywrócenie działania Platformy. Prosimy

@@ -20,7 +20,7 @@ const Footer = () => {
   return (
     <Wrapper>
       <Content>
-        Platforma licencyjna | Copyright © 2021 Wielkopolski Związek Piłki
+        Platforma licencyjna | Copyright © 2025 Wielkopolski Związek Piłki
         Nożnej.Wszelkie prawa zastrzeżone.
       </Content>
     </Wrapper>
