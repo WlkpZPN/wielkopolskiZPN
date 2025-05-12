@@ -9,11 +9,13 @@ import { LogOut } from "@styled-icons/entypo/LogOut";
 //utils
 import { logout } from "../../middleware/utils";
 
+
 //components
 import IconButton from "../atoms/IconButton";
 import ProgressBar from "../molecules/progress_bar";
 import NavItem from "../atoms/navItem";
 import { AdminContext } from "../../pages/admin/index";
+import Image from "next/image";
 
 const Wrapper = styled.main`
   display: grid;
@@ -77,11 +79,9 @@ const AdminLayout = ({ userData, children, view }) => {
   return (
     <Wrapper>
       <TopBar>
-        <LogoImage
-          src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
-          alt="wielkoposlki ZPN logo"
-          onClick={() => router.push("/admin")}
-        />
+        <Link href="/">
+          <Image src={'/wzpn_logo.png'} alt={'logo'} width={150} height={50} />
+        </Link>
         <ProgressBar />
         <ButtonWrapper>
           <Link href={`/admin/uzytkownicy/${userData?.email}`}>
