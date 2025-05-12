@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { useState } from "react";
-import axios from "axios";
-import Loader from "../atoms/loader";
-import PrimaryButton from "../atoms/primary_button";
-import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
-import { toast } from "react-toastify";
-import ErrorMessage from "../atoms/error_message";
+import styled from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
+import Loader from '../atoms/loader';
+import PrimaryButton from '../atoms/primary_button';
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline';
+import { toast } from 'react-toastify';
+import ErrorMessage from '../atoms/error_message';
 
 const Close = styled(CloseOutline)`
   width: 32px;
@@ -19,7 +19,7 @@ const Close = styled(CloseOutline)`
     color: ${({ theme }) => theme.danger};
   }
 `;
-const Background = styled.div<{visible: boolean}>`
+const Background = styled.div<{ visible: boolean }>`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
@@ -27,7 +27,7 @@ const Background = styled.div<{visible: boolean}>`
   left: 0;
   position: fixed;
   z-index: 100;
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
 `;
 
 const Content = styled.div`
@@ -56,8 +56,8 @@ const TextArea = styled.textarea`
   padding: 4px;
 `;
 const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
-  const [text, setText] = useState("");
-  const [error, setError] = useState("");
+  const [text, setText] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   console.log(visible);
 
@@ -70,15 +70,15 @@ const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (text.trim() === "") {
+    if (text.trim() === '') {
       setError(
-        "Aby wysłać nieprawidłowości należy opsiać je poniżej w polu tekstowym"
+        'Aby wysłać nieprawidłowości należy opsiać je poniżej w polu tekstowym'
       );
       return;
     }
     try {
       setLoading(true);
-      await axios.post("/api/applications/sendAbnormalities", {
+      await axios.post('/api/applications/sendAbnormalities', {
         reason: text,
         club: {
           name: clubData.name,
@@ -86,29 +86,29 @@ const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
         },
       });
       setLoading(false);
-      toast.info("Nieprawidłowości zgłoszone", {
+      toast.info('Nieprawidłowości zgłoszone', {
         autoClose: 2000,
       });
-      setText("");
+      setText('');
       setVisible(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
       toast.error(
-        "Nie udało się zgłosić nieprawidłowości,spróbuj ponownie za chwilę"
+        'Nie udało się zgłosić nieprawidłowości,spróbuj ponownie za chwilę'
       );
     }
   };
 
   const handleChange = (e) => {
-    setError("");
+    setError('');
     setText(e.target.value);
   };
   return (
     <Background onClick={handleClose} visible={visible}>
       <Content>
-        <Close onClick={handleClose} />{" "}
-        <h3 style={{ marginBottom: "32px" }}>
+        <Close onClick={handleClose} />{' '}
+        <h3 style={{ marginBottom: '32px' }}>
           Zgłoś nieprawidłowości w fakturze
         </h3>
         {error ? <ErrorMessage>{error}</ErrorMessage> : null}
@@ -117,17 +117,13 @@ const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
           value={text}
           onChange={handleChange}
         ></TextArea>
-        {loading ? (
-          <Loader />
-        ) : (
-          <PrimaryButton
-            type="button"
-            style={{ marginTop: "24px", width: "130px" }}
-            onClick={handleSubmit}
-          >
-            Wyślij
-          </PrimaryButton>
-        )}
+        <PrimaryButton
+          type="button"
+          style={{ marginTop: '24px', width: '130px' }}
+          onClick={handleSubmit}
+        >
+          Wyślij
+        </PrimaryButton>
       </Content>
     </Background>
   );

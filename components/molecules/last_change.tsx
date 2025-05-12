@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   width: 100%;
   margin: 24px 0;
   color: ${({ theme }) => theme.darkLight};
+  border-radius: 8px;
 `;
 
 const LastChange = ({ children }) => {

@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { useRouter } from "next/router";
-import axios from "axios";
-import Loader from "./loader";
-import ApplicationStatus from "./application_status";
-import PrimaryButton from "./primary_button";
-import RejectLicense from "../molecules/reject_license_modal";
-import { generatePdf } from "../../middleware/generatePdf";
-import { getCurrentDate } from "../../middleware/utils";
-import GiveSupervisionModal from "../molecules/give_supervision_modal";
+import styled from 'styled-components';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import Loader from './loader';
+import ApplicationStatus from './application_status';
+import PrimaryButton from './primary_button';
+import RejectLicense from '../molecules/reject_license_modal';
+import { generatePdf } from '../../middleware/generatePdf';
+import { getCurrentDate } from '../../middleware/utils';
+import GiveSupervisionModal from '../molecules/give_supervision_modal';
 const Wrapper = styled.div`
   display: grid;
   border-radius: 4px;
@@ -49,36 +49,32 @@ const LicenseDecision = ({
   const IssueLicense = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/licences/setLicense", {
+      await axios.post('/api/licences/setLicense', {
         applicationID,
         statusID,
-        reason: reason || "",
+        reason: reason || '',
         description,
         userID: authData.id,
       });
       if (statusID === 8 || statusID === 10) {
         //3. send email and generate license as attachment
-        await axios.post("/api/mails/sendLicense", {
+        await axios.post('/api/mails/sendLicense', {
           clubData: clubData,
         });
       }
       setLoading(false);
       refreshState();
-      toast.success("Licencja wydana pomyślnie");
+      toast.success('Licencja wydana pomyślnie');
     } catch (err) {
       console.log(err);
       setLoading(false);
-      toast.error("Coś poszło nie tak,proszę spróbować później");
+      toast.error('Coś poszło nie tak,proszę spróbować później');
     }
   };
 
   const renderIcon = () => {
-    if (loading) {
-      return <Loader />;
-    }
-
     switch (type) {
-      case "standard":
+      case 'standard':
         return (
           <Wrapper>
             <ApplicationStatus size="40px" status="licencja wydana" />
@@ -92,7 +88,7 @@ const LicenseDecision = ({
             </PrimaryButton>
           </Wrapper>
         );
-      case "nadzór":
+      case 'nadzór':
         return (
           <Wrapper>
             <ApplicationStatus
@@ -118,7 +114,7 @@ const LicenseDecision = ({
             </PrimaryButton>
           </Wrapper>
         );
-      case "odmowa":
+      case 'odmowa':
         return (
           <Wrapper>
             <RejectLicense
@@ -139,7 +135,7 @@ const LicenseDecision = ({
             </PrimaryButton>
           </Wrapper>
         );
-      case "cofnij":
+      case 'cofnij':
         return (
           <Wrapper>
             <RejectLicense
@@ -166,7 +162,7 @@ const LicenseDecision = ({
             </PrimaryButton>
           </Wrapper>
         );
-      case "niewydana":
+      case 'niewydana':
         return (
           <Wrapper>
             <RejectLicense

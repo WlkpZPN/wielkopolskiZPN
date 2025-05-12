@@ -5,7 +5,8 @@ import { convertLeauge, createSeasons } from "../../middleware/utils";
 const Wrapper = styled.div`
   color: ${({ theme }) => theme.darkLight};
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
   & div {
     display: flex;
     margin: 4px 0;
@@ -17,6 +18,8 @@ const Wrapper = styled.div`
 `;
 
 const Bold = styled.p`
+  display: flex;
+  align-items: center;
   font-weight: bold;
   margin-right: 3px;
   color: ${({ theme }) => theme.darkLight};

@@ -1,24 +1,24 @@
-import styled from "styled-components";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Select from "../atoms/form_select";
-import PrimaryButton from "../atoms/primary_button";
-import CloseIcon from "../atoms/close_icon";
-import Loader from "../atoms/loader";
-import Label from "../atoms/form_label";
-import Input from "../atoms/input";
-import RichTextEditor from "./rich_text_editor";
-import ErrorMessage from "../atoms/error_message";
-const Background = styled.div<{visible: boolean}>`
+import styled from 'styled-components';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Select from '../atoms/form_select';
+import PrimaryButton from '../atoms/primary_button';
+import CloseIcon from '../atoms/close_icon';
+import Loader from '../atoms/loader';
+import Label from '../atoms/form_label';
+import Input from '../atoms/input';
+import RichTextEditor from './rich_text_editor';
+import ErrorMessage from '../atoms/error_message';
+const Background = styled.div<{ visible: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
   z-index: 100;
 `;
 
@@ -40,12 +40,12 @@ const Content = styled.div`
 `;
 const NewMessageModal = ({ visible, setVisible }) => {
   const router = useRouter();
-  const [recipients, setRecipients] = useState("aktywne");
+  const [recipients, setRecipients] = useState('aktywne');
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-  const [rule, setRule] = useState("brak");
-  const [error, setError] = useState("");
+  const [title, setTitle] = useState('');
+  const [message, setMessage] = useState('');
+  const [rule, setRule] = useState('brak');
+  const [error, setError] = useState('');
 
   const handleClose = (e) => {
     if (e.target === e.currentTarget) {
@@ -56,13 +56,13 @@ const NewMessageModal = ({ visible, setVisible }) => {
   const addNewMessage = async (e) => {
     e.preventDefault();
 
-    if (!recipients || title.trim() === "" || message.trim() === "") {
-      setError("Proszę wpisać pytanie oraz podać odpowiedź");
+    if (!recipients || title.trim() === '' || message.trim() === '') {
+      setError('Proszę wpisać pytanie oraz podać odpowiedź');
       return;
     }
     setLoading(true);
     axios
-      .post("/api/settings/addNewMessage", {
+      .post('/api/settings/addNewMessage', {
         recipients,
         title,
         message,
@@ -70,7 +70,7 @@ const NewMessageModal = ({ visible, setVisible }) => {
       })
       .then(() => {
         setLoading(false);
-        toast.success("Pomyślnie dodano pytanie", {
+        toast.success('Pomyślnie dodano pytanie', {
           autoClose: 2000,
         });
         setVisible(false);
@@ -79,7 +79,7 @@ const NewMessageModal = ({ visible, setVisible }) => {
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        toast.error("Wystąpił błąd podczas dodawania pytania,spróbuj ponownie");
+        toast.error('Wystąpił błąd podczas dodawania pytania,spróbuj ponownie');
         return;
       });
   };
@@ -88,19 +88,19 @@ const NewMessageModal = ({ visible, setVisible }) => {
     addNewMessage(e);
     setLoading(true);
     try {
-      await axios.post("/api/mails/sendMails", {
+      await axios.post('/api/mails/sendMails', {
         recipients,
         title,
         message,
       });
       setLoading(false);
-      toast.success("Wiadomości wysłane", {
+      toast.success('Wiadomości wysłane', {
         autoClose: 2000,
       });
     } catch (error) {
       console.log(error);
       setLoading(false);
-      toast.error("Wysyłanie wiadomości nie udało się,spróbuj ponownie", {
+      toast.error('Wysyłanie wiadomości nie udało się,spróbuj ponownie', {
         autoClose: 2000,
       });
     }
@@ -110,13 +110,12 @@ const NewMessageModal = ({ visible, setVisible }) => {
     <Background onClick={handleClose} visible={visible}>
       <Content>
         <CloseIcon onClick={() => setVisible(false)} />
-        <form style={{ width: "100%" }} onSubmit={addNewMessage}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <h1 style={{ margin: "24px 0" }}>Dodaj nową wiadomość grupową</h1>
-            {loading && <Loader />}
+        <form style={{ width: '100%' }} onSubmit={addNewMessage}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <h1 style={{ margin: '24px 0' }}>Dodaj nową wiadomość grupową</h1>
           </div>
           <ErrorMessage> {error}</ErrorMessage>
-          <span style={{ fontWeight: "bold" }}> Grupa odbiorców</span>
+          <span style={{ fontWeight: 'bold' }}> Grupa odbiorców</span>
           <Select
             value={recipients}
             onChange={(e) => setRecipients(e.target.value)}
@@ -136,9 +135,9 @@ const NewMessageModal = ({ visible, setVisible }) => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </Label>
-          <span style={{ fontWeight: "bold" }}> Reguła (opcjonalnie)</span>
+          <span style={{ fontWeight: 'bold' }}> Reguła (opcjonalnie)</span>
           <Select
-            style={{ marginBottom: "32px" }}
+            style={{ marginBottom: '32px' }}
             value={rule}
             onChange={(e) => setRule(e.target.value)}
           >
@@ -150,7 +149,7 @@ const NewMessageModal = ({ visible, setVisible }) => {
               7 dni przed końcem procesu
             </option>
           </Select>
-          <span style={{ fontWeight: "bold" }}>Wiadomość</span>
+          <span style={{ fontWeight: 'bold' }}>Wiadomość</span>
           <RichTextEditor value={message} onChange={(e) => setMessage(e)} />
           <div>
             <PrimaryButton
@@ -161,7 +160,7 @@ const NewMessageModal = ({ visible, setVisible }) => {
             >
               Anuluj
             </PrimaryButton>
-            <PrimaryButton style={{ margin: "0 16px" }} type="submit">
+            <PrimaryButton style={{ margin: '0 16px' }} type="submit">
               Utwórz
             </PrimaryButton>
             <PrimaryButton onClick={sendMessage} type="button">
