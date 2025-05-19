@@ -18,7 +18,7 @@ import NavItem from '../atoms/navItem';
 
 const Wrapper = styled.main`
   display: grid;
-  grid-template-rows: 9% 7% auto 4%;
+  grid-template-rows: 12% 7% auto 4%;
   height: 100vh;
 `;
 const Content = styled.div`
@@ -40,6 +40,7 @@ const TopBar = styled.div`
 
 const NavBar = styled.div`
   background-color: ${({ theme }) => theme.primary};
+  align-items: center;
 `;
 
 const NavBarContent = styled.div`
