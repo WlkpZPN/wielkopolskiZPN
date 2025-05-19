@@ -53,7 +53,7 @@ const Content = styled.span`
 const StatusContainer = styled.div<{isAdmin?: boolean}>`
   position: ${({ isAdmin }) => (isAdmin ? "initial" : "absolute")};
   /* top:${({ isAdmin }) => (isAdmin ? "initial" : "absolute")}; */
-  top: -20px;
+  top: 20px;
   left: 50%;
   align-self: center;
   transform: ${({ isAdmin }) => (isAdmin ? "initial" : "translateX(-50%)")};
