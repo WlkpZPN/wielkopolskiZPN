@@ -1,21 +1,13 @@
 import nodemailer from "nodemailer";
+import smtpConfig from "../smtpConfig";
 
 const transporter = nodemailer.createTransport({
-  host: "serwer1710802.home.pl",
-  port: 465,
+  host: smtpConfig.host,
+  port: smtpConfig.port,
   auth: {
-    user: "licklub@wielkopolskizpn.pl",
-    pass: "licencje2020",
+    user: smtpConfig.username,
+    pass: smtpConfig.password,
   },
 });
-
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.mailtrap.io",
-//   port: 2525,
-//   auth: {
-//     user: "d6b6955cf480dd",
-//     pass: "fb302668d87e65",
-//   },
-// });
 
 export default transporter;
