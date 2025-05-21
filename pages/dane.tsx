@@ -1,23 +1,25 @@
-import { useState, createContext, useEffect } from "react";
-import axios from "axios";
-import prisma from "../middleware/prisma";
-import { toast } from "react-toastify";
+import { useState, createContext, useEffect } from 'react';
+import axios from 'axios';
+import prisma from '../middleware/prisma';
+import { toast } from 'react-toastify';
 //components
-import { getClubData } from "../middleware/swr";
-import { protectedClientRoute } from "../middleware/protectedClient";
-import ClientLayout from "../components/organisms/client_layout";
-import Loader from "../components/atoms/loader";
-import EditClubData from "../components/organisms/editClubData";
-import Header from "../components/atoms/header";
+import { getClubData } from '../middleware/swr';
+import { protectedClientRoute } from '../middleware/protectedClient';
+import ClientLayout from '../components/organisms/client_layout';
+import Loader from '../components/atoms/loader';
+import EditClubData from '../components/organisms/editClubData';
+import Header from '../components/atoms/header';
 
 const Dane = ({ authData }) => {
   const { clubData, isError, isLoading } = getClubData(authData.id);
   //console.log(clubData);
   if (isLoading) {
     return (
-      <ClientLayout clubData={authData} view="Dane klubu">
-        <Loader />
-      </ClientLayout>
+      <ClientLayout
+        clubData={authData}
+        children
+        view="Dane klubu"
+      ></ClientLayout>
     );
   }
   return (

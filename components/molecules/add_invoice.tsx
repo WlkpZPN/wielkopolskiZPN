@@ -1,17 +1,17 @@
-import { useState } from "react";
-import uniqid from "uniqid";
+import { useState } from 'react';
+import uniqid from 'uniqid';
 
-import styled from "styled-components";
-import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
-import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
-import axios from "axios";
-import { useRouter } from "next/router";
-import Loader from "../atoms/loader";
-import { toast } from "react-toastify";
+import styled from 'styled-components';
+import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
+import { FilePdf } from '@styled-icons/fa-regular/FilePdf';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import Loader from '../atoms/loader';
+import { toast } from 'react-toastify';
 //components
-import OutlineButton from "../atoms/outline_button";
-import PrimaryButton from "../atoms/primary_button";
-import SendAbnormalitites from "../molecules/send_abnormalities";
+import OutlineButton from '../atoms/outline_button';
+import PrimaryButton from '../atoms/primary_button';
+import SendAbnormalitites from '../molecules/send_abnormalities';
 const Wrapper = styled.div`
   border-radius: 5px;
   white-space: pre-wrap;
@@ -33,7 +33,7 @@ const Wrapper = styled.div`
   text-align: center;
 
   &::after {
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ";
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ';
     z-index: 100;
     padding: 24px;
     display: none;
@@ -74,7 +74,7 @@ const Info = styled.div`
     }
   }
   &::after {
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ";
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae tempor felis, a euismod est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel nulla ac ex blandit dapibus vel non nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada ';
     z-index: 100;
     padding: 32px;
     display: none;
@@ -177,13 +177,13 @@ const AddInvoice = ({
   const generateContent = () => {
     if (admin == false) {
       //TODO handle object case
-      if (typeof file == "string") {
-        const addressArr = file.split("/");
+      if (typeof file == 'string') {
+        const addressArr = file.split('/');
         const key = addressArr[addressArr.length - 1];
         return (
           <>
-            {" "}
-            <a target="_blank" style={{ marginBottom: "16px" }} href={file}>
+            {' '}
+            <a target="_blank" style={{ marginBottom: '16px' }} href={file}>
               <OutlineButton>Pobierz fakturę</OutlineButton>
             </a>
             <PrimaryButton
@@ -206,17 +206,13 @@ const AddInvoice = ({
       }
     }
 
-    if (loading) {
-      return <Loader style={{ alignSelf: "center" }} />;
-    }
-
-    if (typeof file == "string") {
-      const addressArr = file.split("/");
+    if (typeof file == 'string') {
+      const addressArr = file.split('/');
       const key = addressArr[addressArr.length - 1];
       return (
         <>
-          {" "}
-          <a target="_blank" style={{ marginBottom: "16px" }} href={file}>
+          {' '}
+          <a target="_blank" style={{ marginBottom: '16px' }} href={file}>
             <OutlineButton>Pobierz fakturę</OutlineButton>
           </a>
           <PrimaryButton
@@ -230,11 +226,11 @@ const AddInvoice = ({
       );
     }
 
-    if (typeof file != "string" && file) {
+    if (typeof file != 'string' && file) {
       return (
         <>
           <PrimaryButton
-            style={{ marginBottom: "16px" }}
+            style={{ marginBottom: '16px' }}
             color="success"
             hoverColor="successDark"
             onClick={uploadFile}
@@ -275,37 +271,37 @@ const AddInvoice = ({
   const renderTitle = () => {
     if (admin == false) {
       if (file) {
-        const addressArr = file.split("/");
+        const addressArr = file.split('/');
         return (
-          <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+          <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
             {addressArr[addressArr.length - 1]}
           </span>
         );
       } else {
         return (
-          <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+          <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
             Brak załączonej faktury
           </span>
         );
       }
     }
 
-    if (typeof file === "string") {
-      const addressArr = file.split("/");
+    if (typeof file === 'string') {
+      const addressArr = file.split('/');
       return (
-        <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+        <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
           {addressArr[addressArr.length - 1]}
         </span>
       );
-    } else if (typeof file == "object" && file != null) {
+    } else if (typeof file == 'object' && file != null) {
       return (
-        <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+        <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
           {file.name}
         </span>
       );
     } else {
       return (
-        <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+        <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
           Brak załączonej faktury
         </span>
       );
@@ -319,7 +315,7 @@ const AddInvoice = ({
       </Info>
       <FileInfo>
         <FilePdf />
-        <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
+        <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
           {renderTitle()}
         </span>
       </FileInfo>

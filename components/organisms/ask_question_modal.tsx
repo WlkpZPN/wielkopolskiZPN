@@ -1,24 +1,24 @@
-import styled from "styled-components";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import Select from "../atoms/form_select";
-import PrimaryButton from "../atoms/primary_button";
-import CloseIcon from "../atoms/close_icon";
-import Loader from "../atoms/loader";
-import Label from "../atoms/form_label";
-import Input from "../atoms/input";
-import RichTextEditor from "./rich_text_editor";
-import ErrorMessage from "../atoms/error_message";
-const Background = styled.div<{visible: boolean}>`
+import styled from 'styled-components';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Select from '../atoms/form_select';
+import PrimaryButton from '../atoms/primary_button';
+import CloseIcon from '../atoms/close_icon';
+import Loader from '../atoms/loader';
+import Label from '../atoms/form_label';
+import Input from '../atoms/input';
+import RichTextEditor from './rich_text_editor';
+import ErrorMessage from '../atoms/error_message';
+const Background = styled.div<{ visible: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
   z-index: 100;
 `;
 
@@ -56,11 +56,11 @@ const Bold = styled.span`
 
 const AskQuestionModal = ({ visible, setVisible, authData }) => {
   const router = useRouter();
-  const [category, setCategory] = useState("Proces składania wniosku");
+  const [category, setCategory] = useState('Proces składania wniosku');
   const [loading, setLoading] = useState(false);
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState('');
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleClose = (e) => {
     if (e.target === e.currentTarget) {
@@ -70,20 +70,20 @@ const AskQuestionModal = ({ visible, setVisible, authData }) => {
   const askQuestion = async (e) => {
     e.preventDefault();
 
-    if (!category || question.trim() === "") {
-      setError("Proszę podać treść pytania");
+    if (!category || question.trim() === '') {
+      setError('Proszę podać treść pytania');
       return;
     }
     setLoading(true);
     axios
-      .post("/api/settings/askQuestion", {
+      .post('/api/settings/askQuestion', {
         clubName: authData.name,
         question,
         category,
       })
       .then(() => {
         setLoading(false);
-        toast.success("Pytanie wysłane", {
+        toast.success('Pytanie wysłane', {
           autoClose: 2000,
         });
         setVisible(false);
@@ -92,7 +92,7 @@ const AskQuestionModal = ({ visible, setVisible, authData }) => {
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        toast.error("Wystąpił błąd podczas dodawania pytania,spróbuj ponownie");
+        toast.error('Wystąpił błąd podczas dodawania pytania,spróbuj ponownie');
         return;
       });
   };
@@ -101,15 +101,14 @@ const AskQuestionModal = ({ visible, setVisible, authData }) => {
     <Background onClick={handleClose} visible={visible}>
       <Content>
         <CloseIcon onClick={() => setVisible(false)} />
-        <form style={{ width: "60%" }} onSubmit={askQuestion}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <h1 style={{ margin: "24px 0" }}>Dodaj pytanie do FAQ</h1>
-            {loading && <Loader />}
+        <form style={{ width: '60%' }} onSubmit={askQuestion}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <h1 style={{ margin: '24px 0' }}>Dodaj pytanie do FAQ</h1>
           </div>
           <ErrorMessage> {error}</ErrorMessage>
           <Bold> Kategoria pytania </Bold>
           <Select
-            style={{ marginTop: "6px", fontSize: "13px" }}
+            style={{ marginTop: '6px', fontSize: '13px' }}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -125,7 +124,7 @@ const AskQuestionModal = ({ visible, setVisible, authData }) => {
           <Label>
             Pytanie
             <TextArea
-              style={{ marginTop: "6px", fontSize: "13px" }}
+              style={{ marginTop: '6px', fontSize: '13px' }}
               value={question}
               placeholder="Treść pytania"
               onChange={(e) => setQuestion(e.target.value)}

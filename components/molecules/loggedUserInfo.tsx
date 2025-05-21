@@ -1,9 +1,9 @@
-import { useState } from "react";
-import styled from "styled-components";
-import axios from "axios";
-import { useRouter } from "next/router";
-import Loader from "../atoms/loader";
-import { logout } from "../../middleware/utils";
+import { useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import Loader from '../atoms/loader';
+import { logout } from '../../middleware/utils';
 const UserInfo = styled.div`
   width: 80%;
 
@@ -45,23 +45,19 @@ const LoggedUserInfo = ({ userData }) => {
   const renewLogin = () => {
     setLoading(true);
     axios
-      .post("/api/auth/renewToken", {
+      .post('/api/auth/renewToken', {
         userData,
       })
       .then((res) => {
         setLoading(false);
 
-        router.push("/admin");
+        router.push('/admin');
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
       });
   };
-
-  if (loading) {
-    return <Loader></Loader>;
-  }
   return (
     <UserInfo>
       <div>
@@ -69,7 +65,7 @@ const LoggedUserInfo = ({ userData }) => {
         <p onClick={renewLogin}> Zaloguj</p>
       </div>
       <p>
-        to nie Ty?{" "}
+        to nie Ty?{' '}
         <span
           onClick={() => {
             logout;

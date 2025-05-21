@@ -61,8 +61,11 @@ export default (req, res) => {
       ">
       <tr>
         <td style="padding: 32px 48px">
-          <img src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
-            alt="WIELKOPOLSKI ZWIĄZEK PIŁKI NOŻNEJ" style="max-width: 160px" />
+          <img
+            src={'/wzpn_logo.png'} 
+            alt={'logo'} 
+            style= 'width={150} height={50}'
+          />
         </td>
       </tr>
       <tr style="padding: 0">

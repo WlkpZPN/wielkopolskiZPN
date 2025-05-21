@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const Select = styled.select`
   width: 100%;
-  margin-top: 15px;
   font-size: 16px;
   padding: 6px 12px;
   border-radius: 5px;

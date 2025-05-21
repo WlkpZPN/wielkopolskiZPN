@@ -48,8 +48,8 @@ const Custom404 = () => {
   return (
     <Wrapper>
       <LogoImage
-        src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
-        alt="wielkoposlki ZPN logo"
+          src={'/wzpn_logo.png'}
+          alt = {'logo'}
       />
       <h1>
         Błąd 404 <br /> Ta podstrona nie istnieje.{" "}

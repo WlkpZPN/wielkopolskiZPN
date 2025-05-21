@@ -1,23 +1,22 @@
-import { useState, useContext } from "react";
-import uniqid from "uniqid";
-import axios from "axios";
-import { useRouter } from "next/router";
-import styled from "styled-components";
-import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
-import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
-import Loader from "../atoms/loader";
-import { toast } from "react-toastify";
-import { makeid, checkMimeType } from "../../middleware/utils";
-import { ApplicationContext } from "../../components/organisms/club_application";
+import { useState, useContext } from 'react';
+import uniqid from 'uniqid';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
+import { FilePdf } from '@styled-icons/fa-regular/FilePdf';
+import Loader from '../atoms/loader';
+import { toast } from 'react-toastify';
+import { makeid, checkMimeType } from '../../middleware/utils';
+import { ApplicationContext } from '../../components/organisms/club_application';
 //components
-import OutlineButton from "../atoms/outline_button";
+import OutlineButton from '../atoms/outline_button';
 
 const Parent = styled.div`
   position: relative;
 `;
 
 const Wrapper = styled.div`
-  //border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-word;
   padding: 16px;
@@ -29,6 +28,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 8px;
 
   z-index: 0;
   width: 260px;
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-const Info = styled.div<{text:string}>`
+const Info = styled.div<{ text: string }>`
   & svg {
     width: 30px;
     z-index: 0;
@@ -55,7 +55,7 @@ const Info = styled.div<{text:string}>`
     }
   }
   &::after {
-    content: "${({ text }) => `${text}`}";
+    content: '${({ text }) => `${text}`}';
     z-index: 200;
     padding: 32px;
     display: none;
@@ -155,7 +155,7 @@ const AddFile = ({ file, category, id, text }) => {
     });
 
     const fileData = new FormData();
-    fileData.append("file", newFile);
+    fileData.append('file', newFile);
 
     const config = {
       // headers: { "Content-type": "multipart/form-data" },
@@ -168,30 +168,30 @@ const AddFile = ({ file, category, id, text }) => {
     };
     try {
       setLoading(true);
-      await axios.post("/api/applications/uploadFiles", fileData, config);
+      await axios.post('/api/applications/uploadFiles', fileData, config);
 
-      if (category === "agreement_documents" || category === "krs_documents") {
-        await axios.post("/api/files/addFilesUrl", {
+      if (category === 'agreement_documents' || category === 'krs_documents') {
+        await axios.post('/api/files/addFilesUrl', {
           applicationID: clubData.applications[0].id,
           category: category,
           fileName: fileName,
         });
       } else {
-        await axios.post("/api/files/addFilesUrl", {
+        await axios.post('/api/files/addFilesUrl', {
           facilityID: clubData.applications[0].id,
           category: category,
           fileName: fileName,
         });
       }
       setLoading(false);
-      toast.success("Zapisano plik", {
+      toast.success('Zapisano plik', {
         autoClose: 2000,
       });
       router.replace(router.asPath);
     } catch (err) {
       console.log(err);
       toast.error(
-        "Dodawanie pliku się nie powiodło, prosimy spróbować później"
+        'Dodawanie pliku się nie powiodło, prosimy spróbować później'
       );
       setLoading(false);
     }
@@ -203,18 +203,18 @@ const AddFile = ({ file, category, id, text }) => {
     }
     setLoading(true);
     try {
-      axios.post("/api/applications/deleteFile", {
+      axios.post('/api/applications/deleteFile', {
         attachment: file,
       });
       setLoading(false);
-      toast.error("Usunięto plik", {
+      toast.error('Usunięto plik', {
         autoClose: 1500,
       });
       refreshData();
     } catch (err) {
       console.log(err);
       setLoading(false);
-      toast.error("Nie udało się usunąć pliku,spróbuj ponownie", {
+      toast.error('Nie udało się usunąć pliku,spróbuj ponownie', {
         autoClose: 2000,
       });
     }
@@ -222,65 +222,61 @@ const AddFile = ({ file, category, id, text }) => {
   return (
     <Parent>
       <Wrapper>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            {" "}
-            {text ? (
-              <Info text={text}>
-                <InfoCircle />
-              </Info>
-            ) : null}
-            <FileInfo>
-              <FilePdf />
-              {file ? (
-                <Link target="_blank" href={file.filepath}>
-                  {file.name}
-                </Link>
-              ) : (
-                <span style={{ width: "100%", whiteSpace: "pre-wrap" }}>
-                  {"Brak załączonego dokumentu."}
-                </span>
-              )}
-            </FileInfo>
-            <Label>
-              {file ? null : (
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  {" "}
-                  <AddButton>+ Dodaj dokument</AddButton>
-                  <span
-                    style={{
-                      color: "#363636",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Dopuszczalne formaty to PDF oraz JPG, maksymalnie 5 Mb
-                  </span>{" "}
-                </div>
-              )}
-
-              <FileInput
-                id="file"
-                type="file"
-                name="file"
-                onChange={handleChange}
-              />
-            </Label>
+        <>
+          {' '}
+          {text ? (
+            <Info text={text}>
+              <InfoCircle />
+            </Info>
+          ) : null}
+          <FileInfo>
+            <FilePdf />
             {file ? (
-              <DeleteButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  // handleDelete(file.id);
-                  deleteFile();
-                }}
-              >
-                Usuń
-              </DeleteButton>
-            ) : null}{" "}
-          </>
-        )}
+              <Link target="_blank" href={file.filepath}>
+                {file.name}
+              </Link>
+            ) : (
+              <span style={{ width: '100%', whiteSpace: 'pre-wrap' }}>
+                {'Brak załączonego dokumentu.'}
+              </span>
+            )}
+          </FileInfo>
+          <Label>
+            {file ? null : (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {' '}
+                <AddButton>+ Dodaj dokument</AddButton>
+                <span
+                  style={{
+                    color: '#363636',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Dopuszczalne formaty to PDF oraz JPG, maksymalnie 5 Mb
+                </span>{' '}
+              </div>
+            )}
+
+            <FileInput
+              id="file"
+              type="file"
+              name="file"
+              onChange={handleChange}
+            />
+          </Label>
+          {file ? (
+            <DeleteButton
+              onClick={(e) => {
+                e.preventDefault();
+                // handleDelete(file.id);
+                deleteFile();
+              }}
+            >
+              Usuń
+            </DeleteButton>
+          ) : null}{' '}
+        </>
       </Wrapper>
     </Parent>
   );

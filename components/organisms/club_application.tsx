@@ -29,6 +29,9 @@ const StepsContainer = styled.div`
   position: relative;
   z-index: 1;
   max-width: 1360px;
+  // border: 1px solid black;
+  // border-radius: 5px;
+  gap: 8px;
   width: 100%;
 `;
 export const ApplicationContext = createContext(null);

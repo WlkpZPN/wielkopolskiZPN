@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import styled from "styled-components";
+import Link from 'next/link';
 
 //components
 import Label from "../components/atoms/label";
@@ -141,10 +142,9 @@ const LoginPage = ({ userData }) => {
     <Wrapper>
       <RemindPasswordModal setVisible={setVisible} visible={visible} />
       <Left>
-        <Image
-          src="https://cdn.bsbox.pl/files/wzpn/YjU7MDA_/2536b28051ecaf0c109bc801d3503d86_original_images.png"
-          alt="Wielkopolski ZPN logo"
-        />
+        <Link href="/">
+          <Image src={'/wzpn_logo.png'} alt={'logo'} width={150} height={50} />
+        </Link>
 
         <Header>Platforma licencyjna</Header>
         <p
