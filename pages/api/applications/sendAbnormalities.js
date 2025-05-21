@@ -4,7 +4,7 @@ export default (req, res) => {
   return new Promise(async (resolve) => {
     const { reason, club } = req.body;
     transporter.sendMail({
-      from: "licklub@wielkopolskizpn.pl",
+      from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
       to: "licklub@wielkopolskizpn.pl",
 
       subject: "WielkopolskiZPN - uwagi do faktury",

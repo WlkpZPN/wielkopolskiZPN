@@ -14,7 +14,7 @@ export default (req, res) => {
     const { link, email } = req.body;
 
     transporter.sendMail({
-      from: "licklub@wielkopolskizpn.pl",
+      from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
       to: email,
       subject: "WielkopolskiZPN - opłata za złożenie wniosku",
       html: `<head>

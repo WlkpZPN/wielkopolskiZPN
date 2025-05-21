@@ -15,7 +15,7 @@ export default (req, res) => {
           content: new Buffer.from(license),
         },
       ],
-      from: "licklub@wielkopolskizpn.pl",
+      from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
       to: clubData.email,
       subject: "WielkopolskiZPN - licencja pomyślnie wydana",
       // attachments: [

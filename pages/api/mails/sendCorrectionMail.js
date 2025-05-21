@@ -6,7 +6,7 @@ export default (req, res) => {
 
     try {
       transporter.sendMail({
-        from: "licklub@wielkopolskizpn.pl",
+        from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
         to: email,
         subject: "WielkopolskiZPN - popraw swój wniosek licencyjny",
         html: `<head>
