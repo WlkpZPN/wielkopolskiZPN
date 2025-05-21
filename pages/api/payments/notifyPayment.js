@@ -42,7 +42,7 @@ export default (req, res) => {
       });
       if (email) {
         transporter.sendMail({
-          from: "licklub@wielkopolskizpn.pl",
+          from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
           to: email,
           subject: "WielkopolskiZPN - opłata za złożenie wniosku",
           html: `<head>

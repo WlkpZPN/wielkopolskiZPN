@@ -36,7 +36,7 @@ export default (req, res) => {
       }
 
       await transporter.sendMail({
-        from: "licklub@wielkopolskizpn.pl",
+        from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
         to: clubData[0].email,
         subject: "WielkopolskiZPN - przypomnienie hasła",
         html: `<head>
