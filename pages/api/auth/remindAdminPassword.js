@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import prisma from "../../../middleware/prisma";
 import transporter from "../../../middleware/transporter";
 import generator from "generate-password";
+import smtpConfig from "../../../smtpConfig";
 const saltRounds = 10;
 
 export default (req, res) => {
@@ -137,7 +138,7 @@ export default (req, res) => {
       res.send("Hasło wysłane");
     } catch (err) {
       console.log(err);
-      res.status(400).send("Something went wrong");
+      res.status(400).send("Problem - something went wrong");
     }
   });
 };
