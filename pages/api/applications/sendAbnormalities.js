@@ -1,5 +1,6 @@
 import prisma from "../../../middleware/prisma";
 import transporter from "../../../middleware/transporter";
+import smtpConfig from "../../../smtpConfig";
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { reason, club } = req.body;

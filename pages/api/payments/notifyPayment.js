@@ -1,6 +1,7 @@
 import prisma from "../../../middleware/prisma";
 import nodemailer from "nodemailer";
 import { getCurrentDate } from "../../../middleware/utils";
+import smtpConfig from "../../../smtpConfig";
 var transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
