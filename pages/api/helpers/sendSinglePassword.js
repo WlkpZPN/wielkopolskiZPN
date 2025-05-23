@@ -3,6 +3,7 @@ import transporter from "../../../middleware/transporter";
 import axios from "axios";
 import emailTemplate from "../../../middleware/emailTemplate";
 import { getCurrentDate } from "../../../middleware/utils";
+import smtpConfig from "../../../smtpConfig";
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { clubEmail } = req.body;

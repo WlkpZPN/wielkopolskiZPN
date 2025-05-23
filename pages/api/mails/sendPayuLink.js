@@ -1,4 +1,5 @@
 import transporter from "../../../middleware/transporter";
+import smtpConfig from "../../../smtpConfig";
 
 // transporter.use(
 //   "compile",

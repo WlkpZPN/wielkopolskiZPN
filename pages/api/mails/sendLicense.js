@@ -1,6 +1,7 @@
 import { generatePdf } from "../../../middleware/generatePdf";
 import transporter from "../../../middleware/transporter";
 import { getCurrentDate } from "../../../middleware/utils";
+import smtpConfig from "../../../smtpConfig";
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { clubData } = req.body;

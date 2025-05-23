@@ -62,9 +62,9 @@ export default (req, res) => {
       <tr>
         <td style="padding: 32px 48px">
           <img
-            src={'/wzpn_logo.png'} 
-            alt={'logo'} 
-            style= 'width={150} height={50}'
+            src="https://licencje.wielkopolskizpn.pl/wzpn_logo.png"
+            alt="WielkopolskiZPN" 
+            style="width: 150px; height: 50px"
           />
         </td>
       </tr>

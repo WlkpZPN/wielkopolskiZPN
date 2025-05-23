@@ -1,4 +1,5 @@
 import transporter from "../../../middleware/transporter";
+import smtpConfig from "../../../smtpConfig";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {

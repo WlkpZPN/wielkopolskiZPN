@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import prisma from "../../../middleware/prisma";
 import transporter from "../../../middleware/transporter";
 import generator from "generate-password";
+import smtpConfig from "../../../smtpConfig";
 const saltRounds = 10;
 
 export default (req, res) => {
