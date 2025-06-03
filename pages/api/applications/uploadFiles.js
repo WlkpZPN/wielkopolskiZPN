@@ -60,7 +60,7 @@ export default async function handler(req, res) {
           })
           .promise();
 
-      return res.status(200).json({ message: 'File uploaded', url: uploadResult.Location });
+      return res.status(200).json({ message: 'File uploaded', url: uploadResult.Location , result: uploadResult});
     } catch (uploadErr) {
       console.error("S3 upload error:", uploadErr);
       return res.status(500).json({ error: 'Failed to upload to S3' });
