@@ -19,7 +19,7 @@ if (!process.env.DB_SPACES_ENDPOINT || !process.env.DB_SPACES_KEY || !process.en
 const spacesEndpoint = new aws.Endpoint(process.env.DB_SPACES_ENDPOINT);
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
-  region: "us-east-1",
+  region: process.env.DB_SPACES_REGION,
   credentials: {
     accessKeyId: process.env.DB_SPACES_KEY,
     secretAccessKey: process.env.DB_SPACES_SECRET,
