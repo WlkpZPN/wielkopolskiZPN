@@ -798,6 +798,7 @@ const ClubApplication = ({
           );
         },
       };
+      //TODO HERE!
 
       await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
 
