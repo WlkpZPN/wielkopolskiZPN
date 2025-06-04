@@ -8,9 +8,17 @@ export default function FtpFileManager() {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [editFile, setEditFile] = useState(null);
     const [editContent, setEditContent] = useState('');
-
     const folderInputRef = useRef();
     const newFileRef = useRef();
+
+    const canPreview = (filePath) => {
+        const previewableExt = [
+            '.txt', '.html', '.htm', '.css', '.js', '.json', '.md',
+            '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.pdf', '.mp4', '.mp3'
+        ];
+        const ext = filePath.split('.').pop().toLowerCase();
+        return previewableExt.includes(`.${ext}`);
+    };
 
     const fetchFiles = async (targetPath = path) => {
         const res = await fetch(`/api/ftp/list?path=${encodeURIComponent(targetPath)}`);
@@ -199,9 +207,6 @@ export default function FtpFileManager() {
                 </thead>
                 <tbody>
                 {files.map((file) => {
-
-                    console.log(file.type);
-
                     const fullPath = `${path}/${file.name}`.replace(/\/+/g, '/');
                     const isDir = file.type === 2;
                     return (
@@ -241,6 +246,16 @@ export default function FtpFileManager() {
                                         >
                                             Edytuj
                                         </button>
+                                        {canPreview(fullPath) && (
+                                            <a
+                                                href={`/api/view?path=${encodeURIComponent(fullPath)}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-indigo-600 hover:underline"
+                                            >
+                                                Podgląd
+                                            </a>
+                                        )}
                                     </>
                                 )}
                                 {isDir && (
@@ -278,13 +293,25 @@ export default function FtpFileManager() {
                             onChange={(e) => setEditContent(e.target.value)}
                             className="w-full h-64 border p-2 font-mono text-sm"
                         />
-                        <div className="mt-2 flex justify-end gap-2">
-                            <button onClick={saveEditor} className="bg-blue-600 text-white px-3 py-1 rounded">
-                                💾 Zapisz
-                            </button>
-                            <button onClick={() => setEditFile(null)} className="text-red-500">
-                                Anuluj
-                            </button>
+                        <div className="mt-2 flex justify-between items-center gap-2">
+                            <div className="flex gap-2">
+                                <button onClick={saveEditor} className="bg-blue-600 text-white px-3 py-1 rounded">
+                                    💾 Zapisz
+                                </button>
+                                <button onClick={() => setEditFile(null)} className="text-red-500">
+                                    Anuluj
+                                </button>
+                            </div>
+                            {canPreview(editFile) && (
+                                <a
+                                    href={`/api/ftp/view?path=${encodeURIComponent(editFile)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-indigo-600 underline text-sm"
+                                >
+                                    🔍 Podgląd
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>
