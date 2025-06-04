@@ -51,6 +51,7 @@
     "react-dom": "^18.0.0",
     "react-loader-spinner": "^6.1.6",
     "react-toastify": "^10.0.5",
+    "ssh2-sftp-client": "^12.0.0",
     "styled-components": "^6.1.11",
     "styled-icons": "^10.47.1",
     "suneditor-react": "^3.6.1",
@@ -59,7 +60,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@types/node": "^20.14.8",
+    "@types/node": "^22.15.0",
     "@types/react": "^18.3.3",
     "babel-plugin-styled-components": "^2.1.4",
     "prisma": "^5.15.1",

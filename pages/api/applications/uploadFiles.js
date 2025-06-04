@@ -1,7 +1,7 @@
 // pages/api/applications/uploadFiles.ts
 
 import { IncomingForm } from "formidable"; // To parse multi-part form data
-import fs from "fs"; // For file stream reading
+import fs from "fs";                       // For file stream reading
 import SFTPClient from "ssh2-sftp-client"; // Library for SFTP
 import path from "path";
 
