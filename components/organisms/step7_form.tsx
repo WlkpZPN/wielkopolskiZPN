@@ -230,7 +230,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
               <a
                 style={{ color: "#0056A5" }}
                 target="_blank"
-                href="https://pdf.fra1.digitaloceanspaces.com/Regulamin_Licencje_WZPN.pdf"
+                href="/api/view?path=Regulamin_Licencje_WZPN.pdf"
               >
                 &nbsp;Regulamin PDF
               </a>

@@ -11,7 +11,7 @@ export default (req, res) => {
           sport_facilities_id: parseInt(facilityID),
           name: fileName,
           category: category,
-          filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
+          filepath: `/wnioski/${fileName}`,
         },
       });
     } else if (applicationID) {
@@ -22,7 +22,7 @@ export default (req, res) => {
           application_id: parseInt(applicationID),
           name: fileName,
           category: category,
-          filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
+          filepath: `/wnioski/${fileName}`,
         },
       });
     }

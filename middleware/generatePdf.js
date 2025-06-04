@@ -65,7 +65,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const bold = await pdfDoc.embedFont(fontBytes2);
 
   const backgroundUrl =
-    "https://pdf.fra1.digitaloceanspaces.com/licencja-tlo.png";
+    "/api/view?path=licencja-tlo.png";
 
   const backgroundBytes = await fetch(backgroundUrl).then((res) =>
     res.arrayBuffer()
@@ -75,7 +75,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const scaleBackground = pngBackground.scale(0.6);
 
   const logoBytes = await fetch(
-    "https://pdf.fra1.digitaloceanspaces.com/wzpn_logo.png"
+    "/api/view?path=wzpn_logo.png"
   ).then((res) => res.arrayBuffer());
 
   const pngLogo = await pdfDoc.embedPng(logoBytes);
@@ -489,21 +489,21 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   });
 
   const stampBytes = await fetch(
-    "https://pdf.fra1.digitaloceanspaces.com/piecz%C4%85tka.png"
+    "/api/view?path=pieczatka.png"
   ).then((res) => res.arrayBuffer());
 
   const stampPng = await pdfDoc.embedPng(stampBytes);
   const scaledStamp = pngLogo.scale(0.4);
 
   const signBytes = await fetch(
-    "https://pdf.fra1.digitaloceanspaces.com/podpis_marek.png"
+    "/api/view?path=podpis_marek.png"
   ).then((res) => res.arrayBuffer());
 
   const signPng = await pdfDoc.embedPng(signBytes);
   const scaledSign = pngLogo.scale(0.7);
 
   const sign2Bytes = await fetch(
-    "https://pdf.fra1.digitaloceanspaces.com/Podpis2.png"
+    "/api/view?path=Podpis2.png"
   ).then((res) => res.arrayBuffer());
 
   const sign2Png = await pdfDoc.embedPng(sign2Bytes);

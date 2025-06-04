@@ -13,7 +13,7 @@ export default (req, res) => {
             return {
               category: "krs_documents",
               application_id: parseInt(applicationID),
-              filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${doc.name}`,
+              filepath: `/wnioski/${doc.name}`,
               name: doc.name,
             };
           }),
@@ -26,7 +26,7 @@ export default (req, res) => {
             return {
               category: "agreement_documents",
               application_id: parseInt(applicationID),
-              filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${doc.name}`,
+              filepath: `/wnioski/${doc.name}`,
               name: doc.name,
             };
           }),

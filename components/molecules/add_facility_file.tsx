@@ -180,7 +180,8 @@ const AddFacilityFile = ({
     // const blob = e.target.files[0];
     // const newFile = new File([blob], fileName, blob.type);
     const fileData = new FormData();
-    fileData.append('file', newFile);
+    fileData.append('files', newFile);
+    fileData.append('targetDir', '/wnioski');
 
     const config = {
       // headers: { "Content-type": "multipart/form-data" },
@@ -194,7 +195,7 @@ const AddFacilityFile = ({
     try {
       setLoading(true);
       if (upload) {
-        await axios.post('/api/applications/uploadFiles', fileData, config);
+        await axios.post('/api/ftp/upload', fileData, config);
         await axios.post('/api/files/addFilesUrl', {
           category,
           fileName,
@@ -211,7 +212,7 @@ const AddFacilityFile = ({
         newData.stepFour.futsal_facilities[
           currentObject
         ].applications_attachments.push({
-          filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
+          filepath: `/wnioski/${fileName}`,
           category,
           name: fileName,
           fileData: newFile,
@@ -220,7 +221,7 @@ const AddFacilityFile = ({
         newData.stepFour.sport_facilities[
           currentObject
         ].applications_attachments.push({
-          filepath: `https://pdf.fra1.digitaloceanspaces.com/wnioski/${fileName}`,
+          filepath: `/wnioski/${fileName}`,
           category,
           name: fileName,
           fileData: newFile,
@@ -289,7 +290,9 @@ const AddFacilityFile = ({
 
     setLoading(false);
   };
-
+  if (file) {
+    file.filepath = file.filepath.replace('https://pdf.fra1.digitaloceanspaces.com', '');
+  }
   return (
     <Parent>
       <Wrapper>
@@ -304,7 +307,7 @@ const AddFacilityFile = ({
             <FilePdf />
             {file ? (
               file.id ? (
-                <Link target="_blank" href={file.filepath}>
+                <Link target="_blank" href={'/api/view?path='+encodeURIComponent(file.filepath)}>
                   {file.name}
                 </Link>
               ) : (
