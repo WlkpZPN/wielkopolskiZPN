@@ -76,7 +76,8 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
   const uploadFile = async (field) => {
     const file = invoiceFiles[field];
     const formData = new FormData();
-    formData.append('invoice', file);
+    formData.append('files', file);
+    formData.append('targetDir', '/faktury');
 
     const config = {
       headers: { 'Content-type': 'multipart/form-data' },
@@ -90,7 +91,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
     try {
       setLoading(true);
       const uploadResult = await axios.post(
-        '/api/applications/uploadInvoice',
+        '/api/ftp/upload',
         formData,
         config
       );
@@ -99,7 +100,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
         {
           applicationID: clubData.applications[0].id,
           field: field,
-          url: `https://pdf.fra1.digitaloceanspaces.com/faktury/${file.name}`,
+          url: `/faktury/${file.name}`,
         }
       );
 
@@ -111,7 +112,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
       let newFiles = { ...invoiceFiles };
       newFiles[
         field
-      ] = `https://pdf.fra1.digitaloceanspaces.com/faktury/${file.name}`;
+      ] = `/faktury/${file.name}`;
       setInvoiceFiles(newFiles);
     } catch (error) {
       setLoading(false);

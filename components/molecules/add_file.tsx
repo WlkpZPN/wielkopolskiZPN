@@ -137,7 +137,7 @@ const AddFile = ({ file, category, id, text }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  //console.log(file);
+  console.log(file);
   const handleChange = async (e) => {
     e.preventDefault();
     const result = checkMimeType(e);
@@ -155,7 +155,9 @@ const AddFile = ({ file, category, id, text }) => {
     });
 
     const fileData = new FormData();
-    fileData.append('file', newFile);
+    fileData.append('files', newFile);
+    fileData.append('targetDir', '/wnioski');
+
 
     const config = {
       // headers: { "Content-type": "multipart/form-data" },
@@ -168,7 +170,7 @@ const AddFile = ({ file, category, id, text }) => {
     };
     try {
       setLoading(true);
-      await axios.post('/api/applications/uploadFiles', fileData, config);
+      await axios.post('/api/ftp/upload', fileData, config);
 
       if (category === 'agreement_documents' || category === 'krs_documents') {
         await axios.post('/api/files/addFilesUrl', {
@@ -219,6 +221,9 @@ const AddFile = ({ file, category, id, text }) => {
       });
     }
   };
+  if (file) {
+    file.filepath = file.filepath.replace('https://pdf.fra1.digitaloceanspaces.com', '');
+  }
   return (
     <Parent>
       <Wrapper>
@@ -232,7 +237,7 @@ const AddFile = ({ file, category, id, text }) => {
           <FileInfo>
             <FilePdf />
             {file ? (
-              <Link target="_blank" href={file.filepath}>
+              <Link target="_blank" href={'/api/view?path='+encodeURIComponent(file.filepath)}>
                 {file.name}
               </Link>
             ) : (

@@ -178,12 +178,17 @@ const AddInvoice = ({
     if (admin == false) {
       //TODO handle object case
       if (typeof file == 'string') {
+
+          if (file) {
+              file = file.replace('https://pdf.fra1.digitaloceanspaces.com', '');
+          }
+
         const addressArr = file.split('/');
         const key = addressArr[addressArr.length - 1];
         return (
           <>
             {' '}
-            <a target="_blank" style={{ marginBottom: '16px' }} href={file}>
+            <a target="_blank" style={{ marginBottom: '16px' }} href={'/api/view?path='+encodeURIComponent(file)}>
               <OutlineButton>Pobierz fakturę</OutlineButton>
             </a>
             <PrimaryButton
@@ -207,12 +212,17 @@ const AddInvoice = ({
     }
 
     if (typeof file == 'string') {
+
+        if (file) {
+            file = file.replace('https://pdf.fra1.digitaloceanspaces.com', '');
+        }
+
       const addressArr = file.split('/');
       const key = addressArr[addressArr.length - 1];
       return (
         <>
           {' '}
-          <a target="_blank" style={{ marginBottom: '16px' }} href={file}>
+          <a target="_blank" style={{ marginBottom: '16px' }} href={'/api/view?path='+encodeURIComponent(file)}>
             <OutlineButton>Pobierz fakturę</OutlineButton>
           </a>
           <PrimaryButton

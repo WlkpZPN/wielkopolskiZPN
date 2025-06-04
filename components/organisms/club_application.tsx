@@ -788,6 +788,7 @@ const ClubApplication = ({
       attachments.forEach((attachment) => {
         filesToUpload.append("files", attachment.fileData);
       });
+      filesToUpload.append('targetDir', '/wnioski');
 
       const config = {
         headers: { "Content-type": "multipart/form-data" },
@@ -800,7 +801,7 @@ const ClubApplication = ({
       };
       //TODO HERE!
 
-      await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
+      await axios.post("api/ftp/upload", filesToUpload, config);
 
       //2 attach files to current facility object
 
@@ -845,6 +846,7 @@ const ClubApplication = ({
       attachments.forEach((attachment) => {
         filesToUpload.append("files", attachment.fileData);
       });
+      filesToUpload.append('targetDir', '/wnioski');
 
       const config = {
         headers: { "Content-type": "multipart/form-data" },
@@ -856,7 +858,7 @@ const ClubApplication = ({
         },
       };
 
-      await axios.post("/api/files/uploadManyFiles", filesToUpload, config);
+      await axios.post("/api/ftp/upload", filesToUpload, config);
 
       //attach files
 

@@ -102,7 +102,7 @@ const StepThreeForm = ({ handleStepChange, readOnly }) => {
             <Paragraph>
               Kopa porozumienia na szkolenie młodzieży z powyższym klubem. (
               <a
-                href="https://pdf.fra1.digitaloceanspaces.com/10.4.2.-Wzo%CC%81r-umowy-z-klubem-m%C5%82odziez%CC%87owym.pdf"
+                href={`/api/view?path=${encodeURIComponent('10.4.2.-Wzo%CC%81r-umowy-z-klubem-m%C5%82odziez%CC%87owym.pdf')}`}
                 target="_blank"
                 style={{ color: "#0056A5" }}
               >
