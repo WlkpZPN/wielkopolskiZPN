@@ -458,7 +458,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       `na podstawie art. 3.3.2 Przepisów licencyjnych.`,
       {
         x: 50,
-        y: 235,
+        y: 180,
         font: regular,
         size: 10,
         color: rgb(0, 0, 0),
