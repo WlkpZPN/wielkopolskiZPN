@@ -204,7 +204,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       color: rgb(0, 0, 0),
     });
 
-    page.drawText(" 30 kwietnia 2021 r.", {
+    page.drawText(" 30 kwietnia 2020 r.", {
       x: 232,
       y: 440,
       font: regular,
@@ -231,7 +231,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       }
     );
 
-    page.drawText(` sezon ${clubData.applications[0].seasons} `, {
+    page.drawText(` sezon 2020/2021 i `, {
       x: 362,
       y: 425,
       font: regular,
