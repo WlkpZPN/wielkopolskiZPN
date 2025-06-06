@@ -445,7 +445,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       }
     );
     page.drawText(
-      `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały, na podstawie art. 3.3.2 Przepisów licencyjnych.`,
+      `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały, `,
       {
         x: 50,
         y: 235,
@@ -455,6 +455,17 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       }
     );
   }
+  page.drawText(
+      `na podstawie art. 3.3.2 Przepisów licencyjnych.`,
+      {
+        x: 50,
+        y: 235,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+  );
+}
 
   page.drawText("Otrzymują:", {
     x: 50,
