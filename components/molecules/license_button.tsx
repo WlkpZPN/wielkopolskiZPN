@@ -12,6 +12,14 @@ import PrimaryButton from "../atoms/primary_button";
 import UndoLicense from "./undo_license_modal";
 import GiveSupervision from "./give_supervision_modal";
 import { generatePdf } from "../../middleware/generatePdf";
+import NProgress from "nprogress";
+NProgress.configure({
+  minimum: 0.3,
+  easing: "ease",
+  speed: 800,
+  showSpinner: true,
+});
+
 const FileIcon = styled(FilePdf)`
   width: 40px;
   color: black;
@@ -119,6 +127,14 @@ const LicenseButton = ({
     }
   };
 
+  const getLicence = async () => {
+    NProgress.start()
+    await generatePdf(clubData)
+        .finally(() => {
+          NProgress.done()
+        });
+  }
+
   const renderButtons = () => {
     switch (statusID || application.statuses.id) {
       case 7:
@@ -128,7 +144,7 @@ const LicenseButton = ({
           return (
             <OutlineButton
               style={{ padding: "8px", fontSize: "14px" }}
-              onClick={() => generatePdf(clubData)}
+              onClick={() => getLicence()}
             >
               Pobierz
             </OutlineButton>
@@ -150,7 +166,7 @@ const LicenseButton = ({
           <>
             <OutlineButton
               style={{ padding: "8px", fontSize: "14px" }}
-              onClick={() => generatePdf(clubData)}
+              onClick={() => getLicence()}
             >
               Pobierz
             </OutlineButton>
