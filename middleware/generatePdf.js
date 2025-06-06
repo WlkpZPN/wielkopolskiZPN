@@ -239,7 +239,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       color: rgb(0.07, 0.4, 0.7),
     });
 
-    page.drawText(`następnie po`, {
+    page.drawText(`następne po`, {
       x: 50,
       y: 410,
       font: regular,
@@ -445,7 +445,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       }
     );
     page.drawText(
-      `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały.`,
+      `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały, na podstawie art. 3.3.2 Przepisów licencyjnych.`,
       {
         x: 50,
         y: 235,
