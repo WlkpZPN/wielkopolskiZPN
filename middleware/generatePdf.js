@@ -236,7 +236,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       y: 425,
       font: regular,
       size: 10,
-      color: rgb(0.07, 0.4, 0.7),
+      color: rgb(0, 0, 0),
     });
 
     page.drawText(`następne po`, {
@@ -335,16 +335,27 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     };
   }
 
-  page.drawText(
-    `piłki nożnej w sezonach rozgrywkowych ${clubData.applications[0].seasons} `,
-    {
-      x: 60,
-      y: 345,
-      font: regular,
-      size: 10,
-      color: rgb(0, 0, 0),
-    }
+  page.drawText("piłki nożnej w sezonach rozgrywkowych", {
+    x: 60,
+    y: 345,
+    font: regular,
+    size: 10,
+    color: rgb(0, 0, 0),
+  });
+
+  const textWidth = regular.widthOfTextAtSize(
+      "piłki nożnej w sezonach rozgrywkowych ",
+      10
   );
+
+  page.drawText(`${clubData.applications[0].seasons}`, {
+    x: 60 + textWidth,
+    y: 345,
+    font: regular,
+    size: 10,
+    color: rgb(0.07, 0.4, 0.7),
+  });
+
   if (application.status_id === 10) {
     page.drawText(`z nadzorem ${supervisionType}m`, {
       x: position.x,
