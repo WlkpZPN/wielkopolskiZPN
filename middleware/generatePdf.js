@@ -454,7 +454,6 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
         color: rgb(0, 0, 0),
       }
     );
-  }
   page.drawText(
       `na podstawie art. 3.3.2 Przepisów licencyjnych.`,
       {
