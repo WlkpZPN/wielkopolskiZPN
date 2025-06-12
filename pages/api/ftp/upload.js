@@ -33,32 +33,33 @@ export default async function handler(req, res) {
         const { fields, files } = await parseForm(req);
         const uploadedFiles = files.files || [];
 
-        const targetDir = (fields.targetDir?.[0] || "/uploads").replace(/\\/g, "/");
+        const targetDirRaw = fields.targetDir?.[0] || "/uploads";
+        const targetDir = path.posix.normalize(targetDirRaw.replace(/\\/g, "/"));
 
-        client.ftp.verbose = true; // do logów (możesz wyłączyć)
+        client.ftp.verbose = false;
+
         await client.access({
             host: process.env.SFTP_HOST,
-            port: parseInt(process.env.SFTP_PORT || "21", 10),
+            port: 21,
             user: process.env.SFTP_USERNAME,
             password: process.env.SFTP_PASSWORD,
-            secure: false,
+            secure: false, // home.pl: zwykłe FTP, brak TLS domyślnie
         });
 
         for (const file of uploadedFiles) {
             const sourcePath = file.path;
             const destinationPath = path.posix.join(targetDir, file.originalFilename);
 
-            console.log(`Uploading: ${sourcePath} -> ${destinationPath}`);
-
+            console.log(`Uploading: ${destinationPath}`);
             try {
                 await client.uploadFrom(sourcePath, destinationPath);
             } catch (uploadErr) {
-                console.error(`Upload failed for ${file.originalFilename}:`, uploadErr);
-                throw uploadErr; // przerywamy całość, jeśli 1 plik nie przejdzie
+                console.error(`Upload failed for ${file.originalFilename}:`, uploadErr.message);
+                throw uploadErr;
             }
 
-            // (opcjonalnie) krótka przerwa między uploadami
-            await new Promise((r) => setTimeout(r, 100));
+            // Delikatna przerwa między uploadami (home.pl bywa wrażliwy)
+            await new Promise((res) => setTimeout(res, 200));
         }
 
         res.status(200).json({ message: "Upload successful" });
@@ -69,7 +70,7 @@ export default async function handler(req, res) {
 
     } finally {
         try {
-            await client.close(); // zawsze zamykamy połączenie!
+            await client.close(); // zamknięcie połączenia obowiązkowe!
         } catch (closeErr) {
             console.warn("Error closing FTP connection:", closeErr.message);
         }
