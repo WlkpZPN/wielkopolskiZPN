@@ -83,7 +83,7 @@ export default function FtpFileManager() {
         });
         newFileRef.current.value = '';
         fetchFiles();
-        setTimeout(() => openEditor(name), 300);
+        setTimeout(() => openEditor(name), 3000);
     };
 
     const deleteFolder = async (folderName) => {
