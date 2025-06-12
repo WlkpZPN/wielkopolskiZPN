@@ -1,5 +1,4 @@
-// pages/api/files/upload.js
-import {Client} from "basic-ftp";
+import { Client } from "basic-ftp";
 import multiparty from "multiparty";
 import fs from "fs";
 import path from "path";
@@ -10,45 +9,70 @@ export const config = {
     },
 };
 
+import { config as dotenvConfig } from "dotenv";
+dotenvConfig();
+
+function parseForm(req) {
+    return new Promise((resolve, reject) => {
+        const form = new multiparty.Form();
+        form.parse(req, (err, fields, files) => {
+            if (err) reject(err);
+            else resolve({ fields, files });
+        });
+    });
+}
+
 export default async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method Not Allowed" });
     }
 
-    const form = new multiparty.Form();
+    const client = new Client(30000); // 30s timeout
 
-    form.parse(req, async (err, fields, files) => {
-        if (err) {
-            console.error("Form parse error:", err);
-            return res.status(400).json({ error: "Failed to parse form" });
-        }
-
+    try {
+        const { fields, files } = await parseForm(req);
         const uploadedFiles = files.files || [];
-        const targetDir = (fields.targetDir?.[0] || "/uploads").replace(/\\/g, "/");
 
+        const targetDirRaw = fields.targetDir?.[0] || "/uploads";
+        const targetDir = path.posix.normalize(targetDirRaw.replace(/\\/g, "/"));
 
-        const client = new Client(60000);
-        try {
-            await client.access({
-                host: process.env.SFTP_HOST,
-                port: parseInt(process.env.SFTP_PORT || "21", 10),
-                user: process.env.SFTP_USERNAME,
-                password: process.env.SFTP_PASSWORD,
-                secure: false,
-            });
+        client.ftp.verbose = false;
 
-            for (const file of uploadedFiles) {
-                const stream = fs.createReadStream(file.path);
-                const destinationPath = path.posix.join(targetDir, file.originalFilename);
-                await client.uploadFrom(stream, destinationPath);
+        await client.access({
+            host: process.env.SFTP_HOST,
+            port: 21,
+            user: process.env.SFTP_USERNAME,
+            password: process.env.SFTP_PASSWORD,
+            secure: false, // home.pl: zwykłe FTP, brak TLS domyślnie
+        });
+
+        for (const file of uploadedFiles) {
+            const sourcePath = file.path;
+            const destinationPath = path.posix.join(targetDir, file.originalFilename);
+
+            console.log(`Uploading: ${destinationPath}`);
+            try {
+                await client.uploadFrom(sourcePath, destinationPath);
+            } catch (uploadErr) {
+                console.error(`Upload failed for ${file.originalFilename}:`, uploadErr.message);
+                throw uploadErr;
             }
 
-            res.status(200).json({ message: "Upload successful" });
-        } catch (e) {
-            console.error("FTP Upload Error:", e);
-            res.status(500).json({ error: "Upload failed" });
-        } finally {
-            client.close();
+            // Delikatna przerwa między uploadami (home.pl bywa wrażliwy)
+            await new Promise((res) => setTimeout(res, 200));
         }
-    });
+
+        res.status(200).json({ message: "Upload successful" });
+
+    } catch (err) {
+        console.error("Upload error:", err);
+        res.status(500).json({ error: "Upload failed", details: err.message });
+
+    } finally {
+        try {
+            await client.close(); // zamknięcie połączenia obowiązkowe!
+        } catch (closeErr) {
+            console.warn("Error closing FTP connection:", closeErr.message);
+        }
+    }
 }
