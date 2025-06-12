@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
-const AddFile = ({ clubData, category, checkMimeType, makeid }) => {
+const AddFile = ({ clubData, category, checkMimeType, makeid, id }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -17,7 +17,6 @@ const AddFile = ({ clubData, category, checkMimeType, makeid }) => {
     }
     console.log(e.target.files[0].type);
 
-    // Create File and Prepare Data
     const fileName = `${makeid(3)}_${e.target.files[0].name}`;
     const newFile = new File([e.target.files[0]], fileName, {
       type: e.target.files[0].type,
@@ -84,6 +83,7 @@ const AddFile = ({ clubData, category, checkMimeType, makeid }) => {
       <div>
         <input
             type="file"
+            id={`file-input-${id}`} // Use the id to set a unique identifier for the input
             onChange={handleFileUpload}
             disabled={loading}
             accept="*/*"
