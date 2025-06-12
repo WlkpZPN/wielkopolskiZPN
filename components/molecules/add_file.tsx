@@ -160,11 +160,11 @@ const AddFile = ({ file, category, id, text }) => {
 
 
     const config = {
-      // headers: { "Content-type": "multipart/form-data" },
+      timeout: 60000, // 1-minute timeout
       onUploadProgress: (event) => {
         console.log(
-          `Current progress:`,
-          Math.round((event.loaded * 100) / event.total)
+            `Current progress:`,
+            Math.round((event.loaded * 100) / event.total)
         );
       },
     };
