@@ -1,9 +1,9 @@
-import { google } from 'googleapis';
+import {google} from 'googleapis';
 import mime from 'mime-types';
-import { PassThrough } from 'stream';
-import { Client } from 'basic-ftp';
-import { tmpdir } from 'os';
-import { join } from 'path';
+import {PassThrough} from 'stream';
+import {Client} from 'basic-ftp';
+import {tmpdir} from 'os';
+import {join} from 'path';
 import fs from 'fs';
 
 export const config = {
@@ -31,7 +31,7 @@ function getDriveClient() {
         scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     });
 
-    return google.drive({ version: 'v3', auth });
+    return google.drive({version: 'v3', auth});
 }
 
 async function findFileInFolder(drive, fileName, folderId) {
@@ -46,11 +46,11 @@ async function findFileInFolder(drive, fileName, folderId) {
 
 export default async function handler(req, res) {
     const rawPath = decodeURIComponent(req.query.path || '');
-    if (!rawPath) return res.status(400).json({ error: 'Missing file path' });
+    if (!rawPath) return res.status(400).json({error: 'Missing file path'});
 
     const pathParts = rawPath.split('/').filter(Boolean);
     if (pathParts.length !== 2) {
-        return res.status(400).json({ error: 'Path must be in format /prefix/filename.ext' });
+        return res.status(400).json({error: 'Path must be in format /prefix/filename.ext'});
     }
 
     const [prefix, fileName] = pathParts;
@@ -61,11 +61,11 @@ export default async function handler(req, res) {
     } else if (prefix === 'faktura') {
         rootFolderId = process.env.GDRIVE_FOLDER_ID_FAKTURY;
     } else {
-        return res.status(400).json({ error: `Unknown folder prefix: ${prefix}` });
+        return res.status(400).json({error: `Unknown folder prefix: ${prefix}`});
     }
 
     if (!rootFolderId) {
-        return res.status(500).json({ error: `Missing root folder ID for: ${prefix}` });
+        return res.status(500).json({error: `Missing root folder ID for: ${prefix}`});
     }
 
     const drive = getDriveClient();
@@ -78,12 +78,12 @@ export default async function handler(req, res) {
             const isAllowed = ALLOWED_MIME_TYPES.some((pattern) => pattern.test(mimeType));
 
             if (!isAllowed) {
-                return res.status(403).json({ error: `Preview not allowed for this file type (${mimeType})` });
+                return res.status(403).json({error: `Preview not allowed for this file type (${mimeType})`});
             }
 
             const streamRes = await drive.files.get(
-                { fileId: file.id, alt: 'media' },
-                { responseType: 'stream' }
+                {fileId: file.id, alt: 'media'},
+                {responseType: 'stream'}
             );
 
             res.setHeader('Content-Type', mimeType);
@@ -109,14 +109,14 @@ export default async function handler(req, res) {
             const list = await ftpClient.list(`/${prefix}`);
             const found = list.find((f) => f.name === fileName);
             if (!found) {
-                return res.status(404).json({ error: 'File not found on Drive or FTP' });
+                return res.status(404).json({error: 'File not found on Drive or FTP'});
             }
 
             const mimeType = mime.lookup(fileName) || 'application/octet-stream';
             const isAllowed = ALLOWED_MIME_TYPES.some((pattern) => pattern.test(mimeType));
 
             if (!isAllowed) {
-                return res.status(403).json({ error: `Preview not allowed for this file type (${mimeType})` });
+                return res.status(403).json({error: `Preview not allowed for this file type (${mimeType})`});
             }
 
             const tempPath = join(tmpdir(), `${Date.now()}_${fileName}`);
@@ -127,15 +127,16 @@ export default async function handler(req, res) {
 
             const fileStream = fs.createReadStream(tempPath);
             fileStream.pipe(res);
-            fileStream.on('end', () => fs.unlink(tempPath, () => {}));
+            fileStream.on('end', () => fs.unlink(tempPath, () => {
+            }));
         } catch (ftpErr) {
             console.error('FTP fallback failed:', ftpErr);
-            return res.status(500).json({ error: 'Error retrieving file from FTP' });
+            return res.status(500).json({error: 'Error retrieving file from FTP'});
         } finally {
             ftpClient.close();
         }
     } catch (err) {
         console.error('Drive View Error:', err);
-        res.status(500).json({ error: 'Failed to preview file', details: err.message });
+        res.status(500).json({error: 'Failed to preview file', details: err.message});
     }
 }

@@ -1,4 +1,4 @@
-import { google } from 'googleapis';
+import {google} from 'googleapis';
 import multiparty from 'multiparty';
 import fs from 'fs';
 import path from 'path';
@@ -14,7 +14,7 @@ function parseForm(req) {
         const form = new multiparty.Form();
         form.parse(req, (err, fields, files) => {
             if (err) reject(err);
-            else resolve({ fields, files });
+            else resolve({fields, files});
         });
     });
 }
@@ -28,16 +28,16 @@ function getDriveClient() {
         scopes: ['https://www.googleapis.com/auth/drive'],
     });
 
-    return google.drive({ version: 'v3', auth });
+    return google.drive({version: 'v3', auth});
 }
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
+        return res.status(405).json({error: 'Method Not Allowed'});
     }
 
     try {
-        const { fields, files } = await parseForm(req);
+        const {fields, files} = await parseForm(req);
         const uploadedFiles = files.files || [];
         // const targetDir2 = process.env.GDRIVE_FOLDER_ID;
         // const targetDir = fields.targetDir;
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
 
 
         if (!targetDir) {
-            return res.status(500).json({ error: 'Missing GDRIVE_FOLDER_ID' });
+            return res.status(500).json({error: 'Missing GDRIVE_FOLDER_ID'});
         }
 
         const drive = getDriveClient();
@@ -89,7 +89,7 @@ export default async function handler(req, res) {
                 await new Promise((r) => setTimeout(r, 200)); // delikatna przerwa
             } catch (err) {
                 console.error(`Upload failed for ${fileName}:`, err.message);
-                results.push({ name: fileName, error: err.message });
+                results.push({name: fileName, error: err.message});
             }
         }
 
@@ -100,6 +100,6 @@ export default async function handler(req, res) {
 
     } catch (err) {
         console.error('Upload error:', err);
-        res.status(500).json({ error: 'Upload failed', details: err.message });
+        res.status(500).json({error: 'Upload failed', details: err.message});
     }
 }
