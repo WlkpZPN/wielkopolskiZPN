@@ -22,8 +22,6 @@ const ALLOWED_MIME_TYPES = [
 
 function getDriveClient() {
     const credentials = JSON.parse(process.env.GDRIVE_CREDENTIALS);
-
-    // 🔁 Zamień literalne \\n na prawdziwe \n
     credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
 
     const auth = new google.auth.GoogleAuth({
@@ -49,6 +47,64 @@ export default async function handler(req, res) {
     if (!rawPath) return res.status(400).json({error: 'Missing file path'});
 
     const pathParts = rawPath.split('/').filter(Boolean);
+
+    // Jeśli podano tylko nazwę pliku – szukaj tylko w katalogu głównym FTP
+    if (pathParts.length === 1) {
+        const fileName = pathParts[0];
+        const ftpClient = new Client(30000);
+
+        try {
+            await ftpClient.access({
+                host: process.env.SFTP_HOST,
+                port: parseInt(process.env.SFTP_PORT || '21', 10),
+                user: process.env.SFTP_USERNAME,
+                password: process.env.SFTP_PASSWORD,
+                secure: false,
+            });
+
+            let list;
+            try {
+                list = await ftpClient.list('/');
+            } catch (err) {
+                if (err.code === 550) {
+                    return res.status(404).json({error: 'Root directory not found on FTP'});
+                } else {
+                    throw err;
+                }
+            }
+
+            const found = list.find((f) => f.name === fileName);
+            if (!found) {
+                return res.status(404).json({error: 'File not found in root FTP directory'});
+            }
+
+            const mimeType = mime.lookup(fileName) || 'application/octet-stream';
+            const isAllowed = ALLOWED_MIME_TYPES.some((pattern) => pattern.test(mimeType));
+
+            if (!isAllowed) {
+                return res.status(403).json({error: `Preview not allowed for this file type (${mimeType})`});
+            }
+
+            const tempPath = join(tmpdir(), `${Date.now()}_${fileName}`);
+            await ftpClient.downloadTo(tempPath, `/${fileName}`);
+
+            res.setHeader('Content-Type', mimeType);
+            res.setHeader('Content-Disposition', `inline; filename*=UTF-8''${encodeURIComponent(fileName)}`);
+
+            const fileStream = fs.createReadStream(tempPath);
+            fileStream.pipe(res);
+            fileStream.on('end', () => fs.unlink(tempPath, () => {}));
+        } catch (ftpErr) {
+            console.error('FTP-only fallback failed:', ftpErr);
+            return res.status(500).json({error: 'Error retrieving file from FTP'});
+        } finally {
+            ftpClient.close();
+        }
+
+        return;
+    }
+
+    // Wymagamy /prefix/filename.ext
     if (pathParts.length !== 2) {
         return res.status(400).json({error: 'Path must be in format /prefix/filename.ext'});
     }
@@ -60,6 +116,8 @@ export default async function handler(req, res) {
         rootFolderId = process.env.GDRIVE_FOLDER_ID_WNIOSKI;
     } else if (prefix === 'faktura') {
         rootFolderId = process.env.GDRIVE_FOLDER_ID_FAKTURY;
+    } else if (prefix === 'upload') {
+        rootFolderId = process.env.GDRIVE_FOLDER_ID;
     } else {
         return res.status(400).json({error: `Unknown folder prefix: ${prefix}`});
     }
@@ -95,7 +153,7 @@ export default async function handler(req, res) {
             return;
         }
 
-        // Fallback: check FTP
+        // Fallback do FTP w katalogu /prefix
         const ftpClient = new Client(30000);
         try {
             await ftpClient.access({
@@ -106,7 +164,17 @@ export default async function handler(req, res) {
                 secure: false,
             });
 
-            const list = await ftpClient.list(`/${prefix}`);
+            let list;
+            try {
+                list = await ftpClient.list(`/${prefix}`);
+            } catch (err) {
+                if (err.code === 550) {
+                    return res.status(404).json({error: `Folder not found on FTP: /${prefix}`});
+                } else {
+                    throw err;
+                }
+            }
+
             const found = list.find((f) => f.name === fileName);
             if (!found) {
                 return res.status(404).json({error: 'File not found on Drive or FTP'});
@@ -127,8 +195,7 @@ export default async function handler(req, res) {
 
             const fileStream = fs.createReadStream(tempPath);
             fileStream.pipe(res);
-            fileStream.on('end', () => fs.unlink(tempPath, () => {
-            }));
+            fileStream.on('end', () => fs.unlink(tempPath, () => {}));
         } catch (ftpErr) {
             console.error('FTP fallback failed:', ftpErr);
             return res.status(500).json({error: 'Error retrieving file from FTP'});

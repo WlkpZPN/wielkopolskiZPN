@@ -786,6 +786,7 @@ const ClubApplication = ({
 
       const filesToUpload = new FormData();
       attachments.forEach((attachment) => {
+        console.log(attachment.fileData.name);
         filesToUpload.append("files", attachment.fileData);
       });
       filesToUpload.append('targetDir', '/wnioski');
@@ -801,7 +802,7 @@ const ClubApplication = ({
       };
       //TODO HERE!
 
-      await axios.post("api/ftp/upload", filesToUpload, config);
+      await axios.post("/api/ftp/upload", filesToUpload, config);
 
       //2 attach files to current facility object
 

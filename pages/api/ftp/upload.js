@@ -51,6 +51,8 @@ export default async function handler(req, res) {
             targetDir = process.env.GDRIVE_FOLDER_ID_WNIOSKI;
         } else if (fields.targetDir[0] === '/faktura') {
             targetDir = process.env.GDRIVE_FOLDER_ID_FAKTURY;
+        } else if (fields.targetDir[0] === '/faktury') {
+            targetDir = process.env.GDRIVE_FOLDER_ID_FAKTURY;
         } else {
             // return res.status(400).json({ error: 'Unknown root folder for path prefix: ' + firstSegment });
         }
