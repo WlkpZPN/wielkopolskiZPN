@@ -179,6 +179,7 @@ const AddInvoice = ({
       //TODO handle object case
       if (typeof file == 'string') {
 
+          //TODO FV zapisywana w nowy sposób jak pliki
           if (file) {
               file = file.replace('https://pdf.fra1.digitaloceanspaces.com', '');
           }
