@@ -9,6 +9,7 @@ import {
 import download from "downloadjs";
 import fontKit from "@pdf-lib/fontkit";
 import { createSeasons } from "../middleware/utils";
+import * as req from "next/headers";
 export const generatePdf = async (clubData, date = null, dwn = true) => {
   console.log(clubData);
   const supervisionType = clubData.applications[0].supervision_type;
@@ -64,8 +65,17 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const regular = await pdfDoc.embedFont(fontBytes);
   const bold = await pdfDoc.embedFont(fontBytes2);
 
-  const backgroundUrl =
-    "/api/view?path=licencja-tlo.png";
+  const isServer = typeof window === 'undefined';
+
+  let backgroundUrl;
+  let file = '/licencja-tlo.png';
+  if (isServer) {
+    const host = req?.headers?.host || 'localhost:3000';
+    const protocol = req?.headers?.['x-forwarded-proto'] || 'http';
+    backgroundUrl = `${protocol}://${host}${file}`;
+  } else {
+    backgroundUrl = file;
+  }
 
   const backgroundBytes = await fetch(backgroundUrl).then((res) =>
     res.arrayBuffer()
@@ -74,9 +84,18 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
   const pngBackground = await pdfDoc.embedPng(backgroundBytes);
   const scaleBackground = pngBackground.scale(0.6);
 
-  const logoBytes = await fetch(
-    "/api/view?path=wzpn_logo.png"
-  ).then((res) => res.arrayBuffer());
+
+  let logoUrl;
+  let file2 = '/wzpn_logo.png';
+  if (isServer) {
+    const host = req?.headers?.host || 'localhost:3000';
+    const protocol = req?.headers?.['x-forwarded-proto'] || 'http';
+    logoUrl = `${protocol}://${host}${file2}`;
+  } else {
+    logoUrl = file2;
+  }
+
+  const logoBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
 
   const pngLogo = await pdfDoc.embedPng(logoBytes);
   const scaledLogo = pngLogo.scale(0.7);
@@ -509,23 +528,48 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     color: rgb(0, 0, 0),
   });
 
-  const stampBytes = await fetch(
-    "/api/view?path=pieczatka.png"
-  ).then((res) => res.arrayBuffer());
+  let pieczatkaUrl;
+  let pieczatka = '/pieczatka.png';
+  if (isServer) {
+    const host = req?.headers?.host || 'localhost:3000';
+    const protocol = req?.headers?.['x-forwarded-proto'] || 'http';
+    pieczatkaUrl = `${protocol}://${host}${pieczatka}`;
+  } else {
+    pieczatkaUrl = pieczatka;
+  }
+
+  const stampBytes = await fetch(pieczatkaUrl).then((res) => res.arrayBuffer());
 
   const stampPng = await pdfDoc.embedPng(stampBytes);
   const scaledStamp = pngLogo.scale(0.4);
 
-  const signBytes = await fetch(
-    "/api/view?path=podpis_marek.png"
-  ).then((res) => res.arrayBuffer());
+  let podpis_marekUrl;
+  let podpis_marek = '/podpis_marek.png';
+  if (isServer) {
+    const host = req?.headers?.host || 'localhost:3000';
+    const protocol = req?.headers?.['x-forwarded-proto'] || 'http';
+    podpis_marekUrl = `${protocol}://${host}${podpis_marek}`;
+  } else {
+    podpis_marekUrl = podpis_marek;
+  }
+
+  const signBytes = await fetch(podpis_marekUrl).then((res) => res.arrayBuffer());
 
   const signPng = await pdfDoc.embedPng(signBytes);
   const scaledSign = pngLogo.scale(0.7);
 
-  const sign2Bytes = await fetch(
-    "/api/view?path=Podpis2.png"
-  ).then((res) => res.arrayBuffer());
+
+  let Podpis2Url;
+  let Podpis2 = '/Podpis2.png';
+  if (isServer) {
+    const host = req?.headers?.host || 'localhost:3000';
+    const protocol = req?.headers?.['x-forwarded-proto'] || 'http';
+    Podpis2Url = `${protocol}://${host}${Podpis2}`;
+  } else {
+    Podpis2Url = Podpis2;
+  }
+
+  const sign2Bytes = await fetch(Podpis2Url).then((res) => res.arrayBuffer());
 
   const sign2Png = await pdfDoc.embedPng(sign2Bytes);
   const scaledSign2 = pngLogo.scale(0.7);

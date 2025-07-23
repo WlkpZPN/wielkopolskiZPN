@@ -61,8 +61,8 @@ export default (req, res) => {
       <tr>
         <td style="padding: 32px 48px">
           <img
-            src={'/wzpn_logo.png'} 
-            alt={'logo'} 
+            src="https://licencje.wielkopolskizpn.pl/wzpn_logo.png"
+            alt="Wielkopolski Związek Piłki Nożnej"
             style= 'width={150} height={50}'
           />
         </td>
@@ -103,8 +103,6 @@ export default (req, res) => {
         <td
           style="
             padding: 32px 48px;
-           
-            flex-direction: column;
             width: 50%;
           "
         >
