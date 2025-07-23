@@ -102,15 +102,15 @@ const ClientLayout = ({ view, children, clubData }) => {
         <NavBarContent>
           <List>
             <Link href="/">
-              <NavItem active={view === 'Wniosek licencyjny'}>
+              <NavItem $active={view === 'Wniosek licencyjny'}>
                 Wniosek licencyjny
               </NavItem>
             </Link>
             <Link href="/dane">
-              <NavItem active={view === 'Dane klubu'}>Dane klubu</NavItem>
+              <NavItem $active={view === 'Dane klubu'}>Dane klubu</NavItem>
             </Link>
             <Link href="/pomoc">
-              <NavItem active={view === 'Pomoc'}>Pomoc / FAQ</NavItem>
+              <NavItem $active={view === 'Pomoc'}>Pomoc / FAQ</NavItem>
             </Link>
           </List>
         </NavBarContent>
