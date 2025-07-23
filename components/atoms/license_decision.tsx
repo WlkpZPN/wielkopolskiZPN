@@ -51,7 +51,7 @@ const LicenseDecision = ({
     try {
       await axios.post('/api/licences/setLicense', {
         applicationID,
-        statusID,
+        statusID: 8,
         reason: reason || '',
         description,
         userID: authData.id,

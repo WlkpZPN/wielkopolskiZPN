@@ -255,10 +255,10 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       y: 425,
       font: regular,
       size: 10,
-      color: rgb(0.07, 0.4, 0.7),
+      color: rgb(0, 0, 0),
     });
 
-    page.drawText(`następnie po`, {
+    page.drawText(`następne po`, {
       x: 50,
       y: 410,
       font: regular,
@@ -354,16 +354,27 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
     };
   }
 
-  page.drawText(
-    `piłki nożnej w sezonach rozgrywkowych ${clubData.applications[0].seasons} `,
-    {
-      x: 60,
-      y: 345,
-      font: regular,
-      size: 10,
-      color: rgb(0, 0, 0),
-    }
+  page.drawText("piłki nożnej w sezonach rozgrywkowych", {
+    x: 60,
+    y: 345,
+    font: regular,
+    size: 10,
+    color: rgb(0, 0, 0),
+  });
+
+  const textWidth = regular.widthOfTextAtSize(
+      "piłki nożnej w sezonach rozgrywkowych ",
+      10
   );
+
+  page.drawText(`${clubData.applications[0].seasons}`, {
+    x: 60 + textWidth,
+    y: 345,
+    font: regular,
+    size: 10,
+    color: rgb(0.07, 0.4, 0.7),
+  });
+
   if (application.status_id === 10) {
     page.drawText(`z nadzorem ${supervisionType}m`, {
       x: position.x,
@@ -457,23 +468,33 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
       "Ad.1. W związku ze spełnieniem wymogów wyżej wymienionych przepisów licencyjnych PZPN",
       {
         x: 50,
-        y: 250,
+        y: 210,
         font: regular,
         size: 10,
         color: rgb(0, 0, 0),
       }
     );
     page.drawText(
-      `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały.`,
+      `oraz wydaniem licencji zgodnie z wnioskiem klubu, odstępuje się od uzasadnienia niniejszej uchwały, `,
       {
         x: 50,
-        y: 235,
+        y: 195,
         font: regular,
         size: 10,
         color: rgb(0, 0, 0),
       }
     );
-  }
+  page.drawText(
+      `na podstawie art. 3.3.2 Przepisów licencyjnych.`,
+      {
+        x: 50,
+        y: 180,
+        font: regular,
+        size: 10,
+        color: rgb(0, 0, 0),
+      }
+  );
+}
 
   page.drawText("Otrzymują:", {
     x: 50,

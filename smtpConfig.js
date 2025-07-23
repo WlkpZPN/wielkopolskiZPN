@@ -1,10 +1,11 @@
 // config/smtpConfig.js
+require('dotenv').config();
 
 const smtpConfig = {
-  host: "serwer1710802.home.pl",
+  host: process.env.SMTP_HOST,
   port: 587,
-  username: "no-reply@wielkopolskizpn.pl",
-  password: "PVMnPKA8Tef",
+  username: process.env.SMTP_USERNAME,
+  password: process.env.SMTP_PASSWORD,
   protocol: "smtp",
   properties: {
     mail: {
