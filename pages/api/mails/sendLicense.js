@@ -6,7 +6,9 @@ export default (req, res) => {
   return new Promise(async (resolve) => {
     const { clubData } = req.body;
     const date = getCurrentDate().split(",")[0];
-    //console.log(clubData);
+
+    console.log(`${clubData.internal_id}_licencja.pdf`);
+
     const license = await generatePdf(clubData, date, false);
 
     transporter.sendMail({
@@ -45,7 +47,8 @@ export default (req, res) => {
           >
             <tr>
               <td style="padding: 32px 48px">
-                <img src={'/wzpn_logo.png'} alt={'logo'} width={150} height={50} />
+                <img src="https://licencje.wielkopolskizpn.pl/wzpn_logo.png"
+            alt="Wielkopolski Związek Piłki Nożnej" width={150} height={50} />
               </td>
             </tr>
             <tr style="padding: 0">
@@ -88,7 +91,7 @@ export default (req, res) => {
                     font-weight: bold;
                    
                   "
-                  href="wielkopolski-zpn-wielkopolskizpn.vercel.app"
+                  href="https://licencje.wielkopolskizpn.pl/"
                   >Platforma Licencyjna</a
                 >
               </td>
@@ -97,8 +100,6 @@ export default (req, res) => {
               <td
                 style="
                   padding: 32px 48px;
-                  display: flex;
-                  flex-direction: column;
                   width: 50%;
                 "
               >

@@ -100,19 +100,19 @@ const AdminLayout = ({ userData, children, view }) => {
         <NavBarContent>
           <List>
             <Link href="/admin">
-              <NavItem active={view === "wnioski"}>Wnioski licencyjne</NavItem>
+              <NavItem $active={view === "wnioski"}>Wnioski licencyjne</NavItem>
             </Link>
             <Link href="/admin/kluby">
-              <NavItem active={view === "kluby"}>Kluby</NavItem>
+              <NavItem $active={view === "kluby"}>Kluby</NavItem>
             </Link>
             <Link href="/admin/statystyki">
-              <NavItem active={view === "statystyki"}>Statystyki</NavItem>
+              <NavItem $active={view === "statystyki"}>Statystyki</NavItem>
             </Link>
             <Link href="/admin/uzytkownicy">
-              <NavItem active={view === "uzytkownicy"}>Użytkownicy</NavItem>
+              <NavItem $active={view === "uzytkownicy"}>Użytkownicy</NavItem>
             </Link>
             <Link href="/admin/ustawienia">
-              <NavItem active={view === "ustawienia"}>Ustawienia</NavItem>
+              <NavItem $active={view === "ustawienia"}>Ustawienia</NavItem>
             </Link>
           </List>
         </NavBarContent>

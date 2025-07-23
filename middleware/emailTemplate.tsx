@@ -15,8 +15,8 @@ const emailTemplate = (title, message) => {
       ">
       <tr>
         <td style="padding: 32px 48px">
-          <img  src={'/wzpn_logo.png'} 
-            alt={'logo'} style= 'width={150} height={50}' />
+          <img  src="https://licencje.wielkopolskizpn.pl/wzpn_logo.png"
+            alt="Wielkopolski Związek Piłki Nożnej" style= 'width={150} height={50}' />
         </td>
       </tr>
       <tr style="padding: 0">

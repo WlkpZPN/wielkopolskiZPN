@@ -45,7 +45,7 @@ export default (req, res) => {
           Authorization: `Bearer ${tokenData.data.access_token}`,
         },
         data: {
-          notifyUrl: `https://wielkopolski-zpn-three.vercel.app/api/payments/notifyPayment`,
+          notifyUrl: `https://licencje.wielkopolskizpn.pl/api/payments/notifyPayment`,
           currencyCode: "PLN",
           description: description,
           merchantPosId: process.env.PAYU_POS_ID,
