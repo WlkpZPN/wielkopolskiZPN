@@ -1,16 +1,13 @@
-import { useState, useContext } from 'react';
-import uniqid from 'uniqid';
+import {useContext, useState} from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import styled from 'styled-components';
-import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
-import { FilePdf } from '@styled-icons/fa-regular/FilePdf';
-import Loader from '../atoms/loader';
-import { toast } from 'react-toastify';
-import { makeid, checkMimeType } from '../../middleware/utils';
-import { ApplicationContext } from '../../components/organisms/club_application';
+import {InfoCircle} from '@styled-icons/boxicons-regular/InfoCircle';
+import {FilePdf} from '@styled-icons/fa-regular/FilePdf';
+import {toast} from 'react-toastify';
+import {checkMimeType, makeid} from '../../middleware/utils';
+import {ApplicationContext} from '../../components/organisms/club_application';
 //components
-import OutlineButton from '../atoms/outline_button';
 
 const Parent = styled.div`
   position: relative;
@@ -170,13 +167,14 @@ const AddFile = ({ file, category, id, text }) => {
     };
     try {
       setLoading(true);
-      await axios.post('/api/ftp/upload', fileData, config);
+      const uploadResult = await axios.post('/api/ftp/upload', fileData, config);
 
       if (category === 'agreement_documents' || category === 'krs_documents') {
         await axios.post('/api/files/addFilesUrl', {
           applicationID: clubData.applications[0].id,
           category: category,
           fileName: fileName,
+          filePath: `/${uploadResult.data.results[0].key}`,
         });
       } else {
         await axios.post('/api/files/addFilesUrl', {
@@ -221,8 +219,8 @@ const AddFile = ({ file, category, id, text }) => {
       });
     }
   };
-  if (file) {
-    file.filepath = file.filepath.replace('https://pdf.fra1.digitaloceanspaces.com', '');
+  if (file && file.filepath != '') {
+    file.filepath = '';
   }
   return (
     <Parent>
