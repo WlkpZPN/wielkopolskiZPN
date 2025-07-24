@@ -167,7 +167,7 @@ const AddInvoice = ({
   };
 
   const handleDelete = (key = null) => {
-    deleteFile(key);
+    deleteFile(`faktury/${key}`);
   };
 
   //* null if no invoice added
@@ -178,11 +178,6 @@ const AddInvoice = ({
     if (admin == false) {
       //TODO handle object case
       if (typeof file == 'string') {
-
-          //TODO FV zapisywana w nowy sposób jak pliki
-          if (file) {
-              file = file.replace('https://pdf.fra1.digitaloceanspaces.com', '');
-          }
 
         const addressArr = file.split('/');
         const key = addressArr[addressArr.length - 1];
@@ -213,10 +208,6 @@ const AddInvoice = ({
     }
 
     if (typeof file == 'string') {
-
-        if (file) {
-            file = file.replace('https://pdf.fra1.digitaloceanspaces.com', '');
-        }
 
       const addressArr = file.split('/');
       const key = addressArr[addressArr.length - 1];

@@ -1,0 +1,2 @@
+[2025-07-23T22:52:52.862Z] Błąd migracji pliku ZRM_ksolaunch.exe: Cannot read properties of undefined (reading 'Symbol(Symbol.asyncIterator)')
+[2025-07-23T23:03:26.042Z] Błąd migracji pliku ZRM_ksolaunch.exe: Cannot read properties of undefined (reading 'Symbol(Symbol.asyncIterator)')

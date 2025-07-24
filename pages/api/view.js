@@ -1,10 +1,6 @@
-import {google} from 'googleapis';
+import {S3} from 'aws-sdk';
 import mime from 'mime-types';
 import {PassThrough} from 'stream';
-import {Client} from 'basic-ftp';
-import {tmpdir} from 'os';
-import {join} from 'path';
-import fs from 'fs';
 
 export const config = {
     api: {
@@ -20,27 +16,13 @@ const ALLOWED_MIME_TYPES = [
     /^application\/pdf$/,
 ];
 
-function getDriveClient() {
-    const credentials = JSON.parse(process.env.GDRIVE_CREDENTIALS);
-    credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
-
-    const auth = new google.auth.GoogleAuth({
-        credentials,
-        scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-    });
-
-    return google.drive({version: 'v3', auth});
-}
-
-async function findFileInFolder(drive, fileName, folderId) {
-    const query = `'${folderId}' in parents and name = '${fileName}' and trashed = false`;
-    const res = await drive.files.list({
-        q: query,
-        fields: 'files(id, name, mimeType)',
-    });
-
-    return res.data.files[0] || null;
-}
+const s3 = new S3({
+    accessKeyId: process.env.B2_KEY_ID,
+    secretAccessKey: process.env.B2_KEY,
+    endpoint: process.env.B2_ENDPOINT,
+    region: 'auto',
+    signatureVersion: 'v4',
+});
 
 export default async function handler(req, res) {
     const rawPath = decodeURIComponent(req.query.path || '');
@@ -48,162 +30,41 @@ export default async function handler(req, res) {
 
     const pathParts = rawPath.split('/').filter(Boolean);
 
-    // Jeśli podano tylko nazwę pliku – szukaj tylko w katalogu głównym FTP
-    if (pathParts.length === 1) {
-        const fileName = pathParts[0];
-        const ftpClient = new Client(30000);
-
-        try {
-            await ftpClient.access({
-                host: process.env.SFTP_HOST,
-                port: parseInt(process.env.SFTP_PORT || '21', 10),
-                user: process.env.SFTP_USERNAME,
-                password: process.env.SFTP_PASSWORD,
-                secure: false,
-            });
-
-            let list;
-            try {
-                list = await ftpClient.list('/');
-            } catch (err) {
-                if (err.code === 550) {
-                    return res.status(404).json({error: 'Root directory not found on FTP'});
-                } else {
-                    throw err;
-                }
-            }
-
-            const found = list.find((f) => f.name === fileName);
-            if (!found) {
-                return res.status(404).json({error: 'File not found in root FTP directory'});
-            }
-
-            const mimeType = mime.lookup(fileName) || 'application/octet-stream';
-            const isAllowed = ALLOWED_MIME_TYPES.some((pattern) => pattern.test(mimeType));
-
-            if (!isAllowed) {
-                return res.status(403).json({error: `Preview not allowed for this file type (${mimeType})`});
-            }
-
-            const tempPath = join(tmpdir(), `${Date.now()}_${fileName}`);
-            await ftpClient.downloadTo(tempPath, `/${fileName}`);
-
-            res.setHeader('Content-Type', mimeType);
-            res.setHeader('Content-Disposition', `inline; filename*=UTF-8''${encodeURIComponent(fileName)}`);
-
-            const fileStream = fs.createReadStream(tempPath);
-            fileStream.pipe(res);
-            fileStream.on('end', () => fs.unlink(tempPath, () => {}));
-        } catch (ftpErr) {
-            console.error('FTP-only fallback failed:', ftpErr);
-            return res.status(500).json({error: 'Error retrieving file from FTP'});
-        } finally {
-            ftpClient.close();
-        }
-
-        return;
-    }
-
-    // Wymagamy /prefix/filename.ext
     if (pathParts.length !== 2) {
         return res.status(400).json({error: 'Path must be in format /prefix/filename.ext'});
     }
 
     const [prefix, fileName] = pathParts;
+    const key = `${prefix}/${fileName}`;
 
-    let rootFolderId;
-    if (prefix === 'wnioski') {
-        rootFolderId = process.env.GDRIVE_FOLDER_ID_WNIOSKI;
-    } else if (prefix === 'faktura') {
-        rootFolderId = process.env.GDRIVE_FOLDER_ID_FAKTURY;
-    } else if (prefix === 'upload') {
-        rootFolderId = process.env.GDRIVE_FOLDER_ID;
-    } else {
-        return res.status(400).json({error: `Unknown folder prefix: ${prefix}`});
+    const mimeType = mime.lookup(fileName) || 'application/octet-stream';
+    const isAllowed = ALLOWED_MIME_TYPES.some((pattern) => pattern.test(mimeType));
+
+    if (!isAllowed) {
+        return res.status(403).json({error: `Preview not allowed for this file type (${mimeType})`});
     }
-
-    if (!rootFolderId) {
-        return res.status(500).json({error: `Missing root folder ID for: ${prefix}`});
-    }
-
-    const drive = getDriveClient();
 
     try {
-        const file = await findFileInFolder(drive, fileName, rootFolderId);
+        const pass = new PassThrough();
 
-        if (file) {
-            const mimeType = mime.lookup(file.name) || file.mimeType || 'application/octet-stream';
-            const isAllowed = ALLOWED_MIME_TYPES.some((pattern) => pattern.test(mimeType));
+        const stream = s3
+            .getObject({
+                Bucket: process.env.B2_BUCKET,
+                Key: key,
+            })
+            .createReadStream();
 
-            if (!isAllowed) {
-                return res.status(403).json({error: `Preview not allowed for this file type (${mimeType})`});
-            }
+        stream.on('error', (err) => {
+            console.error('B2 Stream error:', err);
+            res.status(404).json({error: 'File not found in B2'});
+        });
 
-            const streamRes = await drive.files.get(
-                {fileId: file.id, alt: 'media'},
-                {responseType: 'stream'}
-            );
+        res.setHeader('Content-Type', mimeType);
+        res.setHeader('Content-Disposition', `inline; filename*=UTF-8''${encodeURIComponent(fileName)}`);
 
-            res.setHeader('Content-Type', mimeType);
-            const encodedName = encodeURIComponent(file.name);
-            res.setHeader('Content-Disposition', `inline; filename*=UTF-8''${encodedName}`);
-
-            const passthrough = new PassThrough();
-            streamRes.data.pipe(passthrough).pipe(res);
-            return;
-        }
-
-        // Fallback do FTP w katalogu /prefix
-        const ftpClient = new Client(30000);
-        try {
-            await ftpClient.access({
-                host: process.env.SFTP_HOST,
-                port: parseInt(process.env.SFTP_PORT || '21', 10),
-                user: process.env.SFTP_USERNAME,
-                password: process.env.SFTP_PASSWORD,
-                secure: false,
-            });
-
-            let list;
-            try {
-                list = await ftpClient.list(`/${prefix}`);
-            } catch (err) {
-                if (err.code === 550) {
-                    return res.status(404).json({error: `Folder not found on FTP: /${prefix}`});
-                } else {
-                    throw err;
-                }
-            }
-
-            const found = list.find((f) => f.name === fileName);
-            if (!found) {
-                return res.status(404).json({error: 'File not found on Drive or FTP'});
-            }
-
-            const mimeType = mime.lookup(fileName) || 'application/octet-stream';
-            const isAllowed = ALLOWED_MIME_TYPES.some((pattern) => pattern.test(mimeType));
-
-            if (!isAllowed) {
-                return res.status(403).json({error: `Preview not allowed for this file type (${mimeType})`});
-            }
-
-            const tempPath = join(tmpdir(), `${Date.now()}_${fileName}`);
-            await ftpClient.downloadTo(tempPath, `/${prefix}/${fileName}`);
-
-            res.setHeader('Content-Type', mimeType);
-            res.setHeader('Content-Disposition', `inline; filename*=UTF-8''${encodeURIComponent(fileName)}`);
-
-            const fileStream = fs.createReadStream(tempPath);
-            fileStream.pipe(res);
-            fileStream.on('end', () => fs.unlink(tempPath, () => {}));
-        } catch (ftpErr) {
-            console.error('FTP fallback failed:', ftpErr);
-            return res.status(500).json({error: 'Error retrieving file from FTP'});
-        } finally {
-            ftpClient.close();
-        }
+        stream.pipe(pass).pipe(res);
     } catch (err) {
-        console.error('Drive View Error:', err);
-        res.status(500).json({error: 'Failed to preview file', details: err.message});
+        console.error('B2 download error:', err);
+        res.status(500).json({error: 'Failed to download from B2', details: err.message});
     }
 }
