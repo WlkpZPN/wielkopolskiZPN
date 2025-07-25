@@ -174,6 +174,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                 files={fileData}
                 category="I01_agreement"
                 text={null}
+                upload={true}
               />
               <Label pointer margin="16px 0" direction="row">
                 <RadioSquare

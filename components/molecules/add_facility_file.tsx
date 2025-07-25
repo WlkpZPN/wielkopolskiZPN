@@ -189,7 +189,7 @@ const AddFacilityFile = ({
         fileData.append('targetDir', '/wnioski');
 
         const config = {
-            // headers: { "Content-type": "multipart/form-data" },
+            timeout: 60000, // 1-minute timeout
             onUploadProgress: (event) => {
                 console.log(
                     `Current progress:`,
