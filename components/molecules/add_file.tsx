@@ -220,9 +220,9 @@ const AddFile = ({ file, category, id, text }) => {
       });
     }
   };
-  if (file && file.filepath != '') {
-    file.filepath = '';
-  }
+
+  console.log('file', file);
+
   return (
     <Parent>
       <Wrapper>
