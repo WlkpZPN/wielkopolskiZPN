@@ -1268,6 +1268,7 @@ Dla każdego wymienionego obiektu sportowego należy uzupełnić informację dot
                   files={fileData}
                   category="I17_intensity_level"
                   text={null}
+                  upload={true}
                 />
               </Label>{" "}
             </>
