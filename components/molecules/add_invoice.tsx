@@ -170,10 +170,6 @@ const AddInvoice = ({
         addFile(e.target.files[0]);
     };
 
-    const handleDelete = (key = null) => {
-        deleteFile(`faktury/${key}`);
-    };
-
     //* null if no invoice added
     //* object ( not string ) if file is in the browser
     //* url string if file is on the server

@@ -2,7 +2,7 @@ import prisma from "../../../middleware/prisma";
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { applicationID, category, fileName, facilityID, filePath } = req.body;
+    const { applicationID, category, fileName, facilityID, filePath: filepath } = req.body;
 
     if (facilityID) {
       // adding file to sport facilities
@@ -11,7 +11,7 @@ export default (req, res) => {
           sport_facilities_id: parseInt(facilityID),
           name: fileName,
           category: category,
-          filepath: filePath,
+          filepath: filepath,
         },
       });
     } else if (applicationID) {
@@ -22,7 +22,7 @@ export default (req, res) => {
           application_id: parseInt(applicationID),
           name: fileName,
           category: category,
-          filepath: filePath,
+          filepath: filepath,
         },
       });
     }
