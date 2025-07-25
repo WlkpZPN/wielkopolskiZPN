@@ -201,8 +201,6 @@ const AddFacilityFile = ({
             setLoading(true);
             const uploadResult = await axios.post('/api/ftp/upload', fileData, config);
 
-
-
             if (upload) {
                 await axios.post('/api/files/addFilesUrl', {
                     category,
@@ -254,7 +252,6 @@ const AddFacilityFile = ({
     const deleteFile = async (e) => {
         e.preventDefault();
         setLoading(true);
-
         if (file.id || upload) {
             // delete from server
 
