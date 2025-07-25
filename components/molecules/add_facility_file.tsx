@@ -200,12 +200,15 @@ const AddFacilityFile = ({
         try {
             setLoading(true);
             const uploadResult = await axios.post('/api/ftp/upload', fileData, config);
+
+
+
             if (upload) {
                 await axios.post('/api/files/addFilesUrl', {
                     category,
                     fileName,
                     facilityID: app_facility.id,
-                    filepath: filePath,
+                    filepath: `${uploadResult.data.results[0].key}`,
                 });
                 toast.info('Dodano plik', {
                     autoClose: 2000,
