@@ -100,7 +100,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
         {
           applicationID: clubData.applications[0].id,
           field: field,
-          url: `/faktury/${file.name}`,
+          url: `/${uploadResult.data.results[0].key}`,
         }
       );
 
@@ -112,7 +112,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
       let newFiles = { ...invoiceFiles };
       newFiles[
         field
-      ] = `/faktury/${file.name}`;
+      ] = `/${uploadResult.data.results[0].key}`;
       setInvoiceFiles(newFiles);
     } catch (error) {
       setLoading(false);

@@ -1,71 +1,54 @@
-import multer from "multer";
-import multerS3 from "multer-s3";
-import aws from "aws-sdk";
-import prisma from "../../../middleware/prisma";
+import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import prisma from '../../../middleware/prisma';
 
-const spacesEndpoint = new aws.Endpoint(process.env.DB_SPACES_ENDPOINT);
-const s3 = new aws.S3({
-  endpoint: spacesEndpoint,
-  accessKeyId: process.env.DB_SPACES_KEY,
-  secretAccessKey: process.env.DB_SPACES_SECRET,
+const s3 = new S3Client({
+  region: 'auto',
+  endpoint: process.env.B2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.B2_KEY_ID,
+    secretAccessKey: process.env.B2_KEY,
+  },
 });
 
-//apiRoute.use(upload.single("invoice"));
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
 
-export default (req, res) => {
-  return new Promise(async (resolve) => {
-    const { key, applicationID, index } = req.body;
+  const { key, applicationID, index } = req.body;
 
-    const params = {
-      Bucket: "pdf/faktury",
+  if (!key || !applicationID || !index) {
+    res.status(400).json({ error: 'Missing required fields' });
+    return;
+  }
+
+  try {
+    const deleteCommand = new DeleteObjectCommand({
+      Bucket: process.env.B2_BUCKET,
       Key: key,
-    };
-    try {
-    } catch (e) {
-      res.status(400);
-      console.log(e);
-      res.json({
-        status: "error",
-        message: e,
-      });
-    }
-    s3.deleteObject(params, function (err, data) {
-      if (err) console.log(err, err.stack);
-      else {
-        console.log(data);
-      }
     });
 
-    if (index == "second") {
+    await s3.send(deleteCommand);
+
+    if (index === 'first') {
       await prisma.applications.update({
-        where: {
-          id: parseInt(applicationID),
-        },
-        data: {
-          invoice_url_2: null,
-        },
+        where: { id: parseInt(applicationID, 10) },
+        data: { invoice_url: null },
       });
-      res.status(200);
-      res.send("faktura usunieta");
-      return resolve();
+    } else if (index === 'second') {
+      await prisma.applications.update({
+        where: { id: parseInt(applicationID, 10) },
+        data: { invoice_url_2: null },
+      });
+    } else {
+      res.status(400).json({ error: 'Unknown index value' });
+      return;
     }
 
-    if (index == "first") {
-      await prisma.applications.update({
-        where: {
-          id: parseInt(applicationID),
-        },
-        data: {
-          invoice_url: null,
-        },
-      });
-
-      res.status(200);
-      res.send("faktura usunieta");
-      return resolve();
-    }
-    res.status(400);
-    res.send("nieznany index");
-    return resolve();
-  });
-};
+    res.status(200).json({ message: 'File deleted and database updated' });
+  } catch (err) {
+    console.error('Delete error:', err);
+    res.status(500).json({ error: 'Failed to delete file', details: err.message });
+  }
+}
