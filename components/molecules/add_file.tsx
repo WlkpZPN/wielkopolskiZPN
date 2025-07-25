@@ -221,8 +221,6 @@ const AddFile = ({ file, category, id, text }) => {
     }
   };
 
-  console.log('file', file);
-
   return (
     <Parent>
       <Wrapper>
