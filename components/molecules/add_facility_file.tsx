@@ -206,7 +206,7 @@ const AddFacilityFile = ({
                     category,
                     fileName,
                     facilityID: app_facility.id,
-                    filepath: `${uploadResult.data.results[0].key}`,
+                    filepath: `/${uploadResult.data.results[0].key}`,
                 });
                 toast.info('Dodano plik', {
                     autoClose: 2000,
@@ -296,9 +296,17 @@ const AddFacilityFile = ({
 
         setLoading(false);
     };
-    if (file && file.filepath != '') {
-        file.filepath = '';
+
+    console.log('file', file)
+
+    function getFilePath(file): string {
+        if (file.filepath) {
+            return file.filepath
+        } else {
+            return '/wnioski/' + file.name;
+        }
     }
+
     return (
         <Parent>
             <Wrapper>
@@ -312,7 +320,7 @@ const AddFacilityFile = ({
                     <FileInfo>
                         <FilePdf/>
                         {file ? (
-                            <Link target="_blank" href={'/api/view?path=' + encodeURIComponent(file.filepath)}>
+                            <Link target="_blank" href={'/api/view?path=' + encodeURIComponent(getFilePath(file))}>
                                 {file.name}
                             </Link>
                         ) : (
