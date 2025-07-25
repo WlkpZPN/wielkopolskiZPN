@@ -181,6 +181,7 @@ const AddFile = ({ file, category, id, text }) => {
           facilityID: clubData.applications[0].id,
           category: category,
           fileName: fileName,
+          filePath: `/${uploadResult.data.results[0].key}`,
         });
       }
       setLoading(false);
