@@ -278,21 +278,21 @@ const AddFacilityFile = ({
                         currentObject
                         ].applications_attachments = response.data.attachments;
 
-          setFormData(newFormData);
+                    setFormData(newFormData);
+                }
+                refreshData();
+            } catch (error) {
+                setLoading(false);
+                console.log(error);
+                toast.error('Nie udało się usunąć pliku,spróbuj ponownie', {
+                    autoClose: 2500,
+                });
+                return;
+            }
+        } else {
+            // delete from state
+            deleteFacilityFile(file.name);
         }
-        refreshData();
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-        toast.error('Nie udało się usunąć pliku,spróbuj ponownie', {
-          autoClose: 2500,
-        });
-        return;
-      }
-    } else {
-      // delete from state
-      deleteFacilityFile(file.name);
-    }
 
         setLoading(false);
     };
@@ -312,13 +312,9 @@ const AddFacilityFile = ({
                     <FileInfo>
                         <FilePdf/>
                         {file ? (
-                            file.id ? (
-                                <Link target="_blank" href={'/api/view?path=' + encodeURIComponent(file.filepath)}>
-                                    {file.name}
-                                </Link>
-                            ) : (
-                                <span>{file.name}</span>
-                            )
+                            <Link target="_blank" href={'/api/view?path=' + encodeURIComponent(file.filepath)}>
+                                {file.name}
+                            </Link>
                         ) : (
                             <span style={{width: '100%', whiteSpace: 'pre-wrap'}}>
                 {'Brak załączonego dokumentu.'}
@@ -346,10 +342,7 @@ const AddFacilityFile = ({
                             id="file"
                             type="file"
                             name="file"
-                            onChange={(e) => {
-                                // setError(null);
-                                handleChange(e);
-                            }}
+                            onChange={handleChange}
                         />
                     </Label>
                     {file ? <DeleteButton onClick={deleteFile}>Usuń</DeleteButton> : null}{' '}
