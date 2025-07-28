@@ -363,7 +363,7 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
     if (application.status_id === 10) {
         page.drawText(`z nadzorem ${supervisionType}m`, {
-            x: 60 + textWidth + clubData.applications[0].seasons.length,
+            x: 60 + textWidth + `${clubData.applications[0].seasons}`.length,
             y: 345,
             font: regular,
             size: 10,
