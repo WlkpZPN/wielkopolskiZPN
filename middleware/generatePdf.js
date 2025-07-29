@@ -361,9 +361,12 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
         color: rgb(0.07, 0.4, 0.7),
     });
 
+    const seasonsText = `${clubData.applications[0].seasons}`;
+    const seasonsWidth = regular.widthOfTextAtSize(seasonsText, 10);
+
     if (application.status_id === 10) {
         page.drawText(`z nadzorem ${supervisionType}m`, {
-            x: 60 + textWidth + `${clubData.applications[0].seasons}`.length,
+            x: 60 + textWidth + seasonsWidth,
             y: 345,
             font: regular,
             size: 10,
