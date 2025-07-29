@@ -143,7 +143,7 @@ const StepOneForm = ({
                                     value={"1"}
                                     onChange={(e) => {
                                         handleChange("1", "number_of_seasons", 1)
-                                        handleChange("2025", "seasons", 1);
+                                        handleChange("2025/2026", "seasons", 1);
                                     }}
                                 >
                                     1 sezon
@@ -157,7 +157,7 @@ const StepOneForm = ({
                                     checked={data.number_of_seasons === "2"}
                                     onChange={(e) => {
                                         handleChange("2", "number_of_seasons", 1);
-                                        handleChange("2025/2026", "seasons", 1);
+                                        handleChange("2025/2026 i 2026/2027", "seasons", 1);
                                     }}
                                 >
                                     2 sezony
