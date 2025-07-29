@@ -363,10 +363,11 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
 
     const seasonsText = `${clubData.applications[0].seasons}`;
     const seasonsWidth = regular.widthOfTextAtSize(seasonsText, 10);
+    const spaceWidth = regular.widthOfTextAtSize(" ", 10);
 
     if (application.status_id === 10) {
         page.drawText(`z nadzorem ${supervisionType}m`, {
-            x: 60 + textWidth + seasonsWidth,
+            x: 60 + spaceWidth + textWidth + seasonsWidth,
             y: 345,
             font: regular,
             size: 10,
