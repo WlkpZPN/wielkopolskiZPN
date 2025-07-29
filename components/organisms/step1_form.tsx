@@ -141,7 +141,10 @@ const StepOneForm = ({
                   name="number_of_seasons"
                   checked={data.number_of_seasons === "1"}
                   value={"1"}
-                  onChange={(e) => handleChange("1", "number_of_seasons", 1)}
+                  onChange={(e) =>  {
+                    handleChange("1", "number_of_seasons", 1)
+                    handleChange("2025", "seasons", 1);
+                  }}
                 >
                   1 sezon
                 </RadioButton>
@@ -152,7 +155,10 @@ const StepOneForm = ({
                   name="number_of_seasons"
                   id="2"
                   checked={data.number_of_seasons === "2"}
-                  onChange={(e) => handleChange("2", "number_of_seasons", 1)}
+                  onChange={(e) => {
+                    handleChange("2", "number_of_seasons", 1);
+                    handleChange("2025/2026", "seasons", 1);
+                  }}
                 >
                   2 sezony
                 </RadioButton>

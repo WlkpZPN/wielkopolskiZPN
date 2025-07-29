@@ -352,6 +352,8 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
         "piłki nożnej w sezonach rozgrywkowych ",
         10
     );
+    const seasonsText = `${clubData.applications[0].seasons}`;
+    if (seasonsText.length <= 4 &&) {}
 
     page.drawText(`${clubData.applications[0].seasons}`, {
         x: 60 + textWidth,
@@ -361,7 +363,6 @@ export const generatePdf = async (clubData, date = null, dwn = true) => {
         color: rgb(0.07, 0.4, 0.7),
     });
 
-    const seasonsText = `${clubData.applications[0].seasons}`;
     const seasonsWidth = regular.widthOfTextAtSize(seasonsText, 10);
     const spaceWidth = regular.widthOfTextAtSize(" ", 10);
 
