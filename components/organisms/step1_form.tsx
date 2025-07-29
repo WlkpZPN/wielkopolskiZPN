@@ -142,7 +142,7 @@ const StepOneForm = ({
                                     checked={data.number_of_seasons === "1"}
                                     value={"1"}
                                     onChange={(e) => {
-                                        handleChange("1", "number_of_seasons", 1)
+                                        handleChange("1", "number_of_seasons", 1);
                                         handleChange("2025/2026", "seasons", 1);
                                     }}
                                 >
