@@ -16,6 +16,7 @@ import {ApplicationContext} from "./club_application";
 import ErrorMessage from "../atoms/error_message";
 import ZipCodeInput from "../atoms/zip_code_input";
 import RadioButton from "../atoms/radio_button";
+import {createSeasons} from "../../middleware/utils";
 
 const StepOneForm = ({
                          data,
@@ -144,9 +145,10 @@ const StepOneForm = ({
                                     onChange={(e) => {
                                         handleChange({
                                             number_of_seasons: "1",
-                                            seasons: "2025/2026"
-                                        }, 1);
+                                            seasons: createSeasons("1")
+                                        }, null, 1);
                                     }}
+
                                 >
                                     1 sezon
                                 </RadioButton>
@@ -159,10 +161,11 @@ const StepOneForm = ({
                                     checked={data.number_of_seasons === "2"}
                                     onChange={(e) => {
                                         handleChange({
-                                            number_of_seasons: "1",
-                                            seasons: "2025/2026"
+                                            number_of_seasons: "2",
+                                            seasons: createSeasons("1")
                                         }, null, 1);
                                     }}
+
 
                                 >
                                     2 sezony
