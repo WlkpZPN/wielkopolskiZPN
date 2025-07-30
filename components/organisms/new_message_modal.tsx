@@ -116,10 +116,7 @@ const NewMessageModal = ({ visible, setVisible }) => {
           </div>
           <ErrorMessage> {error}</ErrorMessage>
           <span style={{ fontWeight: 'bold' }}> Grupa odbiorców</span>
-          <Select
-            value={recipients}
-            onChange={(e) => setRecipients(e.target.value)}
-          >
+          <Select value={recipients} onChange={(e) => setRecipients(e.target.value)}>
             <option value="aktywne">Kluby aktywne</option>
             <option value="nieaktywne">Kluby nieaktywne</option>
             <option value="nierozpoczęte">Wnioski nierozpoczęte</option>
@@ -142,12 +139,8 @@ const NewMessageModal = ({ visible, setVisible }) => {
             onChange={(e) => setRule(e.target.value)}
           >
             <option value="brak">Brak reguły</option>
-            <option value="rozpoczęcie procesu">
-              W dniu rozpoczęcia procesu
-            </option>
-            <option value="7 dni przed końcem procesu">
-              7 dni przed końcem procesu
-            </option>
+            <option value="rozpoczęcie procesu">W dniu rozpoczęcia procesu</option>
+            <option value="7 dni przed końcem procesu">7 dni przed końcem procesu</option>
           </Select>
           <span style={{ fontWeight: 'bold' }}>Wiadomość</span>
           <RichTextEditor value={message} onChange={(e) => setMessage(e)} />

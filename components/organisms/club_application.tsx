@@ -1,21 +1,21 @@
-import styled from "styled-components";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useRouter } from "next/router";
-import { useState, createContext, useEffect } from "react";
-import Select from "../atoms/form_select";
-import { extractAddressData } from "../../middleware/utils";
-import StepOneForm from "./step1_form";
-import StepTwoForm from "./step2_form";
-import StepThreeForm from "./step3_form";
-import ConfirmChangeModal from "../molecules/confirmChangeModal";
-import StepFourForm from "./step4_form";
-import StepFiveForm from "./step5_form";
-import StepSixForm from "./step6_form";
-import StepSevenForm from "./step7_form";
-import StepBox from "../atoms/step_box";
-import Loader from "../atoms/loader";
-import PrimaryButton from "../atoms/primary_button";
+import styled from 'styled-components';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { useState, createContext, useEffect } from 'react';
+import Select from '../atoms/form_select';
+import { extractAddressData } from '../../middleware/utils';
+import StepOneForm from './step1_form';
+import StepTwoForm from './step2_form';
+import StepThreeForm from './step3_form';
+import ConfirmChangeModal from '../molecules/confirmChangeModal';
+import StepFourForm from './step4_form';
+import StepFiveForm from './step5_form';
+import StepSixForm from './step6_form';
+import StepSevenForm from './step7_form';
+import StepBox from '../atoms/step_box';
+import Loader from '../atoms/loader';
+import PrimaryButton from '../atoms/primary_button';
 import {
   checkStepOne,
   checkStepTwo,
@@ -23,7 +23,7 @@ import {
   checkStepFour,
   checkStepFive,
   checkStepSix,
-} from "../../middleware/stepValidation";
+} from '../../middleware/stepValidation';
 const StepsContainer = styled.div`
   display: flex;
   position: relative;
@@ -51,80 +51,71 @@ const ClubApplication = ({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [newStatus, setNewStatus] = useState(
-    clubData.applications[0].status_id
-  );
+  const [newStatus, setNewStatus] = useState(clubData.applications[0].status_id);
   const [step, setStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState({
-    stepOne: completed ? "completed" : "default",
-    stepTwo: completed ? "completed" : "default",
-    stepThree: completed ? "completed" : "default",
-    stepFour: completed ? "completed" : "default",
-    stepFive: completed ? "completed" : "default",
-    stepSix: completed ? "completed" : "default",
-    stepSeven: completed ? "completed" : "default",
+    stepOne: completed ? 'completed' : 'default',
+    stepTwo: completed ? 'completed' : 'default',
+    stepThree: completed ? 'completed' : 'default',
+    stepFour: completed ? 'completed' : 'default',
+    stepFive: completed ? 'completed' : 'default',
+    stepSix: completed ? 'completed' : 'default',
+    stepSeven: completed ? 'completed' : 'default',
   });
 
   useEffect(() => {
     let newStepData = { ...completedSteps };
-    newStepData.stepFour = "";
+    newStepData.stepFour = '';
 
-    if (
-      clubData.applications[0].statuses.id === 1 &&
-      clubData.applications[0].updated_at
-    ) {
-      handleStepChange("jump", 1, 1);
-      handleStepChange("jump", 3, 3);
-      handleStepChange("jump", 4, 4);
-      handleStepChange("jump", 5, 5);
-      handleStepChange("jump", 6, 6);
-      handleStepChange("jump", 2, 2);
+    if (clubData.applications[0].statuses.id === 1 && clubData.applications[0].updated_at) {
+      handleStepChange('jump', 1, 1);
+      handleStepChange('jump', 3, 3);
+      handleStepChange('jump', 4, 4);
+      handleStepChange('jump', 5, 5);
+      handleStepChange('jump', 6, 6);
+      handleStepChange('jump', 2, 2);
     }
   }, []);
 
   const [city, street, zipCode] = extractAddressData(clubData.address);
   const [error, setError] = useState({
-    stepOne: improvements.one ? error_message : "",
-    stepTwo: improvements.two ? error_message : "",
-    stepThree: improvements.three ? error_message : "",
-    stepFour: improvements.four ? error_message : "",
-    stepFive: improvements.five ? error_message : "",
-    stepSix: improvements.six ? error_message : "",
-    stepSeven: improvements.seven ? error_message : "",
+    stepOne: improvements.one ? error_message : '',
+    stepTwo: improvements.two ? error_message : '',
+    stepThree: improvements.three ? error_message : '',
+    stepFour: improvements.four ? error_message : '',
+    stepFive: improvements.five ? error_message : '',
+    stepSix: improvements.six ? error_message : '',
+    stepSeven: improvements.seven ? error_message : '',
   });
 
   //console.log("sezony", clubData.applications[0].seasons);
 
   const [formData, setFormData] = useState({
     stepOne: {
-      leauge: clubData.leauge?.toLowerCase() || "brak",
-      number_of_seasons: clubData.applications[0].number_of_seasons || "1",
-      clubName: clubData.name || "",
-      futsal_subtype: clubData.futsal_subtype || "II",
-      clubCity: city || "",
-      clubZipCode: zipCode || "",
-      clubStreet: street || "",
-      email: clubData.email || "",
-      agentName: clubData.agent_name ? clubData.agent_name.split(" ")[0] : "",
-      agentLastName: clubData.agent_name
-        ? clubData.agent_name.split(" ")[1]
-        : "",
-      position: clubData.agent_position || "",
-      agentEmail: clubData.agent_email || "",
-      agentPhone: clubData.agent_phone || "",
+      leauge: clubData.leauge?.toLowerCase() || 'brak',
+      number_of_seasons: clubData.applications[0].number_of_seasons || '1',
+      clubName: clubData.name || '',
+      futsal_subtype: clubData.futsal_subtype || 'II',
+      clubCity: city || '',
+      clubZipCode: zipCode || '',
+      clubStreet: street || '',
+      email: clubData.email || '',
+      agentName: clubData.agent_name ? clubData.agent_name.split(' ')[0] : '',
+      agentLastName: clubData.agent_name ? clubData.agent_name.split(' ')[1] : '',
+      position: clubData.agent_position || '',
+      agentEmail: clubData.agent_email || '',
+      agentPhone: clubData.agent_phone || '',
     },
     stepTwo: {
       participateInCompetitions: clubData.applications[0]
-        ? clubData.applications[0]
-            .declaration_on_the_subject_of_participation_in_the_competition
+        ? clubData.applications[0].declaration_on_the_subject_of_participation_in_the_competition
         : false,
       privateDataProtection: clubData.applications[0]
-        ? clubData.applications[0]
-            .declaration_on_the_use_of_personal_data_documentation
+        ? clubData.applications[0].declaration_on_the_use_of_personal_data_documentation
         : false,
       krs_documents: clubData.applications[0]
         ? clubData.applications[0].applications_attachments.filter(
-            (file) => file.category === "krs_documents"
+            (file) => file.category === 'krs_documents',
           )
         : [],
     },
@@ -132,14 +123,13 @@ const ClubApplication = ({
       numberOfYouthGroups: clubData.applications[0].number_of_youth_groups,
       shareOfYouthGroups: clubData.applications[0].share_of_youth_groups,
       medicalDeclaration:
-        clubData.applications[0].declaration_on_medical_care_for_the_players ||
-        false,
-      clubAgreementName: clubData.applications[0].club_agreement_name || "",
+        clubData.applications[0].declaration_on_medical_care_for_the_players || false,
+      clubAgreementName: clubData.applications[0].club_agreement_name || '',
       youthGroupsPossession:
-        clubData.applications[0].youth_groups_possession || "posiadamy zespoły",
+        clubData.applications[0].youth_groups_possession || 'posiadamy zespoły',
       agreement_documents: clubData.applications[0]
         ? clubData.applications[0].applications_attachments.filter(
-            (file) => file.category === "agreement_documents"
+            (file) => file.category === 'agreement_documents',
           )
         : [],
     },
@@ -149,21 +139,16 @@ const ClubApplication = ({
     },
     stepFive: {
       NoObligationsTowardsEmployees:
-        clubData.applications[0]
-          .declaration_of_no_obligations_towards_employees || false,
+        clubData.applications[0].declaration_of_no_obligations_towards_employees || false,
       NoObligationsTowardsPzpnAndWzpn:
-        clubData.applications[0]
-          .declaration_of_no_obligations_towards_PZPN_and_WZPN || false,
+        clubData.applications[0].declaration_of_no_obligations_towards_PZPN_and_WZPN || false,
       NoObligationTowardsFootballClubs:
-        clubData.applications[0]
-          .declaration_of_no_obligations_towards_football_clubs || false,
+        clubData.applications[0].declaration_of_no_obligations_towards_football_clubs || false,
     },
     stepSix: {
-      havingFootballStaff:
-        clubData.applications[0].declaration_of_having_football_staff || false,
+      havingFootballStaff: clubData.applications[0].declaration_of_having_football_staff || false,
       HavingSecurityServices:
-        clubData.applications[0].declaration_of_having_security_services ||
-        false,
+        clubData.applications[0].declaration_of_having_security_services || false,
     },
     stepSeven: {
       invoice_required: clubData.applications[0].invoice_required,
@@ -175,22 +160,20 @@ const ClubApplication = ({
   const deleteFacilityFile = (filename) => {
     let newFormData = formData;
 
-    if (formData.stepOne.leauge == "futsal") {
-      newFormData.stepFour.futsal_facilities[
-        currentObject
-      ].applications_attachments = newFormData.stepFour.futsal_facilities[
-        currentObject
-      ].applications_attachments.filter((el) => el.name !== filename);
+    if (formData.stepOne.leauge == 'futsal') {
+      newFormData.stepFour.futsal_facilities[currentObject].applications_attachments =
+        newFormData.stepFour.futsal_facilities[currentObject].applications_attachments.filter(
+          (el) => el.name !== filename,
+        );
       setFormData(newFormData);
       router.replace(router.asPath);
       return;
     }
 
-    newFormData.stepFour.sport_facilities[
-      currentObject
-    ].applications_attachments = newFormData.stepFour.sport_facilities[
-      currentObject
-    ].applications_attachments.filter((el) => el.name !== filename);
+    newFormData.stepFour.sport_facilities[currentObject].applications_attachments =
+      newFormData.stepFour.sport_facilities[currentObject].applications_attachments.filter(
+        (el) => el.name !== filename,
+      );
     setFormData(newFormData);
     router.replace(router.asPath);
   };
@@ -199,7 +182,7 @@ const ClubApplication = ({
     // console.log(data);
     if (data.id) {
       axios
-        .post("/api/applications/deleteSportFacility", {
+        .post('/api/applications/deleteSportFacility', {
           facilityId: data.id,
         })
         .then((res) => {
@@ -212,7 +195,7 @@ const ClubApplication = ({
     const newFormData = formData;
     newFormData.stepFour.sport_facilities.splice(
       newFormData.stepFour.sport_facilities.findIndex((e) => e.id === data.id),
-      1
+      1,
     );
     router.replace(router.asPath);
 
@@ -221,11 +204,11 @@ const ClubApplication = ({
   };
 
   const deleteFutsalFacility = (data) => {
-    console.log("deleting futsal");
+    console.log('deleting futsal');
     try {
       if (data.id) {
         axios
-          .post("/api/applications/deleteFutsalFacility", {
+          .post('/api/applications/deleteFutsalFacility', {
             facilityId: data.id,
           })
           .then((res) => {
@@ -237,18 +220,16 @@ const ClubApplication = ({
       }
       const newFormData = formData;
       newFormData.stepFour.futsal_facilities.splice(
-        newFormData.stepFour.futsal_facilities.findIndex(
-          (e) => e.id === data.id
-        ),
-        1
+        newFormData.stepFour.futsal_facilities.findIndex((e) => e.id === data.id),
+        1,
       );
       router.replace(router.asPath);
 
       setFormData(newFormData);
       setCurrentObject(0);
     } catch (e) {
-      console.log("futsal removing error", e);
-      toast.error("Nie udało się usunąć obiektu,spróbuj ponownie");
+      console.log('futsal removing error', e);
+      toast.error('Nie udało się usunąć obiektu,spróbuj ponownie');
     }
   };
 
@@ -305,79 +286,76 @@ const ClubApplication = ({
   const createNewFutsalFacilityForm = () => {
     if (formData.stepFour.futsal_facilities.length < 5) {
       const facilitiesArray = formData.stepFour.futsal_facilities;
-      if (
-        facilitiesArray.length > 0 &&
-        !facilitiesArray[facilitiesArray.length - 1].id
-      ) {
-        return "Zapisz aktualny obiekt aby utworzyć kolejny";
+      if (facilitiesArray.length > 0 && !facilitiesArray[facilitiesArray.length - 1].id) {
+        return 'Zapisz aktualny obiekt aby utworzyć kolejny';
       }
 
       const newForm = {
-        name: "Obiekt 1",
-        address: "",
-        postal_code: "",
-        city: "",
+        name: 'Obiekt 1',
+        address: '',
+        postal_code: '',
+        city: '',
         I01_1: false,
         I01_2: false,
         I02_2: false,
-        I02_audience_capacity: "0",
-        I02_audience_entrance: "0",
-        I03_lighting: "0",
-        I04_length: "0",
-        I04_width: "0",
-        I04_1: "0",
-        I04_2: "0",
-        I04_3: "0",
-        I05_primary_color: "",
-        I05_secondary_color: "",
-        I05_material: "",
+        I02_audience_capacity: '0',
+        I02_audience_entrance: '0',
+        I03_lighting: '0',
+        I04_length: '0',
+        I04_width: '0',
+        I04_1: '0',
+        I04_2: '0',
+        I04_3: '0',
+        I05_primary_color: '',
+        I05_secondary_color: '',
+        I05_material: '',
         I05_lines: null,
-        I05_dyscyplines: "",
-        I06_material: "",
-        I06_color: "",
+        I05_dyscyplines: '',
+        I06_material: '',
+        I06_color: '',
         I06_base: false,
-        I07_first_half_capacity: "0",
-        I07_second_half_capacity: "0",
+        I07_first_half_capacity: '0',
+        I07_second_half_capacity: '0',
         I07_table: false,
-        I08_clock: "analogowy",
-        I08_scoreboards: "0",
-        I08_sound: "stałe",
-        I09_length: "0",
-        I09_width: "0",
-        I09_guest_length: "0",
-        I09_guest_width: "0",
-        I09_guest_hygiene: "0",
-        I09_guest_showers: "0",
-        I09_hygiene: "0",
-        I09_showers: "0",
+        I08_clock: 'analogowy',
+        I08_scoreboards: '0',
+        I08_sound: 'stałe',
+        I09_length: '0',
+        I09_width: '0',
+        I09_guest_length: '0',
+        I09_guest_width: '0',
+        I09_guest_hygiene: '0',
+        I09_guest_showers: '0',
+        I09_hygiene: '0',
+        I09_showers: '0',
         I09_exit: false,
-        I10_width: "0",
-        I10_length: "0",
-        I10_hygiene: "0",
-        I10_showers: "0",
-        I11_heating: "brak",
+        I10_width: '0',
+        I10_length: '0',
+        I10_hygiene: '0',
+        I10_showers: '0',
+        I11_heating: 'brak',
         I11_air_conditioning: false,
         I12_stretcher: false,
         I12_medical_service: false,
-        I13_capacity: "0",
+        I13_capacity: '0',
         I13_internet_access: false,
         I13_separate_press: false,
-        I13_separate_media: "",
+        I13_separate_media: '',
         I14_moving: false,
-        I14_moving_quantity: "0",
-        I14_moving_length: "0",
-        I14_moving_width: "0",
+        I14_moving_quantity: '0',
+        I14_moving_length: '0',
+        I14_moving_width: '0',
         I14_electric: false,
-        I14_electric_quantity: "0",
-        I14_electric_length: "0",
-        I14_electric_width: "0",
+        I14_electric_quantity: '0',
+        I14_electric_length: '0',
+        I14_electric_width: '0',
         I14_fixed: false,
-        I14_fixed_quantity: "0",
-        I14_fixed_length: "0",
-        I14_fixed_width: "0",
-        I15_parking_sports: "0",
-        I15_special_spots: "0",
-        I16_service: "0",
+        I14_fixed_quantity: '0',
+        I14_fixed_length: '0',
+        I14_fixed_width: '0',
+        I15_parking_sports: '0',
+        I15_special_spots: '0',
+        I16_service: '0',
         applications_attachments: [],
       };
 
@@ -388,7 +366,7 @@ const ClubApplication = ({
       router.replace(router.asPath);
       return true;
     }
-    return "Osiągnięto maksymalną liczbe obiektów sportowych (5)";
+    return 'Osiągnięto maksymalną liczbe obiektów sportowych (5)';
   };
 
   const createNewSportFacilityForm = () => {
@@ -396,24 +374,21 @@ const ClubApplication = ({
       // dodaj obiekt tylko jesli ich liczba w clubData i formData jest taka sama
       //console.log("adding new facility", formData.stepFour.sport_facilities);
       const facilitiesArray = formData.stepFour.sport_facilities;
-      if (
-        facilitiesArray.length > 0 &&
-        !facilitiesArray[facilitiesArray.length - 1].id
-      ) {
-        return "Zapisz aktualny obiekt aby utworzyć kolejny";
+      if (facilitiesArray.length > 0 && !facilitiesArray[facilitiesArray.length - 1].id) {
+        return 'Zapisz aktualny obiekt aby utworzyć kolejny';
       }
       const newForm = {
-        name: "Obiekt 1",
-        address: "",
-        post_code: "",
-        city: "",
+        name: 'Obiekt 1',
+        address: '',
+        post_code: '',
+        city: '',
         I01_1: false,
         I01_2: false,
         I02_1: false,
         I02_2: false,
         I02_3: false,
         I02_4: false,
-        I03_total_capacity: "0",
+        I03_total_capacity: '0',
         I03_1: false,
         I03_2: false,
         I04_1: false,
@@ -421,25 +396,25 @@ const ClubApplication = ({
         I04_3: false,
         I04_4: false,
         I04_5: false,
-        I05_number_of_seats_for_guests: "0",
-        I05_percentage_of_seats_for_guests: "0",
+        I05_number_of_seats_for_guests: '0',
+        I05_percentage_of_seats_for_guests: '0',
         I05_1: false,
         I05_2: false,
         I05_3: false,
-        I06_type: "naturalna",
-        I06_condition: "dobry",
+        I06_type: 'naturalna',
+        I06_condition: 'dobry',
         I06_1: false,
         I06_2: false,
         I06_3: false,
         I06_4: false,
         I06_5: false,
-        I06_width: "",
-        I06_length: "",
+        I06_width: '',
+        I06_length: '',
         I07_1: false,
         I07_2: false,
         I07_3: false,
         I07_4: false,
-        I08_number_of_seats_on_the_bench: "0",
+        I08_number_of_seats_on_the_bench: '0',
         I08_1: false,
         I08_2: false,
         I08_3: false,
@@ -447,16 +422,16 @@ const ClubApplication = ({
         I09_1: false,
         I09_2: false,
         I10_1: false,
-        I11_number_of_seats: "0",
-        I11_number_of_hangers_or_lockers: "0",
-        I11_number_of_showers: "0",
-        I11_number_of_toilets: "0",
+        I11_number_of_seats: '0',
+        I11_number_of_hangers_or_lockers: '0',
+        I11_number_of_showers: '0',
+        I11_number_of_toilets: '0',
         I11_1: false,
         I11_2: false,
-        I12_number_of_seats: "0",
-        I12_number_of_hangers_or_lockers: "0",
-        I12_number_of_showers: "0",
-        I12_number_of_toilets: "0",
+        I12_number_of_seats: '0',
+        I12_number_of_hangers_or_lockers: '0',
+        I12_number_of_showers: '0',
+        I12_number_of_toilets: '0',
         I12_1: false,
         I12_2: false,
         I13_1: false,
@@ -467,9 +442,9 @@ const ClubApplication = ({
         I14_1: false,
         I14_2: false,
         I14_3: false,
-        I15_number_of_toilets_for_women: "0",
-        I15_number_of_toilets_for_men: "0",
-        I15_standard: "Odpowiedni",
+        I15_number_of_toilets_for_women: '0',
+        I15_number_of_toilets_for_men: '0',
+        I15_standard: 'Odpowiedni',
         I15_1: false,
         I16_1: false,
         I17_1: false,
@@ -478,9 +453,9 @@ const ClubApplication = ({
         I19_2: false,
         I19_3: false,
         I20_1: false,
-        I21_3_1_gates: "",
-        I21_3_15_gates: "",
-        I21_3_2_gates: "",
+        I21_3_1_gates: '',
+        I21_3_15_gates: '',
+        I21_3_2_gates: '',
 
         applications_attachments: [],
       };
@@ -492,21 +467,19 @@ const ClubApplication = ({
       router.replace(router.asPath);
       return true;
     } else {
-      return "Osiągnięto maksymalną liczbe obiektów sportowych (5)";
+      return 'Osiągnięto maksymalną liczbe obiektów sportowych (5)';
     }
   };
 
   const [fileData, setFileData] = useState(
-    clubData.applications[0]
-      ? clubData.applications.applications_attachments
-      : []
+    clubData.applications[0] ? clubData.applications.applications_attachments : [],
   );
 
   const handleFileChange = (id, file, name, category) => {
     let newFormData = formData;
 
     switch (category) {
-      case "krs_documents":
+      case 'krs_documents':
         newFormData.stepTwo.krs_documents.push({
           file,
           id: id,
@@ -516,7 +489,7 @@ const ClubApplication = ({
 
         setFormData(newFormData);
         break;
-      case "agreement_documents":
+      case 'agreement_documents':
         newFormData.stepThree.agreement_documents.push({
           file,
           id: id,
@@ -530,16 +503,15 @@ const ClubApplication = ({
     let newFormData = formData;
 
     switch (category) {
-      case "krs_documents":
-        newFormData.stepTwo.krs_documents =
-          newFormData.stepTwo.krs_documents.filter((file) => file.id !== id);
+      case 'krs_documents':
+        newFormData.stepTwo.krs_documents = newFormData.stepTwo.krs_documents.filter(
+          (file) => file.id !== id,
+        );
 
         break;
-      case "agreement_documents":
+      case 'agreement_documents':
         newFormData.stepThree.agreement_documents =
-          newFormData.stepThree.agreement_documents.filter(
-            (file) => file.id !== id
-          );
+          newFormData.stepThree.agreement_documents.filter((file) => file.id !== id);
         break;
     }
 
@@ -549,9 +521,7 @@ const ClubApplication = ({
   const handleObjectFileChange = (id, file, name, category, objectIndex) => {
     let newFileData = formData;
 
-    newFileData.stepFour.sport_facilities[
-      objectIndex
-    ].applications_attachments.push({
+    newFileData.stepFour.sport_facilities[objectIndex].applications_attachments.push({
       id: id,
       file,
       name,
@@ -565,23 +535,21 @@ const ClubApplication = ({
     let newFileData = formData;
 
     newFileData.stepFour.sport_facilities[index].applications_attachments =
-      newFileData.stepFour.sport_facilities[
-        index
-      ].applications_attachments.filter((file) => file.id !== fileId);
+      newFileData.stepFour.sport_facilities[index].applications_attachments.filter(
+        (file) => file.id !== fileId,
+      );
 
     setFormData(newFileData);
   };
 
   const sendApplication = async () => {
     // validate  all steps
-    const stepTwoFiles =
-      clubData.applications[0].applications_attachments.filter(
-        (file) => file.category === "krs_documents"
-      );
-    const stepThreeFiles =
-      clubData.applications[0].applications_attachments.filter(
-        (file) => file.category === "agreement_documents"
-      );
+    const stepTwoFiles = clubData.applications[0].applications_attachments.filter(
+      (file) => file.category === 'krs_documents',
+    );
+    const stepThreeFiles = clubData.applications[0].applications_attachments.filter(
+      (file) => file.category === 'agreement_documents',
+    );
     const checkSuperVision = () => {
       if (stepTwoFiles.length === 0) {
         return true;
@@ -589,24 +557,24 @@ const ClubApplication = ({
 
       if (
         stepThreeFiles.length === 0 &&
-        formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
+        formData.stepThree.youthGroupsPossession === 'porozumienie na szkolenie'
       ) {
         return true;
       }
       if (
         stepThreeFiles.length === 0 &&
-        formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
+        formData.stepThree.youthGroupsPossession === 'porozumienie na szkolenie'
       ) {
         return true;
       }
 
       formData.stepFour.sport_facilities.forEach((facility) => {
         const files1 = facility.applications_attachments.filter(
-          (el) => el.category === "I01_agreement"
+          (el) => el.category === 'I01_agreement',
         );
 
         const files2 = facility.applications_attachments.filter(
-          (el) => el.category === "I17_intensity_level"
+          (el) => el.category === 'I17_intensity_level',
         );
         if (facility.I01_1 === false && files1.length === 0) {
           return true;
@@ -624,35 +592,33 @@ const ClubApplication = ({
     // step one
     result = checkStepOne(formData.stepOne);
     if (result.valid === false) {
-      handleStepFill("stepOne", "error");
+      handleStepFill('stepOne', 'error');
       setError((state) => ({ ...state, stepOne: result.text }));
       window.scrollTo(0, 0);
-      toast.error("Prosimy wypełnić wszystkie etapy");
+      toast.error('Prosimy wypełnić wszystkie etapy');
       return;
     }
 
     // step two
     result = checkStepTwo(formData.stepTwo);
     if (result.valid === false) {
-      handleStepFill("stepTwo", "error");
+      handleStepFill('stepTwo', 'error');
       setError((state) => ({ ...state, stepTwo: result.text }));
       window.scrollTo(0, 0);
-      toast.error("Prosimy wypełnić wszystkie etapy");
+      toast.error('Prosimy wypełnić wszystkie etapy');
       return;
     }
 
     if (
-      (formData.stepOne.leauge === "iv liga" ||
-        formData.stepOne.leauge === "v liga" ||
-        formData.stepOne.leauge === "klasa okręgowa") &&
-      formData.stepThree.youthGroupsPossession ===
-        "wystepujemy w rozgrywkach klasy A"
+      (formData.stepOne.leauge === 'iv liga' ||
+        formData.stepOne.leauge === 'v liga' ||
+        formData.stepOne.leauge === 'klasa okręgowa') &&
+      formData.stepThree.youthGroupsPossession === 'wystepujemy w rozgrywkach klasy A'
     ) {
-      handleStepFill("stepThree", "error");
+      handleStepFill('stepThree', 'error');
       setError((state) => ({
         ...state,
-        stepThree:
-          "Deklaracja ligii z kroku 1 nie zgadza się z deklaracją powyżej",
+        stepThree: 'Deklaracja ligii z kroku 1 nie zgadza się z deklaracją powyżej',
       }));
       window.scrollTo(0, 0);
 
@@ -660,13 +626,13 @@ const ClubApplication = ({
     }
     //step three
 
-    if (formData.stepOne.leauge !== "futsal") {
+    if (formData.stepOne.leauge !== 'futsal') {
       result = checkStepThree(formData.stepThree);
       if (result.valid === false) {
-        handleStepFill("stepThree", "error");
+        handleStepFill('stepThree', 'error');
         setError((state) => ({ ...state, stepThree: result.text }));
         window.scrollTo(0, 0);
-        toast.error("Prosimy wypełnić wszystkie etapy");
+        toast.error('Prosimy wypełnić wszystkie etapy');
         return;
       }
     }
@@ -674,44 +640,44 @@ const ClubApplication = ({
     // step four
     result = checkStepFour(formData.stepFour);
     if (result.valid === false) {
-      handleStepFill("stepFour", "error");
+      handleStepFill('stepFour', 'error');
       setError((state) => ({ ...state, stepFour: result.text }));
       window.scrollTo(0, 0);
-      toast.error("Prosimy wypełnić wszystkie etapy");
+      toast.error('Prosimy wypełnić wszystkie etapy');
       return;
     }
     //step five
     result = checkStepFive(formData.stepFive);
 
     if (result.valid === false) {
-      handleStepFill("stepFive", "error");
+      handleStepFill('stepFive', 'error');
       setError((state) => ({ ...state, stepFive: result.text }));
       window.scrollTo(0, 0);
-      toast.error("Prosimy wypełnić wszystkie etapy");
+      toast.error('Prosimy wypełnić wszystkie etapy');
       return;
     }
 
     //step six
     result = checkStepSix(formData.stepSix);
     if (result.valid === false) {
-      handleStepFill("stepSix", "error");
+      handleStepFill('stepSix', 'error');
       setError((state) => ({ ...state, stepSix: result.text }));
       window.scrollTo(0, 0);
-      toast.error("Prosimy wypełnić wszystkie etapy");
+      toast.error('Prosimy wypełnić wszystkie etapy');
       return;
     }
-    toast.info("Wysyłanie wniosku do Wielkopolskiego ZPN");
+    toast.info('Wysyłanie wniosku do Wielkopolskiego ZPN');
     setLoading(true);
     await addSportFacility();
 
-    await axios.post("/api/applications/addHistory", {
-      description: "Złożenie wniosku licencyjnego w terminie.",
+    await axios.post('/api/applications/addHistory', {
+      description: 'Złożenie wniosku licencyjnego w terminie.',
       applicationID: clubData.applications[0].id,
       statusID: isSuperVision ? 2 : 3,
     });
 
     await axios
-      .post("/api/applications/updateApplication", {
+      .post('/api/applications/updateApplication', {
         formData,
         clubData,
         statusId: isSuperVision ? 2 : 3,
@@ -724,10 +690,10 @@ const ClubApplication = ({
         setLoading(false);
       });
 
-    await axios.post("/api/mails/applicationSendedMail", {
+    await axios.post('/api/mails/applicationSendedMail', {
       email: clubData.email,
       description:
-        "Potwierdzamy złożenie wniosku na Platformie Licencyjnej Wielkopolskiego Związku Piłki Nożnej. Nasz zespół rozpatrzy wniosek tak szybko jak to możliwe. Prosimy o cierpliwość.",
+        'Potwierdzamy złożenie wniosku na Platformie Licencyjnej Wielkopolskiego Związku Piłki Nożnej. Nasz zespół rozpatrzy wniosek tak szybko jak to możliwe. Prosimy o cierpliwość.',
     });
     router.replace(router.asPath);
     // console.log("application sent");
@@ -745,7 +711,7 @@ const ClubApplication = ({
       addSportFacility();
     }
     axios
-      .post("/api/applications/updateApplication", {
+      .post('/api/applications/updateApplication', {
         formData,
         clubData,
         statusId: 1,
@@ -753,7 +719,7 @@ const ClubApplication = ({
       .then((res) => {
         setLoading(false);
         console.log(res);
-        toast.success("zapisano jako kopie roboczą", {
+        toast.success('zapisano jako kopie roboczą', {
           autoClose: 1500,
         });
         router.replace(router.asPath);
@@ -774,7 +740,7 @@ const ClubApplication = ({
     // console.log(formData.stepFour.sport_facilities[currentObject]);
     setLoading(true);
     try {
-      const res = await axios.post("/api/applications/addSportFacility", {
+      const res = await axios.post('/api/applications/addSportFacility', {
         sport_facility: formData.stepFour.sport_facilities[currentObject],
         clubData,
       });
@@ -787,26 +753,23 @@ const ClubApplication = ({
       const filesToUpload = new FormData();
       attachments.forEach((attachment) => {
         console.log(attachment.fileData.name);
-        filesToUpload.append("files", attachment.fileData);
+        filesToUpload.append('files', attachment.fileData);
       });
       filesToUpload.append('targetDir', '/wnioski');
 
       const config = {
-        headers: { "Content-type": "multipart/form-data" },
+        headers: { 'Content-type': 'multipart/form-data' },
         onUploadProgress: (event) => {
-          console.log(
-            `Current progress:`,
-            Math.round((event.loaded * 100) / event.total)
-          );
+          console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
         },
       };
       //TODO HERE!
 
-      await axios.post("/api/ftp/upload", filesToUpload, config);
+      await axios.post('/api/ftp/upload', filesToUpload, config);
 
       //2 attach files to current facility object
 
-      const res2 = await axios.post("/api/applications/addFacilitiesUrl", {
+      const res2 = await axios.post('/api/applications/addFacilitiesUrl', {
         facilityFilesUrls: attachments,
         facilityID: res.data.facility.id,
         applicationID: clubData.applications[0].id,
@@ -819,21 +782,21 @@ const ClubApplication = ({
       setFormData(newFormData);
 
       if (!toastHidden) {
-        toast.info("Zapisano obiekt", {
+        toast.info('Zapisano obiekt', {
           autoClose: 2000,
         });
       }
     } catch (err) {
       console.log(err);
       setLoading(false);
-      toast.error("Nie udało się zapisać obiektu,spróbuj ponownie");
+      toast.error('Nie udało się zapisać obiektu,spróbuj ponownie');
     }
   };
 
   const addFutsalFacility = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("/api/applications/addFutsalFacility", {
+      const res = await axios.post('/api/applications/addFutsalFacility', {
         sport_facility: formData.stepFour.futsal_facilities[currentObject],
         clubData,
       });
@@ -845,42 +808,39 @@ const ClubApplication = ({
 
       const filesToUpload = new FormData();
       attachments.forEach((attachment) => {
-        filesToUpload.append("files", attachment.fileData);
+        filesToUpload.append('files', attachment.fileData);
       });
       filesToUpload.append('targetDir', '/wnioski');
 
       const config = {
-        headers: { "Content-type": "multipart/form-data" },
+        headers: { 'Content-type': 'multipart/form-data' },
         onUploadProgress: (event) => {
-          console.log(
-            `Current progress:`,
-            Math.round((event.loaded * 100) / event.total)
-          );
+          console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
         },
       };
 
-      await axios.post("/api/ftp/upload", filesToUpload, config);
+      await axios.post('/api/ftp/upload', filesToUpload, config);
 
       //attach files
 
-      const res2 = await axios.post("/api/applications/addFutsalUrl", {
+      const res2 = await axios.post('/api/applications/addFutsalUrl', {
         facilityFilesUrls: attachments,
         facilityID: res.data.facility.id,
         applicationID: clubData.applications[0].id,
       });
 
       setLoading(false);
-      toast.success("Zapisano nowy obiekt");
+      toast.success('Zapisano nowy obiekt');
     } catch (e) {
-      console.log("error when adding futsal facility:", e);
+      console.log('error when adding futsal facility:', e);
       setLoading(false);
-      toast.error("Nie udało się zapisać obiektu, spróbuj ponownie");
+      toast.error('Nie udało się zapisać obiektu, spróbuj ponownie');
     }
   };
 
   const clearErrors = (step) => {
     let newErrData = error;
-    newErrData[step] = "";
+    newErrData[step] = '';
     setError(newErrData);
   };
 
@@ -893,56 +853,56 @@ const ClubApplication = ({
         result = checkStepOne(formData.stepOne);
 
         if (!result.valid) {
-          handleStepFill("stepOne", "uncompleted");
+          handleStepFill('stepOne', 'uncompleted');
         }
         if (result.valid) {
-          handleStepFill("stepOne", "completed");
+          handleStepFill('stepOne', 'completed');
         }
         break;
       case 2:
         result = checkStepTwo(formData.stepTwo);
 
         if (!result.valid) {
-          handleStepFill("stepTwo", "uncompleted");
+          handleStepFill('stepTwo', 'uncompleted');
         }
         if (result.valid) {
-          handleStepFill("stepTwo", "completed");
+          handleStepFill('stepTwo', 'completed');
         }
         break;
       case 3:
         result = checkStepThree(formData.stepThree);
         if (!result.valid) {
-          handleStepFill("stepThree", "uncompleted");
+          handleStepFill('stepThree', 'uncompleted');
         }
         if (result.valid) {
-          handleStepFill("stepThree", "completed");
+          handleStepFill('stepThree', 'completed');
         }
         break;
       case 4:
         result = checkStepFour(formData.stepFour);
         if (!result.valid) {
-          handleStepFill("stepFour", "uncompleted");
+          handleStepFill('stepFour', 'uncompleted');
         }
         if (result.valid) {
-          handleStepFill("stepFour", "completed");
+          handleStepFill('stepFour', 'completed');
         }
         break;
       case 5:
         result = checkStepFive(formData.stepFive);
         if (!result.valid) {
-          handleStepFill("stepFive", "uncompleted");
+          handleStepFill('stepFive', 'uncompleted');
         }
         if (result.valid) {
-          handleStepFill("stepFive", "completed");
+          handleStepFill('stepFive', 'completed');
         }
         break;
       case 6:
         result = checkStepSix(formData.stepSix);
         if (!result.valid) {
-          handleStepFill("stepSix", "uncompleted");
+          handleStepFill('stepSix', 'uncompleted');
         }
         if (result.valid) {
-          handleStepFill("stepSix", "completed");
+          handleStepFill('stepSix', 'completed');
         }
         break;
       default:
@@ -952,18 +912,18 @@ const ClubApplication = ({
     // if step has empty required fields mark as uncompleted
     // if step has all field mark as completed
     switch (type) {
-      case "next":
+      case 'next':
         if (step < 7) {
           setStep(step + 1);
         }
         break;
-      case "previous":
+      case 'previous':
         if (step > 1) {
-          console.log("chuj");
+          console.log('chuj');
           setStep(step - 1);
         }
         break;
-      case "jump":
+      case 'jump':
         setStep(nextStep);
         break;
       default:
@@ -983,47 +943,17 @@ const ClubApplication = ({
           />
         );
       case 2:
-        return (
-          <StepTwoForm
-            readOnly={readOnly}
-            handleStepChange={handleStepChange}
-          />
-        );
+        return <StepTwoForm readOnly={readOnly} handleStepChange={handleStepChange} />;
       case 3:
-        return (
-          <StepThreeForm
-            readOnly={readOnly}
-            handleStepChange={handleStepChange}
-          />
-        );
+        return <StepThreeForm readOnly={readOnly} handleStepChange={handleStepChange} />;
       case 4:
-        return (
-          <StepFourForm
-            readOnly={readOnly}
-            handleStepChange={handleStepChange}
-          />
-        );
+        return <StepFourForm readOnly={readOnly} handleStepChange={handleStepChange} />;
       case 5:
-        return (
-          <StepFiveForm
-            readOnly={readOnly}
-            handleStepChange={handleStepChange}
-          />
-        );
+        return <StepFiveForm readOnly={readOnly} handleStepChange={handleStepChange} />;
       case 6:
-        return (
-          <StepSixForm
-            readOnly={readOnly}
-            handleStepChange={handleStepChange}
-          />
-        );
+        return <StepSixForm readOnly={readOnly} handleStepChange={handleStepChange} />;
       case 7:
-        return (
-          <StepSevenForm
-            readOnly={readOnly}
-            handleStepChange={handleObjectChange}
-          />
-        );
+        return <StepSevenForm readOnly={readOnly} handleStepChange={handleObjectChange} />;
     }
   };
 
@@ -1041,14 +971,14 @@ const ClubApplication = ({
     setLoading(true);
 
     try {
-      await axios.post("/api/applications/admin/editApplication", {
+      await axios.post('/api/applications/admin/editApplication', {
         formData,
         clubData,
         newStatus,
         userID: authData.id,
       });
 
-      toast.success("Wniosek zaktualizowany", {
+      toast.success('Wniosek zaktualizowany', {
         autoClose: 2000,
       });
       router.replace(router.asPath);
@@ -1056,13 +986,15 @@ const ClubApplication = ({
     } catch (e) {
       console.log(e);
       setLoading(false);
-      toast.error("Nie udało się edytować wniosku,spróbuj ponownie", {
+      toast.error('Nie udało się edytować wniosku,spróbuj ponownie', {
         autoClose: 2000,
       });
     }
   };
 
-  const changeApplicationDataClickFromEvent = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const changeApplicationDataClickFromEvent = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.preventDefault();
     await changeApplicationData(false); // lub true, zależnie od logiki
   };
@@ -1107,9 +1039,9 @@ const ClubApplication = ({
       <div>
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "12px",
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '12px',
           }}
         >
           {isAdmin && clubData.applications[0].status_id < 8 ? (
@@ -1119,12 +1051,12 @@ const ClubApplication = ({
                 visible={visible}
                 setVisible={setVisible}
                 nextStatus={newStatus}
-              />{" "}
+              />{' '}
               <p> Zmień status wniosku </p> &nbsp;&nbsp;
               <Select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value)}
-                style={{ maxWidth: "300px", marginTop: 0 }}
+                style={{ maxWidth: '300px', marginTop: 0 }}
               >
                 <option value={1}>roboczy</option>
                 <option value={2}>wnioskowany</option>
@@ -1135,7 +1067,7 @@ const ClubApplication = ({
                 <option value={7}>zaakceptowany opłacony</option>
               </Select>
               <PrimaryButton
-                style={{ marginLeft: "16px" }}
+                style={{ marginLeft: '16px' }}
                 type="button"
                 color="success"
                 hoverColor="successDark"
@@ -1148,7 +1080,7 @@ const ClubApplication = ({
         </div>
         <StepsContainer>
           <StepBox
-            improvements={improvements.one || ""}
+            improvements={improvements.one || ''}
             handleStepChange={handleStepChange}
             state={completedSteps.stepOne}
             number={1}
@@ -1158,7 +1090,7 @@ const ClubApplication = ({
           />
 
           <StepBox
-            improvements={improvements.two || ""}
+            improvements={improvements.two || ''}
             handleStepChange={handleStepChange}
             state={completedSteps.stepTwo}
             number={2}
@@ -1168,7 +1100,7 @@ const ClubApplication = ({
           />
 
           <StepBox
-            improvements={improvements.three || ""}
+            improvements={improvements.three || ''}
             handleStepChange={handleStepChange}
             state={completedSteps.stepThree}
             number={3}
@@ -1177,7 +1109,7 @@ const ClubApplication = ({
             helperText="Kryteria sportowe"
           />
           <StepBox
-            improvements={improvements.four || ""}
+            improvements={improvements.four || ''}
             handleStepChange={handleStepChange}
             state={completedSteps.stepFour}
             number={4}
@@ -1186,7 +1118,7 @@ const ClubApplication = ({
             helperText="Kryteria infrastrukturalne"
           />
           <StepBox
-            improvements={improvements.five || ""}
+            improvements={improvements.five || ''}
             handleStepChange={handleStepChange}
             state={completedSteps.stepFive}
             number={5}
@@ -1195,7 +1127,7 @@ const ClubApplication = ({
             helperText="Kryteria finansowe"
           />
           <StepBox
-            improvements={improvements.six || ""}
+            improvements={improvements.six || ''}
             handleStepChange={handleStepChange}
             state={completedSteps.stepSix}
             number={6}
@@ -1204,7 +1136,7 @@ const ClubApplication = ({
             helperText="kryteria personalne"
           />
           <StepBox
-            improvements={improvements.seven || ""}
+            improvements={improvements.seven || ''}
             handleStepChange={handleStepChange}
             state={completedSteps.stepSeven}
             number={7}

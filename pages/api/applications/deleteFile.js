@@ -1,8 +1,8 @@
-import multer from "multer";
-import multerS3 from "multer-s3";
-import aws from "aws-sdk";
-import prisma from "../../../middleware/prisma";
-import {DeleteObjectCommand, S3Client} from "@aws-sdk/client-s3";
+import multer from 'multer';
+import multerS3 from 'multer-s3';
+import aws from 'aws-sdk';
+import prisma from '../../../middleware/prisma';
+import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 const s3 = new S3Client({
   region: 'auto',
@@ -20,7 +20,7 @@ export default (req, res) => {
     const { attachment } = req.body;
 
     let attachmentID = attachment.id;
-    console.log("attachment", attachment);
+    console.log('attachment', attachment);
 
     const deleteCommand = new DeleteObjectCommand({
       Bucket: process.env.B2_BUCKET,
@@ -38,6 +38,6 @@ export default (req, res) => {
       },
     });
 
-    res.send("file deleted");
+    res.send('file deleted');
   });
 };

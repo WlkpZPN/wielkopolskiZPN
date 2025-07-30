@@ -1,21 +1,20 @@
-import { useContext } from "react";
-import styled from "styled-components";
-import axios from "axios";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { useContext } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 //icons
-import { User } from "@styled-icons/fa-solid/User";
-import { LogOut } from "@styled-icons/entypo/LogOut";
+import { User } from '@styled-icons/fa-solid/User';
+import { LogOut } from '@styled-icons/entypo/LogOut';
 //utils
-import { logout } from "../../middleware/utils";
-
+import { logout } from '../../middleware/utils';
 
 //components
-import IconButton from "../atoms/IconButton";
-import ProgressBar from "../molecules/progress_bar";
-import NavItem from "../atoms/navItem";
-import { AdminContext } from "../../pages/admin/index";
-import Image from "next/image";
+import IconButton from '../atoms/IconButton';
+import ProgressBar from '../molecules/progress_bar';
+import NavItem from '../atoms/navItem';
+import { AdminContext } from '../../pages/admin/index';
+import Image from 'next/image';
 
 const Wrapper = styled.main`
   display: grid;
@@ -86,11 +85,11 @@ const AdminLayout = ({ userData, children, view }) => {
         <ButtonWrapper>
           <Link href={`/admin/uzytkownicy/${userData?.email}`}>
             <IconButton>
-              <User /> {userData ? userData.email : ""}
+              <User /> {userData ? userData.email : ''}
             </IconButton>
           </Link>
           <Link href="/admin/login">
-            <IconButton onClick={() => logout("admin")}>
+            <IconButton onClick={() => logout('admin')}>
               <LogOut /> Wyloguj
             </IconButton>
           </Link>
@@ -100,19 +99,19 @@ const AdminLayout = ({ userData, children, view }) => {
         <NavBarContent>
           <List>
             <Link href="/admin">
-              <NavItem $active={view === "wnioski"}>Wnioski licencyjne</NavItem>
+              <NavItem $active={view === 'wnioski'}>Wnioski licencyjne</NavItem>
             </Link>
             <Link href="/admin/kluby">
-              <NavItem $active={view === "kluby"}>Kluby</NavItem>
+              <NavItem $active={view === 'kluby'}>Kluby</NavItem>
             </Link>
             <Link href="/admin/statystyki">
-              <NavItem $active={view === "statystyki"}>Statystyki</NavItem>
+              <NavItem $active={view === 'statystyki'}>Statystyki</NavItem>
             </Link>
             <Link href="/admin/uzytkownicy">
-              <NavItem $active={view === "uzytkownicy"}>Użytkownicy</NavItem>
+              <NavItem $active={view === 'uzytkownicy'}>Użytkownicy</NavItem>
             </Link>
             <Link href="/admin/ustawienia">
-              <NavItem $active={view === "ustawienia"}>Ustawienia</NavItem>
+              <NavItem $active={view === 'ustawienia'}>Ustawienia</NavItem>
             </Link>
           </List>
         </NavBarContent>

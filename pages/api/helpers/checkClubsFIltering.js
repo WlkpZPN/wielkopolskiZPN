@@ -1,8 +1,8 @@
-import prisma from "../../../middleware/prisma";
-import transporter from "../../../middleware/transporter";
-import axios from "axios";
-import emailTemplate from "../../../middleware/emailTemplate";
-import { getCurrentDate } from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import transporter from '../../../middleware/transporter';
+import axios from 'axios';
+import emailTemplate from '../../../middleware/emailTemplate';
+import { getCurrentDate } from '../../../middleware/utils';
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { message, recipients, title } = req.body;
@@ -12,21 +12,21 @@ export default (req, res) => {
     // console.log("message", message);
     try {
       switch (recipients) {
-        case "aktywne":
+        case 'aktywne':
           clubs = await prisma.clubs.findMany({
             where: {
               active: true,
             },
           });
           break;
-        case "niekatywne":
+        case 'niekatywne':
           clubs = await prisma.clubs.findMany({
             where: {
               active: false,
             },
           });
           break;
-        case "nierozpoczęte":
+        case 'nierozpoczęte':
           clubs = await prisma.clubs.findMany({
             where: {
               OR: [
@@ -54,7 +54,7 @@ export default (req, res) => {
             },
           });
           break;
-        case "zatwierdzone":
+        case 'zatwierdzone':
           clubs = await prisma.clubs.findMany({
             where: {
               applications: {
@@ -72,7 +72,7 @@ export default (req, res) => {
             },
           });
           break;
-        case "wszystkie":
+        case 'wszystkie':
           clubs = await prisma.clubs.findMany();
           break;
       }

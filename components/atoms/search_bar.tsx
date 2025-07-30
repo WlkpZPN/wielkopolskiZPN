@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const SearchBar = styled.input`
   padding: 6px 12px;
@@ -9,7 +9,7 @@ const SearchBar = styled.input`
   min-width: 200px;
   max-width: 350px;
   width: 100%;
-  background-image: url("/loupe.png");
+  background-image: url('/loupe.png');
   background-repeat: no-repeat;
   background-position: 95% 50%;
   padding-right: 16px;

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Check } from "@styled-icons/boxicons-regular/Check";
+import styled from 'styled-components';
+import { Check } from '@styled-icons/boxicons-regular/Check';
 
 const Radio = styled.input`
   opacity: 0;

@@ -6,7 +6,7 @@ const smtpConfig = {
   port: 587,
   username: process.env.SMTP_USERNAME,
   password: process.env.SMTP_PASSWORD,
-  protocol: "smtp",
+  protocol: 'smtp',
   properties: {
     mail: {
       smtp: {
@@ -17,7 +17,7 @@ const smtpConfig = {
       },
     },
   },
-  defaultEncoding: "UTF-8",
+  defaultEncoding: 'UTF-8',
 };
 
 module.exports = smtpConfig;

@@ -90,9 +90,7 @@ const RemindPasswordModal = ({ visible, setVisible }) => {
         clubEmail: email,
       });
       setLoading(false);
-      toast.success(
-        'Email z hasłem został wysłany,sprawdź swoją skrzynke pocztową'
-      );
+      toast.success('Email z hasłem został wysłany,sprawdź swoją skrzynke pocztową');
 
       setVisible(false);
     } catch (error) {
@@ -111,8 +109,8 @@ const RemindPasswordModal = ({ visible, setVisible }) => {
         <>
           {' '}
           <p>
-            Nie pamiętasz hasła ? <br /> Podaj email zarejestrowany w domenie
-            WielkopolskiegoZPN a my wyślemy Ci hasło mailem. <br />
+            Nie pamiętasz hasła ? <br /> Podaj email zarejestrowany w domenie WielkopolskiegoZPN a
+            my wyślemy Ci hasło mailem. <br />
             Po zalogowaniu się możesz zmienić hasło w aplikacji.
           </p>
           <Form onChange={() => setError('')} onSubmit={handleSubmit}>

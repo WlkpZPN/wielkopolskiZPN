@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const IconButton = styled.p`
   max-width: 350px;

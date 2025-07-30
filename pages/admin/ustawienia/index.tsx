@@ -1,23 +1,23 @@
-import AdminLayout from "../../../components/organisms/admin_layout";
-import styled from "styled-components";
-import React, { useState } from "react";
-import { toast } from "react-toastify";
-import prisma from "../../../middleware/prisma";
-import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
-import { validateNumber } from "../../../middleware/validation";
-import axios from "axios";
-import Loader from "../../../components/atoms/loader";
-import Input from "../../../components/atoms/input";
-import Label from "../../../components/atoms/form_label";
-import PrimaryButton from "../../../components/atoms/primary_button";
-import ErrorMessage from "../../../components/atoms/error_message";
-import QuestionList from "../../../components/organisms/questions_list";
-import GroupMessages from "../../../components/organisms/group_messages";
-import NumericInput from "../../../components/atoms/numeric_input";
-import Fieldset from "../../../components/atoms/fieldset";
-import AmountInput from "../../../components/atoms/amount_input";
-import LockButton from "../../../components/molecules/lock_sending_button";
-import StartNewSeason from "../../../components/organisms/start_new_season";
+import AdminLayout from '../../../components/organisms/admin_layout';
+import styled from 'styled-components';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import prisma from '../../../middleware/prisma';
+import { protectedAdminRoute } from '../../../middleware/protectedAdmin';
+import { validateNumber } from '../../../middleware/validation';
+import axios from 'axios';
+import Loader from '../../../components/atoms/loader';
+import Input from '../../../components/atoms/input';
+import Label from '../../../components/atoms/form_label';
+import PrimaryButton from '../../../components/atoms/primary_button';
+import ErrorMessage from '../../../components/atoms/error_message';
+import QuestionList from '../../../components/organisms/questions_list';
+import GroupMessages from '../../../components/organisms/group_messages';
+import NumericInput from '../../../components/atoms/numeric_input';
+import Fieldset from '../../../components/atoms/fieldset';
+import AmountInput from '../../../components/atoms/amount_input';
+import LockButton from '../../../components/molecules/lock_sending_button';
+import StartNewSeason from '../../../components/organisms/start_new_season';
 const Header = styled.h3`
   margin-top: 32px;
 `;
@@ -37,88 +37,68 @@ const AmountRow = styled.div`
 const Ustawienia = ({ userData, settings, questions, messages }) => {
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(settings.start_date || new Date());
-  const [futsalStartDate, setFutsalStartDate] = useState(
-    settings.futsal_start_date || new Date()
-  );
+  const [futsalStartDate, setFutsalStartDate] = useState(settings.futsal_start_date || new Date());
   const [primaryAmount, setPrimaryAmount] = useState(
-    parseFloat(settings.iv_application_fee).toFixed(2) || 0
+    parseFloat(settings.iv_application_fee).toFixed(2) || 0,
   );
 
   const [vFee, setVFee] = useState(settings.v_application_fee || 0);
   const [abFee, setAbFee] = useState(settings.ab_application_fee || 0);
   const [youngFee, setYoungFee] = useState(settings.young_application_fee || 0);
-  const [futsalFee, setFutsalFee] = useState(
-    settings.futsal_application_fee || 0
-  );
+  const [futsalFee, setFutsalFee] = useState(settings.futsal_application_fee || 0);
   const [womenFee, setWomenFee] = useState(settings.women_application_fee || 0);
   const [extraAmount, setExtraAmount] = useState(
-    parseFloat(settings.iv_possession_fee).toFixed(2) || 0
+    parseFloat(settings.iv_possession_fee).toFixed(2) || 0,
   );
 
   const [extraAmount2, setExtraAmount2] = useState(
-    parseFloat(settings.v_possession_fee).toFixed(2)
+    parseFloat(settings.v_possession_fee).toFixed(2),
   );
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   console.log(settings);
   console.log(vFee, abFee, youngFee, primaryAmount);
   const setAmounts = async (e) => {
     e.preventDefault();
 
     if (!validateNumber(extraAmount).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
     if (!validateNumber(vFee).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
     if (!validateNumber(abFee).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
 
     if (!validateNumber(youngFee).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
 
     if (!validateNumber(primaryAmount).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
 
     if (!validateNumber(extraAmount2).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
 
     if (!validateNumber(futsalFee).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
 
     if (!validateNumber(womenFee).valid) {
-      setError(
-        "Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych"
-      );
+      setError('Proszę podać poprawną kwote, bez waluty oraz znaków specjlanych');
       return;
     }
     setLoading(true);
-    await axios.post("/api/settings/setAmounts", {
+    await axios.post('/api/settings/setAmounts', {
       primaryAmount,
       extraAmount,
       extraAmount2,
@@ -129,7 +109,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       womenFee,
     });
     setLoading(false);
-    toast.success("Pomyślnie zaaktualizowano opłaty licencyjne", {
+    toast.success('Pomyślnie zaaktualizowano opłaty licencyjne', {
       autoClose: 2000,
     });
   };
@@ -138,19 +118,17 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("/api/settings/setDates", {
+      await axios.post('/api/settings/setDates', {
         startDate,
         futsalStartDate,
       });
 
       setLoading(false);
-      toast.success(
-        "Pomyślnie zaktualizowano czas trwania procesu licencyjnego"
-      );
+      toast.success('Pomyślnie zaktualizowano czas trwania procesu licencyjnego');
     } catch (e) {
       console.log(`error setting dates: ${e}`);
       setLoading(false);
-      toast.error("Błąd podczas aktualizacji dart,spróbuj ponownie później");
+      toast.error('Błąd podczas aktualizacji dart,spróbuj ponownie później');
     }
   };
 
@@ -167,13 +145,13 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
     <AdminLayout userData={userData} view="ustawienia">
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
         <>
-          <h1 style={{ margin: "40px 0" }}>Ustawienia</h1>
+          <h1 style={{ margin: '40px 0' }}>Ustawienia</h1>
           {loading && <Loader />}
         </>
       </div>
@@ -182,28 +160,24 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
       <Header>Czas trwania procesu licencyjnego</Header>
       <form
         onChange={() => {
-          setError("");
+          setError('');
         }}
       >
-        <div style={{ display: "flex" }}>
-          <Label
-            style={{ width: "350px", marginRight: "16px", fontSize: "14px" }}
-          >
+        <div style={{ display: 'flex' }}>
+          <Label style={{ width: '350px', marginRight: '16px', fontSize: '14px' }}>
             Rozpoczęcie procedury licencyjnej (trawiaste)
             <Input
-              disabled={userData?.role !== "administrator"}
+              disabled={userData?.role !== 'administrator'}
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               type="date"
               placeholder="data"
             />
           </Label>
-          <Label
-            style={{ width: "350px", marginRight: "16px", fontSize: "14px" }}
-          >
+          <Label style={{ width: '350px', marginRight: '16px', fontSize: '14px' }}>
             Rozpoczęcie procedury licencyjnej dla futsalu
             <Input
-              disabled={userData?.role !== "administrator"}
+              disabled={userData?.role !== 'administrator'}
               value={futsalStartDate}
               onChange={(e) => setFutsalStartDate(e.target.value)}
               type="date"
@@ -211,9 +185,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
             />
           </Label>
         </div>
-        {userData?.role === "administrator" && (
-          <LockButton locked={settings.locked_sending} />
-        )}
+        {userData?.role === 'administrator' && <LockButton locked={settings.locked_sending} />}
 
         <PrimaryButton
           disabled={userData.id !== 1}
@@ -226,126 +198,101 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
         </PrimaryButton>
       </form>
       <Header>Opłaty składane przez kluby</Header>
-      <Fieldset
-        style={{ margin: 0, padding: 0 }}
-        disabled={userData?.role !== "administrator"}
-      >
+      <Fieldset style={{ margin: 0, padding: 0 }} disabled={userData?.role !== 'administrator'}>
         <form
           onSubmit={setAmounts}
           onChange={() => {
-            setError("");
+            setError('');
           }}
         >
           <AmountRow>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              {" "}
-              <Label style={{ maxWidth: "400px" }}>
-                <span>
-                  Wysokość opłaty za złożenie wniosku licencyjnego w lidze IV
-                </span>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {' '}
+              <Label style={{ maxWidth: '400px' }}>
+                <span>Wysokość opłaty za złożenie wniosku licencyjnego w lidze IV</span>
                 <AmountInput
-                  style={{ paddingRight: "24px" }}
+                  style={{ paddingRight: '24px' }}
                   placeholder="0"
                   onBlur={formatPrimaryValue}
                   value={primaryAmount}
                   onChange={(e) => setPrimaryAmount(e.target.value)}
                 />
               </Label>
-              <Label style={{ maxWidth: "400px" }}>
+              <Label style={{ maxWidth: '400px' }}>
                 <span>
-                  Wysokość opłaty za złożenie wniosku licencyjnego w lidze V i
-                  klasie okręgowej
+                  Wysokość opłaty za złożenie wniosku licencyjnego w lidze V i klasie okręgowej
                 </span>
                 <AmountInput
-                  style={{ paddingRight: "24px" }}
+                  style={{ paddingRight: '24px' }}
                   placeholder="0"
                   onBlur={(e) => setVFee(parseFloat(e.target.value).toFixed(2))}
                   value={vFee}
                   onChange={(e) => setVFee(e.target.value)}
                 />
               </Label>
-              <Label style={{ maxWidth: "400px" }}>
-                <span>
-                  Wysokość opłaty za złożenie wniosku licencyjnego w klasie A i
-                  B
-                </span>
+              <Label style={{ maxWidth: '400px' }}>
+                <span>Wysokość opłaty za złożenie wniosku licencyjnego w klasie A i B</span>
                 <AmountInput
-                  style={{ paddingRight: "24px" }}
+                  style={{ paddingRight: '24px' }}
                   placeholder="0"
-                  onBlur={(e) =>
-                    setAbFee(parseFloat(e.target.value).toFixed(2))
-                  }
+                  onBlur={(e) => setAbFee(parseFloat(e.target.value).toFixed(2))}
                   value={abFee}
                   onChange={(e) => setAbFee(e.target.value)}
                 />
               </Label>
-              <Label style={{ maxWidth: "400px" }}>
-                <span>
-                  Wysokość opłaty za złożenie wniosku licencyjnego w klasie
-                  młodzieżowej
-                </span>
+              <Label style={{ maxWidth: '400px' }}>
+                <span>Wysokość opłaty za złożenie wniosku licencyjnego w klasie młodzieżowej</span>
                 <AmountInput
-                  style={{ paddingRight: "24px" }}
+                  style={{ paddingRight: '24px' }}
                   placeholder="0"
-                  onBlur={(e) =>
-                    setYoungFee(parseFloat(e.target.value).toFixed(2))
-                  }
+                  onBlur={(e) => setYoungFee(parseFloat(e.target.value).toFixed(2))}
                   value={youngFee}
                   onChange={(e) => setYoungFee(e.target.value)}
                 />
               </Label>
-              <Label style={{ maxWidth: "400px" }}>
-                <span>
-                  Wysokość opłaty za złożenie wniosku licencyjnego w futsalu
-                </span>
+              <Label style={{ maxWidth: '400px' }}>
+                <span>Wysokość opłaty za złożenie wniosku licencyjnego w futsalu</span>
                 <AmountInput
-                  style={{ paddingRight: "24px" }}
+                  style={{ paddingRight: '24px' }}
                   placeholder="0"
-                  onBlur={(e) =>
-                    setFutsalFee(parseFloat(e.target.value).toFixed(2))
-                  }
+                  onBlur={(e) => setFutsalFee(parseFloat(e.target.value).toFixed(2))}
                   value={futsalFee}
                   onChange={(e) => setFutsalFee(e.target.value)}
                 />
               </Label>
-              <Label style={{ maxWidth: "400px" }}>
-                <span>
-                  Wysokość opłaty za złożenie wniosku licencyjnego w lidze
-                  kobiecej
-                </span>
+              <Label style={{ maxWidth: '400px' }}>
+                <span>Wysokość opłaty za złożenie wniosku licencyjnego w lidze kobiecej</span>
                 <AmountInput
-                  style={{ paddingRight: "24px" }}
+                  style={{ paddingRight: '24px' }}
                   placeholder="0"
-                  onBlur={(e) =>
-                    setWomenFee(parseFloat(e.target.value).toFixed(2))
-                  }
+                  onBlur={(e) => setWomenFee(parseFloat(e.target.value).toFixed(2))}
                   value={womenFee}
                   onChange={(e) => setWomenFee(e.target.value)}
                 />
               </Label>
             </div>
 
-            <Label style={{ maxWidth: "400px" }}>
+            <Label style={{ maxWidth: '400px' }}>
               <span>
-                Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
-                młodzieżowych dla IV ligi
+                Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów młodzieżowych dla IV
+                ligi
               </span>
               <AmountInput
-                style={{ paddingRight: "24px" }}
+                style={{ paddingRight: '24px' }}
                 placeholder="0"
                 onBlur={formatExtraValue}
                 value={extraAmount}
                 onChange={(e) => setExtraAmount(e.target.value)}
               />
             </Label>
-            <Label style={{ maxWidth: "400px", marginRight: "16px" }}>
+            <Label style={{ maxWidth: '400px', marginRight: '16px' }}>
               <span>
-                {" "}
-                Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów
-                młodzieżowych dla V ligi oraz klasy okręgowej
+                {' '}
+                Wysokość opłaty dodatkowej za nieposiadanie własnych zespołów młodzieżowych dla V
+                ligi oraz klasy okręgowej
               </span>
               <AmountInput
-                style={{ paddingRight: "24px" }}
+                style={{ paddingRight: '24px' }}
                 placeholder="0"
                 onBlur={formatExtraValue2}
                 value={extraAmount2}
@@ -354,7 +301,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
             </Label>
           </AmountRow>
           <PrimaryButton
-            style={{ marginTop: "8px" }}
+            style={{ marginTop: '8px' }}
             hoverColor="success"
             color="successDark"
             type="submit"
@@ -364,7 +311,7 @@ const Ustawienia = ({ userData, settings, questions, messages }) => {
         </form>
       </Fieldset>
 
-      <Header style={{ marginTop: "64px" }}> Wiadomości grupowe </Header>
+      <Header style={{ marginTop: '64px' }}> Wiadomości grupowe </Header>
       <GroupMessages userData={userData} messages={messages} />
       <Header>Pytania do działu FAQ</Header>
       <QuestionList userData={userData} questions={questions} />

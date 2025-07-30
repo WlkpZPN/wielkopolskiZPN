@@ -77,22 +77,10 @@ const StyledClose = styled(Close)`
   fill: ${({ theme }) => theme.danger};
   width: 20px;
 `;
-const StepBox = ({
-  number,
-  text,
-  helperText,
-  active,
-  state,
-  handleStepChange,
-  improvements,
-}) => {
+const StepBox = ({ number, text, helperText, active, state, handleStepChange, improvements }) => {
   if (improvements) {
     return (
-      <Wrapper
-        onClick={() => handleStepChange('jump', number)}
-        color="#D3E500"
-        active={active}
-      >
+      <Wrapper onClick={() => handleStepChange('jump', number)} color="#D3E500" active={active}>
         <Header active={active} color="black">
           {text}
         </Header>
@@ -110,11 +98,7 @@ const StepBox = ({
     switch (state) {
       case 'default':
         return (
-          <Wrapper
-            onClick={() => handleStepChange('jump', number)}
-            color="white"
-            active={active}
-          >
+          <Wrapper onClick={() => handleStepChange('jump', number)} color="white" active={active}>
             <Header active={active} color="black">
               {text}
             </Header>
@@ -126,11 +110,7 @@ const StepBox = ({
         );
       case 'uncompleted':
         return (
-          <Wrapper
-            onClick={() => handleStepChange('jump', number)}
-            color="#DEDEDE"
-            active={active}
-          >
+          <Wrapper onClick={() => handleStepChange('jump', number)} color="#DEDEDE" active={active}>
             <Header active={active} color="black">
               {text}
             </Header>

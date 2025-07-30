@@ -1,12 +1,12 @@
-import prisma from "../../../middleware/prisma";
-import { getCurrentDate } from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import { getCurrentDate } from '../../../middleware/utils';
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const { question, answer, category,clubName } = req.body;
+    const { question, answer, category, clubName } = req.body;
     try {
       await prisma.frequently_asked_questions.create({
         data: {
-          club_name:clubName,
+          club_name: clubName,
           question,
           category,
           created_at: getCurrentDate(),
@@ -22,7 +22,7 @@ export default (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("Question asked");
+    res.send('Question asked');
     return resolve();
   });
 };

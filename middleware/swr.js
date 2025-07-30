@@ -1,9 +1,9 @@
-import useSWR from "swr";
-import axios from "axios";
+import useSWR from 'swr';
+import axios from 'axios';
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-export const getClubData = (id) => {
+export const useClubData = (id) => {
   const { data, error } = useSWR(`/api/clubs/${id}`, fetcher);
 
   return {
@@ -13,7 +13,7 @@ export const getClubData = (id) => {
   };
 };
 
-export const getFaqData = () => {
+export const useFaqData = () => {
   const { data, error } = useSWR(`/api/data/getFaqData`, fetcher);
 
   return {
@@ -23,14 +23,10 @@ export const getFaqData = () => {
   };
 };
 
-export const getApplications = () => {
-  const { data, error, mutate } = useSWR(
-    "/api/applications/getAllApplications",
-    fetcher,
-    {
-      refreshInterval: 3000,
-    }
-  );
+export const useApplications = () => {
+  const { data, error, mutate } = useSWR('/api/applications/getAllApplications', fetcher, {
+    refreshInterval: 3000,
+  });
 
   return {
     applications: data,
@@ -40,8 +36,8 @@ export const getApplications = () => {
   };
 };
 
-export const getClubs = () => {
-  const { data, error } = useSWR("/api/clubs/getAllClubs", fetcher);
+export const useClubs = () => {
+  const { data, error } = useSWR('/api/clubs/getAllClubs', fetcher);
 
   return {
     clubs: data,
@@ -50,8 +46,8 @@ export const getClubs = () => {
   };
 };
 
-export const getUsers = () => {
-  const { data, error } = useSWR("/api/users/getUsers", fetcher);
+export const useUsers = () => {
+  const { data, error } = useSWR('/api/users/getUsers', fetcher);
 
   return {
     users: data,
@@ -60,8 +56,8 @@ export const getUsers = () => {
   };
 };
 
-export const getRoles = () => {
-  const { data, error } = useSWR("/api/users/getRoles", fetcher);
+export const useRoles = () => {
+  const { data, error } = useSWR('/api/users/getRoles', fetcher);
 
   return {
     roles: data,
@@ -70,7 +66,7 @@ export const getRoles = () => {
   };
 };
 
-export const getStats = (type) => {
+export const useStats = (type) => {
   const { data, error } = useSWR(`/api/fetch/stats/${type}`);
 
   return {

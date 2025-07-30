@@ -1,18 +1,18 @@
-import { useState, useContext } from "react";
-import styled from "styled-components";
-import { ApplicationContext } from "./club_application";
+import { useState, useContext } from 'react';
+import styled from 'styled-components';
+import { ApplicationContext } from './club_application';
 
-import FormRow from "../atoms/form_row";
-import PrimaryButton from "../atoms/primary_button";
+import FormRow from '../atoms/form_row';
+import PrimaryButton from '../atoms/primary_button';
 
-import OutlineButton from "../atoms/outline_button";
+import OutlineButton from '../atoms/outline_button';
 
-import ObjectName from "../atoms/object_name";
+import ObjectName from '../atoms/object_name';
 
-import Fieldset from "../atoms/fieldset";
-import ErrorMessage from "../atoms/error_message";
-import ObjectForm from "./object_form";
-import FutsalForm from "./futsal_object_form";
+import Fieldset from '../atoms/fieldset';
+import ErrorMessage from '../atoms/error_message';
+import ObjectForm from './object_form';
+import FutsalForm from './futsal_object_form';
 
 const NoObjects = styled.div`
   margin: 24px 0;
@@ -55,37 +55,37 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     deleteFutsalFacility,
     formData,
   } = context;
-  const [internalError, setInternalError] = useState("");
-  console.log("futsal facility", futsal_facilities);
-  console.log("sport facility", sport_facilities);
+  const [internalError, setInternalError] = useState('');
+  console.log('futsal facility', futsal_facilities);
+  console.log('sport facility', sport_facilities);
 
-  const isFutsal: boolean = formData.stepOne.leauge == "futsal";
+  const isFutsal: boolean = formData.stepOne.leauge == 'futsal';
   const app_facilities = isFutsal ? futsal_facilities : sport_facilities;
   const handleNewForm = () => {
     const result =
-      formData.stepOne.leauge === "futsal"
+      formData.stepOne.leauge === 'futsal'
         ? createNewFutsalFacilityForm()
         : createNewSportFacilityForm();
 
     if (result === true) {
-      setInternalError("");
-    } else if (typeof result === "string") {
+      setInternalError('');
+    } else if (typeof result === 'string') {
       setInternalError(result);
     }
   };
 
   const renderObjects = () => {
     let helperArr = [];
-    console.log("app facilities", app_facilities);
+    console.log('app facilities', app_facilities);
     app_facilities.map((facility, index) => {
       helperArr.push(
-        <div style={{ display: "flex", alignItems: "flex-start" }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <PrimaryButton
             color="danger"
             hoverColor="dangerDark"
-            style={{ marginRight: "12px" }}
+            style={{ marginRight: '12px' }}
             onClick={() =>
-              formData.stepOne.leauge == "futsal"
+              formData.stepOne.leauge == 'futsal'
                 ? deleteFutsalFacility(facility)
                 : deleteFacility(facility)
             }
@@ -98,9 +98,9 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
             key={facility.id}
             onClick={() => setCurrentobject(index)}
           >
-            {facility.name || "Obiekt 1"}
+            {facility.name || 'Obiekt 1'}
           </ObjectName>
-        </div>
+        </div>,
       );
     });
     return helperArr;
@@ -115,14 +115,14 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
     );
   return (
     <div>
-      <div style={{ display: "flex", marginTop: "32px" }}>
+      <div style={{ display: 'flex', marginTop: '32px' }}>
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            marginRight: "16px",
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
+            display: 'flex',
+            flexDirection: 'column',
+            marginRight: '16px',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
           }}
         >
           {renderObjects()}
@@ -145,15 +145,15 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
       {error ? <ErrorMessage>{internalError}</ErrorMessage> : null}
       {app_facilities.length === 0 ? (
         <NoObjects>
-          Nie posiadasz żadnych obiektów sportowych. Dodaj je, klikając przycisk
-          poniżej Wymagane jest wprowadzenie min. 1 obiektu. Pamiętaj aby
-          zapisać obiekt po wypełnieniu danych, klikając przycisk "Zapisz".
+          Nie posiadasz żadnych obiektów sportowych. Dodaj je, klikając przycisk poniżej Wymagane
+          jest wprowadzenie min. 1 obiektu. Pamiętaj aby zapisać obiekt po wypełnieniu danych,
+          klikając przycisk &quot;Zapisz&quot;.
           <OutlineButton
             style={{
-              marginTop: "15px",
+              marginTop: '15px',
             }}
             onClick={() => {
-              clearErrors("stepFour");
+              clearErrors('stepFour');
               handleNewForm();
             }}
             align="flex-start"
@@ -165,11 +165,11 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
         renderForms()
       )}
 
-      <div style={{ margin: "40px 0" }}>
+      <div style={{ margin: '40px 0' }}>
         <PrimaryButton
           type="button"
-          style={{ marginRight: "16px" }}
-          onClick={() => handleStepChange("jump", 3)}
+          style={{ marginRight: '16px' }}
+          onClick={() => handleStepChange('jump', 3)}
         >
           Cofnij
         </PrimaryButton>
@@ -180,13 +180,13 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
               hoverColor="darkLight"
               type="button"
               onClick={context.saveForm}
-              style={{ marginRight: "16px" }}
+              style={{ marginRight: '16px' }}
             >
               Zapisz wersję roboczą
             </PrimaryButton>
-            {completedSteps.stepFour === "error" ? (
+            {completedSteps.stepFour === 'error' ? (
               <PrimaryButton
-                style={{ marginRight: "16px" }}
+                style={{ marginRight: '16px' }}
                 hoverColor="success"
                 color="successDark"
                 type="button"
@@ -196,20 +196,22 @@ const StepFourForm = ({ handleStepChange, readOnly }) => {
               </PrimaryButton>
             ) : null}
           </>
-        ) : isAdmin && (
-          <PrimaryButton
-            type="button"
-            color="success"
-            hoverColor="successDark"
-            onClick={changeApplicationData}
-          >
-            Zaktualizuj wniosek
-          </PrimaryButton>
+        ) : (
+          isAdmin && (
+            <PrimaryButton
+              type="button"
+              color="success"
+              hoverColor="successDark"
+              onClick={changeApplicationData}
+            >
+              Zaktualizuj wniosek
+            </PrimaryButton>
+          )
         )}
         <PrimaryButton
-          style={{ marginLeft: "16px" }}
+          style={{ marginLeft: '16px' }}
           type="button"
-          onClick={() => handleStepChange("jump", 5)}
+          onClick={() => handleStepChange('jump', 5)}
         >
           Kolejny krok
         </PrimaryButton>

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { RefreshOutline } from "@styled-icons/evaicons-outline/RefreshOutline";
+import styled from 'styled-components';
+import { RefreshOutline } from '@styled-icons/evaicons-outline/RefreshOutline';
 
 const RefreshIcon = styled(RefreshOutline)`
   width: 25px;

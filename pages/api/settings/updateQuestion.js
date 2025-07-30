@@ -1,5 +1,5 @@
-import prisma from "../../../middleware/prisma";
-import { getCurrentDate } from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import { getCurrentDate } from '../../../middleware/utils';
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { question, answer, category, ID } = req.body;
@@ -25,7 +25,7 @@ export default (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("Question updated");
+    res.send('Question updated');
     return resolve();
   });
 };

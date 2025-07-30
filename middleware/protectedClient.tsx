@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 export function protectedClientRoute(cb) {
   return async (context) => {
     const { req, res } = context;
@@ -8,13 +8,13 @@ export function protectedClientRoute(cb) {
 
     if (!token) {
       res.statusCode = 302;
-      res.setHeader("Location", "/login");
+      res.setHeader('Location', '/login');
     } else {
       decodedToken = jwt.verify(token, process.env.AUTH_KEY);
 
-      if (decodedToken.role !== "klub") {
+      if (decodedToken.role !== 'klub') {
         res.statusCode = 302;
-        res.setHeader("Location", "/login");
+        res.setHeader('Location', '/login');
       }
     }
 

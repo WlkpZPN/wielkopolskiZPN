@@ -1,13 +1,13 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
 //components
-import Paragraph from "../atoms/paragraph";
-import OutlineButton from "../atoms/outline_button";
-import Label from "../atoms/form_label";
-import RadioSquare from "./form_radio";
+import Paragraph from '../atoms/paragraph';
+import OutlineButton from '../atoms/outline_button';
+import Label from '../atoms/form_label';
+import RadioSquare from './form_radio';
 //icons
-import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline';
 const Wrapper = styled.div``;
 
 const Statement = styled.div`
@@ -70,7 +70,7 @@ const Button = styled(OutlineButton)`
 const FormStatement = ({
   text,
   name,
-  buttonText = "Potwierdzam treść oświadczenia",
+  buttonText = 'Potwierdzam treść oświadczenia',
   value,
   handleChange,
 }) => {
@@ -97,12 +97,8 @@ const FormStatement = ({
             <CloseIcon onClick={() => setVisible(false)} />
             <Header>{name}</Header>
             <StatementText>{text}</StatementText>
-            <Label style={{ marginLeft: "-9px" }} pointer direction="row">
-              <RadioSquare
-                setVisible={setVisible}
-                value={value}
-                handleChange={handleChange}
-              />
+            <Label style={{ marginLeft: '-9px' }} pointer direction="row">
+              <RadioSquare setVisible={setVisible} value={value} handleChange={handleChange} />
               {buttonText}
             </Label>
           </StatementContent>

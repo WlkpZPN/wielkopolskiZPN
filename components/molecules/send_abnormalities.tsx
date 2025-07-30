@@ -71,9 +71,7 @@ const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
     e.preventDefault();
 
     if (text.trim() === '') {
-      setError(
-        'Aby wysłać nieprawidłowości należy opsiać je poniżej w polu tekstowym'
-      );
+      setError('Aby wysłać nieprawidłowości należy opsiać je poniżej w polu tekstowym');
       return;
     }
     try {
@@ -94,9 +92,7 @@ const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
     } catch (err) {
       console.log(err);
       setLoading(false);
-      toast.error(
-        'Nie udało się zgłosić nieprawidłowości,spróbuj ponownie za chwilę'
-      );
+      toast.error('Nie udało się zgłosić nieprawidłowości,spróbuj ponownie za chwilę');
     }
   };
 
@@ -108,9 +104,7 @@ const SendAbnormalitites = ({ visible, setVisible, clubData }) => {
     <Background onClick={handleClose} visible={visible}>
       <Content>
         <Close onClick={handleClose} />{' '}
-        <h3 style={{ marginBottom: '32px' }}>
-          Zgłoś nieprawidłowości w fakturze
-        </h3>
+        <h3 style={{ marginBottom: '32px' }}>Zgłoś nieprawidłowości w fakturze</h3>
         {error ? <ErrorMessage>{error}</ErrorMessage> : null}
         <TextArea
           placeholder="Opisz nieprawidłowości jakie wystąpiły w Twojej fakturze"

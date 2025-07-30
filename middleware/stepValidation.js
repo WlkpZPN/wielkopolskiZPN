@@ -1,17 +1,17 @@
-import { validateEmail } from "./validation";
+import { validateEmail } from './validation';
 
 export const checkStepOne = (data) => {
-  if (!data.leauge || data.leauge === "brak") {
+  if (!data.leauge || data.leauge === 'brak') {
     return {
       valid: false,
-      text: "Proszę podać ligę rozgrywkową",
+      text: 'Proszę podać ligę rozgrywkową',
     };
   }
 
   if (!data.number_of_seasons) {
     return {
       valid: false,
-      text: "Proszę zaznaczyć liczbę sezonów",
+      text: 'Proszę zaznaczyć liczbę sezonów',
     };
   }
   let result = validateEmail(data.agentEmail);
@@ -25,14 +25,14 @@ export const checkStepOne = (data) => {
   if (!data.clubCity || !data.clubStreet || !data.clubZipCode) {
     return {
       valid: false,
-      text: "Proszę podać pełen adres klubu",
+      text: 'Proszę podać pełen adres klubu',
     };
   }
 
   if (!data.agentName || !data.agentLastName) {
     return {
       valid: false,
-      text: "Proszę podać imię i nazwisko pełnomocnika",
+      text: 'Proszę podać imię i nazwisko pełnomocnika',
     };
   }
   if (!data.agentEmail) {
@@ -41,21 +41,21 @@ export const checkStepOne = (data) => {
   if (!data.email) {
     return {
       valid: false,
-      text: "Proszę podać email klubu",
+      text: 'Proszę podać email klubu',
     };
   }
 
   if (!data.position) {
     return {
       valid: false,
-      text: "Proszę podać stanowisko / funkcję pełnomocnika",
+      text: 'Proszę podać stanowisko / funkcję pełnomocnika',
     };
   }
 
   if (!data.agentPhone) {
     return {
       valid: false,
-      text: "Proszę podać telefon pełnomocnika",
+      text: 'Proszę podać telefon pełnomocnika',
     };
   }
 
@@ -68,7 +68,7 @@ export const checkStepTwo = (data) => {
   if (!data.participateInCompetitions || !data.privateDataProtection) {
     return {
       valid: false,
-      text: "Proszę potwierdzić wszystkie oświadczenia",
+      text: 'Proszę potwierdzić wszystkie oświadczenia',
     };
   }
   return {
@@ -78,11 +78,11 @@ export const checkStepTwo = (data) => {
 
 export const checkStepThree = (formData, leauge) => {
   switch (formData.youthGroupsPossession) {
-    case "posiadamy zespoły":
+    case 'posiadamy zespoły':
       if (!formData.numberOfYouthGroups || !formData.shareOfYouthGroups) {
         return {
           valid: false,
-          text: "Proszę podać liczbę zespołów młodzieżowych oraz udział zawodników",
+          text: 'Proszę podać liczbę zespołów młodzieżowych oraz udział zawodników',
         };
       } else if (
         isNaN(formData.numberOfYouthGroups) ||
@@ -92,45 +92,45 @@ export const checkStepThree = (formData, leauge) => {
       ) {
         return {
           valid: false,
-          text: "Proszę podać liczbę zespołów młodzieżowym oraz udział uczestników",
+          text: 'Proszę podać liczbę zespołów młodzieżowym oraz udział uczestników',
         };
       }
 
       switch (leauge) {
-        case "iv liga":
+        case 'iv liga':
           if (parseInt(formData.youthGroupsPossession) < 2) {
             return {
               valid: false,
-              text: "Klub musi posiadać przynajmniej 2 zespoły młodzieżowe",
+              text: 'Klub musi posiadać przynajmniej 2 zespoły młodzieżowe',
             };
           }
           break;
-        case "v liga":
-        case "klasa okręgowa":
+        case 'v liga':
+        case 'klasa okręgowa':
           if (parseInt(formData.youthGroupsPossession) < 1) {
             return {
               valid: false,
-              text: "Klub musi posiadać przynajmniej 1 zespół młodzieżowy",
+              text: 'Klub musi posiadać przynajmniej 1 zespół młodzieżowy',
             };
           }
       }
       break;
-    case "porozumienie na szkolenie":
+    case 'porozumienie na szkolenie':
       if (!formData.clubAgreementName) {
         return {
           valid: false,
-          text: "Proszę podać nazwe klubu, z którym zawarto porozumienie",
+          text: 'Proszę podać nazwe klubu, z którym zawarto porozumienie',
         };
       }
-    case "nie posiadamy zespołów":
-    case "wystepujemy w rozgrywkach klasy A":
+    case 'nie posiadamy zespołów':
+    case 'wystepujemy w rozgrywkach klasy A':
       break;
   }
 
   if (!formData.medicalDeclaration) {
     return {
       valid: false,
-      text: "Proszę potwierdzić deklarację o opiece medycznej",
+      text: 'Proszę potwierdzić deklarację o opiece medycznej',
     };
   }
 
@@ -141,13 +141,10 @@ export const checkStepThree = (formData, leauge) => {
 
 export const checkStepFour = (data) => {
   // to do check for sport_facilitie possesion
-  if (
-    data.sport_facilities.length === 0 &&
-    data.futsal_facilities.length === 0
-  ) {
+  if (data.sport_facilities.length === 0 && data.futsal_facilities.length === 0) {
     return {
       valid: false,
-      text: "Klub musi posiadać minimum 1 obiekt sportowy",
+      text: 'Klub musi posiadać minimum 1 obiekt sportowy',
     };
   }
   return {
@@ -163,7 +160,7 @@ export const checkStepFive = (formData) => {
   ) {
     return {
       valid: false,
-      text: "Proszę zaakceptować poniższe oświadczenia",
+      text: 'Proszę zaakceptować poniższe oświadczenia',
     };
   }
 
@@ -176,7 +173,7 @@ export const checkStepSix = (formData) => {
   if (!formData.havingFootballStaff || !formData.HavingSecurityServices) {
     return {
       valid: false,
-      text: "Proszę zaakceptować poniższe oświadczenia",
+      text: 'Proszę zaakceptować poniższe oświadczenia',
     };
   }
 
@@ -191,7 +188,7 @@ export const validateFutsalObject = (data) => {
     return {
       valid: false,
       step: 0,
-      text: "Proszę podac nazwę obiektu, ulicę, kod pocztowy oraz miasto",
+      text: 'Proszę podac nazwę obiektu, ulicę, kod pocztowy oraz miasto',
     };
   }
 
@@ -200,7 +197,7 @@ export const validateFutsalObject = (data) => {
     return {
       valid: false,
       step: 1,
-      text: "Proszę wybrać jedną z poniższych opcji",
+      text: 'Proszę wybrać jedną z poniższych opcji',
     };
   }
 
@@ -209,7 +206,7 @@ export const validateFutsalObject = (data) => {
     return {
       valid: false,
       step: 1,
-      text: "Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu",
+      text: 'Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu',
     };
   }
 
@@ -218,17 +215,11 @@ export const validateFutsalObject = (data) => {
     return {
       valid: false,
       step: 2,
-      text: "Proszę zaznaczyć wszystkie pola formularza",
+      text: 'Proszę zaznaczyć wszystkie pola formularza',
     };
   }
 
-  if (
-    !data.I04_width ||
-    !data.I04_length ||
-    !data.I04_1 ||
-    !data.I04_2 ||
-    !data.I04_3
-  ) {
+  if (!data.I04_width || !data.I04_length || !data.I04_1 || !data.I04_2 || !data.I04_3) {
     window.scrollTo(0, 1400);
     return {
       valid: false,
@@ -255,12 +246,7 @@ export const validateFutsalObject = (data) => {
     };
   }
 
-  if (
-    !data.I10_width ||
-    !data.I10_length ||
-    !data.I10_hygiene ||
-    !data.I10_showers
-  ) {
+  if (!data.I10_width || !data.I10_length || !data.I10_hygiene || !data.I10_showers) {
     window.scrollTo(0, 4000);
     return {
       valid: false,
@@ -274,7 +260,7 @@ export const validateFutsalObject = (data) => {
     return {
       valid: false,
       step: 16,
-      text: "Proszę podać ilość osób porządkowych w czasie zawodów",
+      text: 'Proszę podać ilość osób porządkowych w czasie zawodów',
     };
   }
 
@@ -289,7 +275,7 @@ export const validateObject = (data) => {
     return {
       valid: false,
       step: 0,
-      text: "Proszę podac nazwę obiektu, ulicę, kod pocztowy oraz miasto",
+      text: 'Proszę podac nazwę obiektu, ulicę, kod pocztowy oraz miasto',
     };
   }
   if (data.I01_1 === null) {
@@ -297,7 +283,7 @@ export const validateObject = (data) => {
     return {
       valid: false,
       step: 1,
-      text: "Proszę wybrać jedną z poniższych opcji",
+      text: 'Proszę wybrać jedną z poniższych opcji',
     };
   }
 
@@ -306,7 +292,7 @@ export const validateObject = (data) => {
     return {
       valid: false,
       step: 1,
-      text: "Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu",
+      text: 'Proszę potwierdzić posiadanie prawa do korzystania ze stadionu podczas sezonu',
     };
   }
   if (!data.I02_1 || !data.I02_2 || !data.I02_3 || !data.I02_4) {
@@ -314,7 +300,7 @@ export const validateObject = (data) => {
     return {
       valid: false,
       step: 2,
-      text: "Proszę zaznaczyć wszystkie pola formularza",
+      text: 'Proszę zaznaczyć wszystkie pola formularza',
     };
   }
 
@@ -331,14 +317,14 @@ export const validateObject = (data) => {
     return {
       valid: false,
       step: 6,
-      text: "Proszę określić rodzaj i stan nawierzchni oraz zaznaczyć wszystkie pola",
+      text: 'Proszę określić rodzaj i stan nawierzchni oraz zaznaczyć wszystkie pola',
     };
   }
-  if (data.I06_type === "sztuczna" && (!data.I06_2 || !data.I06_3)) {
+  if (data.I06_type === 'sztuczna' && (!data.I06_2 || !data.I06_3)) {
     return {
       valid: false,
       step: 6,
-      text: "Proszę zaznaczyć wszystkie pola",
+      text: 'Proszę zaznaczyć wszystkie pola',
     };
   }
 
@@ -347,7 +333,7 @@ export const validateObject = (data) => {
     return {
       valid: false,
       step: 7,
-      text: "Proszę zaznaczyć wszystkie pola",
+      text: 'Proszę zaznaczyć wszystkie pola',
     };
   }
 

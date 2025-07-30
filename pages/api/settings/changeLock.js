@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -15,7 +15,7 @@ export default (req, res) => {
       });
 
       res.status(200);
-      res.send("Lock mode changed");
+      res.send('Lock mode changed');
     } catch (error) {
       console.log(error);
       res.status(400);

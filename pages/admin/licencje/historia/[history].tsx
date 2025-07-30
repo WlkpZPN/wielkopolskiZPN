@@ -1,15 +1,15 @@
-import styled from "styled-components";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { toast } from "react-toastify";
-import prisma from "../../../../middleware/prisma";
-import { protectedAdminRoute } from "../../../../middleware/protectedAdmin";
-import AdminLayout from "../../../../components/organisms/admin_layout";
-import IconButton from "../../../../components/atoms/IconButton";
-import { ControllerFastBackward } from "@styled-icons/entypo/ControllerFastBackward";
-import HistoryIcon from "../../../../components/atoms/history_icon";
-import Link from "next/link";
+import styled from 'styled-components';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import prisma from '../../../../middleware/prisma';
+import { protectedAdminRoute } from '../../../../middleware/protectedAdmin';
+import AdminLayout from '../../../../components/organisms/admin_layout';
+import IconButton from '../../../../components/atoms/IconButton';
+import { ControllerFastBackward } from '@styled-icons/entypo/ControllerFastBackward';
+import HistoryIcon from '../../../../components/atoms/history_icon';
+import Link from 'next/link';
 
 const Row = styled.div`
   display: flex;
@@ -25,13 +25,13 @@ const History = ({ authData, applicationData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const history = applicationData.histories;
-  console.log("history", history);
+  console.log('history', history);
   const renderHistory = () => {
     let helperArr = [];
     history.forEach((item, index, array) => {
       const user = item.users
         ? `${item.users.name || item.users.email}, ${item.users.roles.name}`
-        : "";
+        : '';
       switch (item.status_id) {
         case 4:
           helperArr.push(
@@ -44,9 +44,9 @@ const History = ({ authData, applicationData }) => {
               />
               <span>
                 {item.description}
-                <br /> {item.created_at} <br /> {user || ""}
+                <br /> {item.created_at} <br /> {user || ''}
               </span>
-            </Row>
+            </Row>,
           );
           break;
         case 5:
@@ -61,9 +61,9 @@ const History = ({ authData, applicationData }) => {
               <span>
                 {item.description}
                 <br /> {item.created_at}
-                <br /> {user || ""}
+                <br /> {user || ''}
               </span>
-            </Row>
+            </Row>,
           );
           break;
         default:
@@ -78,9 +78,9 @@ const History = ({ authData, applicationData }) => {
               <span>
                 {item.description}
                 <br /> {item.created_at}
-                <br /> {user || ""}
+                <br /> {user || ''}
               </span>
-            </Row>
+            </Row>,
           );
           break;
       }
@@ -92,17 +92,17 @@ const History = ({ authData, applicationData }) => {
     <AdminLayout view="wnioski" userData={authData}>
       <div
         style={{
-          display: "flex",
-          margin: "32px 0",
-          flexDirection: "column",
-          alignItems: "flex-start",
+          display: 'flex',
+          margin: '32px 0',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
         }}
       >
         <h1
           style={{
-            marginRight: "32px",
-            marginTop: "-6px",
-            marginBottom: "15px",
+            marginRight: '32px',
+            marginTop: '-6px',
+            marginBottom: '15px',
           }}
         >
           Historia zmian {applicationData.internal_id}
@@ -123,37 +123,37 @@ const History = ({ authData, applicationData }) => {
 export const getServerSideProps = protectedAdminRoute(async (context, data) => {
   try {
     const applicationData = await prisma.applications.findUnique({
-        where: {
-          id: parseInt(context.params.history),
-        },
-        include: {
-          histories: {
-            orderBy: {
-              id: "asc",
-            },
-            include: {
-              users: {
-                include: {
-                  roles: true,
-                },
+      where: {
+        id: parseInt(context.params.history),
+      },
+      include: {
+        histories: {
+          orderBy: {
+            id: 'asc',
+          },
+          include: {
+            users: {
+              include: {
+                roles: true,
               },
             },
           },
-          clubs: true,
         },
-      });
-      return {
-        props: {
-          applicationData: applicationData,
-          authData: data,
-        },
-      };
-    } catch (error) {
-        console.error('SSR error:', error);
-        return {
-            notFound: true, // albo redirect na stronę błędu
-        };
-    }
+        clubs: true,
+      },
+    });
+    return {
+      props: {
+        applicationData: applicationData,
+        authData: data,
+      },
+    };
+  } catch (error) {
+    console.error('SSR error:', error);
+    return {
+      notFound: true, // albo redirect na stronę błędu
+    };
+  }
 });
 
 export default History;

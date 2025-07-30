@@ -1,8 +1,8 @@
-import { useState } from "react";
-import styled from "styled-components";
-import Cleave from "cleave.js/react";
+import { useState } from 'react';
+import styled from 'styled-components';
+import Cleave from 'cleave.js/react';
 
-const StyledCleave = styled.input<{suffix?: string}>`
+const StyledCleave = styled.input<{ suffix?: string }>`
   width: ${({ width }) => width};
   margin-top: 15px;
   padding: 6px 12px;
@@ -17,7 +17,7 @@ const StyledCleave = styled.input<{suffix?: string}>`
 
   width: 100%;
   text-align: right;
-  padding-right: ${({ suffix }) => (suffix ? "20px" : "12px")};
+  padding-right: ${({ suffix }) => (suffix ? '20px' : '12px')};
   -moz-appearance: textfield;
   /* font-family: "Roboto Mono", monospace; */
   &:focus {
@@ -32,10 +32,10 @@ const Wrapper = styled.div`
   height: min-content;
 `;
 
-const Suffix = styled.span<{position?: string}>`
+const Suffix = styled.span<{ position?: string }>`
   position: absolute;
   bottom: 6px;
-  right: ${({ position }) => position || "6px"};
+  right: ${({ position }) => position || '6px'};
   display: none;
 `;
 
@@ -55,7 +55,7 @@ const AmountInput = ({
     onChange(e);
   };
   return (
-    <Wrapper >
+    <Wrapper>
       <StyledCleave
         type="number"
         style={style}

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { DownArrow } from "@styled-icons/boxicons-solid/DownArrow";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { DownArrow } from '@styled-icons/boxicons-solid/DownArrow';
 const Wrapper = styled.div`
   margin: 16px 0;
   padding-bottom: 16px;
@@ -8,12 +8,12 @@ const Wrapper = styled.div`
   border-bottom: 2px solid ${({ theme }) => theme.primaryLight};
 `;
 
-const MoreInfo = styled.div<{expanded?: boolean}>`
-  display: ${({ expanded }) => (expanded ? "block" : "none")};
+const MoreInfo = styled.div<{ expanded?: boolean }>`
+  display: ${({ expanded }) => (expanded ? 'block' : 'none')};
   padding-left: 8px;
 `;
 
-const Paragraph = styled.p<{expanded?: boolean}>`
+const Paragraph = styled.p<{ expanded?: boolean }>`
   color: white;
   font-weight: 600;
   padding: 12px;
@@ -28,7 +28,7 @@ const Paragraph = styled.p<{expanded?: boolean}>`
   }
   & svg {
     width: 25px;
-    transform: ${({ expanded }) => (expanded ? "rotate(180deg)" : "rotate(0)")};
+    transform: ${({ expanded }) => (expanded ? 'rotate(180deg)' : 'rotate(0)')};
 
     margin-right: 8px;
     transition: all 0.2s;
@@ -39,7 +39,7 @@ const ObjectInfo = ({ children }) => {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <Wrapper >
+    <Wrapper>
       <Paragraph onClick={() => setExpanded(!expanded)} expanded={expanded}>
         <DownArrow />
         Informacje dot. powyższego obiektu sportowego

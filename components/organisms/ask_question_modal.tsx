@@ -112,13 +112,9 @@ const AskQuestionModal = ({ visible, setVisible, authData }) => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="Proces składania wniosku">
-              Proces składania wniosku
-            </option>
+            <option value="Proces składania wniosku">Proces składania wniosku</option>
             <option value="Płatności">Płatności</option>
-            <option value="Decyzje Komisji Licencyjnej">
-              Decyzje Komisji Licencyjnej
-            </option>
+            <option value="Decyzje Komisji Licencyjnej">Decyzje Komisji Licencyjnej</option>
             <option value="Inne">Inne</option>
           </Select>
           <Label>
@@ -131,11 +127,7 @@ const AskQuestionModal = ({ visible, setVisible, authData }) => {
             />
           </Label>
           <div>
-            <PrimaryButton
-              color="primaryLight"
-              hoverColor="primary"
-              type="submit"
-            >
+            <PrimaryButton color="primaryLight" hoverColor="primary" type="submit">
               Dodaj pytanie
             </PrimaryButton>
           </div>

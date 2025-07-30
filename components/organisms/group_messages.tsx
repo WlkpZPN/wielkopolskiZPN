@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { Mail } from "@styled-icons/entypo/Mail";
-import TableRow from "../atoms/table_row";
-import PrimaryButton from "../atoms/primary_button";
-import NewMessageModal from "./new_message_modal";
+import styled from 'styled-components';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { Mail } from '@styled-icons/entypo/Mail';
+import TableRow from '../atoms/table_row';
+import PrimaryButton from '../atoms/primary_button';
+import NewMessageModal from './new_message_modal';
 
 const MailIcon = styled(Mail)`
   width: 26px;
@@ -33,20 +33,18 @@ const GroupMessages = ({ userData, messages }) => {
 
   const deleteMessage = async (messageID) => {
     axios
-      .post("/api/settings/deleteMessage", {
+      .post('/api/settings/deleteMessage', {
         messageID,
       })
       .then(() => {
-        toast.error("Wiadomość usunięta", {
+        toast.error('Wiadomość usunięta', {
           autoClose: 1500,
         });
         router.replace(router.asPath);
       })
       .catch((err) => {
         console.log(err);
-        toast.error(
-          "Usuwanie wiadomości,nie powiodło się, prosimy spróbuj jeszcze raz"
-        );
+        toast.error('Usuwanie wiadomości,nie powiodło się, prosimy spróbuj jeszcze raz');
       });
   };
 
@@ -55,20 +53,18 @@ const GroupMessages = ({ userData, messages }) => {
     messages.forEach((message) => {
       messageArr.push(
         <StyledRow
-          onClick={() =>
-            router.push(`/admin/ustawienia/wiadomosci/${message.id}`)
-          }
+          onClick={() => router.push(`/admin/ustawienia/wiadomosci/${message.id}`)}
           key={message.id}
         >
           <MailIcon />
           <span>{message.id}</span>
-          <span>{message.send_date || "nie wysłano"}</span>
+          <span>{message.send_date || 'nie wysłano'}</span>
           <span>{message.recipients}</span>
           <span>{message.title}</span>
-          <div style={{ display: "flex" }}>
-            {userData.role === "administrator" && (
+          <div style={{ display: 'flex' }}>
+            {userData.role === 'administrator' && (
               <PrimaryButton
-                style={{ marginRight: "8px" }}
+                style={{ marginRight: '8px' }}
                 hoverColor="dangerDark"
                 color="danger"
                 onClick={() => deleteMessage(message.id)}
@@ -77,14 +73,12 @@ const GroupMessages = ({ userData, messages }) => {
               </PrimaryButton>
             )}
             <PrimaryButton
-              onClick={() =>
-                router.push(`/admin/ustawienia/wiadomosci/${message.id}`)
-              }
+              onClick={() => router.push(`/admin/ustawienia/wiadomosci/${message.id}`)}
             >
               Szczegóły
             </PrimaryButton>
           </div>
-        </StyledRow>
+        </StyledRow>,
       );
     });
 
@@ -93,7 +87,7 @@ const GroupMessages = ({ userData, messages }) => {
   return (
     <Wrapper>
       <NewMessageModal visible={visible} setVisible={setVisible} />
-      <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
+      <StyledRow style={{ backgroundColor: '#F9FAFB' }}>
         <span></span>
         <TableHeader>ID wiadomości</TableHeader>
         <TableHeader>Data wysyłki</TableHeader>
@@ -102,10 +96,7 @@ const GroupMessages = ({ userData, messages }) => {
         <TableHeader>Reguła</TableHeader>
       </StyledRow>
       {renderQuestions()}
-      <PrimaryButton
-        onClick={() => setVisible(true)}
-        style={{ margin: "24px 0" }}
-      >
+      <PrimaryButton onClick={() => setVisible(true)} style={{ margin: '24px 0' }}>
         + Dodaj nową wiadomość grupową
       </PrimaryButton>
     </Wrapper>

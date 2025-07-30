@@ -1,22 +1,22 @@
-import { useState, useContext } from "react";
-import styled from "styled-components";
+import { useState, useContext } from 'react';
+import styled from 'styled-components';
 
-import FormTemplate from "../atoms/form_template";
+import FormTemplate from '../atoms/form_template';
 
-import PrimaryButton from "../atoms/primary_button";
-import RadioSquare from "../molecules/form_radio";
-import Paragraph from "../atoms/paragraph";
-import Label from "../atoms/form_label";
-import Fieldset from "../atoms/fieldset";
-import { ApplicationContext } from "./club_application";
-import ErrorMessage from "../atoms/error_message";
-import AddFilesWrapper from "./add_files_wrapper";
-import OutlineButton from "../atoms/outline_button";
-import ObjectName from "../atoms/object_name";
-import AddFacilityFilesWrapper from "../organisms/add_facility_files_wrapper";
+import PrimaryButton from '../atoms/primary_button';
+import RadioSquare from '../molecules/form_radio';
+import Paragraph from '../atoms/paragraph';
+import Label from '../atoms/form_label';
+import Fieldset from '../atoms/fieldset';
+import { ApplicationContext } from './club_application';
+import ErrorMessage from '../atoms/error_message';
+import AddFilesWrapper from './add_files_wrapper';
+import OutlineButton from '../atoms/outline_button';
+import ObjectName from '../atoms/object_name';
+import AddFacilityFilesWrapper from '../organisms/add_facility_files_wrapper';
 const StepSevenForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const context = useContext(ApplicationContext);
   const clubName = context.formData.stepThree.clubAgreementName;
   const {
@@ -32,14 +32,12 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     changeApplicationData,
   } = context;
   const [regulations, setRegulations] = useState(show_buttons ? false : true);
-  const stepTwoFiles =
-    context.clubData.applications[0].applications_attachments.filter(
-      (file) => file.category === "krs_documents"
-    );
-  const stepThreeFiles =
-    context.clubData.applications[0].applications_attachments.filter(
-      (file) => file.category === "agreement_documents"
-    );
+  const stepTwoFiles = context.clubData.applications[0].applications_attachments.filter(
+    (file) => file.category === 'krs_documents',
+  );
+  const stepThreeFiles = context.clubData.applications[0].applications_attachments.filter(
+    (file) => file.category === 'agreement_documents',
+  );
 
   const isSuperVision = () => {
     if (stepTwoFiles.length === 0) {
@@ -48,24 +46,24 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
 
     if (
       stepThreeFiles.length === 0 &&
-      formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
+      formData.stepThree.youthGroupsPossession === 'porozumienie na szkolenie'
     ) {
       return true;
     }
     if (
       stepThreeFiles.length === 0 &&
-      formData.stepThree.youthGroupsPossession === "porozumienie na szkolenie"
+      formData.stepThree.youthGroupsPossession === 'porozumienie na szkolenie'
     ) {
       return true;
     }
 
     formData.stepFour.sport_facilities.forEach((facility) => {
       const files1 = facility.applications_attachments.filter(
-        (el) => el.category === "I01_agreement"
+        (el) => el.category === 'I01_agreement',
       );
 
       const files2 = facility.applications_attachments.filter(
-        (el) => el.category === "I17_intensity_level"
+        (el) => el.category === 'I17_intensity_level',
       );
       if (facility.I01_1 === false && files1.length === 0) {
         return true;
@@ -85,16 +83,16 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
       if (!facility.I01_1 || facility.I17_1) {
         return (
           <ObjectName
-            style={{ marginLeft: "-10px" }}
+            style={{ marginLeft: '-10px' }}
             onClick={() => {
-              console.log("click happend");
+              console.log('click happend');
               setCurrentObject(index);
             }}
             key={facility.id}
             saved={true}
             active={index === currentObject}
           >
-            {facility.name || "Obiekt 1"}
+            {facility.name || 'Obiekt 1'}
           </ObjectName>
         );
       }
@@ -108,32 +106,28 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
     if (currentObj.I01_1 === false) {
       fileArr.push(
         <>
-          <Paragraph>
-            Umowa gwarantująca prawo do korzystania z obiektu sportowego
-          </Paragraph>
+          <Paragraph>Umowa gwarantująca prawo do korzystania z obiektu sportowego</Paragraph>
           <AddFacilityFilesWrapper
             upload={true}
             files={fileData}
             category="I01_agreement"
             text={null}
-          />{" "}
-        </>
+          />{' '}
+        </>,
       );
     }
 
     if (currentObj.I17_1 === true) {
       fileArr.push(
         <>
-          <Paragraph>
-            Dokument poświadczający pomiar natężenia światła
-          </Paragraph>
+          <Paragraph>Dokument poświadczający pomiar natężenia światła</Paragraph>
           <AddFacilityFilesWrapper
             upload={true}
             files={fileData}
             category="I17_intensity_level"
             text={null}
           />
-        </>
+        </>,
       );
     }
 
@@ -147,7 +141,7 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
 
     if (!regulations) {
       setError(
-        "Prosimy o zapoznanie się i zaakceptowanie regulaminu płatności przed wysłaniem wniosku"
+        'Prosimy o zapoznanie się i zaakceptowanie regulaminu płatności przed wysłaniem wniosku',
       );
       return;
     }
@@ -155,28 +149,24 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
   };
   return (
     <Fieldset>
-      <FormTemplate style={{ maxWidth: "100%" }} onChange={() => setError("")}>
+      <FormTemplate style={{ maxWidth: '100%' }} onChange={() => setError('')}>
         <Paragraph>
-          W swoim zgłoszeniu licencyjnym załączyłeś poniższe załączniki. Prosimy
-          sprawdź ich aktualność.
+          W swoim zgłoszeniu licencyjnym załączyłeś poniższe załączniki. Prosimy sprawdź ich
+          aktualność.
         </Paragraph>
         <Paragraph>
-          {" "}
-          Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty
-          potwierdzony za zgodność ze stanem faktycznym na dzień składania
-          niniejszego wniosku.
-        </Paragraph>{" "}
+          {' '}
+          Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty potwierdzony za zgodność ze
+          stanem faktycznym na dzień składania niniejszego wniosku.
+        </Paragraph>{' '}
         <AddFilesWrapper
           text="Oświadczamy, że nasz klub przekazuje w załączeniu odpis aktualnego rejestru z Krajowego Rejestru Sądowego lub ewidencji prowadzonej przez właściwego starostę/prezydenta zawierający następujące informacje: nazwa Wnioskodawcy, siedziba Wnioskodawcy, forma prawna Wnioskodawcy, lista osób upoważnionych do składania oświadczeń woli w imieniu Wnioskodawcy, sposób reprezentacji Wnioskodawcy."
           category="krs_documents"
           id={clubData.applications[0].id}
         />
-        {context.formData.stepThree.youthGroupsPossession ===
-        "porozumienie na szkolenie" ? (
+        {context.formData.stepThree.youthGroupsPossession === 'porozumienie na szkolenie' ? (
           <>
-            <Paragraph>
-              Kopia Porozumienia na szkolenie młodzieży z klubem {clubName}
-            </Paragraph>{" "}
+            <Paragraph>Kopia Porozumienia na szkolenie młodzieży z klubem {clubName}</Paragraph>{' '}
             <AddFilesWrapper
               id={clubData.applications[0].id}
               category="agreement_documents"
@@ -192,29 +182,20 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
         )}
         {isSuperVision() ? (
           <ErrorMessage>
-            Brak wszystkich dokumentów, zostanie wydana licencja z nadzorem
-            (istnieje możliwość późniejszego dosłania dokumentów)
+            Brak wszystkich dokumentów, zostanie wydana licencja z nadzorem (istnieje możliwość
+            późniejszego dosłania dokumentów)
           </ErrorMessage>
         ) : null}
-        <Paragraph>
-          Informacje dotyczące płatności za procedurę licencyjną
-        </Paragraph>
-        <Fieldset
-          style={{ marginBottom: "0", paddingLeft: "0" }}
-          disabled={readOnly}
-        >
+        <Paragraph>Informacje dotyczące płatności za procedurę licencyjną</Paragraph>
+        <Fieldset style={{ marginBottom: '0', paddingLeft: '0' }} disabled={readOnly}>
           <Label style={{ marginTop: 0 }} pointer>
             <span>
               <RadioSquare
                 value={formData.stepSeven.invoice_required}
                 handleChange={(e) =>
-                  handleFormChange(
-                    !formData.stepSeven.invoice_required,
-                    "invoice_required",
-                    7
-                  )
+                  handleFormChange(!formData.stepSeven.invoice_required, 'invoice_required', 7)
                 }
-              />{" "}
+              />{' '}
               Chcemy otrzymać fakturę przed dokonaniem płatności
             </span>
           </Label>
@@ -225,10 +206,10 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
                 value={regulations}
                 handleChange={(e) => setRegulations(e.target.value)}
               />
-              Zapoznałam/em się z regulaminem płatności opłat administracyjnych
-              za przyznanie licencji
+              Zapoznałam/em się z regulaminem płatności opłat administracyjnych za przyznanie
+              licencji
               <a
-                style={{ color: "#0056A5" }}
+                style={{ color: '#0056A5' }}
                 target="_blank"
                 href="/api/view?path=Regulamin_Licencje_WZPN.pdf"
               >
@@ -238,35 +219,29 @@ const StepSevenForm = ({ handleStepChange, readOnly }) => {
             </span>
           </Label>
         </Fieldset>
-        <div style={{ marginTop: "16px", marginBottom: "32px" }}>
+        <div style={{ marginTop: '16px', marginBottom: '32px' }}>
           <PrimaryButton
             type="button"
-            style={{ marginRight: "16px" }}
-            onClick={() =>
-              show_buttons ? handleStepChange("previous") : setStep(6)
-            }
+            style={{ marginRight: '16px' }}
+            onClick={() => (show_buttons ? handleStepChange('previous') : setStep(6))}
           >
             Cofnij
           </PrimaryButton>
           {show_buttons ? (
             <>
-              {" "}
+              {' '}
               <PrimaryButton
-                style={{ marginRight: "16px" }}
+                style={{ marginRight: '16px' }}
                 color="dark"
                 hoverColor="darkLight"
                 onClick={context.saveForm}
               >
                 Zapisz wersję roboczą
               </PrimaryButton>
-              <PrimaryButton
-                color="successDark"
-                hoverColor="success"
-                onClick={submitForm}
-              >
+              <PrimaryButton color="successDark" hoverColor="success" onClick={submitForm}>
                 {clubData.applications[0].status_id == 4
-                  ? "Wyślij poprawiony wniosek"
-                  : "Zatwierdź i wyślij do Wielkopolskiego ZPN"}
+                  ? 'Wyślij poprawiony wniosek'
+                  : 'Zatwierdź i wyślij do Wielkopolskiego ZPN'}
               </PrimaryButton>
             </>
           ) : null}

@@ -1,5 +1,5 @@
-import prisma from "../../../middleware/prisma";
-const bcrypt = require("bcrypt");
+import prisma from '../../../middleware/prisma';
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 export default (req, res) => {
@@ -7,7 +7,7 @@ export default (req, res) => {
     console.log(req.body);
 
     const { email, password, firstName, lastName, role } = req.body;
-    let securedPassword = "";
+    let securedPassword = '';
     bcrypt.hash(password, saltRounds).then(async (hash) => {
       securedPassword = hash;
       await prisma.users.create({
@@ -18,7 +18,7 @@ export default (req, res) => {
           role_id: parseInt(role),
         },
       });
-      res.send("user added");
+      res.send('user added');
       return resolve();
     });
   });

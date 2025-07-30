@@ -1,5 +1,5 @@
-import prisma from "../../../middleware/prisma";
-import { getCurrentDate } from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import { getCurrentDate } from '../../../middleware/utils';
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { description, applicationID, statusID } = req.body;
@@ -20,7 +20,7 @@ export default async (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("application history updated");
+    res.send('application history updated');
     return resolve();
   });
 };

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const FormHeader = styled.div`
   padding: 6px 16px;

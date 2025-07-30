@@ -1,14 +1,14 @@
-import prisma from "../../../middleware/prisma";
-import transporter from "../../../middleware/transporter";
-import smtpConfig from "../../../smtpConfig";
+import prisma from '../../../middleware/prisma';
+import transporter from '../../../middleware/transporter';
+import smtpConfig from '../../../smtpConfig';
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { reason, club } = req.body;
     transporter.sendMail({
       from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
-      to: "licklub@wielkopolskizpn.pl",
+      to: 'licklub@wielkopolskizpn.pl',
 
-      subject: "WielkopolskiZPN - uwagi do faktury",
+      subject: 'WielkopolskiZPN - uwagi do faktury',
       html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -94,7 +94,7 @@ export default (req, res) => {
       //   content: "testowa wiadomosc",
       // },
     });
-    res.send("Nieprawidłowości zgłoszone");
+    res.send('Nieprawidłowości zgłoszone');
     return resolve();
   });
 };

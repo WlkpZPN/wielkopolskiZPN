@@ -65,13 +65,7 @@ const TextArea = styled.textarea`
   padding: 4px;
 `;
 
-const GiveSupervision = ({
-  visible,
-  setVisible,
-  applicationID,
-  internalID,
-  authData,
-}) => {
+const GiveSupervision = ({ visible, setVisible, applicationID, internalID, authData }) => {
   const router = useRouter();
   const [reason, setReason] = useState('');
   const [error, setError] = useState('');
@@ -126,10 +120,7 @@ const GiveSupervision = ({
           }}
         >
           <h1>Wydaj licencję z nadzorem {internalID}</h1>
-          <ApplicationStatus
-            size="40px"
-            status={'licencja wydana z nadzorem'}
-          />
+          <ApplicationStatus size="40px" status={'licencja wydana z nadzorem'} />
         </div>
         <form style={{ width: '100%' }}>
           <ErrorMessage>{error}</ErrorMessage>
@@ -188,11 +179,7 @@ const GiveSupervision = ({
             >
               Anuluj
             </PrimaryButton>
-            <PrimaryButton
-              hoverColor="successDark"
-              color="success"
-              onClick={rejectApplication}
-            >
+            <PrimaryButton hoverColor="successDark" color="success" onClick={rejectApplication}>
               Wydaj licencję z nadzorem
             </PrimaryButton>
           </div>

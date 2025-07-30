@@ -1,16 +1,16 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect } from 'react';
 
-import styled from "styled-components";
-import prisma from "../../middleware/prisma";
-import { getApplications } from "../../middleware/swr";
-import AdminLayout from "../../components/organisms/admin_layout";
-import { protectedAdminRoute } from "../../middleware/protectedAdmin";
-import { useLocalStorage } from "../../middleware/hooks";
+import styled from 'styled-components';
+import prisma from '../../middleware/prisma';
+import { useApplications } from '../../middleware/swr';
+import AdminLayout from '../../components/organisms/admin_layout';
+import { protectedAdminRoute } from '../../middleware/protectedAdmin';
+import { useLocalStorage } from '../../middleware/hooks';
 //components
-import ApplicationsList from "../../components/organisms/applications_list";
-import Select from "../../components/atoms/form_select";
-import Loader from "../../components/atoms/loader";
-import RefreshIcon from "../../components/atoms/refresh_icon";
+import ApplicationsList from '../../components/organisms/applications_list';
+import Select from '../../components/atoms/form_select';
+import Loader from '../../components/atoms/loader';
+import RefreshIcon from '../../components/atoms/refresh_icon';
 
 const SearchBar = styled.input`
   padding: 6px 12px;
@@ -21,7 +21,7 @@ const SearchBar = styled.input`
   min-width: 200px;
   max-width: 350px;
   width: 100%;
-  background-image: url("/loupe.png");
+  background-image: url('/loupe.png');
   background-repeat: no-repeat;
   background-position: 95% 50%;
   padding-right: 16px;
@@ -31,17 +31,13 @@ const SearchBar = styled.input`
 export const AdminContext = createContext(null);
 
 const MainPage = ({ userData }) => {
-  const {
-    applications,
-    isApplicationsError,
-    isApplicationsLoading,
-    mutateApplications,
-  } = getApplications();
+  const { applications, isApplicationsError, isApplicationsLoading, mutateApplications } =
+    useApplications();
   //console.log(applications);
-  const [filterType, setFilterType] = useLocalStorage("filter_type", 0);
-  const [query, setQuery] = useState("");
+  const [filterType, setFilterType] = useLocalStorage('filter_type', 0);
+  const [query, setQuery] = useState('');
   const [list, setList] = useState(applications);
-  const [dateOrder, setDateOrder] = useLocalStorage("date_order", null);
+  const [dateOrder, setDateOrder] = useLocalStorage('date_order', null);
 
   useEffect(() => {
     if (!dateOrder) {
@@ -54,12 +50,8 @@ const MainPage = ({ userData }) => {
       let helperArr = applications;
 
       helperArr = [
-        ...applications.filter(
-          (el) => el.status_id === 2 || el.status_id === 3
-        ),
-        ...applications.filter(
-          (el) => el.status_id !== 2 && el.status_id !== 3
-        ),
+        ...applications.filter((el) => el.status_id === 2 || el.status_id === 3),
+        ...applications.filter((el) => el.status_id !== 2 && el.status_id !== 3),
       ];
 
       if (filterType > 0) {
@@ -69,7 +61,7 @@ const MainPage = ({ userData }) => {
         });
       }
 
-      if (query !== "") {
+      if (query !== '') {
         helperArr = helperArr.filter((application) => {
           const string = JSON.stringify(application).toLowerCase();
           return string.indexOf(query.toLowerCase()) > -1 ? true : false;
@@ -85,16 +77,16 @@ const MainPage = ({ userData }) => {
 
   const sortByDate = (a, b) => {
     let x,
-      x1 = "";
-    x = a.created_at.split(",")[0].split("/");
-    x1 = a.created_at.split(",")[1].split(":");
+      x1 = '';
+    x = a.created_at.split(',')[0].split('/');
+    x1 = a.created_at.split(',')[1].split(':');
 
     const dateA = new Date(+x[2], +x[1], +x[0], +x1[0], +x1[1]);
-    x = b.created_at.split(",")[0].split("/");
-    x1 = b.created_at.split(",")[1].split(":");
+    x = b.created_at.split(',')[0].split('/');
+    x1 = b.created_at.split(',')[1].split(':');
     const dateB = new Date(+x[2], +x[1], +x[0], +x1[0], +x1[1]);
     //console.log(dateA < dateB);
-    if (dateOrder === "asc") {
+    if (dateOrder === 'asc') {
       if (dateA < dateB) {
         return 1;
       }
@@ -103,7 +95,7 @@ const MainPage = ({ userData }) => {
       }
     }
 
-    if (dateOrder === "desc") {
+    if (dateOrder === 'desc') {
       if (dateA < dateB) {
         return 1;
       }
@@ -116,7 +108,7 @@ const MainPage = ({ userData }) => {
   if (isApplicationsLoading) {
     return (
       <AdminLayout userData={userData} view="wnioski">
-        {" "}
+        {' '}
         <Loader />
       </AdminLayout>
     );
@@ -126,16 +118,16 @@ const MainPage = ({ userData }) => {
       <AdminLayout userData={userData} view="wnioski">
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            margin: "30px 0",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            margin: '30px 0',
           }}
         >
           <h1>Wnioski licencyjne </h1>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <Select
-              style={{ marginTop: 0, minWidth: "200px", fontSize: "13px" }}
+              style={{ marginTop: 0, minWidth: '200px', fontSize: '13px' }}
               value={filterType}
               onChange={(e) => setFilterType(parseInt(e.target.value))}
             >
@@ -174,7 +166,7 @@ export const getServerSideProps = protectedAdminRoute(async (context, data) => {
 
   if (!data) {
     res.statusCode = 302;
-    res.setHeader("Location", "/admin/login");
+    res.setHeader('Location', '/admin/login');
     return {
       props: {},
     };

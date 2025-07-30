@@ -1,16 +1,16 @@
-import {useContext, useState} from "react";
-import uniqid from "uniqid";
-import styled from "styled-components";
-import {ApplicationContext} from "./club_application";
-import AddFacilityFile from "../molecules/add_facility_file";
+import { useContext, useState } from 'react';
+import uniqid from 'uniqid';
+import styled from 'styled-components';
+import { ApplicationContext } from './club_application';
+import AddFacilityFile from '../molecules/add_facility_file';
 
-const Row = styled.div<{cols?: string}>`
-    padding-bottom: 16px;
-    display: grid;
-    grid-gap: 12px;
-    grid-template-columns: ${({cols}) => `repeat(4,260px)`};
-    /* overflow-x: auto; */
-    width: 70vw;
+const Row = styled.div<{ cols?: string }>`
+  padding-bottom: 16px;
+  display: grid;
+  grid-gap: 12px;
+  grid-template-columns: ${({ cols }) => `repeat(4,260px)`};
+  /* overflow-x: auto; */
+  width: 70vw;
 `;
 //TO DO SIDE SCROLLING WITH VISIBLE TOOL TIP
 
@@ -45,7 +45,7 @@ const AddFacilityFilesWrapper = ({
           // addFile={addFile}
           // handleDelete={deleteFile}
           file={fileData[i] ? fileData[i] : null}
-        />
+        />,
       );
     }
     //console.log(arr);

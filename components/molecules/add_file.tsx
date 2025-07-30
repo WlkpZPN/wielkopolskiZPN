@@ -1,12 +1,12 @@
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import {InfoCircle} from '@styled-icons/boxicons-regular/InfoCircle';
-import {FilePdf} from '@styled-icons/fa-regular/FilePdf';
-import {toast} from 'react-toastify';
-import {checkMimeType, makeid} from '../../middleware/utils';
-import {ApplicationContext} from '../../components/organisms/club_application';
+import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
+import { FilePdf } from '@styled-icons/fa-regular/FilePdf';
+import { toast } from 'react-toastify';
+import { checkMimeType, makeid } from '../../middleware/utils';
+import { ApplicationContext } from '../../components/organisms/club_application';
 //components
 
 const Parent = styled.div`
@@ -155,14 +155,10 @@ const AddFile = ({ file, category, id, text }) => {
     fileData.append('files', newFile);
     fileData.append('targetDir', '/wnioski');
 
-
     const config = {
       timeout: 60000, // 1-minute timeout
       onUploadProgress: (event) => {
-        console.log(
-            `Current progress:`,
-            Math.round((event.loaded * 100) / event.total)
-        );
+        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
       },
     };
     try {
@@ -191,9 +187,7 @@ const AddFile = ({ file, category, id, text }) => {
       router.replace(router.asPath);
     } catch (err) {
       console.log(err);
-      toast.error(
-        'Dodawanie pliku się nie powiodło, prosimy spróbować później'
-      );
+      toast.error('Dodawanie pliku się nie powiodło, prosimy spróbować później');
       setLoading(false);
     }
   };
@@ -234,7 +228,7 @@ const AddFile = ({ file, category, id, text }) => {
           <FileInfo>
             <FilePdf />
             {file ? (
-              <Link target="_blank" href={'/api/view?path='+encodeURIComponent(file.filepath)}>
+              <Link target="_blank" href={'/api/view?path=' + encodeURIComponent(file.filepath)}>
                 {file.name}
               </Link>
             ) : (
@@ -260,12 +254,7 @@ const AddFile = ({ file, category, id, text }) => {
               </div>
             )}
 
-            <FileInput
-              id="file"
-              type="file"
-              name="file"
-              onChange={handleChange}
-            />
+            <FileInput id="file" type="file" name="file" onChange={handleChange} />
           </Label>
           {file ? (
             <DeleteButton

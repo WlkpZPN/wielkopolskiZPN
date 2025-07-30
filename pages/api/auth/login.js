@@ -1,20 +1,20 @@
-const bcrypt = require("bcrypt");
-import cookie from "cookie";
-import jwt from "jsonwebtoken";
-import prisma from "../../../middleware/prisma";
+const bcrypt = require('bcrypt');
+import cookie from 'cookie';
+import jwt from 'jsonwebtoken';
+import prisma from '../../../middleware/prisma';
 
 export default async (req, res) => {
   const { method } = req;
 
   return new Promise(async (resolve) => {
     try {
-      if (method === "POST") {
+      if (method === 'POST') {
         const { email, password } = req.body;
         // check if email or user is null
         if (!email || !password) {
           return res.status(400).json({
-            status: "error",
-            message: "Brak hasła lub adresu email",
+            status: 'error',
+            message: 'Brak hasła lub adresu email',
           });
           return resolve();
         }
@@ -30,8 +30,8 @@ export default async (req, res) => {
         // check if we have a user
         if (!user) {
           res.status(400).json({
-            status: "error",
-            message: "Użytkownik o podanym adresie email nie istnieje",
+            status: 'error',
+            message: 'Użytkownik o podanym adresie email nie istnieje',
           });
         }
         //console.log("user role:", user);
@@ -47,38 +47,38 @@ export default async (req, res) => {
             };
 
             const token = jwt.sign(payload, process.env.AUTH_KEY, {
-              expiresIn: "16h",
+              expiresIn: '16h',
             });
 
             try {
               // res.cookie("userToken", token, { httpOnly: true });
               res.setHeader(
-                "Set-Cookie",
-                cookie.serialize("adminToken", token, {
+                'Set-Cookie',
+                cookie.serialize('adminToken', token, {
                   maxAge: 43200,
-                  path: "/",
+                  path: '/',
                   httpOnly: true,
-                  secure: process.env.NODE_ENV !== "development",
-                })
+                  secure: process.env.NODE_ENV !== 'development',
+                }),
               );
               res.status(200).send(payload);
               return resolve();
             } catch (err) {
               console.log(err);
-              res.status(500).send({ error: "There was an error signing in" });
+              res.status(500).send({ error: 'There was an error signing in' });
               return resolve();
             }
           } else {
             res.status(400).json({
-              message: "Błędne hasło",
+              message: 'Błędne hasło',
             });
             return resolve();
           }
         });
       } else {
         res.status(401).json({
-          status: "error",
-          message: "Niedozwolona metoda HTTP",
+          status: 'error',
+          message: 'Niedozwolona metoda HTTP',
         });
         return resolve();
       }

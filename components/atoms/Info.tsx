@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { InfoCircle } from "@styled-icons/boxicons-regular/InfoCircle";
+import styled from 'styled-components';
+import { InfoCircle } from '@styled-icons/boxicons-regular/InfoCircle';
 
 const StyledCircle = styled(InfoCircle)``;
-const InfoContainer = styled.div<{position?: string}>`
+const InfoContainer = styled.div<{ position?: string }>`
   z-index: 99;
   width: max-content;
   cursor: pointer;
   overflow: visible;
-  /* // position: ${({ position }) => (position ? position : "absolute")};
+  /* // position: ${({ position }) => (position ? position : 'absolute')};
   top: 0px;
   right: -30px; */
   margin-left: 15px;
@@ -47,7 +47,7 @@ const Parent = styled.div`
 const Info = ({ text, style = null }) => {
   return (
     <Parent>
-      <InfoContainer position={style?.position} style={style} >
+      <InfoContainer position={style?.position} style={style}>
         {text ? <StyledCircle /> : null}
         <Text>{text}</Text>
       </InfoContainer>

@@ -1,5 +1,4 @@
-
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 // Rozszerzenie globalThis o właściwość prisma
 const globalForPrisma = globalThis as typeof globalThis & {
@@ -9,12 +8,11 @@ const globalForPrisma = globalThis as typeof globalThis & {
 // Tworzymy nową instancję lub używamy istniejącej w czasie developmentu
 const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === 'development') {
   globalForPrisma.prisma = prisma;
 }
 
 export default prisma;
-
 
 // import { PrismaClient } from "@prisma/client"
 

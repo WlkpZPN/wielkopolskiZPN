@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useLocalStorage(key, initialValue) {
-  if (typeof window === "undefined") {
-    return [null, null];
-  }
+  const isClient = typeof window !== 'undefined';
 
   const [storedValue, setStoredValue] = useState(() => {
+    if (!isClient) return initialValue;
+
     try {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
@@ -17,11 +17,12 @@ export function useLocalStorage(key, initialValue) {
 
   const setValue = (value) => {
     try {
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+
+      if (isClient) {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      }
     } catch (error) {
       console.log(error);
     }

@@ -69,8 +69,7 @@ const ClubInfo = ({ clubData }) => {
       <Club>
         {clubData.applications[0].statuses.id > 7 ? (
           <>
-            <Bold>Licencja ważna na sezon/y:</Bold>{' '}
-            <p>{clubData.applications[0].seasons}</p>
+            <Bold>Licencja ważna na sezon/y:</Bold> <p>{clubData.applications[0].seasons}</p>
           </>
         ) : null}
       </Club>

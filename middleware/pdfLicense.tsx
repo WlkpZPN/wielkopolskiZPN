@@ -1,16 +1,10 @@
-import ReactPDF, {
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-} from "@react-pdf/renderer";
-import download from "downloadjs";
+import ReactPDF, { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import download from 'downloadjs';
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
-    backgroundColor: "#E4E4E4",
+    flexDirection: 'row',
+    backgroundColor: '#E4E4E4',
   },
   section: {
     margin: 10,

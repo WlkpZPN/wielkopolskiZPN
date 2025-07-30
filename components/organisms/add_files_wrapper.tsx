@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext } from "react";
-import uniqid from "uniqid";
-import styled from "styled-components";
-import { ApplicationContext } from "./club_application";
-import AddFile from "../molecules/add_file";
+import { useState, useEffect, useContext } from 'react';
+import uniqid from 'uniqid';
+import styled from 'styled-components';
+import { ApplicationContext } from './club_application';
+import AddFile from '../molecules/add_file';
 
-const Row = styled.div<{cols?: string}>`
+const Row = styled.div<{ cols?: string }>`
   padding-bottom: 16px;
   display: grid;
   grid-gap: 12px;
@@ -16,10 +16,9 @@ const Row = styled.div<{cols?: string}>`
 const AddFilesWrapper = ({ text = null, category, id }) => {
   const [boxes, setBoxes] = useState([]);
   const context = useContext(ApplicationContext);
-  const fileData =
-    context.clubData.applications[0].applications_attachments.filter(
-      (file) => file.category === category
-    );
+  const fileData = context.clubData.applications[0].applications_attachments.filter(
+    (file) => file.category === category,
+  );
 
   const generateBoxes = () => {
     const arr = [];
@@ -33,7 +32,7 @@ const AddFilesWrapper = ({ text = null, category, id }) => {
           // addFile={addFile}
           // handleDelete={deleteFile}
           file={fileData[i] ? fileData[i] : null}
-        />
+        />,
       );
     }
     //console.log(arr);

@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -18,7 +18,7 @@ export default (req, res) => {
           futsal_start_date: futsalStartDate,
         },
       });
-      res.send("dates updated");
+      res.send('dates updated');
     } catch (error) {
       console.log(error);
       res.status(400);

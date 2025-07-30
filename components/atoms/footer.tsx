@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Wrapper = styled.footer`
   background: ${({ theme }) => theme.primary};
@@ -20,8 +20,8 @@ const Footer = () => {
   return (
     <Wrapper>
       <Content>
-        Platforma licencyjna | Copyright © 2025 Wielkopolski Związek Piłki
-        Nożnej.Wszelkie prawa zastrzeżone.
+        Platforma licencyjna | Copyright © 2025 Wielkopolski Związek Piłki Nożnej.Wszelkie prawa
+        zastrzeżone.
       </Content>
     </Wrapper>
   );

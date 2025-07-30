@@ -1,17 +1,9 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
-    const {
-      primaryAmount,
-      extraAmount,
-      extraAmount2,
-      vFee,
-      abFee,
-      youngFee,
-      futsalFee,
-      womenFee,
-    } = req.body;
+    const { primaryAmount, extraAmount, extraAmount2, vFee, abFee, youngFee, futsalFee, womenFee } =
+      req.body;
 
     try {
       await prisma.settings.upsert({
@@ -39,7 +31,7 @@ export default (req, res) => {
           women_application_fee: Number(womenFee),
         },
       });
-      res.send("amount updated");
+      res.send('amount updated');
     } catch (error) {
       console.log(error);
       res.status(400);

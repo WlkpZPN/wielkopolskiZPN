@@ -1,13 +1,13 @@
-import prisma from "../../../middleware/prisma";
-import nodemailer from "nodemailer";
-import { getCurrentDate } from "../../../middleware/utils";
-import smtpConfig from "../../../smtpConfig";
+import prisma from '../../../middleware/prisma';
+import nodemailer from 'nodemailer';
+import { getCurrentDate } from '../../../middleware/utils';
+import smtpConfig from '../../../smtpConfig';
 var transporter = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
+  host: 'smtp.mailtrap.io',
   port: 2525,
   auth: {
-    user: "d6b6955cf480dd",
-    pass: "fb302668d87e65",
+    user: 'd6b6955cf480dd',
+    pass: 'fb302668d87e65',
   },
 });
 
@@ -16,7 +16,7 @@ export default (req, res) => {
     const newStatus = req.body.order.status;
     const paymentID = req.body.order.extOrderId;
     const email = req.body.order?.buyer.email;
-    console.log("NOTIFY ROUTE FIRED");
+    console.log('NOTIFY ROUTE FIRED');
     console.log(req.body);
 
     const application = await prisma.applications.findUnique({
@@ -24,7 +24,7 @@ export default (req, res) => {
         payment_id: paymentID,
       },
     });
-    if (newStatus === "COMPLETED" && application.status_id == 6) {
+    if (newStatus === 'COMPLETED' && application.status_id == 6) {
       await prisma.applications.update({
         where: {
           payment_id: paymentID,
@@ -37,7 +37,7 @@ export default (req, res) => {
         data: {
           application_id: parseInt(application.id),
           created_at: getCurrentDate(),
-          description: "Płatność zaakceptowana",
+          description: 'Płatność zaakceptowana',
           status_id: 7,
         },
       });
@@ -45,7 +45,7 @@ export default (req, res) => {
         transporter.sendMail({
           from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
           to: email,
-          subject: "WielkopolskiZPN - opłata za złożenie wniosku",
+          subject: 'WielkopolskiZPN - opłata za złożenie wniosku',
           html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -133,7 +133,7 @@ export default (req, res) => {
     }
 
     res.status(200);
-    res.send("OK");
+    res.send('OK');
     return resolve();
   });
 };

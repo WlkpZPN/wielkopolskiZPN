@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import prisma from "../../../middleware/prisma";
-import { protectedAdminRoute } from "../../../middleware/protectedAdmin";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import prisma from '../../../middleware/prisma';
+import { protectedAdminRoute } from '../../../middleware/protectedAdmin';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 //components
-import Loader from "../../../components/atoms/loader";
-import { getUsers, getRoles } from "../../../middleware/swr";
-import AdminLayout from "../../../components/organisms/admin_layout";
-import UsersList from "../../../components/molecules/users_list";
-import PrimaryButton from "../../../components/atoms/primary_button";
-import AddUserModal from "../../../components/organisms/add_user_modal";
-import StyledSpinner from "../../../components/atoms/loader";
-const Table = styled.div<{size: number}>`
+import Loader from '../../../components/atoms/loader';
+import { useUsers, useRoles } from '../../../middleware/swr';
+import AdminLayout from '../../../components/organisms/admin_layout';
+import UsersList from '../../../components/molecules/users_list';
+import PrimaryButton from '../../../components/atoms/primary_button';
+import AddUserModal from '../../../components/organisms/add_user_modal';
+import StyledSpinner from '../../../components/atoms/loader';
+const Table = styled.div<{ size: number }>`
   margin: 32px 0;
   display: grid;
   grid-template-rows: ${({ size }) => `repeat(${size},50px)`};
@@ -40,8 +40,8 @@ const TableHeader = styled.div`
 
 const Uzytkownicy = ({ authData }) => {
   const router = useRouter();
-  const { users, isUsersError, isUsersLoading } = getUsers();
-  const { roles, isRolesError, isRolesLoading } = getRoles();
+  const { users, isUsersError, isUsersLoading } = useUsers();
+  const { roles, isRolesError, isRolesLoading } = useRoles();
   const [loading, setLoading] = useState(false);
   const [visibility, setVisibility] = useState(false);
   const refreshData = () => {
@@ -51,8 +51,8 @@ const Uzytkownicy = ({ authData }) => {
   if (isUsersLoading || isRolesLoading) {
     return (
       <AdminLayout userData={authData} view="uzytkownicy">
-        {" "}
-        <Loader />{" "}
+        {' '}
+        <Loader />{' '}
       </AdminLayout>
     );
   }
@@ -61,10 +61,10 @@ const Uzytkownicy = ({ authData }) => {
     <AdminLayout userData={authData} view="uzytkownicy">
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          margin: "24px 0 40px 0",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          margin: '24px 0 40px 0',
         }}
       >
         <h1>Użytkownicy {loading && <StyledSpinner width="40px" />}</h1>
@@ -83,12 +83,7 @@ const Uzytkownicy = ({ authData }) => {
           <p>E-mail</p>
         </TableHeader>
         {users && !isUsersLoading ? (
-          <UsersList
-            authData={authData}
-            users={users}
-            loading={loading}
-            setLoading={setLoading}
-          />
+          <UsersList authData={authData} users={users} loading={loading} setLoading={setLoading} />
         ) : (
           <p>Brak użytkowników</p>
         )}

@@ -3,17 +3,13 @@ export function validateEmail(email) {
   if (!email) {
     return {
       valid: false,
-      message: "Email nie może być pusty",
+      message: 'Email nie może być pusty',
     };
   }
-  if (
-    !email.match(
-      /^[a-zA-Z-.-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-    )
-  ) {
+  if (!email.match(/^[a-zA-Z-.-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/)) {
     return {
       valid: false,
-      message: "Proszę podać poprawny adres email",
+      message: 'Proszę podać poprawny adres email',
     };
   }
 
@@ -26,7 +22,7 @@ export const validateZipCode = (zipCode) => {
   if (zipCode.length !== 6) {
     return {
       valid: false,
-      message: "Kod pocztowy powinien być w formacie xx-xxx",
+      message: 'Kod pocztowy powinien być w formacie xx-xxx',
     };
   }
 
@@ -41,13 +37,13 @@ export const validateText = (text) => {
   if (!textRegex.test(text)) {
     return {
       valid: false,
-      message: "proszę podać wartość bez cyfr",
+      message: 'proszę podać wartość bez cyfr',
     };
   }
   if (/^\s*$/.test(text.trim())) {
     return {
       valid: false,
-      message: "białe znaki (spacje) są niedozwolone",
+      message: 'białe znaki (spacje) są niedozwolone',
     };
   }
 
@@ -57,11 +53,11 @@ export const validateText = (text) => {
 };
 
 export const validatePhone = (phone) => {
-  if (phone.replaceAll("-", "").replace(/\s/g, "").length !== 9) {
-    console.log(phone.replaceAll("-", ""));
+  if (phone.replaceAll('-', '').replace(/\s/g, '').length !== 9) {
+    console.log(phone.replaceAll('-', ''));
     return {
       valid: false,
-      message: "Nr telefonu musi mieć 9 znaków",
+      message: 'Nr telefonu musi mieć 9 znaków',
     };
   }
 
@@ -76,7 +72,7 @@ export const validateNumber = (number) => {
   if (isNaN(num)) {
     return {
       valid: false,
-      message: "Proszę podać poprawną liczbę,znaki tekstowe nie są dozwolone",
+      message: 'Proszę podać poprawną liczbę,znaki tekstowe nie są dozwolone',
     };
   }
 

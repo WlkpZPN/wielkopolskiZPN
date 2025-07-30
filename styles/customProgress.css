@@ -29,7 +29,9 @@
   right: 0px;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 20px #29d, 0 0 5px #29d;
+  box-shadow:
+    0 0 20px #29d,
+    0 0 5px #29d;
   opacity: 1;
 
   -webkit-transform: rotate(3deg) translate(0px, -4px);
@@ -62,7 +64,7 @@
   border-top-color: #29d;
   border-left-color: #29d;
   border-radius: 50%; */
-  background: url("/logo_white.svg");
+  background: url('/logo_white.svg');
 
   background-size: contain;
   background-repeat: no-repeat;

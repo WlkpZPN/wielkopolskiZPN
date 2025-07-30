@@ -1,21 +1,21 @@
-import styled from "styled-components";
-import { useContext, useEffect } from "react";
-import { AdminContext } from "../../pages/admin/kluby";
-import { useRouter } from "next/router";
-import { useLocalStorage } from "../../middleware/hooks";
+import styled from 'styled-components';
+import { useContext, useEffect } from 'react';
+import { AdminContext } from '../../pages/admin/kluby';
+import { useRouter } from 'next/router';
+import { useLocalStorage } from '../../middleware/hooks';
 //icons
-import { Download } from "@styled-icons/entypo/Download";
+import { Download } from '@styled-icons/entypo/Download';
 
 //components
-import { exportClubData, convertLeauge } from "../../middleware/utils";
+import { exportClubData, convertLeauge } from '../../middleware/utils';
 
-import TableRow from "../atoms/table_row";
-import ClubStatus from "../atoms/club_status";
-import IconButton from "../atoms/IconButton";
-import TablePagination from "../molecules/table_pagination";
-import ClubName from "../atoms/club_name";
-import PrimaryButton from "../atoms/primary_button";
-import DebtIcon from "../atoms/debt_icon";
+import TableRow from '../atoms/table_row';
+import ClubStatus from '../atoms/club_status';
+import IconButton from '../atoms/IconButton';
+import TablePagination from '../molecules/table_pagination';
+import ClubName from '../atoms/club_name';
+import PrimaryButton from '../atoms/primary_button';
+import DebtIcon from '../atoms/debt_icon';
 const Wrapper = styled.div`
   margin: 24px 0;
   border-radius: 4px;
@@ -27,7 +27,7 @@ const TableHeader = styled.span`
 
 const ClubsList = () => {
   const router = useRouter();
-  const [page, setPage] = useLocalStorage("club_page", 0);
+  const [page, setPage] = useLocalStorage('club_page', 0);
   //const [page, setPage] = useState(0);
   const { list: clubs } = useContext(AdminContext);
 
@@ -50,27 +50,22 @@ const ClubsList = () => {
     let currentPage = 0;
     clubs.forEach((club, index) => {
       clubsArray[currentPage].push(
-        <TableRow
-          key={club.id}
-          onClick={() => router.push(`/admin/kluby/${club.id}`)}
-        >
+        <TableRow key={club.id} onClick={() => router.push(`/admin/kluby/${club.id}`)}>
           <DebtIcon debt={club.debt} />
           <ClubStatus active={club.active} />
-          <span>{club.internal_id.replaceAll(".", "")}</span>
+          <span>{club.internal_id.replaceAll('.', '')}</span>
           <span>{club.updated_at}</span>
-          <ClubName style={{ display: "block", width: "100%" }}>
-            {club.name}
-          </ClubName>
-          <span>{club.active ? "aktywny" : "niekatywny"}</span>
+          <ClubName style={{ display: 'block', width: '100%' }}>{club.name}</ClubName>
+          <span>{club.active ? 'aktywny' : 'niekatywny'}</span>
           <span>{club.region}</span>
           <span>{convertLeauge(club.leauge)}</span>
           <PrimaryButton
             onClick={() => router.push(`/admin/kluby/${club.id}`)}
-            style={{ width: "min-content", justifySelf: "end" }}
+            style={{ width: 'min-content', justifySelf: 'end' }}
           >
             Szczegóły
           </PrimaryButton>
-        </TableRow>
+        </TableRow>,
       );
       if (clubsArray[currentPage].length === 10) {
         currentPage += 1;
@@ -82,7 +77,7 @@ const ClubsList = () => {
   return (
     <Wrapper>
       <div>
-        <TableRow style={{ backgroundColor: "#F9FAFB" }}>
+        <TableRow style={{ backgroundColor: '#F9FAFB' }}>
           <span></span>
           <TableHeader>ID klubu</TableHeader>
           <TableHeader>Data ost. akutalizacji</TableHeader>
@@ -95,10 +90,10 @@ const ClubsList = () => {
       </div>
       <div
         style={{
-          margin: "32px 0",
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
+          margin: '32px 0',
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
         }}
       >
         <IconButton onClick={() => exportClubData(clubs)}>
@@ -106,11 +101,7 @@ const ClubsList = () => {
           Eksportuj tabelę do CSV
         </IconButton>
 
-        <TablePagination
-          pages={totalPages}
-          setPage={setPage}
-          currentPage={page}
-        />
+        <TablePagination pages={totalPages} setPage={setPage} currentPage={page} />
       </div>
     </Wrapper>
   );
