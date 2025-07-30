@@ -156,9 +156,12 @@ const StepOneForm = ({
                                     id="2"
                                     checked={data.number_of_seasons === "2"}
                                     onChange={(e) => {
-                                        handleChange("2", "number_of_seasons", 1);
-                                        handleChange("2025/2026 i 2026/2027", "seasons", 1);
+                                        handleChange({
+                                            number_of_seasons: "1",
+                                            seasons: "2025/2026"
+                                        }, 1);
                                     }}
+
                                 >
                                     2 sezony
                                 </RadioButton>
