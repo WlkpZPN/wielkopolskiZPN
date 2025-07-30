@@ -1,11 +1,11 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { applicationID, field, url } = req.body;
 
     try {
-      if (field == "first") {
+      if (field == 'first') {
         await prisma.applications.update({
           where: {
             id: parseInt(applicationID),
@@ -16,7 +16,7 @@ export default async (req, res) => {
         });
       }
 
-      if (field == "second") {
+      if (field == 'second') {
         await prisma.applications.update({
           where: {
             id: parseInt(applicationID),
@@ -27,11 +27,11 @@ export default async (req, res) => {
         });
       }
       res.status(200);
-      res.send("data updated");
+      res.send('data updated');
       return resolve();
     } catch (e) {
       res.status(400);
-      console.log("errror", e);
+      console.log('errror', e);
       res.send(e);
     }
   });

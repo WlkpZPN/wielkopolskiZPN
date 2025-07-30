@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   padding: 12px 24px;
@@ -20,7 +20,7 @@ const LastChange = ({ children }) => {
 
   return (
     <Wrapper>
-      <p style={{ fontWeight: "bold" }}>Ostatnia aktualizacja</p>
+      <p style={{ fontWeight: 'bold' }}>Ostatnia aktualizacja</p>
       <p>{children}</p>
     </Wrapper>
   );

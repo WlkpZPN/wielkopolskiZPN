@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
-import cookie from "cookie";
-import prisma from "../../../middleware/prisma";
+import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
+import prisma from '../../../middleware/prisma';
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { email } = req.body;
@@ -15,7 +15,7 @@ export default async (req, res) => {
         roles: true,
       },
     });
-    console.log("user data", user);
+    console.log('user data', user);
     if (user) {
       const payload = {
         id: user.id,
@@ -25,18 +25,18 @@ export default async (req, res) => {
         role: user.role,
       };
       const token = jwt.sign(payload, process.env.AUTH_KEY, {
-        expiresIn: "16h",
+        expiresIn: '16h',
       });
 
       try {
         res.setHeader(
-          "Set-Cookie",
-          cookie.serialize("userToken", token, {
+          'Set-Cookie',
+          cookie.serialize('userToken', token, {
             maxAge: 43200,
-            path: "/",
+            path: '/',
             httpOnly: true,
-            secure: process.env.NODE_ENV !== "development",
-          })
+            secure: process.env.NODE_ENV !== 'development',
+          }),
         );
         res.status(200).send(payload);
         return resolve();
@@ -50,7 +50,7 @@ export default async (req, res) => {
     } else {
       res.status(400);
       res.json({
-        message: "Nie znaleziono użytkownika",
+        message: 'Nie znaleziono użytkownika',
       });
     }
 

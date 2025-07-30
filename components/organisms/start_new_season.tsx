@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import Loader from "../atoms/loader";
-import Select from "../atoms/form_select";
-import PrimaryButton from "../atoms/primary_button";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
-import Header from "../atoms/header";
-import { getCurrentDate } from "../../middleware/utils";
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import Loader from '../atoms/loader';
+import Select from '../atoms/form_select';
+import PrimaryButton from '../atoms/primary_button';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
+import Header from '../atoms/header';
+import { getCurrentDate } from '../../middleware/utils';
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,8 +18,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const ModalBackground = styled.div<{visible: boolean}>`
-  display: ${({ visible }) => (visible ? "block" : "none")};
+const ModalBackground = styled.div<{ visible: boolean }>`
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
@@ -44,41 +44,39 @@ const ModalContent = styled.div`
 const StartNewSeason = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [leauge, setLeauge] = useState("");
-  const [lastSingleUpdate, setLastSingleUpdate] = useState("");
-  const [lastUpdate, setLastUpdate] = useState("");
+  const [leauge, setLeauge] = useState('');
+  const [lastSingleUpdate, setLastSingleUpdate] = useState('');
+  const [lastUpdate, setLastUpdate] = useState('');
 
   useEffect(() => {
     getLastUpdate();
   }, [leauge]);
 
   const getLastUpdate = async () => {
-    const lastUpdate = await axios.post(
-      "/api/applications/admin/getLeaugesLastUpdate"
-    );
+    const lastUpdate = await axios.post('/api/applications/admin/getLeaugesLastUpdate');
     const data = lastUpdate.data;
     setLastSingleUpdate(data.find((el) => el.name === leauge)?.updated_at);
 
-    setLastUpdate(data.find((el) => el.name === "brak")?.updated_at);
+    setLastUpdate(data.find((el) => el.name === 'brak')?.updated_at);
 
     console.log(lastUpdate);
   };
   const createNewSeason = async (setForAll = true) => {
     setLoading(true);
     try {
-      await axios.post("/api/applications/admin/startNewSeason", {
+      await axios.post('/api/applications/admin/startNewSeason', {
         leauge: leauge,
         setForAll: setForAll,
       });
 
       await getLastUpdate();
-      toast.success("Pomyślnie rozpoczęto proces licencyjny", {
+      toast.success('Pomyślnie rozpoczęto proces licencyjny', {
         autoClose: 2000,
       });
     } catch (e) {
       console.log(e);
       toast.error(
-        "Nie udało się rozpocząc procesu licencyjnego,spróbuj ponownie później lub skontaktuj się z administratorem."
+        'Nie udało się rozpocząc procesu licencyjnego,spróbuj ponownie później lub skontaktuj się z administratorem.',
       );
     }
 
@@ -86,8 +84,8 @@ const StartNewSeason = () => {
   };
 
   const startNewSeasonForLeauge = async () => {
-    if (leauge == "" || leauge == "brak" || !leauge) {
-      toast.error("Proszę wybrać lige rozgrywkową", {
+    if (leauge == '' || leauge == 'brak' || !leauge) {
+      toast.error('Proszę wybrać lige rozgrywkową', {
         autoClose: 2000,
       });
       return;
@@ -102,7 +100,7 @@ const StartNewSeason = () => {
         <Loader />
       ) : (
         <>
-          <div style={{ maxWidth: "500px", width: "100%" }}>
+          <div style={{ maxWidth: '500px', width: '100%' }}>
             <Select value={leauge} onChange={(e) => setLeauge(e.target.value)}>
               <option value="brak">Wybierz ligę rozgrywkową</option>
               <option value="iv liga">IV liga</option>
@@ -116,9 +114,8 @@ const StartNewSeason = () => {
             </Select>
           </div>
           <p>
-            Wznowiono:{" "}
-            {lastSingleUpdate ||
-              "brak daty (proces licencyjny dla tej ligii nie został wznowiony)"}
+            Wznowiono:{' '}
+            {lastSingleUpdate || 'brak daty (proces licencyjny dla tej ligii nie został wznowiony)'}
           </p>
           <PrimaryButton onClick={() => startNewSeasonForLeauge()}>
             Wznów proces dla tej klasy
@@ -130,11 +127,7 @@ const StartNewSeason = () => {
         </>
       )}
 
-      <ConfirmNewSeasonModal
-        visible={visible}
-        setVisible={setVisible}
-        onClick={() => null}
-      />
+      <ConfirmNewSeasonModal visible={visible} setVisible={setVisible} onClick={() => null} />
     </Wrapper>
   );
 };

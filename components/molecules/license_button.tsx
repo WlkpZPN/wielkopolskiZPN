@@ -1,21 +1,21 @@
-import axios from "axios";
-import { useState, useEffect, createRef } from "react";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import styled from "styled-components";
-import ApplicationStatus from "../atoms/application_status";
-import OutlineButton from "../atoms/outline_button";
-import { FilePdf } from "@styled-icons/fa-regular/FilePdf";
-import CustomScroll from "react-custom-scroll";
+import axios from 'axios';
+import { useState, useEffect, createRef } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import styled from 'styled-components';
+import ApplicationStatus from '../atoms/application_status';
+import OutlineButton from '../atoms/outline_button';
+import { FilePdf } from '@styled-icons/fa-regular/FilePdf';
+import CustomScroll from 'react-custom-scroll';
 
-import PrimaryButton from "../atoms/primary_button";
-import UndoLicense from "./undo_license_modal";
-import GiveSupervision from "./give_supervision_modal";
-import { generatePdf } from "../../middleware/generatePdf";
-import NProgress from "nprogress";
+import PrimaryButton from '../atoms/primary_button';
+import UndoLicense from './undo_license_modal';
+import GiveSupervision from './give_supervision_modal';
+import { generatePdf } from '../../middleware/generatePdf';
+import NProgress from 'nprogress';
 NProgress.configure({
   minimum: 0.3,
-  easing: "ease",
+  easing: 'ease',
   speed: 800,
   showSpinner: true,
 });
@@ -26,13 +26,13 @@ const FileIcon = styled(FilePdf)`
   margin: 0 auto;
 `;
 
-const Wrapper = styled.div<{isAdmin?: string}>`
+const Wrapper = styled.div<{ isAdmin?: string }>`
   border-radius: 5px;
   white-space: pre-wrap;
   word-break: break-all;
   padding: 32px;
   margin-right: 16px;
-  margin-top: ${({ isAdmin }) => isAdmin || "50px"};
+  margin-top: ${({ isAdmin }) => isAdmin || '50px'};
   background-color: #f2f3f4;
   border-radius: 2px 3px 3px rgba(0, 0, 0, 0.2);
   height: 340px;
@@ -58,13 +58,13 @@ const Content = styled.span`
   flex-direction: column;
 `;
 
-const StatusContainer = styled.div<{isAdmin?: boolean}>`
-  position: ${({ isAdmin }) => (isAdmin ? "initial" : "absolute")};
-  /* top:${({ isAdmin }) => (isAdmin ? "initial" : "absolute")}; */
+const StatusContainer = styled.div<{ isAdmin?: boolean }>`
+  position: ${({ isAdmin }) => (isAdmin ? 'initial' : 'absolute')};
+  /* top:${({ isAdmin }) => (isAdmin ? 'initial' : 'absolute')}; */
   top: 20px;
   left: 50%;
   align-self: center;
-  transform: ${({ isAdmin }) => (isAdmin ? "initial" : "translateX(-50%)")};
+  transform: ${({ isAdmin }) => (isAdmin ? 'initial' : 'translateX(-50%)')};
 `;
 
 const ref = createRef();
@@ -86,20 +86,20 @@ const LicenseButton = ({
   const changeDecision = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/licences/setLicense", {
+      await axios.post('/api/licences/setLicense', {
         applicationID: application.id,
         statusID: 8,
         userID: authData.id,
-        description: "Zmiana decyzji, licencja wydana",
+        description: 'Zmiana decyzji, licencja wydana',
       });
 
       setLoading(false);
-      toast.success("Zmieniono decyzję,licencja wydana pomyślnie");
+      toast.success('Zmieniono decyzję,licencja wydana pomyślnie');
       router.replace(router.asPath);
     } catch (error) {
       console.log(error);
       setLoading(false);
-      toast.error("Zmiana decyzji nie powiodła się,spróbuj ponownie", {
+      toast.error('Zmiana decyzji nie powiodła się,spróbuj ponownie', {
         autoClose: 2000,
       });
     }
@@ -107,53 +107,52 @@ const LicenseButton = ({
   const undoSupervision = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/licences/setLicense", {
+      await axios.post('/api/licences/setLicense', {
         applicationID: application.id,
         statusID: 8,
         userID: authData.id,
-        description: "Cofnięto nadzór, wydano licencję standardową",
+        description: 'Cofnięto nadzór, wydano licencję standardową',
       });
       setLoading(false);
-      toast.success("Pomyślnie wydano licencję standardową", {
+      toast.success('Pomyślnie wydano licencję standardową', {
         autoClose: 1500,
       });
       router.replace(router.asPath);
     } catch (err) {
       console.log(err);
       setLoading(false);
-      toast.error("Cofnięcie nadzoru nie powiodło się, spróbuj ponownie", {
+      toast.error('Cofnięcie nadzoru nie powiodło się, spróbuj ponownie', {
         autoClose: 1500,
       });
     }
   };
 
   const getLicence = async () => {
-    NProgress.start()
-    await generatePdf(clubData)
-        .finally(() => {
-          NProgress.done()
-        });
-  }
+    NProgress.start();
+    await generatePdf(clubData).finally(() => {
+      NProgress.done();
+    });
+  };
 
   const renderButtons = () => {
     switch (statusID || application.statuses.id) {
       case 7:
       case 8:
       case 10:
-        if (authData?.role === "księgowa") {
+        if (authData?.role === 'księgowa') {
           return (
             <OutlineButton
-              style={{ padding: "8px", fontSize: "14px" }}
+              style={{ padding: '8px', fontSize: '14px' }}
               onClick={() => getLicence()}
             >
               Pobierz
             </OutlineButton>
           );
         }
-        if (authData?.role === "nadzór finansów") {
+        if (authData?.role === 'nadzór finansów') {
           return (
             <PrimaryButton
-              style={{ padding: "8px", fontSize: "14px" }}
+              style={{ padding: '8px', fontSize: '14px' }}
               color="danger"
               hoverColor="dangerDark"
               onClick={() => setVisible1(true)}
@@ -165,7 +164,7 @@ const LicenseButton = ({
         return (
           <>
             <OutlineButton
-              style={{ padding: "8px", fontSize: "14px" }}
+              style={{ padding: '8px', fontSize: '14px' }}
               onClick={() => getLicence()}
             >
               Pobierz
@@ -175,9 +174,9 @@ const LicenseButton = ({
                 {application.status_id === 8 ? (
                   <PrimaryButton
                     style={{
-                      padding: "8px",
-                      fontSize: "14px",
-                      margin: "12px 0",
+                      padding: '8px',
+                      fontSize: '14px',
+                      margin: '12px 0',
                     }}
                     onClick={() => setVisible2(true)}
                   >
@@ -186,9 +185,9 @@ const LicenseButton = ({
                 ) : (
                   <PrimaryButton
                     style={{
-                      padding: "8px",
-                      fontSize: "14px",
-                      margin: "12px 0",
+                      padding: '8px',
+                      fontSize: '14px',
+                      margin: '12px 0',
                     }}
                     onClick={undoSupervision}
                   >
@@ -196,7 +195,7 @@ const LicenseButton = ({
                   </PrimaryButton>
                 )}
                 <PrimaryButton
-                  style={{ padding: "8px", fontSize: "14px" }}
+                  style={{ padding: '8px', fontSize: '14px' }}
                   color="danger"
                   hoverColor="dangerDark"
                   onClick={() => setVisible1(true)}
@@ -204,19 +203,17 @@ const LicenseButton = ({
                   Cofnij licencję
                 </PrimaryButton>
               </>
-            )}{" "}
+            )}{' '}
           </>
         );
 
       case 11:
-        if (authData.role !== "administrator") {
+        if (authData.role !== 'administrator') {
           return null;
         }
         return (
           <>
-            <PrimaryButton onClick={changeDecision}>
-              Zmień decyzję
-            </PrimaryButton>{" "}
+            <PrimaryButton onClick={changeDecision}>Zmień decyzję</PrimaryButton>{' '}
           </>
         );
     }
@@ -240,7 +237,7 @@ const LicenseButton = ({
 
       <StatusContainer isAdmin={isAdmin}>
         <ApplicationStatus
-          size={isAdmin ? "40px" : "60px"}
+          size={isAdmin ? '40px' : '60px'}
           status={statusName || application.statuses.name}
         />
       </StatusContainer>

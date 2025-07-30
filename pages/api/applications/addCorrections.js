@@ -1,8 +1,5 @@
-import prisma from "../../../middleware/prisma";
-import {
-  getCurrentDate,
-  convertStepsToString,
-} from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import { getCurrentDate, convertStepsToString } from '../../../middleware/utils';
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
@@ -23,7 +20,7 @@ export default async (req, res) => {
         data: {
           application_id: applicationID,
           description: `Skierowanie do poprawy, powód: ${description}. \n Kroki do poprawy: ${convertStepsToString(
-            data
+            data,
           )}`,
           status_id: 4,
           created_at: getCurrentDate(),
@@ -38,7 +35,7 @@ export default async (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("corrections added");
+    res.send('corrections added');
     return resolve();
   });
 };

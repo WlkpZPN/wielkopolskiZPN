@@ -82,27 +82,17 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
     const config = {
       headers: { 'Content-type': 'multipart/form-data' },
       onUploadProgress: (event) => {
-        console.log(
-          `Current progress:`,
-          Math.round((event.loaded * 100) / event.total)
-        );
+        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
       },
     };
     try {
       setLoading(true);
-      const uploadResult = await axios.post(
-        '/api/ftp/upload',
-        formData,
-        config
-      );
-      const updateResult = await axios.post(
-        '/api/applications/updateInvoiceUrl',
-        {
-          applicationID: clubData.applications[0].id,
-          field: field,
-          url: `/${uploadResult.data.results[0].key}`,
-        }
-      );
+      const uploadResult = await axios.post('/api/ftp/upload', formData, config);
+      const updateResult = await axios.post('/api/applications/updateInvoiceUrl', {
+        applicationID: clubData.applications[0].id,
+        field: field,
+        url: `/${uploadResult.data.results[0].key}`,
+      });
 
       setLoading(false);
 
@@ -110,9 +100,7 @@ const AddInvoiceWrapper = ({ clubData, admin }) => {
         autoClose: 2000,
       });
       let newFiles = { ...invoiceFiles };
-      newFiles[
-        field
-      ] = `/${uploadResult.data.results[0].key}`;
+      newFiles[field] = `/${uploadResult.data.results[0].key}`;
       setInvoiceFiles(newFiles);
     } catch (error) {
       setLoading(false);

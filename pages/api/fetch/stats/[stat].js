@@ -1,6 +1,6 @@
-import prisma from "../../../../middleware/prisma";
-import { getCurrentDate } from "../../../../middleware/utils";
-import { stat } from "../../../../middleware/types/stats";
+import prisma from '../../../../middleware/prisma';
+import { getCurrentDate } from '../../../../middleware/utils';
+import { stat } from '../../../../middleware/types/stats';
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { stat: statType } = req.query;
@@ -67,7 +67,7 @@ export default async (req, res) => {
         }
         break;
       default:
-        console.log("default");
+        console.log('default');
         break;
     }
 
@@ -75,8 +75,7 @@ export default async (req, res) => {
 
     await prisma.$disconnect();
     //console.log(applications, allApplications);
-    const percent =
-      (Math.round((applications / allApplications) * 100) / 100) * 100;
+    const percent = (Math.round((applications / allApplications) * 100) / 100) * 100;
     res.status(200);
 
     res.json({

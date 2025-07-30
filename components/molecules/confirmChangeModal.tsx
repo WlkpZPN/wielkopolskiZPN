@@ -1,14 +1,14 @@
-import styled from "styled-components";
-import PrimaryButton from "../atoms/primary_button";
+import styled from 'styled-components';
+import PrimaryButton from '../atoms/primary_button';
 
-const Wrapper = styled.div<{visible: boolean}>`
+const Wrapper = styled.div<{ visible: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
   top: 0;
   left: 0;
-  display: ${({ visible }) => (visible ? "block" : "none")};
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
   z-index: 99999;
 `;
 
@@ -28,35 +28,30 @@ const Content = styled.div`
   }
 `;
 
-const ConfirmChangeModal = ({
-  updateApplicationFunction,
-  visible,
-  setVisible,
-  nextStatus,
-}) => {
+const ConfirmChangeModal = ({ updateApplicationFunction, visible, setVisible, nextStatus }) => {
   const renderStatus = () => {
     let status;
     switch (nextStatus) {
       case 1:
-        status = "roboczy";
+        status = 'roboczy';
         break;
       case 2:
-        status = "wnioskowany";
+        status = 'wnioskowany';
         break;
       case 3:
-        status = "zatwierdzony";
+        status = 'zatwierdzony';
         break;
       case 4:
-        status = "do poprawy";
+        status = 'do poprawy';
         break;
       case 5:
-        status = "odrzucony";
+        status = 'odrzucony';
         break;
       case 6:
-        status = "zaakceptowany nieopłacony";
+        status = 'zaakceptowany nieopłacony';
         break;
       case 7:
-        status = "zaakceptowany opłacony";
+        status = 'zaakceptowany opłacony';
         break;
     }
     return status;
@@ -64,9 +59,8 @@ const ConfirmChangeModal = ({
   return (
     <Wrapper onClick={() => setVisible(false)} visible={visible}>
       <Content>
-        Uwaga! Klub opłacił już ten wniosek. Jeśli zmienisz jego status na “
-        {renderStatus()}” to klub będzie musiał opłacić go ponownie. Czy na
-        pewno chcesz tego dokonać?
+        Uwaga! Klub opłacił już ten wniosek. Jeśli zmienisz jego status na “{renderStatus()}” to
+        klub będzie musiał opłacić go ponownie. Czy na pewno chcesz tego dokonać?
         <div>
           <PrimaryButton
             color="success"
@@ -75,11 +69,7 @@ const ConfirmChangeModal = ({
           >
             OK
           </PrimaryButton>
-          <PrimaryButton
-            color="danger"
-            hoverColor="dangerDark"
-            onClick={() => setVisible(false)}
-          >
+          <PrimaryButton color="danger" hoverColor="dangerDark" onClick={() => setVisible(false)}>
             Anuluj
           </PrimaryButton>
         </div>

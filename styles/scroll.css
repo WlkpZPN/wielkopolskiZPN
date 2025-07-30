@@ -18,7 +18,7 @@
   -webkit-overflow-scrolling: touch;
 }
 .rcs-custom-scroll .rcs-inner-container:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;

@@ -1,8 +1,8 @@
-import bcrypt from "bcrypt";
-import prisma from "../../../middleware/prisma";
-import transporter from "../../../middleware/transporter";
-import generator from "generate-password";
-import smtpConfig from "../../../smtpConfig";
+import bcrypt from 'bcrypt';
+import prisma from '../../../middleware/prisma';
+import transporter from '../../../middleware/transporter';
+import generator from 'generate-password';
+import smtpConfig from '../../../smtpConfig';
 const saltRounds = 10;
 
 export default (req, res) => {
@@ -17,7 +17,7 @@ export default (req, res) => {
       console.log(clubData);
 
       if (!clubData) {
-        res.status(400).send("Klub z podanym mailem nie istnieje");
+        res.status(400).send('Klub z podanym mailem nie istnieje');
         return resolve();
       }
 
@@ -39,7 +39,7 @@ export default (req, res) => {
       await transporter.sendMail({
         from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
         to: clubData[0].email,
-        subject: "WielkopolskiZPN - przypomnienie hasła",
+        subject: 'WielkopolskiZPN - przypomnienie hasła',
         html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link
@@ -79,9 +79,7 @@ export default (req, res) => {
           Poniżej znajduje się twoje hasło do Platformy Licencyjnej Wielkopolskiego Związku Piłki Nożnej. 
           Aby się zalogować wprowadź swój adres e-mail,
            na który otrzymałeś tą wiadomość oraz wprowadź hasło znajdujące się poniżej:
-          <p><span style="font-weight: bold">hasło:</span> ${
-            clubData[0].password || password
-          }</p>
+          <p><span style="font-weight: bold">hasło:</span> ${clubData[0].password || password}</p>
         </td>
       </tr>
       <tr>
@@ -134,10 +132,10 @@ export default (req, res) => {
 `,
       });
 
-      res.send("Hasło wysłane");
+      res.send('Hasło wysłane');
     } catch (err) {
       console.log(err);
-      res.status(400).send("Something went wrong");
+      res.status(400).send('Something went wrong');
     }
   });
 };

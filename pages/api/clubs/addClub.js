@@ -1,7 +1,7 @@
-import prisma from "../../../middleware/prisma";
-import { getInternalId } from "../../../middleware/utils";
-import axios from "axios";
-import generator from "generate-password";
+import prisma from '../../../middleware/prisma';
+import { getInternalId } from '../../../middleware/utils';
+import axios from 'axios';
+import generator from 'generate-password';
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { data } = req.body;

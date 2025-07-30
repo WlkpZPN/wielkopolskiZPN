@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import QuestionItem from "../atoms/question_item";
+import styled from 'styled-components';
+import QuestionItem from '../atoms/question_item';
 
 const Header = styled.h2`
   margin: 24px 0;
@@ -26,35 +26,35 @@ const QuestionClubList = ({ questions }) => {
     return helperArr;
   };
 
-  const arrOne: any = renderList("Proces składania wniosku");
-  const arrTwo: any = renderList("Płatności");
-  const arrThree: any = renderList("Decyzje Komisji Licencyjnej");
-  const arrFour: any = renderList("Inne");
+  const arrOne: any = renderList('Proces składania wniosku');
+  const arrTwo: any = renderList('Płatności');
+  const arrThree: any = renderList('Decyzje Komisji Licencyjnej');
+  const arrFour: any = renderList('Inne');
   return (
     <div>
       {arrOne.length > 0 ? (
         <>
-          {" "}
-          <Header>Proces składania wniosku</Header> {arrOne}{" "}
+          {' '}
+          <Header>Proces składania wniosku</Header> {arrOne}{' '}
         </>
       ) : null}
       {arrTwo.length > 0 ? (
         <>
-          {" "}
-          <Header>Płatności</Header> {arrTwo}{" "}
+          {' '}
+          <Header>Płatności</Header> {arrTwo}{' '}
         </>
       ) : null}
 
       {arrThree.length > 0 ? (
         <>
-          {" "}
-          <Header>Decyzje Komisji Licencyjnej</Header> {arrThree}{" "}
+          {' '}
+          <Header>Decyzje Komisji Licencyjnej</Header> {arrThree}{' '}
         </>
       ) : null}
       {arrFour.length > 0 ? (
         <>
-          {" "}
-          <Header>Inne</Header> {arrFour}{" "}
+          {' '}
+          <Header>Inne</Header> {arrFour}{' '}
         </>
       ) : null}
     </div>

@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { useState } from "react";
+import styled from 'styled-components';
+import { useState } from 'react';
 
 //components
-import PrimaryButton from "../atoms/primary_button";
+import PrimaryButton from '../atoms/primary_button';
 
-const Background = styled.div<{isOpen?: boolean}>`
+const Background = styled.div<{ isOpen?: boolean }>`
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -12,7 +12,7 @@ const Background = styled.div<{isOpen?: boolean}>`
   left: 0;
   background: rgba(0, 0, 0, 0.3);
 
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;
 
 const Content = styled.div`

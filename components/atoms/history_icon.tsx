@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Check } from "@styled-icons/boxicons-regular/Check";
-import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline";
+import styled from 'styled-components';
+import { Check } from '@styled-icons/boxicons-regular/Check';
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline';
 
 const Close = styled(CloseOutline)`
   width: 27px;
@@ -27,8 +27,8 @@ const Icon = styled.div`
   position: relative;
   margin-bottom: 32px;
   &::after {
-    content: "";
-    display: ${({ hidden }) => (hidden ? "none" : "block")};
+    content: '';
+    display: ${({ hidden }) => (hidden ? 'none' : 'block')};
     background: #b5b5b5;
     height: 32px;
     bottom: -32px;
@@ -42,25 +42,25 @@ const Icon = styled.div`
 const HistoryIcon = ({ number, state, hidden }) => {
   const renderIcon = () => {
     switch (state) {
-      case "completed":
+      case 'completed':
         return (
           <Icon hidden={hidden} color="#02A54D">
             <StyledCheck />
           </Icon>
         );
-      case "default":
+      case 'default':
         return (
           <Icon hidden={hidden} color="#B5B5B5">
             {number}
           </Icon>
         );
-      case "warning":
+      case 'warning':
         return (
           <Icon hidden={hidden} color="#D3E500">
             <Close />
           </Icon>
         );
-      case "error":
+      case 'error':
         return (
           <Icon hidden={number === 5 ? true : false} color="#D10101">
             <Close />

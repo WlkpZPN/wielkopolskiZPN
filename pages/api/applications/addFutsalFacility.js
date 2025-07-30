@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
@@ -32,7 +32,7 @@ export default async (req, res) => {
       });
     }
 
-    console.log("futsal facility", sport_facility);
+    console.log('futsal facility', sport_facility);
 
     await prisma.$disconnect();
 

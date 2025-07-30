@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
-import jwt from "jsonwebtoken";
-import styled from "styled-components";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import styled from 'styled-components';
 import Link from 'next/link';
 
 //components
-import Label from "../components/atoms/label";
-import Input from "../components/atoms/login_input";
-import ErrorMessage from "../components/atoms/error_message";
-import LoggedUserInfo from "../components/molecules/loggedUserInfo";
-import PrimaryButton from "../components/atoms/primary_button";
-import Loader from "../components/atoms/loader";
-import BigLogo from "../components/atoms/big_logo";
-import RemindPasswordModal from "../components/molecules/remind_passsword";
-import MaintanceScreen from "../components/atoms/maintence_break_screen";
+import Label from '../components/atoms/label';
+import Input from '../components/atoms/login_input';
+import ErrorMessage from '../components/atoms/error_message';
+import LoggedUserInfo from '../components/molecules/loggedUserInfo';
+import PrimaryButton from '../components/atoms/primary_button';
+import Loader from '../components/atoms/loader';
+import BigLogo from '../components/atoms/big_logo';
+import RemindPasswordModal from '../components/molecules/remind_passsword';
+import MaintanceScreen from '../components/atoms/maintence_break_screen';
 //helpers
 
-import { validateEmail } from "../middleware/validation";
+import { validateEmail } from '../middleware/validation';
 
 const Wrapper = styled.main`
   display: grid;
@@ -88,10 +88,10 @@ const ForgetPassword = styled.p`
 
 const LoginPage = ({ userData }) => {
   const router = useRouter();
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const [visible, setVisible] = useState(false);
 
   const submitLogin = async (e) => {
@@ -99,18 +99,18 @@ const LoginPage = ({ userData }) => {
 
     const { valid, message } = validateEmail(email);
 
-    if (password == null || password == "") {
-      setError("Proszę podać hasło");
+    if (password == null || password == '') {
+      setError('Proszę podać hasło');
       setLoading(false);
       return;
     }
 
     if (valid) {
-      setError("");
+      setError('');
       setLoading(true);
 
       axios
-        .post("/api/clubAuth/login", {
+        .post('/api/clubAuth/login', {
           email: email.trim(),
           password,
         })
@@ -119,15 +119,12 @@ const LoginPage = ({ userData }) => {
 
           const { success, token } = res.data;
 
-          router.push("/");
+          router.push('/');
         })
         .catch((err) => {
           setLoading(false);
           console.log(err);
-          setError(
-            err.response.data.message ||
-              "Wystąpił błąd,proszę spróbować później"
-          );
+          setError(err.response.data.message || 'Wystąpił błąd,proszę spróbować później');
         });
     } else {
       setLoading(false);
@@ -147,9 +144,7 @@ const LoginPage = ({ userData }) => {
         </Link>
 
         <Header>Platforma licencyjna</Header>
-        <p
-          style={{ marginTop: "15px", marginBottom: "64px", fontSize: "18px" }}
-        >
+        <p style={{ marginTop: '15px', marginBottom: '64px', fontSize: '18px' }}>
           Konto klubu sportowego
         </p>
         {userData ? (
@@ -164,7 +159,7 @@ const LoginPage = ({ userData }) => {
               placeholder="jan.nowak@wielkopolskizpn.pl"
               value={email}
               onChange={(e) => {
-                setError("");
+                setError('');
                 setEmail(e.target.value);
               }}
             />
@@ -174,18 +169,12 @@ const LoginPage = ({ userData }) => {
               placeholder="********"
               value={password}
               onChange={(e) => {
-                setError("");
+                setError('');
                 setPassword(e.target.value);
               }}
             />
-            <ForgetPassword onClick={() => setVisible(true)}>
-              Przypomnij hasło
-            </ForgetPassword>
-            <PrimaryButton
-              type="submit"
-              onClick={submitLogin}
-              style={{ marginTop: "48px" }}
-            >
+            <ForgetPassword onClick={() => setVisible(true)}>Przypomnij hasło</ForgetPassword>
+            <PrimaryButton type="submit" onClick={submitLogin} style={{ marginTop: '48px' }}>
               Zaloguj
             </PrimaryButton>
             {error ? <ErrorMessage>{error}</ErrorMessage> : null}
@@ -204,7 +193,7 @@ export async function getServerSideProps(context) {
   const token = req.cookies.userToken || null;
   let decodedToken: Object;
   if (token) {
-    console.log("we have token");
+    console.log('we have token');
     decodedToken = jwt.verify(token, process.env.AUTH_KEY);
   } else {
     decodedToken = null;

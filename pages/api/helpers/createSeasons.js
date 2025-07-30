@@ -1,5 +1,5 @@
-import prisma from "../../../middleware/prisma";
-import { createSeasons } from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import { createSeasons } from '../../../middleware/utils';
 
 // asign 1 or 2 to "number_of_seasons" variable
 
@@ -21,7 +21,7 @@ export default async (req, res) => {
 
     const promises = [];
     allApplications.forEach(async (app) => {
-      if (app.seasons == "1" || app.seasons == "2") {
+      if (app.seasons == '1' || app.seasons == '2') {
         // 2
         promises.push(
           prisma.applications.update({
@@ -32,12 +32,12 @@ export default async (req, res) => {
               seasons: createSeasons(app.seasons),
               number_of_seasons: app.seasons,
             },
-          })
+          }),
         );
         return;
       } else if (
         app.seasons?.length > 1 &&
-        (app.number_of_seasons !== "1" || app.number_of_seasons !== "2")
+        (app.number_of_seasons !== '1' || app.number_of_seasons !== '2')
       ) {
         // 1
         promises.push(
@@ -46,10 +46,9 @@ export default async (req, res) => {
               id: parseInt(app.id),
             },
             data: {
-              number_of_seasons:
-                app.seasons.match(/\//g)?.length === 1 ? "1" : "2",
+              number_of_seasons: app.seasons.match(/\//g)?.length === 1 ? '1' : '2',
             },
-          })
+          }),
         );
         return;
       } else if (app.status_id == 1 && app?.seasons?.length === 1) {
@@ -62,13 +61,10 @@ export default async (req, res) => {
             data: {
               number_of_seasons: app.seasons,
             },
-          })
+          }),
         );
         return;
-      } else if (
-        app.status_id > 1 &&
-        (app.seasons == null || app.number_of_seasons == null)
-      ) {
+      } else if (app.status_id > 1 && (app.seasons == null || app.number_of_seasons == null)) {
         // 4
         promises.push(
           prisma.applications.update({
@@ -76,10 +72,10 @@ export default async (req, res) => {
               id: parseInt(app.id),
             },
             data: {
-              number_of_seasons: app.seasons == null ? "1" : app.seasons,
-              seasons: createSeasons(app.seasons == null ? "1" : app.seasons),
+              number_of_seasons: app.seasons == null ? '1' : app.seasons,
+              seasons: createSeasons(app.seasons == null ? '1' : app.seasons),
             },
-          })
+          }),
         );
         return;
       }

@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -24,19 +24,19 @@ export default (req, res) => {
           data: {
             invoice_url: club.invoice_url,
           },
-        })
+        }),
       );
     });
 
     Promise.all(promises)
       .then(() => {
         res.status(200);
-        res.send("invoices updated!");
+        res.send('invoices updated!');
       })
       .catch((err) => {
         console.log(err);
         res.status(400);
-        res.send("updating invoices failed");
+        res.send('updating invoices failed');
       });
   });
 };

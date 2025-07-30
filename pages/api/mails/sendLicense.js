@@ -1,11 +1,11 @@
-import { generatePdf } from "../../../middleware/generatePdf";
-import transporter from "../../../middleware/transporter";
-import { getCurrentDate } from "../../../middleware/utils";
-import smtpConfig from "../../../smtpConfig";
+import { generatePdf } from '../../../middleware/generatePdf';
+import transporter from '../../../middleware/transporter';
+import { getCurrentDate } from '../../../middleware/utils';
+import smtpConfig from '../../../smtpConfig';
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { clubData } = req.body;
-    const date = getCurrentDate().split(",")[0];
+    const date = getCurrentDate().split(',')[0];
 
     console.log(`${clubData.internal_id}_licencja.pdf`);
 
@@ -20,7 +20,7 @@ export default (req, res) => {
       ],
       from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
       to: clubData.email,
-      subject: "WielkopolskiZPN - licencja pomyślnie wydana",
+      subject: 'WielkopolskiZPN - licencja pomyślnie wydana',
       // attachments: [
       //   {
       //     fileName:''
@@ -131,7 +131,7 @@ export default (req, res) => {
       `,
     });
 
-    res.send("mail sent");
+    res.send('mail sent');
     return resolve();
   });
 };

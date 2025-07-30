@@ -1,9 +1,9 @@
 // pages/api/applications/uploadFiles.ts
 
-import { IncomingForm } from "formidable"; // To parse multi-part form data
-import fs from "fs";                       // For file stream reading
-import SFTPClient from "ssh2-sftp-client"; // Library for SFTP
-import path from "path";
+import { IncomingForm } from 'formidable'; // To parse multi-part form data
+import fs from 'fs'; // For file stream reading
+import SFTPClient from 'ssh2-sftp-client'; // Library for SFTP
+import path from 'path';
 
 export const config = {
   api: {
@@ -19,7 +19,7 @@ const SFTP_CONFIG = {
 };
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
+  if (req.method !== 'POST') {
     return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   }
 
@@ -27,13 +27,13 @@ export default async function handler(req, res) {
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
-      console.error("Form parse error:", err);
-      return res.status(500).json({ error: "Error parsing form data" });
+      console.error('Form parse error:', err);
+      return res.status(500).json({ error: 'Error parsing form data' });
     }
 
     const file = files.file;
     if (!file) {
-      return res.status(400).json({ error: "No file uploaded" });
+      return res.status(400).json({ error: 'No file uploaded' });
     }
 
     // Extract file details
@@ -46,10 +46,10 @@ export default async function handler(req, res) {
     try {
       // Connect to the SFTP server
       await sftp.connect(SFTP_CONFIG);
-      console.log("Connected to SFTP server.");
+      console.log('Connected to SFTP server.');
 
       // Ensure the target directory exists
-      const targetDirectory = "/pdf/wnioski"; // Change to the desired SFTP directory
+      const targetDirectory = '/pdf/wnioski'; // Change to the desired SFTP directory
       const targetPath = path.join(targetDirectory, fileName);
 
       // Create directories if needed and upload the file
@@ -60,12 +60,12 @@ export default async function handler(req, res) {
       const resultUrl = `sftp://${SFTP_CONFIG.host}${targetPath}`;
 
       return res.status(200).json({
-        message: "File uploaded successfully",
+        message: 'File uploaded successfully',
         url: resultUrl,
       });
     } catch (sftpErr) {
-      console.error("SFTP upload error:", sftpErr);
-      return res.status(500).json({ error: "Failed to upload to the SFTP server" });
+      console.error('SFTP upload error:', sftpErr);
+      return res.status(500).json({ error: 'Failed to upload to the SFTP server' });
     } finally {
       // Always close the SFTP connection
       await sftp.end();

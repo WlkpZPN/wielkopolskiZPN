@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Label = styled.label`
   display: grid;
@@ -22,12 +22,7 @@ const RadioButton = ({ name, id, checked, value, onChange, children }) => {
   return (
     <Label>
       <RadioInput>
-        <Radio
-          checked={checked}
-          onChange={onChange}
-          type="radio"
-          name={name}
-        ></Radio>
+        <Radio checked={checked} onChange={onChange} type="radio" name={name}></Radio>
         <RadioControl></RadioControl>
       </RadioInput>
       <RadioLabel>{children}</RadioLabel>

@@ -1,9 +1,9 @@
-import AdminLayout from "../../components/organisms/admin_layout";
-import styled from "styled-components";
+import AdminLayout from '../../components/organisms/admin_layout';
+import styled from 'styled-components';
 
-import { protectedAdminRoute } from "../../middleware/protectedAdmin";
-import ProgressContainer from "../../components/atoms/progress_container";
-import { stat } from "../../middleware/types/stats";
+import { protectedAdminRoute } from '../../middleware/protectedAdmin';
+import ProgressContainer from '../../components/atoms/progress_container';
+import { stat } from '../../middleware/types/stats';
 const Header = styled.h2`
   margin: 48px 0 12px 0;
 `;
@@ -22,9 +22,9 @@ const Statystyki = ({ userData }) => {
       <ProgressContainer
         status={stat.paid}
         style={{
-          height: "32px",
-          maxWidth: "600px",
-          width: "100%",
+          height: '32px',
+          maxWidth: '600px',
+          width: '100%',
         }}
       />
 
@@ -32,18 +32,18 @@ const Statystyki = ({ userData }) => {
       <ProgressContainer
         status={stat.unpaid}
         style={{
-          height: "32px",
-          maxWidth: "600px",
-          width: "100%",
+          height: '32px',
+          maxWidth: '600px',
+          width: '100%',
         }}
       />
       <Header>Wnioski odrzucone</Header>
       <ProgressContainer
         status={stat.rejected}
         style={{
-          height: "32px",
-          maxWidth: "600px",
-          width: "100%",
+          height: '32px',
+          maxWidth: '600px',
+          width: '100%',
         }}
       />
 
@@ -51,18 +51,18 @@ const Statystyki = ({ userData }) => {
       <ProgressContainer
         status={stat.sended}
         style={{
-          height: "32px",
-          maxWidth: "600px",
-          width: "100%",
+          height: '32px',
+          maxWidth: '600px',
+          width: '100%',
         }}
       />
       <Header>Wnioski niewypełnione</Header>
       <ProgressContainer
         status={stat.uncompleted}
         style={{
-          height: "32px",
-          maxWidth: "600px",
-          width: "100%",
+          height: '32px',
+          maxWidth: '600px',
+          width: '100%',
         }}
       />
     </AdminLayout>

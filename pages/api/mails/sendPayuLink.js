@@ -1,5 +1,5 @@
-import transporter from "../../../middleware/transporter";
-import smtpConfig from "../../../smtpConfig";
+import transporter from '../../../middleware/transporter';
+import smtpConfig from '../../../smtpConfig';
 
 // transporter.use(
 //   "compile",
@@ -17,7 +17,7 @@ export default (req, res) => {
     transporter.sendMail({
       from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
       to: email,
-      subject: "WielkopolskiZPN - opłata za złożenie wniosku",
+      subject: 'WielkopolskiZPN - opłata za złożenie wniosku',
       html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -95,7 +95,7 @@ Prosimy o dokonanie płatności klikając w poniższy link.
       //   content: "testowa wiadomosc",
       // },
     });
-    res.send("email send");
+    res.send('email send');
     return resolve();
   });
 };

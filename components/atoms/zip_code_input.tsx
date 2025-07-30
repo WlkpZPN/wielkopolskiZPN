@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { useState } from "react";
-import Input from "./input";
-import Cleave from "cleave.js/react";
+import styled from 'styled-components';
+import { useState } from 'react';
+import Input from './input';
+import Cleave from 'cleave.js/react';
 
 const StyledCleave = styled(Cleave)`
   padding: 6px 12px;
@@ -20,7 +20,7 @@ const ZipCodeInput = ({ value, onChange }) => {
   //console.log("value", value);
   return (
     <StyledCleave
-      options={{ delimiters: ["-"], blocks: [2, 3], numericOnly: true }}
+      options={{ delimiters: ['-'], blocks: [2, 3], numericOnly: true }}
       onChange={onChange}
       className="form-field"
       value={value}

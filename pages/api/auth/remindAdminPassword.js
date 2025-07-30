@@ -1,8 +1,8 @@
-import bcrypt from "bcrypt";
-import prisma from "../../../middleware/prisma";
-import transporter from "../../../middleware/transporter";
-import generator from "generate-password";
-import smtpConfig from "../../../smtpConfig";
+import bcrypt from 'bcrypt';
+import prisma from '../../../middleware/prisma';
+import transporter from '../../../middleware/transporter';
+import generator from 'generate-password';
+import smtpConfig from '../../../smtpConfig';
 const saltRounds = 10;
 
 export default (req, res) => {
@@ -16,7 +16,7 @@ export default (req, res) => {
       });
 
       if (!userData) {
-        res.status(400).send("Klub z podanym mailem nie istnieje");
+        res.status(400).send('Klub z podanym mailem nie istnieje');
         return resolve();
       }
 
@@ -24,7 +24,7 @@ export default (req, res) => {
         length: 8,
         numbers: true,
       });
-      let securedPassword = "";
+      let securedPassword = '';
       bcrypt.hash(pass, saltRounds).then(async (hash) => {
         securedPassword = hash;
         await prisma.users.updateMany({
@@ -40,7 +40,7 @@ export default (req, res) => {
       await transporter.sendMail({
         from: `"Wielkopolski ZPN" <${smtpConfig.username}>`,
         to: userData[0].email,
-        subject: "WielkopolskiZPN - przypomnienie hasła",
+        subject: 'WielkopolskiZPN - przypomnienie hasła',
         html: `<head>
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link
@@ -133,10 +133,10 @@ export default (req, res) => {
 `,
       });
 
-      res.send("Hasło wysłane");
+      res.send('Hasło wysłane');
     } catch (err) {
       console.log(err);
-      res.status(400).send("Problem - something went wrong");
+      res.status(400).send('Problem - something went wrong');
     }
   });
 };

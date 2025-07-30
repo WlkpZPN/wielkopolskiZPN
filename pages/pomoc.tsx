@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 //components
-import { getClubData, getFaqData } from '../middleware/swr';
+import { useClubData, useFaqData } from '../middleware/swr';
 
 import { protectedClientRoute } from '../middleware/protectedClient';
 import ClientLayout from '../components/organisms/client_layout';
@@ -31,8 +31,8 @@ const StyledLink = styled.a`
 `;
 
 const Pomoc = ({ authData }) => {
-  const { clubData, isError, isLoading } = getClubData(authData.id);
-  const { faq, isFaqError, isFaqLoading } = getFaqData();
+  const { clubData, isError, isLoading } = useClubData(authData.id);
+  const { faq, isFaqError, isFaqLoading } = useFaqData();
   console.log(faq);
   //console.log(faq);
   const [visible, setVisible] = useState(false);
@@ -44,9 +44,7 @@ const Pomoc = ({ authData }) => {
 
     if (query !== '') {
       helperArr = helperArr.filter((question) => {
-        return JSON.stringify(question)
-          .toLowerCase()
-          .indexOf(query.toLowerCase()) > -1
+        return JSON.stringify(question).toLowerCase().indexOf(query.toLowerCase()) > -1
           ? true
           : false;
       });
@@ -67,41 +65,29 @@ const Pomoc = ({ authData }) => {
           placeholder="Pytanie"
         />
       </div>
-      {list ? (
-        <QuestionClubList questions={list} />
-      ) : (
-        <p>Brak pytań do wyświetlenia</p>
-      )}
+      {list ? <QuestionClubList questions={list} /> : <p>Brak pytań do wyświetlenia</p>}
 
       <Footer>
         <h2>Nie znalazłaś/eś odpowiedzi?</h2>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <PrimaryButton onClick={() => setVisible(true)}>
-            Dodaj pytanie
-          </PrimaryButton>
+          <PrimaryButton onClick={() => setVisible(true)}>Dodaj pytanie</PrimaryButton>
 
           <StyledLink href="mailto:licencje@wielkopolskizpn.pl">
             licklub@wielkopolskizpn.pl
           </StyledLink>
         </div>
       </Footer>
-      <AskQuestionModal
-        authData={authData}
-        visible={visible}
-        setVisible={setVisible}
-      />
+      <AskQuestionModal authData={authData} visible={visible} setVisible={setVisible} />
     </ClientLayout>
   );
 };
 
-export const getServerSideProps = protectedClientRoute(
-  async (context, data) => {
-    return {
-      props: {
-        authData: data,
-      },
-    };
-  }
-);
+export const getServerSideProps = protectedClientRoute(async (context, data) => {
+  return {
+    props: {
+      authData: data,
+    },
+  };
+});
 
 export default Pomoc;

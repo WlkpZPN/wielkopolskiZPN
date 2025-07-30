@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
@@ -24,7 +24,7 @@ export default async (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("facility deleted");
+    res.send('facility deleted');
     return resolve();
   });
 };

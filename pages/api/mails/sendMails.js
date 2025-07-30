@@ -1,8 +1,8 @@
-import prisma from "../../../middleware/prisma";
-import emailTemplate from "../../../middleware/emailTemplate";
-import { getCurrentDate } from "../../../middleware/utils";
-import nodemailer from "nodemailer";
-import smtpConfig from "../../../smtpConfig"; // Import SMTP configuration
+import prisma from '../../../middleware/prisma';
+import emailTemplate from '../../../middleware/emailTemplate';
+import { getCurrentDate } from '../../../middleware/utils';
+import nodemailer from 'nodemailer';
+import smtpConfig from '../../../smtpConfig'; // Import SMTP configuration
 
 // Create transporter using config values
 const transporter = nodemailer.createTransport({
@@ -24,29 +24,26 @@ export default (req, res) => {
 
     let clubs = [];
     switch (recipients) {
-      case "aktywne":
+      case 'aktywne':
         clubs = await prisma.clubs.findMany({
           where: { active: true },
         });
         break;
-      case "niekatywne":
+      case 'niekatywne':
         clubs = await prisma.clubs.findMany({
           where: { active: false },
         });
         break;
-      case "nierozpoczęte":
+      case 'nierozpoczęte':
         clubs = await prisma.clubs.findMany({
           where: {
-            OR: [
-              { applications: { none: {} } },
-              { applications: { every: { status_id: 1 } } },
-            ],
+            OR: [{ applications: { none: {} } }, { applications: { every: { status_id: 1 } } }],
             NOT: [{ leauge: null }],
             active: true,
           },
         });
         break;
-      case "zatwierdzone":
+      case 'zatwierdzone':
         clubs = await prisma.clubs.findMany({
           where: {
             applications: {
@@ -57,12 +54,12 @@ export default (req, res) => {
           },
         });
         break;
-      case "wszystkie":
+      case 'wszystkie':
         clubs = await prisma.clubs.findMany();
         break;
     }
 
-    console.log("Selected clubs count:", clubs.length);
+    console.log('Selected clubs count:', clubs.length);
 
     const promises = clubs.map(async (club) => {
       if (!club.email) return Promise.resolve(); // Skip if email is missing
@@ -85,26 +82,26 @@ export default (req, res) => {
 
     // Execute all email-sending promises
     Promise.all(promises)
-        .then(async () => {
-          await prisma.messages.update({
-            where: {
-              id: parseInt(message.id),
-            },
-            data: {
-              send_date: getCurrentDate(),
-            },
-          });
-
-          res.send("Emails sent successfully!");
-          resolve();
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(500).json({
-            type: "error",
-            message: "Failed to send some emails. Check logs for details.",
-          });
-          resolve();
+      .then(async () => {
+        await prisma.messages.update({
+          where: {
+            id: parseInt(message.id),
+          },
+          data: {
+            send_date: getCurrentDate(),
+          },
         });
+
+        res.send('Emails sent successfully!');
+        resolve();
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({
+          type: 'error',
+          message: 'Failed to send some emails. Check logs for details.',
+        });
+        resolve();
+      });
   });
 };

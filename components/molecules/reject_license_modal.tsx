@@ -139,11 +139,7 @@ const RejectLicense = ({ visible, setVisible, applicationID, internalID }) => {
             >
               Anuluj
             </PrimaryButton>
-            <PrimaryButton
-              color="dangerDark"
-              hoverColor="danger"
-              onClick={rejectApplication}
-            >
+            <PrimaryButton color="dangerDark" hoverColor="danger" onClick={rejectApplication}>
               Odmów wydania licencji
             </PrimaryButton>
           </div>

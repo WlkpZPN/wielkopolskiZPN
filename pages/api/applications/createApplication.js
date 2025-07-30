@@ -1,5 +1,5 @@
-import prisma from "../../../middleware/prisma";
-import aws from "aws-sdk";
+import prisma from '../../../middleware/prisma';
+import aws from 'aws-sdk';
 
 const spacesEndpoint = new aws.Endpoint(process.env.DB_SPACES_ENDPOINT);
 const s3 = new aws.S3({
@@ -23,7 +23,6 @@ export default (req, res) => {
 
       // 2. delete sport facilities
 
-
       // await prisma.sport_facilities.deleteMany({
       //   where: {
       //     application_id: parseInt(applicationID),
@@ -34,12 +33,11 @@ export default (req, res) => {
       await prisma.applications.update({
         where: {
           id: parseInt(applicationID),
-
         },
         data: {
           status_id: 1,
           is_new_season: false,
-        }
+        },
       });
       // 4.delete files TO DO LATER
       //TODO: delete files from bucket
@@ -48,7 +46,7 @@ export default (req, res) => {
       sport_facilities.forEach((facility) => {
         facility.applications_attachments.forEach(async (attachment) => {
           const params = {
-            Bucket: "pdf/wnioski",
+            Bucket: 'pdf/wnioski',
             Key: attachment.name,
           };
           s3.deleteObject(params, function (err, data) {
@@ -58,18 +56,16 @@ export default (req, res) => {
         });
       });
 
-      clubData.applications[0].applications_attachments.forEach(
-        (attachment) => {
-          const params = {
-            Bucket: "pdf/wnioski",
-            Key: attachment.name,
-          };
-          s3.deleteObject(params, function (err, data) {
-            if (err) console.log(err, err.stack);
-            else console.log(data);
-          });
-        }
-      );
+      clubData.applications[0].applications_attachments.forEach((attachment) => {
+        const params = {
+          Bucket: 'pdf/wnioski',
+          Key: attachment.name,
+        };
+        s3.deleteObject(params, function (err, data) {
+          if (err) console.log(err, err.stack);
+          else console.log(data);
+        });
+      });
 
       // delete attachments from database
 
@@ -87,7 +83,7 @@ export default (req, res) => {
         });
       });
 
-      res.send("Application deleted");
+      res.send('Application deleted');
 
       // const allFiles = await prisma.applications_attachments.findMany({
       //   where: {

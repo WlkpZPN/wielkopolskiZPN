@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,300&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600;700&display=swap');
 html {
   box-sizing: border-box;
   font-size: 15px;
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
   scroll-behavior: smooth;
   line-height: 1.5rem;
 }

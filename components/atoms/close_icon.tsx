@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Close } from "@styled-icons/evaicons-solid/Close";
+import styled from 'styled-components';
+import { Close } from '@styled-icons/evaicons-solid/Close';
 
 const CloseIcon = styled(Close)`
   position: absolute;

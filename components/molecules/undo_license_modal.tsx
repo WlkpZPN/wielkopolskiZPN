@@ -61,13 +61,7 @@ const TextArea = styled.textarea`
   padding: 4px;
 `;
 
-const UndoLicense = ({
-  visible,
-  setVisible,
-  applicationID,
-  internalID,
-  authData,
-}) => {
+const UndoLicense = ({ visible, setVisible, applicationID, internalID, authData }) => {
   const router = useRouter();
   const [reason, setReason] = useState('');
   const [error, setError] = useState('');
@@ -152,11 +146,7 @@ const UndoLicense = ({
             >
               Anuluj
             </PrimaryButton>
-            <PrimaryButton
-              hoverColor="dangerDark"
-              color="danger"
-              onClick={rejectApplication}
-            >
+            <PrimaryButton hoverColor="dangerDark" color="danger" onClick={rejectApplication}>
               Cofnij wydanie licencji
             </PrimaryButton>
           </div>

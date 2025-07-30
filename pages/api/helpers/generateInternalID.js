@@ -1,7 +1,7 @@
-import prisma from "../../../middleware/prisma";
-import generator from "generate-password";
-import { getCurrentDate } from "../../../middleware/utils";
-const bcrypt = require("bcrypt");
+import prisma from '../../../middleware/prisma';
+import generator from 'generate-password';
+import { getCurrentDate } from '../../../middleware/utils';
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 export default async (req, res) => {
   return new Promise(async (resolve) => {

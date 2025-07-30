@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const OutlineButton = styled.button<{align?: string}>`
+const OutlineButton = styled.button<{ align?: string }>`
   padding: 6px 12px;
   border: 2px solid ${({ theme }) => theme.primaryLight};
   transition: all 0.2s;
@@ -8,7 +8,7 @@ const OutlineButton = styled.button<{align?: string}>`
   font-weight: bold;
   color: ${({ theme }) => theme.primaryLight};
   border-radius: 5px;
-  align-self: ${({ align }) => align || "initial"};
+  align-self: ${({ align }) => align || 'initial'};
   cursor: pointer;
   background: transparent;
   text-align: center;

@@ -70,14 +70,7 @@ const TextArea = styled.textarea`
   min-height: 150px;
 `;
 
-const CorrectModal = ({
-  internalId,
-  id,
-  visible,
-  setVisibile,
-  userID,
-  email,
-}) => {
+const CorrectModal = ({ internalId, id, visible, setVisibile, userID, email }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState('');
@@ -188,17 +181,11 @@ const CorrectModal = ({
               Wybierz etapy procesu licencyjnego,ktore klub musi poprawić
             </p>
             <StyledLabel>
-              <RadioSquare
-                value={data.one}
-                handleChange={(e) => handleChange('one', !data.one)}
-              />
+              <RadioSquare value={data.one} handleChange={(e) => handleChange('one', !data.one)} />
               Etap 1 - Podstawowe dane
             </StyledLabel>
             <StyledLabel>
-              <RadioSquare
-                value={data.two}
-                handleChange={(e) => handleChange('two', !data.two)}
-              />
+              <RadioSquare value={data.two} handleChange={(e) => handleChange('two', !data.two)} />
               Etap 2 - Kryteria prawne
             </StyledLabel>
             <StyledLabel>
@@ -223,10 +210,7 @@ const CorrectModal = ({
               Etap 5 - Kryteria finansowe
             </StyledLabel>
             <StyledLabel>
-              <RadioSquare
-                value={data.six}
-                handleChange={(e) => handleChange('six', !data.six)}
-              />
+              <RadioSquare value={data.six} handleChange={(e) => handleChange('six', !data.six)} />
               Etap 6 - Kryteria personalne
             </StyledLabel>
             <StyledLabel>

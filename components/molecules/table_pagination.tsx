@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { NavigateNext } from "@styled-icons/material-outlined/NavigateNext";
-import { ArrowIosBack } from "@styled-icons/evaicons-solid/ArrowIosBack";
+import styled from 'styled-components';
+import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
+import { ArrowIosBack } from '@styled-icons/evaicons-solid/ArrowIosBack';
 const Wrapper = styled.div`
   display: flex;
 
@@ -14,7 +14,7 @@ const NavigatePrevious = styled(NavigateNext)`
   transform: rotate(180deg);
 `;
 
-const PageNumber = styled.span<{active?: boolean}>`
+const PageNumber = styled.span<{ active?: boolean }>`
   font-weight: bold;
   font-size: 15px;
   margin: 0 4px;
@@ -22,8 +22,7 @@ const PageNumber = styled.span<{active?: boolean}>`
   height: 25px;
   padding: 4px;
   border-radius: 50%;
-  border: ${({ active, theme }) =>
-    active ? `1px solid ${theme.primary}` : "none"};
+  border: ${({ active, theme }) => (active ? `1px solid ${theme.primary}` : 'none')};
   display: flex;
   color: ${({ active, theme }) => (active ? theme.primary : theme.dark)};
   align-items: center;
@@ -46,13 +45,9 @@ const TablePagination = ({ pages, setPage, currentPage }) => {
     let helperArr = [];
     for (let i = 0; i < pages; i++) {
       helperArr.push(
-        <PageNumber
-          key={i}
-          active={i === currentPage}
-          onClick={() => setPage(i)}
-        >
+        <PageNumber key={i} active={i === currentPage} onClick={() => setPage(i)}>
           {i + 1}
-        </PageNumber>
+        </PageNumber>,
       );
     }
 

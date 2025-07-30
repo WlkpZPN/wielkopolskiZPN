@@ -1,5 +1,5 @@
-import bcrypt from "bcrypt";
-import prisma from "../../../middleware/prisma";
+import bcrypt from 'bcrypt';
+import prisma from '../../../middleware/prisma';
 const saltRounds = 10;
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -26,16 +26,16 @@ export default (req, res) => {
           },
         });
 
-        res.send("Password updated!");
+        res.send('Password updated!');
         return resolve();
       } else {
         // password is not ok, return message
 
         res.status(401);
         res.json({
-          status: "Odmowa dostępu",
+          status: 'Odmowa dostępu',
           message:
-            "aktualne hasło nieprawidłowe,upewnij się że podajesz dobre hasło oraz zwróć uwagę na wielkość liter",
+            'aktualne hasło nieprawidłowe,upewnij się że podajesz dobre hasło oraz zwróć uwagę na wielkość liter',
         });
         return resolve();
       }
@@ -43,7 +43,7 @@ export default (req, res) => {
       console.log(err);
       res.status(400);
       res.json({
-        status: "error",
+        status: 'error',
         message: err,
       });
     }

@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 export function protectedAdminRoute(cb) {
   return async (context) => {
@@ -8,14 +8,14 @@ export function protectedAdminRoute(cb) {
     const token = req.cookies.adminToken || null;
     if (!token) {
       res.statusCode = 302;
-      res.setHeader("Location", "/admin/login");
+      res.setHeader('Location', '/admin/login');
     } else {
       decodedToken = jwt.verify(token, process.env.AUTH_KEY);
       // console.log("token", decodedToken);
       console.log(decodedToken);
-      if (decodedToken.role === "klub") {
+      if (decodedToken.role === 'klub') {
         res.statusCode = 302;
-        res.setHeader("Location", "/admin/login");
+        res.setHeader('Location', '/admin/login');
       }
     }
 

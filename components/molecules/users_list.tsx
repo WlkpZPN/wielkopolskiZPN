@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import PrimaryButton from "../atoms/primary_button";
-import { User } from "@styled-icons/fa-solid/User";
+import styled from 'styled-components';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import PrimaryButton from '../atoms/primary_button';
+import { User } from '@styled-icons/fa-solid/User';
 
 const UserIcon = styled(User)`
   width: 20px;
@@ -45,7 +45,7 @@ const UsersList = ({ authData, users, loading, setLoading }) => {
   const deleteUser = (userID, name) => {
     setLoading(true);
     axios
-      .post("/api/users/deleteUser", {
+      .post('/api/users/deleteUser', {
         userID,
       })
       .then(() => {
@@ -63,7 +63,7 @@ const UsersList = ({ authData, users, loading, setLoading }) => {
         return (
           <TableRow key={index}>
             <UserIcon />
-            <p>{user.name.split(" ")[0]}</p> <p>{user.name.split(" ")[1]}</p>
+            <p>{user.name.split(' ')[0]}</p> <p>{user.name.split(' ')[1]}</p>
             <p>{user.roles.name}</p>
             <p>{user.email}</p>
             <ButtonRow>
@@ -77,9 +77,7 @@ const UsersList = ({ authData, users, loading, setLoading }) => {
                 </PrimaryButton>
               )}
 
-              <PrimaryButton
-                onClick={() => router.push(`/admin/uzytkownicy/${user.email}`)}
-              >
+              <PrimaryButton onClick={() => router.push(`/admin/uzytkownicy/${user.email}`)}>
                 Szczegóły
               </PrimaryButton>
             </ButtonRow>

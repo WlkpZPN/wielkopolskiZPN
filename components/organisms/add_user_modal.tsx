@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import axios from "axios";
-import { Close } from "@styled-icons/evaicons-solid/Close";
+import styled from 'styled-components';
+import axios from 'axios';
+import { Close } from '@styled-icons/evaicons-solid/Close';
 //components
-import AddUserForm from "../molecules/addUserForm";
+import AddUserForm from '../molecules/addUserForm';
 
-const Background = styled.div<{visibility?: boolean}>`
-  display: ${({ visibility }) => (visibility ? "block" : "none")};
+const Background = styled.div<{ visibility?: boolean }>`
+  display: ${({ visibility }) => (visibility ? 'block' : 'none')};
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);

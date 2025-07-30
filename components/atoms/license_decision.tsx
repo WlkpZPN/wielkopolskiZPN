@@ -79,11 +79,7 @@ const LicenseDecision = ({
           <Wrapper>
             <ApplicationStatus size="40px" status="licencja wydana" />
             <Text>Wydaj licencję standardową</Text>
-            <PrimaryButton
-              onClick={IssueLicense}
-              color="successDark"
-              hoverColor="success"
-            >
+            <PrimaryButton onClick={IssueLicense} color="successDark" hoverColor="success">
               Licencja standard
             </PrimaryButton>
           </Wrapper>
@@ -91,10 +87,7 @@ const LicenseDecision = ({
       case 'nadzór':
         return (
           <Wrapper>
-            <ApplicationStatus
-              size="40px"
-              status="licencja wydana z nadzorem"
-            />
+            <ApplicationStatus size="40px" status="licencja wydana z nadzorem" />
             <GiveSupervisionModal
               authData={authData}
               internalID={internalID}
@@ -126,11 +119,7 @@ const LicenseDecision = ({
 
             <ApplicationStatus size="40px" status="licencja niewydana" />
             <Text> Odmów wydania licencji</Text>
-            <PrimaryButton
-              onClick={() => setVisible(true)}
-              hoverColor="dangerDark"
-              color="danger"
-            >
+            <PrimaryButton onClick={() => setVisible(true)} hoverColor="dangerDark" color="danger">
               Odmowa licencji
             </PrimaryButton>
           </Wrapper>
@@ -153,11 +142,7 @@ const LicenseDecision = ({
             />
             <ApplicationStatus size="40px" status="licencja niewydana" />
             <Text> Licencja cofnięta</Text>
-            <PrimaryButton
-              onClick={() => setVisible(true)}
-              hoverColor="dangerDark"
-              color="danger"
-            >
+            <PrimaryButton onClick={() => setVisible(true)} hoverColor="dangerDark" color="danger">
               Zmień decyzję
             </PrimaryButton>
           </Wrapper>
@@ -180,9 +165,7 @@ const LicenseDecision = ({
             />
             <ApplicationStatus size="40px" status="licencja niewydana" />
             <Text> Licencja niewydana</Text>
-            <PrimaryButton onClick={() => setVisible(true)}>
-              Zmień decyzję
-            </PrimaryButton>
+            <PrimaryButton onClick={() => setVisible(true)}>Zmień decyzję</PrimaryButton>
           </Wrapper>
         );
 

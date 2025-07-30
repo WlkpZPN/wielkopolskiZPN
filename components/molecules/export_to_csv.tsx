@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { CSVLink } from "react-csv";
-import { Download } from "@styled-icons/entypo/Download";
+import styled from 'styled-components';
+import { CSVLink } from 'react-csv';
+import { Download } from '@styled-icons/entypo/Download';
 
 const Button = styled.button`
   color: ${({ theme }) => theme.primary};

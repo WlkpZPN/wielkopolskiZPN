@@ -1,21 +1,9 @@
-import prisma from "../../../middleware/prisma";
-import {
-  convertAddressData,
-  getCurrentDate,
-  createSeasons,
-} from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import { convertAddressData, getCurrentDate, createSeasons } from '../../../middleware/utils';
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { formData, clubData, statusId } = req.body;
-    const {
-      stepOne,
-      stepTwo,
-      stepThree,
-      stepFour,
-      stepFive,
-      stepSix,
-      stepSeven,
-    } = formData;
+    const { stepOne, stepTwo, stepThree, stepFour, stepFive, stepSix, stepSeven } = formData;
 
     await prisma.clubs.update({
       where: {
@@ -26,11 +14,7 @@ export default async (req, res) => {
 
         leauge: stepOne.leauge,
         futsal_subtype: stepOne.futsal_subtype,
-        address: convertAddressData(
-          stepOne.clubCity,
-          stepOne.clubStreet,
-          stepOne.clubZipCode
-        ),
+        address: convertAddressData(stepOne.clubCity, stepOne.clubStreet, stepOne.clubZipCode),
         email: stepOne.email,
         agent_name: `${stepOne.agentName} ${stepOne.agentLastName}`,
         agent_position: stepOne.position,
@@ -46,16 +30,13 @@ export default async (req, res) => {
 
       declaration_on_the_subject_of_participation_in_the_competition:
         stepTwo.participateInCompetitions,
-      declaration_on_the_use_of_personal_data_documentation:
-        stepTwo.privateDataProtection,
+      declaration_on_the_use_of_personal_data_documentation: stepTwo.privateDataProtection,
       number_of_youth_groups: stepThree.numberOfYouthGroups,
       share_of_youth_groups: stepThree.shareOfYouthGroups,
       youth_groups_possession: stepThree.youthGroupsPossession,
       declaration_on_medical_care_for_the_players: stepThree.medicalDeclaration,
-      declaration_of_no_obligations_towards_employees:
-        stepFive.NoObligationsTowardsEmployees,
-      declaration_of_no_obligations_towards_PZPN_and_WZPN:
-        stepFive.NoObligationsTowardsPzpnAndWzpn,
+      declaration_of_no_obligations_towards_employees: stepFive.NoObligationsTowardsEmployees,
+      declaration_of_no_obligations_towards_PZPN_and_WZPN: stepFive.NoObligationsTowardsPzpnAndWzpn,
       declaration_of_no_obligations_towards_football_clubs:
         stepFive.NoObligationTowardsFootballClubs,
       declaration_of_having_football_staff: stepSix.havingFootballStaff,
@@ -110,7 +91,7 @@ export default async (req, res) => {
 
     await prisma.$disconnect();
 
-    res.send("zaaktualizowano wniosek");
+    res.send('zaaktualizowano wniosek');
     return resolve();
   });
 };

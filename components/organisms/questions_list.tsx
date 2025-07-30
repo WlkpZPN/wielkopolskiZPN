@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import { InfoCircle } from "@styled-icons/boxicons-solid/InfoCircle";
-import TableRow from "../atoms/table_row";
-import PrimaryButton from "../atoms/primary_button";
-import NewQUestionModal from "../organisms/new_question_modal";
+import styled from 'styled-components';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { InfoCircle } from '@styled-icons/boxicons-solid/InfoCircle';
+import TableRow from '../atoms/table_row';
+import PrimaryButton from '../atoms/primary_button';
+import NewQUestionModal from '../organisms/new_question_modal';
 
 const Text = styled.span`
   width: 100%;
@@ -22,7 +22,7 @@ const Info = styled(InfoCircle)`
   position: relative;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -57,18 +57,16 @@ const QuestionsList = ({ userData, questions }) => {
 
   const deleteQuestion = async (questionID) => {
     axios
-      .post("/api/settings/deleteQuestion", {
+      .post('/api/settings/deleteQuestion', {
         questionID,
       })
       .then(() => {
-        toast.error("Pytanie usunięte");
+        toast.error('Pytanie usunięte');
         router.replace(router.asPath);
       })
       .catch((err) => {
         console.log(err);
-        toast.error(
-          "Usuwanie pytania,nie powiodło się, prosimy spróbuj jeszcze raz"
-        );
+        toast.error('Usuwanie pytania,nie powiodło się, prosimy spróbuj jeszcze raz');
       });
   };
 
@@ -77,9 +75,7 @@ const QuestionsList = ({ userData, questions }) => {
     questions.forEach((question) => {
       questionsArr.push(
         <StyledRow
-          onClick={() =>
-            router.push(`/admin/ustawienia/pytania/${question.id}`)
-          }
+          onClick={() => router.push(`/admin/ustawienia/pytania/${question.id}`)}
           key={question.id}
         >
           <Info />
@@ -87,10 +83,10 @@ const QuestionsList = ({ userData, questions }) => {
           <Text>{question.created_at}</Text>
           <Text>{question.category}</Text>
           <Text>{question.question}</Text>
-          <div style={{ display: "flex" }}>
-            {userData.role === "administrator" && (
+          <div style={{ display: 'flex' }}>
+            {userData.role === 'administrator' && (
               <PrimaryButton
-                style={{ marginRight: "8px" }}
+                style={{ marginRight: '8px' }}
                 hoverColor="dangerDark"
                 color="danger"
                 onClick={() => deleteQuestion(question.id)}
@@ -98,15 +94,11 @@ const QuestionsList = ({ userData, questions }) => {
                 Usuń pytanie
               </PrimaryButton>
             )}
-            <PrimaryButton
-              onClick={() =>
-                router.push(`/admin/ustawienia/pytania/${question.id}`)
-              }
-            >
+            <PrimaryButton onClick={() => router.push(`/admin/ustawienia/pytania/${question.id}`)}>
               Szczegóły
             </PrimaryButton>
           </div>
-        </StyledRow>
+        </StyledRow>,
       );
     });
     return questionsArr;
@@ -114,7 +106,7 @@ const QuestionsList = ({ userData, questions }) => {
   return (
     <Wrapper>
       <NewQUestionModal visible={visible} setVisible={setVisible} />
-      <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
+      <StyledRow style={{ backgroundColor: '#F9FAFB' }}>
         <span></span>
         <TableHeader>ID </TableHeader>
         <TableHeader>Data dodania pytania</TableHeader>
@@ -123,10 +115,7 @@ const QuestionsList = ({ userData, questions }) => {
         <div>&nbsp;</div>
       </StyledRow>
       {renderQuestions()}
-      <PrimaryButton
-        onClick={() => setVisible(true)}
-        style={{ margin: "24px 0" }}
-      >
+      <PrimaryButton onClick={() => setVisible(true)} style={{ margin: '24px 0' }}>
         + Dodaj nowe pytanie
       </PrimaryButton>
     </Wrapper>

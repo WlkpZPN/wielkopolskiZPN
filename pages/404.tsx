@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { useRouter } from "next/router";
-import primaryButton from "../components/atoms/primary_button";
-import PrimaryButton from "../components/atoms/primary_button";
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import primaryButton from '../components/atoms/primary_button';
+import PrimaryButton from '../components/atoms/primary_button';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -37,31 +37,26 @@ const Custom404 = () => {
   const redirectUser = (e) => {
     e.preventDefault();
 
-    if (router.asPath.search("admin") > -1) {
+    if (router.asPath.search('admin') > -1) {
       // przekieruj na strone admina
-      router.replace("/admin");
+      router.replace('/admin');
     } else {
       //przekieruj na strone klubu
-      router.replace("/");
+      router.replace('/');
     }
   };
   return (
     <Wrapper>
-      <LogoImage
-          src={'/wzpn_logo.png'}
-          alt = {'logo'}
-      />
+      <LogoImage src={'/wzpn_logo.png'} alt={'logo'} />
       <h1>
-        Błąd 404 <br /> Ta podstrona nie istnieje.{" "}
+        Błąd 404 <br /> Ta podstrona nie istnieje.{' '}
       </h1>
       <h2>
-        Nie martw się! <br /> <span onClick={redirectUser}>Wróć </span> do
-        strony głównej platformy licencyjnej
+        Nie martw się! <br /> <span onClick={redirectUser}>Wróć </span> do strony głównej platformy
+        licencyjnej
       </h2>
 
-      <PrimaryButton onClick={redirectUser}>
-        Powrót do strony głównej
-      </PrimaryButton>
+      <PrimaryButton onClick={redirectUser}>Powrót do strony głównej</PrimaryButton>
     </Wrapper>
   );
 };

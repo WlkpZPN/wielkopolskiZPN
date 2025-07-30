@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -11,7 +11,7 @@ export default (req, res) => {
           data: krs_documents.map((doc) => {
             //console.log("doc", doc);
             return {
-              category: "krs_documents",
+              category: 'krs_documents',
               application_id: parseInt(applicationID),
               filepath: `/wnioski/${doc.name}`,
               name: doc.name,
@@ -24,7 +24,7 @@ export default (req, res) => {
         await prisma.applications_attachments.createMany({
           data: agreement_documents.map((doc) => {
             return {
-              category: "agreement_documents",
+              category: 'agreement_documents',
               application_id: parseInt(applicationID),
               filepath: `/wnioski/${doc.name}`,
               name: doc.name,
@@ -33,7 +33,7 @@ export default (req, res) => {
         });
       }
 
-      res.send("URLs uploaded ");
+      res.send('URLs uploaded ');
     } catch (error) {
       console.log(error);
       res.status(400);

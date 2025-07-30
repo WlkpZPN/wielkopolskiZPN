@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { AttachMoney } from "@styled-icons/material/AttachMoney";
+import styled from 'styled-components';
+import { AttachMoney } from '@styled-icons/material/AttachMoney';
 
 const Wrapper = styled.div`
   position: absolute;

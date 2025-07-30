@@ -1,16 +1,16 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from 'react';
 
-import { ApplicationContext } from "./club_application";
-import FormTemplate from "../atoms/form_template";
-import DisabledStepInfo from "../molecules/disabled_step_info";
-import PrimaryButton from "../atoms/primary_button";
+import { ApplicationContext } from './club_application';
+import FormTemplate from '../atoms/form_template';
+import DisabledStepInfo from '../molecules/disabled_step_info';
+import PrimaryButton from '../atoms/primary_button';
 
-import Paragraph from "../atoms/paragraph";
-import AddFilesWrapper from "./add_files_wrapper";
+import Paragraph from '../atoms/paragraph';
+import AddFilesWrapper from './add_files_wrapper';
 
-import FormStatement from "../molecules/form_statement";
-import Fieldset from "../atoms/fieldset";
-import ErrorMessage from "../atoms/error_message";
+import FormStatement from '../molecules/form_statement';
+import Fieldset from '../atoms/fieldset';
+import ErrorMessage from '../atoms/error_message';
 const StepTwoForm = ({ handleStepChange, readOnly }) => {
   const [state, setState] = useState(false);
   const context = useContext(ApplicationContext);
@@ -35,22 +35,18 @@ const StepTwoForm = ({ handleStepChange, readOnly }) => {
     e.preventDefault();
 
     if (show_buttons) {
-      handleStepChange("next");
+      handleStepChange('next');
       return;
     }
     setStep(3);
   };
 
   return (
-    <FormTemplate
-      onChange={() => clearErrors("stepTwo")}
-      onSubmit={handleSubmit}
-    >
+    <FormTemplate onChange={() => clearErrors('stepTwo')} onSubmit={handleSubmit}>
       <Fieldset disabled={!fileEdit}>
         <Paragraph>
-          Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty
-          potwierdzony za zgodność ze stanem faktycznym na dzień składania
-          niniejszego wniosku.
+          Wyciągi z Krajowego Rejestru Sądowego lub ewidencji starosty potwierdzony za zgodność ze
+          stanem faktycznym na dzień składania niniejszego wniosku.
         </Paragraph>
         <AddFilesWrapper
           id={clubData.applications[0].id}
@@ -69,41 +65,29 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
 "
           value={data.participateInCompetitions}
           handleChange={() =>
-            handleChange(
-              !data.participateInCompetitions,
-              "participateInCompetitions",
-              2
-            )
+            handleChange(!data.participateInCompetitions, 'participateInCompetitions', 2)
           }
           name="Oświadczenie w przedmiocie udziału w rozgrywkach"
         />
         <FormStatement
           text="Oświadczam(y), iż Klub oraz jego przedstawiciele będę respektować i przestrzegać przepisów Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych - RODO) (Dz. Urz. UE L 2016 Nr 119, s.1) oraz realizować obowiązki nałożone przez ww. akt prawny, tj. w szczególności  wypełnianie obowiązku informacyjnego (art. 13 i 14 RODO); posiadania odpowiedniej podstawy prawnej do przetwarzania danych (art. 6 RODO); przestrzegania zasad przetwarzania danych osobowych (art. 5 RODO); nadawania upoważnień do przetwarzania danych osobowych (art. 29 RODO); zawierania umów powierzenia przetwarzania danych osobowych, wówczas kiedy jest to wymagane (art. 28 RODO); zapewnienia bezpieczeństwa przetwarzania danych osobowych oraz wdrożenia odpowiednich środków organizacyjnych i technicznych w tym zakresie (art. 32 RODO). Jednocześnie oświadczamy, że przed dopuszczeniem osoby do działalności związanej z wychowaniem, edukacją, wypoczynkiem, leczeniem małoletnich lub z opieką nad nimi, dokonujemy weryfikacji takiej osoby w oparciu o przepisy ustawy z dnia 13 maja 2016 r., o przeciwdziałaniu zagrożeniom przestępczością na tle seksualnym."
           value={data.privateDataProtection}
-          handleChange={() =>
-            handleChange(
-              !data.privateDataProtection,
-              "privateDataProtection",
-              2
-            )
-          }
+          handleChange={() => handleChange(!data.privateDataProtection, 'privateDataProtection', 2)}
           name=" Oświadczenie o stosowaniu dokumentacji ochrony danych osobowych"
         />
       </Fieldset>
-      <div style={{ marginBottom: "32px" }}>
+      <div style={{ marginBottom: '32px' }}>
         <PrimaryButton
           type="button"
-          style={{ marginRight: "16px" }}
-          onClick={() =>
-            show_buttons ? handleStepChange("previous") : setStep(1)
-          }
+          style={{ marginRight: '16px' }}
+          onClick={() => (show_buttons ? handleStepChange('previous') : setStep(1))}
         >
           Cofnij
         </PrimaryButton>
         {show_buttons ? (
           <>
             <PrimaryButton
-              style={{ marginRight: "16px" }}
+              style={{ marginRight: '16px' }}
               type="button"
               onClick={context.saveForm}
               color="dark"
@@ -111,9 +95,9 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
             >
               Zapisz wersję roboczą
             </PrimaryButton>
-            {completedSteps.stepTwo === "error" ? (
+            {completedSteps.stepTwo === 'error' ? (
               <PrimaryButton
-                style={{ marginRight: "16px" }}
+                style={{ marginRight: '16px' }}
                 hoverColor="success"
                 color="successDark"
                 type="button"
@@ -123,20 +107,22 @@ w pełni upoważnia stosowne organy decyzyjne do badania dokumentów oraz uzyski
               </PrimaryButton>
             ) : null}
           </>
-        ) : isAdmin && (
-          <PrimaryButton
-            type="button"
-            color="success"
-            hoverColor="successDark"
-            onClick={changeApplicationData}
-          >
-            Zaktualizuj wniosek
-          </PrimaryButton>
+        ) : (
+          isAdmin && (
+            <PrimaryButton
+              type="button"
+              color="success"
+              hoverColor="successDark"
+              onClick={changeApplicationData}
+            >
+              Zaktualizuj wniosek
+            </PrimaryButton>
+          )
         )}
         <PrimaryButton
-          style={{ marginLeft: "16px" }}
+          style={{ marginLeft: '16px' }}
           type="button"
-          onClick={() => (show_buttons ? handleStepChange("next") : setStep(3))}
+          onClick={() => (show_buttons ? handleStepChange('next') : setStep(3))}
         >
           Kolejny krok
         </PrimaryButton>

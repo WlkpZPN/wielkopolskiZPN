@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -19,7 +19,7 @@ export default (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("Question deleted");
+    res.send('Question deleted');
     return resolve();
   });
 };

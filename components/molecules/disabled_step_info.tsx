@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import PrimaryButton from "../atoms/primary_button";
+import PrimaryButton from '../atoms/primary_button';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -31,8 +31,7 @@ const DisabledStepInfo = ({ setStep }) => {
     <Wrapper>
       <Content>
         <Paragraph>
-          Etap ten nie dotyczy Twojej klasy rozgrywkowej. Przejdź do kolejnego
-          kroku
+          Etap ten nie dotyczy Twojej klasy rozgrywkowej. Przejdź do kolejnego kroku
         </Paragraph>
         <PrimaryButton onClick={() => setStep(4)}>Kolejny krok</PrimaryButton>
       </Content>

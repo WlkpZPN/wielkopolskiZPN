@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { getStats } from "../../middleware/swr";
-const Progress = styled.div<{progress?: number, visible?: boolean, number?: number}>`
+import { useStats } from '../../middleware/swr';
+const Progress = styled.div<{ progress?: number; visible?: boolean; number?: number }>`
   background-color: #e6e6e6;
   width: 450px;
   height: 25px;
@@ -27,11 +27,10 @@ const Progress = styled.div<{progress?: number, visible?: boolean, number?: numb
     left: 0;
     bottom: 0;
     height: 100%;
-    width: ${({ progress, visible }) =>
-      visible ? `${progress}%` : "max-content"};
+    width: ${({ progress, visible }) => (visible ? `${progress}%` : 'max-content')};
     border-radius: 5px;
-    content: "${({ progress, number, visible }) =>
-      visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}";
+    content: '${({ progress, number, visible }) =>
+      visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}';
   }
 
   &:hover {
@@ -41,14 +40,14 @@ const Progress = styled.div<{progress?: number, visible?: boolean, number?: numb
 
       font-weight: bold;
       color: ${({ theme }) => theme.primary};
-      content: "${({ progress, number, visible }) =>
-        visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}";
+      content: '${({ progress, number, visible }) =>
+        visible ? `${progress}% ${number} wniosków ` : `Brak wniosków`}';
     }
   }
 `;
 
 const ProgressContainer = ({ status, style }) => {
-  const { data, isLoading } = getStats(status);
+  const { data, isLoading } = useStats(status);
   //console.log(status, data);
 
   if (isLoading) {

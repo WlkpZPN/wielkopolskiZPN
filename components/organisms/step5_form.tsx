@@ -1,27 +1,26 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 
-import FormTemplate from "../atoms/form_template";
+import FormTemplate from '../atoms/form_template';
 
-import PrimaryButton from "../atoms/primary_button";
+import PrimaryButton from '../atoms/primary_button';
 
-import Fieldset from "../atoms/fieldset";
-import FormStatement from "../molecules/form_statement";
-import { ApplicationContext } from "./club_application";
-import ErrorMessage from "../atoms/error_message";
+import Fieldset from '../atoms/fieldset';
+import FormStatement from '../molecules/form_statement';
+import { ApplicationContext } from './club_application';
+import ErrorMessage from '../atoms/error_message';
 const StepFiveForm = ({ handleStepChange, readOnly }) => {
   const context = useContext(ApplicationContext);
   const handleChange = context.handleFormChange;
   const formData = context.formData.stepFive;
   const show_buttons = context.show_buttons;
-  const { error, clearErrors, completedSteps, setStep, changeApplicationData,isAdmin } =
-    context;
+  const { error, clearErrors, completedSteps, setStep, changeApplicationData, isAdmin } = context;
 
   const submitForm = (e) => {
     e.preventDefault();
-    handleStepChange("next");
+    handleStepChange('next');
   };
   return (
-    <FormTemplate onChange={() => clearErrors("stepFive")}>
+    <FormTemplate onChange={() => clearErrors('stepFive')}>
       <Fieldset disabled={readOnly}>
         {<ErrorMessage>{error.stepFive}</ErrorMessage>}
         <FormStatement
@@ -30,8 +29,8 @@ const StepFiveForm = ({ handleStepChange, readOnly }) => {
           handleChange={() =>
             handleChange(
               !formData.NoObligationsTowardsEmployees,
-              "NoObligationsTowardsEmployees",
-              5
+              'NoObligationsTowardsEmployees',
+              5,
             )
           }
           name="Oświadczenie o braku zobowiązań wobec pracowników"
@@ -44,8 +43,8 @@ Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Lice
           handleChange={() =>
             handleChange(
               !formData.NoObligationsTowardsPzpnAndWzpn,
-              "NoObligationsTowardsPzpnAndWzpn",
-              5
+              'NoObligationsTowardsPzpnAndWzpn',
+              5,
             )
           }
           name="Oświadczenie o braku zobowiązań wobec PZPN i Wielkopolskiego ZPN"
@@ -57,19 +56,17 @@ Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Lice
           handleChange={() =>
             handleChange(
               !formData.NoObligationTowardsFootballClubs,
-              "NoObligationTowardsFootballClubs",
-              5
+              'NoObligationTowardsFootballClubs',
+              5,
             )
           }
           name="Oświadczenie o braku zobowiązań wobec klubów piłkarskich"
         />
       </Fieldset>
-      <div style={{ marginBottom: "32px" }}>
+      <div style={{ marginBottom: '32px' }}>
         <PrimaryButton
-          style={{ marginRight: "16px" }}
-          onClick={() =>
-            show_buttons ? handleStepChange("previous") : setStep(4)
-          }
+          style={{ marginRight: '16px' }}
+          onClick={() => (show_buttons ? handleStepChange('previous') : setStep(4))}
         >
           Cofnij
         </PrimaryButton>
@@ -80,35 +77,37 @@ Oświadczamy, że nasz klub na dzień, w którym rozpoczyna się dany Sezon Lice
               hoverColor="darkLight"
               type="button"
               onClick={context.saveForm}
-              style={{ marginRight: "16px" }}
+              style={{ marginRight: '16px' }}
             >
               Zapisz wersję roboczą
             </PrimaryButton>
-            {completedSteps.stepFive === "error" ? (
+            {completedSteps.stepFive === 'error' ? (
               <PrimaryButton
                 hoverColor="success"
                 color="successDark"
                 type="button"
                 onClick={() => context.sendApplication()}
-                style={{ marginRight: "16px" }}
+                style={{ marginRight: '16px' }}
               >
                 Zatwierdź i wyślij
               </PrimaryButton>
             ) : null}
           </>
-        ) : isAdmin && (
-          <PrimaryButton
-            type="button"
-            color="success"
-            hoverColor="successDark"
-            onClick={changeApplicationData}
-          >
-            Zaktualizuj wniosek
-          </PrimaryButton>
+        ) : (
+          isAdmin && (
+            <PrimaryButton
+              type="button"
+              color="success"
+              hoverColor="successDark"
+              onClick={changeApplicationData}
+            >
+              Zaktualizuj wniosek
+            </PrimaryButton>
+          )
         )}
         <PrimaryButton
-          style={{ marginLeft: "16px" }}
-          onClick={() => (show_buttons ? handleStepChange("next") : setStep(6))}
+          style={{ marginLeft: '16px' }}
+          onClick={() => (show_buttons ? handleStepChange('next') : setStep(6))}
         >
           Kolejny krok
         </PrimaryButton>

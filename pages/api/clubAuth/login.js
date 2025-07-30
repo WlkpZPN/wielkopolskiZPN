@@ -1,6 +1,6 @@
-import prisma from "../../../middleware/prisma";
-import cookie from "cookie";
-import jwt from "jsonwebtoken";
+import prisma from '../../../middleware/prisma';
+import cookie from 'cookie';
+import jwt from 'jsonwebtoken';
 const KEY = process.env.AUTH_KEY;
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -9,17 +9,17 @@ export default (req, res) => {
     if (!req.body) {
       res.status(400);
       res.json({
-        status: "error",
+        status: 'error',
         message:
-          "logowanie nie powiodło się, spróbuj skorzystać z innej przeglądarki lub odśwież stronę",
+          'logowanie nie powiodło się, spróbuj skorzystać z innej przeglądarki lub odśwież stronę',
       });
     }
 
     if (!email || !password) {
       res.status(400);
       res.json({
-        status: "error",
-        message: "proszę wpisać email i hasło",
+        status: 'error',
+        message: 'proszę wpisać email i hasło',
       });
       return resolve();
     }
@@ -36,8 +36,8 @@ export default (req, res) => {
     if (!club) {
       res.status(400);
       res.json({
-        status: "error",
-        message: "Użytkownik o podanym mailu nie istnieje",
+        status: 'error',
+        message: 'Użytkownik o podanym mailu nie istnieje',
       });
       return resolve();
     }
@@ -45,8 +45,8 @@ export default (req, res) => {
     if (club.password.trim() !== password.trim()) {
       res.status(400);
       res.json({
-        status: "error",
-        message: "Błedne hasło,spróbuj ponownie",
+        status: 'error',
+        message: 'Błedne hasło,spróbuj ponownie',
       });
       return resolve();
     }
@@ -55,31 +55,30 @@ export default (req, res) => {
       id: club.id,
       name: club.name,
       email: club.email,
-      role: "klub",
+      role: 'klub',
     };
 
     const token = jwt.sign(payload, process.env.AUTH_KEY, {
-      expiresIn: "16h",
+      expiresIn: '16h',
     });
 
     try {
       res.setHeader(
-        "Set-Cookie",
-        cookie.serialize("clubToken", token, {
+        'Set-Cookie',
+        cookie.serialize('clubToken', token, {
           maxAge: 43200,
-          path: "/",
+          path: '/',
           httpOnly: true,
-          secure: process.env.NODE_ENV !== "development",
-        })
+          secure: process.env.NODE_ENV !== 'development',
+        }),
       );
       res.status(200).send(payload);
       return resolve();
     } catch (err) {
       res.status(500);
       res.json({
-        status: "error",
-        message:
-          "podczas logowania wystąpił nieznany problem,proszę spróbuj ponownie",
+        status: 'error',
+        message: 'podczas logowania wystąpił nieznany problem,proszę spróbuj ponownie',
       });
       return resolve();
     }

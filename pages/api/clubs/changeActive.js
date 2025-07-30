@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -13,7 +13,7 @@ export default (req, res) => {
         active: active,
       },
     });
-    res.send("data updated");
+    res.send('data updated');
     return resolve();
   });
 };

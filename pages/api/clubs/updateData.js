@@ -1,6 +1,6 @@
-import prisma from "../../../middleware/prisma";
-import { getCurrentDate } from "../../../middleware/utils";
-import axios from "axios";
+import prisma from '../../../middleware/prisma';
+import { getCurrentDate } from '../../../middleware/utils';
+import axios from 'axios';
 export default (req, res) => {
   return new Promise(async (resolve) => {
     const { data, clubId } = req.body;
@@ -14,10 +14,10 @@ export default (req, res) => {
           updated_at: getCurrentDate(),
         },
       });
-      res.send("data updated");
+      res.send('data updated');
       return resolve();
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
       res.status(400);
       res.send(error);
     } finally {

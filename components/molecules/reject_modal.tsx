@@ -57,13 +57,7 @@ const TextArea = styled.textarea`
   padding: 4px;
 `;
 
-const RejectModal = ({
-  visible,
-  setVisible,
-  applicationID,
-  internalID,
-  userID,
-}) => {
+const RejectModal = ({ visible, setVisible, applicationID, internalID, userID }) => {
   const router = useRouter();
   const [reason, setReason] = useState('');
   const [error, setError] = useState('');
@@ -142,11 +136,7 @@ const RejectModal = ({
             >
               Anuluj
             </PrimaryButton>
-            <PrimaryButton
-              color="dangerDark"
-              hoverColor="danger"
-              onClick={rejectApplication}
-            >
+            <PrimaryButton color="dangerDark" hoverColor="danger" onClick={rejectApplication}>
               Odrzuć
             </PrimaryButton>
           </div>

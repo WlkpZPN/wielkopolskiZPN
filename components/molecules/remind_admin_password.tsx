@@ -90,9 +90,7 @@ const RemindAdminPasswordModal = ({ visible, setVisible }) => {
         userEmail: email,
       });
       setLoading(false);
-      toast.success(
-        'Email z hasłem został wysłany,sprawdź swoją skrzynke pocztową'
-      );
+      toast.success('Email z hasłem został wysłany,sprawdź swoją skrzynke pocztową');
 
       setVisible(false);
     } catch (error) {
@@ -111,9 +109,9 @@ const RemindAdminPasswordModal = ({ visible, setVisible }) => {
         <>
           {' '}
           <p>
-            Nie pamiętasz hasła ? <br /> Podaj email jakiego używasz do
-            logowania się na konto administracyjne, jeśli adres mailowy znajduje
-            się na liście użytkowników otrzymasz na niego maila z hasłem. <br />
+            Nie pamiętasz hasła ? <br /> Podaj email jakiego używasz do logowania się na konto
+            administracyjne, jeśli adres mailowy znajduje się na liście użytkowników otrzymasz na
+            niego maila z hasłem. <br />
             Po zalogowaniu się możesz zmienić hasło w aplikacji.
           </p>
           <Form onChange={() => setError('')} onSubmit={handleSubmit}>

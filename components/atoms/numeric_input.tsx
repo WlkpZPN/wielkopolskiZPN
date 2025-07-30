@@ -1,6 +1,6 @@
-import { useState } from "react";
-import styled from "styled-components";
-import Cleave from "cleave.js/react";
+import { useState } from 'react';
+import styled from 'styled-components';
+import Cleave from 'cleave.js/react';
 
 const StyledCleave = styled(Cleave)`
   width: ${({ width }) => width};
@@ -16,7 +16,7 @@ const StyledCleave = styled(Cleave)`
   max-width: 150px;
   width: 100%;
   text-align: right;
-  padding-right: ${({ suffix }) => (suffix ? "20px" : "12px")};
+  padding-right: ${({ suffix }) => (suffix ? '20px' : '12px')};
   -moz-appearance: textfield;
   /* font-family: "Roboto Mono", monospace; */
   &:focus {
@@ -44,10 +44,10 @@ const Wrapper = styled.div`
   } */
 `;
 
-const Suffix = styled.span<{position?: string}>`
+const Suffix = styled.span<{ position?: string }>`
   position: absolute;
   bottom: 5px;
-  right: ${({ position }) => position || "6px"};
+  right: ${({ position }) => position || '6px'};
   /* display: $ {({ position }) => (position === 0 ? "none" : "initial")}; */
   display: none;
 `;
@@ -65,7 +65,7 @@ const NumericInput = ({
     numeral: true,
   };
   return (
-    <Wrapper >
+    <Wrapper>
       <StyledCleave
         style={style}
         className="form-field"

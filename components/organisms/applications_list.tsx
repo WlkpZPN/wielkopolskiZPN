@@ -1,24 +1,24 @@
-import styled from "styled-components";
-import { useRouter } from "next/router";
-import { useState, useContext, useEffect } from "react";
-import { AdminContext } from "../../pages/admin/index";
-import { useLocalStorage } from "../../middleware/hooks";
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import { useState, useContext, useEffect } from 'react';
+import { AdminContext } from '../../pages/admin/index';
+import { useLocalStorage } from '../../middleware/hooks';
 //icons
-import { Download } from "@styled-icons/entypo/Download";
-import { DownArrow } from "@styled-icons/boxicons-solid/DownArrow";
+import { Download } from '@styled-icons/entypo/Download';
+import { DownArrow } from '@styled-icons/boxicons-solid/DownArrow';
 //components
-import { exportApplicationData } from "../../middleware/utils";
-import TableRow from "../atoms/table_row";
-import ApplicationStatus from "../atoms/application_status";
-import IconButton from "../atoms/IconButton";
-import TablePagination from "../molecules/table_pagination";
-import ClubName from "../atoms/club_name";
-import PrimaryButton from "../atoms/primary_button";
-import { getInternalId } from "../../middleware/utils";
+import { exportApplicationData } from '../../middleware/utils';
+import TableRow from '../atoms/table_row';
+import ApplicationStatus from '../atoms/application_status';
+import IconButton from '../atoms/IconButton';
+import TablePagination from '../molecules/table_pagination';
+import ClubName from '../atoms/club_name';
+import PrimaryButton from '../atoms/primary_button';
+import { getInternalId } from '../../middleware/utils';
 
-const Arrow = styled(DownArrow)<{active?: boolean, rotate?: boolean}>`
+const Arrow = styled(DownArrow)<{ active?: boolean; rotate?: boolean }>`
   width: 15px;
-  transform: ${({ rotate }) => (rotate ? "rotate(180deg)" : "rotate(0deg)")};
+  transform: ${({ rotate }) => (rotate ? 'rotate(180deg)' : 'rotate(0deg)')};
   color: ${({ theme, active }) => active && theme.primary};
 `;
 
@@ -43,7 +43,7 @@ const StyledRow = styled(TableRow)`
 
 const ApplicationsList = ({ dateOrder, setDateOrder }) => {
   const router = useRouter();
-  const [page, setPage] = useLocalStorage("application_page", 0);
+  const [page, setPage] = useLocalStorage('application_page', 0);
   const { list: applications } = useContext(AdminContext);
 
   const dataToExport: any = applications;
@@ -73,22 +73,18 @@ const ApplicationsList = ({ dateOrder, setDateOrder }) => {
           <ApplicationStatus status={application.statuses.name} />
           <span>{application.internal_id}</span>
           <span>{application.created_at}</span>
-          <ClubName style={{ display: "block", width: "100%" }}>
-            {application.clubs.name}
-          </ClubName>
+          <ClubName style={{ display: 'block', width: '100%' }}>{application.clubs.name}</ClubName>
           <span>{application.statuses.name}</span>
           {/* <ClubName>{application.clubs.agent_name}</ClubName> */}
 
           <span>{application.clubs.agent_phone}</span>
           <PrimaryButton
-            onClick={() =>
-              router.push(`/admin/licencje/${application.clubs.id}`)
-            }
-            style={{ width: "min-content", justifySelf: "end" }}
+            onClick={() => router.push(`/admin/licencje/${application.clubs.id}`)}
+            style={{ width: 'min-content', justifySelf: 'end' }}
           >
             Szczegóły
           </PrimaryButton>
-        </StyledRow>
+        </StyledRow>,
       );
       if (applicationsArray[currentPage].length === 10) {
         currentPage += 1;
@@ -100,32 +96,28 @@ const ApplicationsList = ({ dateOrder, setDateOrder }) => {
 
   const changeOrder = () => {
     if (!dateOrder) {
-      setDateOrder("desc");
+      setDateOrder('desc');
       return;
     }
-    if (dateOrder === "desc") {
-      setDateOrder("asc");
+    if (dateOrder === 'desc') {
+      setDateOrder('asc');
       return;
     }
 
-    if (dateOrder === "asc") {
+    if (dateOrder === 'asc') {
       setDateOrder(null);
     }
   };
   return (
     <Wrapper>
       <div>
-        <StyledRow style={{ backgroundColor: "#F9FAFB" }}>
+        <StyledRow style={{ backgroundColor: '#F9FAFB' }}>
           <span></span>
           <TableHeader>ID wniosku</TableHeader>
-          <TableHeader
-            style={{ display: "flex", alignItems: "center" }}
-            onClick={changeOrder}
-          >
+          <TableHeader style={{ display: 'flex', alignItems: 'center' }} onClick={changeOrder}>
             Data złożenia wniosku &nbsp;
             <ArrowContainer>
-              <Arrow active={dateOrder === "asc"} rotate />{" "}
-              <Arrow active={dateOrder === "desc"} />
+              <Arrow active={dateOrder === 'asc'} rotate /> <Arrow active={dateOrder === 'desc'} />
             </ArrowContainer>
           </TableHeader>
           <TableHeader>Klub</TableHeader>
@@ -138,23 +130,19 @@ const ApplicationsList = ({ dateOrder, setDateOrder }) => {
       </div>
       <div
         style={{
-          margin: "32px 0",
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
+          margin: '32px 0',
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
         }}
       >
         <IconButton onClick={() => exportApplicationData(applications)}>
           <Download />
           Eksportuj tabelę do CSV
         </IconButton>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: 'flex' }}>
           <p>{applications.length} wniosków</p>
-          <TablePagination
-            pages={totalPages}
-            setPage={setPage}
-            currentPage={page}
-          />
+          <TablePagination pages={totalPages} setPage={setPage} currentPage={page} />
         </div>
       </div>
     </Wrapper>

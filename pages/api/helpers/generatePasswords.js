@@ -1,6 +1,6 @@
-import prisma from "../../../middleware/prisma";
-import generator from "generate-password";
-const bcrypt = require("bcrypt");
+import prisma from '../../../middleware/prisma';
+import generator from 'generate-password';
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 export default async (req, res) => {
   return new Promise(async (resolve) => {
@@ -25,7 +25,7 @@ export default async (req, res) => {
               numbers: true,
             }),
           },
-        })
+        }),
       );
     });
 

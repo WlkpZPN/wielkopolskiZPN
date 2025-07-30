@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import Link from 'next/link';
 
 const Wrapper = styled.div`
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const BigLogo = styled.div`
   width: 100%;
   height: 100%;
-  background: url("/logo.svg");
+  background: url('/logo.svg');
   background-repeat: no-repeat;
   background-position: center;
 `;
@@ -70,15 +70,13 @@ const MaintanceScreen = () => {
 
         <h2>Platforma licencyjna tymczasowo wyłączona!</h2>
         <p>
-          Trwają prace mające na celu przywrócenie działania Platformy. Prosimy
-          o cierpliwość i przepraszamy za niedogodności.
+          Trwają prace mające na celu przywrócenie działania Platformy. Prosimy o cierpliwość i
+          przepraszamy za niedogodności.
         </p>
 
         <p>
-          W razie pytań lub wątpliwości prosimy o kontakt:{" "}
-          <a href="mailto:licklub@wielkopolskizpn.pl">
-            licklub@wielkopolskizpn.pl
-          </a>{" "}
+          W razie pytań lub wątpliwości prosimy o kontakt:{' '}
+          <a href="mailto:licklub@wielkopolskizpn.pl">licklub@wielkopolskizpn.pl</a>{' '}
         </p>
       </Left>
       <Right>

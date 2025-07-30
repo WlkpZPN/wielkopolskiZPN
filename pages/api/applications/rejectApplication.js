@@ -1,5 +1,5 @@
-import prisma from "../../../middleware/prisma";
-import { getCurrentDate } from "../../../middleware/utils";
+import prisma from '../../../middleware/prisma';
+import { getCurrentDate } from '../../../middleware/utils';
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { applicationID, reason, userID } = req.body;
@@ -30,7 +30,7 @@ export default async (req, res) => {
       await prisma.$disconnect();
     }
 
-    res.send("application rejected");
+    res.send('application rejected');
     return resolve();
   });
 };

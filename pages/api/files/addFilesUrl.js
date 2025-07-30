@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma";
+import prisma from '../../../middleware/prisma';
 
 export default (req, res) => {
   return new Promise(async (resolve) => {
@@ -16,7 +16,7 @@ export default (req, res) => {
       });
     } else if (applicationID) {
       // adding file to applications
-      console.log("adding urls");
+      console.log('adding urls');
       await prisma.applications_attachments.create({
         data: {
           application_id: parseInt(applicationID),
@@ -27,6 +27,6 @@ export default (req, res) => {
       });
     }
 
-    res.send("ok");
+    res.send('ok');
   });
 };

@@ -1,12 +1,12 @@
-import prisma from "../../../middleware/prisma";
-const bcrypt = require("bcrypt");
+import prisma from '../../../middleware/prisma';
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 export default async (req, res) => {
   return new Promise(async (resolve) => {
     const { id, email, password, lastName, firstName, role } = req.body;
     console.log(req.body);
-    let securedPassword = "";
+    let securedPassword = '';
     bcrypt.hash(password, saltRounds).then(async (hash) => {
       securedPassword = hash;
 
