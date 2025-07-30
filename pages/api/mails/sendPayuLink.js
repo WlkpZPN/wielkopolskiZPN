@@ -72,8 +72,8 @@ Prosimy o dokonanie płatności klikając w poniższy link.
 
           <a
             style="color: #0156a6; text-decoration: none; margin: 16px 0 4px 0"
-            href="mailto:sekretariat@wielkopolskizpn.pl"
-            >sekretariat@wielkopolskizpn.pl</a
+            href="mailto:licklub@wielkopolskizpn.pl"
+            >licklub@wielkopolskizpn.pl</a
           >
           <a
             style="color: #0156a6; text-decoration: none"
@@ -81,7 +81,7 @@ Prosimy o dokonanie płatności klikając w poniższy link.
             target="_blank"
             >www.wielkopolskizpn.pl
             </a>
-          <p style="margin: 4px 0">+ 61 679 48 30</p>
+          <p style="margin: 4px 0">+48 600 437 114</p>
         </td>
       </tr>
       <tfoot>
