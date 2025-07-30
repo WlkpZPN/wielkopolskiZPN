@@ -143,11 +143,15 @@ const StepOneForm = ({
                                     checked={data.number_of_seasons === "1"}
                                     value={"1"}
                                     onChange={(e) => {
-                                        handleChange({
-                                            number_of_seasons: "1",
-                                            seasons: createSeasons("1")
-                                        }, null, 1);
+                                        // First set the number of seasons
+                                        handleChange("1", "number_of_seasons", 1);
+                                        // Wait for state update
+                                        setTimeout(() => {
+                                            // Then set the seasons
+                                            handleChange(createSeasons("1"), "seasons", 1);
+                                        }, 0);
                                     }}
+
 
                                 >
                                     1 sezon
@@ -160,11 +164,15 @@ const StepOneForm = ({
                                     id="2"
                                     checked={data.number_of_seasons === "2"}
                                     onChange={(e) => {
-                                        handleChange({
-                                            number_of_seasons: "2",
-                                            seasons: createSeasons("1")
-                                        }, null, 1);
+                                        // First set the number of seasons
+                                        handleChange("2", "number_of_seasons", 1);
+                                        // Wait for state update
+                                        setTimeout(() => {
+                                            // Then set the seasons
+                                            handleChange(createSeasons("1"), "seasons", 1);
+                                        }, 0);
                                     }}
+
 
 
                                 >
