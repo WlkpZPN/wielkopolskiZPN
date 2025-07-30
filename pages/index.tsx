@@ -332,10 +332,10 @@ const Home = ({clubData, authData, settings}) => {
                                     PLN
                 </span>
                             </p>
-                            <PaymentLink
-                                href={clubData.applications[0].payment_link}
-                                target="_blank"
-                            ></PaymentLink>
+                            {/*<PaymentLink*/}
+                            {/*    href={clubData.applications[0].payment_link}*/}
+                            {/*    target="_blank"*/}
+                            {/*></PaymentLink>*/}
                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                 <p style={{marginBottom: '12px'}}>
                                     Jeśli chcec opłacić wniosek tradycyjnym przelewem prosimy o
