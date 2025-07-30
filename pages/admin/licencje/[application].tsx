@@ -300,10 +300,12 @@ const Application = ({clubData, authData, settings}) => {
 
             console.log("new order result", newOrder);
 
-            await axios.post("/api/mails/sendPayuLink", {
-                link: newOrder.data.link,
-                email: clubData.email,
-            });
+            //TODO Do przywrócenia gdy odblokujemy PayU
+
+            // await axios.post("/api/mails/sendPayuLink", {
+            //     link: newOrder.data.link,
+            //     email: clubData.email,
+            // });
 
             await axios.post("/api/applications/acceptApplication", {
                 applicationID: clubData.applications[0].id,
@@ -314,11 +316,11 @@ const Application = ({clubData, authData, settings}) => {
             router.replace(router.asPath);
 
             setLoading(false);
-            toast.success("Link do płatnosci ponownie wyslany");
+            // toast.success("Link do płatnosci ponownie wyslany");
         } catch (err) {
             console.log("error creating new order", err);
             setLoading(false);
-            toast.error("Nie udało się wysłać linku,prosimy spróbuj ponownie");
+            // toast.error("Nie udało się wysłać linku,prosimy spróbuj ponownie");
         }
     };
     const acceptApplication = async () => {
@@ -350,10 +352,10 @@ const Application = ({clubData, authData, settings}) => {
                 phone: clubData.phone,
             });
 
-            await axios.post("/api/mails/sendPayuLink", {
-                link: newOrder.data.link,
-                email: clubData.email,
-            });
+            // await axios.post("/api/mails/sendPayuLink", {
+            //     link: newOrder.data.link,
+            //     email: clubData.email,
+            // });
 
             await axios.post("/api/applications/acceptApplication", {
                 applicationID: clubData.applications[0].id,
@@ -364,11 +366,11 @@ const Application = ({clubData, authData, settings}) => {
             router.replace(router.asPath);
 
             setLoading(false);
-            toast.success("Wniosek zaakceptowany, wysłano link do płatności");
+            // toast.success("Wniosek zaakceptowany, wysłano link do płatności");
         } catch (err) {
             console.log(err);
             setLoading(false);
-            toast.error("Nie udało się zaakceptować wniosku, spróbuj ponownie");
+            // toast.error("Nie udało się zaakceptować wniosku, spróbuj ponownie");
         }
     };
 
