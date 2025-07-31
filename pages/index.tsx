@@ -268,7 +268,7 @@ const Home = ({ clubData, authData, settings }) => {
               </Header>
               <Paragraph style={{ marginBottom: '15px' }}>
                 Wielkopolski ZPN zaakceptował Twój wniosek. <br />
-                Prosimy dokonaj płatności używając poniższego linka
+                Prosimy dokonaj płatności w formie przelewu
               </Paragraph>
               <p
                 style={{
@@ -319,19 +319,19 @@ const Home = ({ clubData, authData, settings }) => {
                   )}{' '}
                   PLN
                 </span>
-              </p>
-              {/*<PaymentLink*/}
-              {/*    href={clubData.applications[0].payment_link}*/}
-              {/*    target="_blank"*/}
-              {/*></PaymentLink>*/}
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <p style={{ marginBottom: '12px' }}>
-                  Jeśli chcec opłacić wniosek tradycyjnym przelewem prosimy o przelew na poniższe
-                  dane:
-                </p>
-                <span>Wielkopolski Związek Piłki Nożnej</span>
-                <span>Numer konta: 48 9043 1070 2070 0065 5659 0001 </span>
-                <span>Tytuł przelewu: {clubData.applications[0].internal_id} </span>
+                            </p>
+                            {/*<PaymentLink*/}
+                            {/*    href={clubData.applications[0].payment_link}*/}
+                            {/*    target="_blank"*/}
+                            {/*></PaymentLink>*/}
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                                <p style={{marginBottom: '12px'}}>
+                                    przelew na poniższe dane:
+                                </p>
+                                <span>Wielkopolski Związek Piłki Nożnej</span>
+                                <span>Numer konta: 48 9043 1070 2070 0065 5659 0001 </span>
+                                <span>
+                  Tytuł przelewu: {clubData.applications[0].internal_id} </span>
                 <span>
                   Kwota:{' '}
                   {clubData.applications[0].youth_groups_possession === 'nie posiadamy zespołów' ? (
