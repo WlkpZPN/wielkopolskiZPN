@@ -58,9 +58,11 @@ const LicenseDecision = ({
       });
       if (statusID === 8 || statusID === 10) {
         //3. send email and generate license as attachment
-        await axios.post('/api/mails/sendLicense', {
-          clubData: clubData,
-        });
+        setTimeout(() => {
+          axios.post('/api/mails/sendLicense', {
+            clubData: clubData,
+          });
+        }, 500);
       }
       setLoading(false);
       refreshState();
